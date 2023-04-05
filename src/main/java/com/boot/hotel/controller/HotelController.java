@@ -19,6 +19,28 @@ public class HotelController {
 		
 	}
 	
+	@GetMapping("/login")
+	public ModelAndView login() throws Exception{
+		
+		//반환값은 MVC로
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("login/login");
+		
+		return mav;
+		
+	}
 	
+	@GetMapping("/login1")
+	public ModelAndView login1() throws Exception{
+		
+		//반환값은 MVC로
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("login/html1");
+		
+		return mav;
+		
+	}
 	
 }
