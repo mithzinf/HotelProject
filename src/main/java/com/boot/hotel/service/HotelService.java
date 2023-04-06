@@ -1,13 +1,12 @@
-package com.boot.hotel.mapper;
-
-import org.apache.ibatis.annotations.Mapper;
+package com.boot.hotel.service;
 
 import com.boot.hotel.dto.MemberDTO;
 
-@Mapper
-public interface HotelMapper {
+public interface HotelService {
 	
 	public int maxNum() throws Exception;
 	
 	public void insertDataMember(MemberDTO dto) throws Exception;
+	
+
 }

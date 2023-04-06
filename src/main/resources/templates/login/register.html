@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base href="/" />
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="css/register.css"/>
+<!-- 별도의 script도 생성 -->
+<script type="text/javascript">
+
+	function duplication() {
+		
+		var f = document.myForm;
+		
+		alert("중복체크!");
+		f.action = "login/register";
+		f.submit();
+		
+	}
+	
+	function sendIt() {
+		
+		var f = document.myForm;
+		
+		alert("가입 진행중.. 로그인 화면으로 이동합니다.");
+		f.action = "login/register_ok";
+		f.submit();
+		
+	}
+
+</script>
+
+
+</head>
+<body>
+<div class="container" id="container">
+	<div class="form-container sign-in-container">
+		<form action="" name="myForm" method="post">
+			<h1>회원가입</h1>
+			<br/>
+				<p>아이디</p>
+			<div>
+				<input type="text" name="userid" placeholder="아이디를 입력하세요."
+				style="width:61%;"/>
+				<button class="btn2" onclick="duplication();">중복체크</button>
+			</div>
+			<br/>
+				<p>비밀번호</p>
+				<input type="password" name="pwd" placeholder="비밀번호를 입력하세요." />
+			<br/>
+				<p>비밀번호 확인</p>
+				<input type="password" name="pwd2" placeholder="비밀번호를 입력하세요." />
+			<br/>
+				<p>이름</p>
+				<input type="text" name="username" placeholder="이름을 입력하세요." />
+			<br/>
+				<p>생년월일</p>
+			<div>
+				<select style="width: 100px;" name="year" >
+				<option>출생년도</option>
+				<option value="1991">1991</option>
+				</select>
+			&nbsp;
+				<select style="width: 60px;" name="month" >
+				<option>월</option>
+				<option value="12">12</option>
+				</select>
+			&nbsp;
+				<select style="width: 60px;" name="day" >
+				<option>일</option>
+				<option value="31">31</option>
+				</select>
+			</div>
+			<br/>
+				<p>이메일</p>
+				<div>
+				<input type="text" name="email1" placeholder="abcd1234"
+				style="width:30%;"/>
+				@
+				<input type="text" name="email2" placeholder="뒷주소"
+				style="width:30%;"/>
+				</div>
+			<br/>
+				<p>전화번호</p>
+				<div>
+				<input type="text" name="tel1" style="width:19%;"/>
+				-
+				<input type="text" name="tel2" style="width:19%;"/>
+				-
+				<input type="text" name="tel3" style="width:19%;"/>
+				</div>
+			<br/>
+				<button class="btn1" onclick="sendIt();">가입하기</button>
+		</form>
+	</div>
+</div>
+
+<footer>
+	<p>
+		Created with <i class="fa fa-heart"></i> by
+		<a target="_blank" href="https://florin-pop.com">Florin Pop</a>
+		- Read how I created this and how you can join the challenge
+		<a target="_blank" href="https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/">here</a>.
+	</p>
+</footer>
+
+</body>
+</html>
