@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -73,5 +75,27 @@ public class MemberController {
 		return mav;
 		
 	}
+
+	@GetMapping("/login/idcheck1")
+	public ModelAndView register11() throws Exception{
+		System.out.println("중복체크 창 띄우기");
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("login/idcheck");
+		
+		return mav;
+		
+	}
+	
+	@PostMapping("/login/check")
+	public String idcheck(@RequestParam String id) throws Exception{
+		System.out.println("중복체크 확인");
+		System.out.println(id);
+		
+		return id + "는 사용 가능한 아이디입니다.";
+		
+	}
+	
+	
 	
 }

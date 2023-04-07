@@ -23,7 +23,7 @@ public class HotelInfoDTO {
 	private int deluxe;
 	private int check_in; 
 	private int check_out; 
-	private int hotel_info;//호텔 소개 글
+	private String hotel_infomation;//호텔 소개 글
 
 
 	private int picture_num;
