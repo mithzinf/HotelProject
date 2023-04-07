@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="<%=cp%>/data/js/jquery-3.1.1.min.js"></script>
+
+<script type="text/javascript">
+
+	$(function(){
+		
+		$("#btnOK").click(function(){
+			
+			$("#dialog").dialog({
+				height:240,
+				width:300,
+				modal:true
+			});
+			
+		});
+		
+	});
+
+</script>
+</head>
+<body>
+<input type="text" id="id"><br/>
+<input type="button" value="확인" id="btn">
+
+</body>
+</html>
