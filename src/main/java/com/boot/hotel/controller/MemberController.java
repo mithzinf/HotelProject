@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.boot.hotel.dto.MemberDTO;
-import com.boot.hotel.service.HotelService;
+import com.boot.hotel.service.MemberService;
 
 @RestController
-public class HotelController {
+public class MemberController {
 	
 	@Resource
-	private HotelService hotelService;
+	private MemberService memberService;
 	
 	@GetMapping("/")
 	public ModelAndView index() throws Exception{
@@ -60,11 +60,11 @@ public class HotelController {
 		
 		ModelAndView mav = new ModelAndView();
 		
-		int maxNum = hotelService.maxNum();
+		int maxNum = memberService.maxNum();
 		
 		dto.setNum(maxNum + 1);
 		
-		hotelService.insertDataMember(dto);
+		memberService.insertDataMember(dto);
 		
 		System.out.println("회원가입 성공!!");
 		

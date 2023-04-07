@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.boot.hotel.dto.MemberDTO;
 
 @Mapper
-public interface HotelMapper {
+public interface MemberMapper {
 	
 	public int maxNum() throws Exception;
 	
