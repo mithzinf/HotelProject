@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boot.hotel.mapper.HotelInfoMapper">
+
+<select id="maxNum" resultType="int">
+	select nvl(max(num),0) from member
+</select>
+
+<insert id="getReadList" parameterType="com.boot.hotel.dto.HotelInfoDTO">
+	insert into member (num,userid,pwd,username,birth,email,tel,point,regdate,auth)
+	values (#{num},#{userid},#{pwd},#{username},#{year}||'-'||#{month}||'-'||#{day},
+	#{email1}||'@'||#{email2},#{tel1}||'-'||#{tel2}||'-'||#{tel3},0,sysdate,'일반')
+</insert>
+
+</mapper>
