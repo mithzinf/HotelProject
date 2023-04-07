@@ -5,18 +5,22 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="css/register.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <!-- 별도의 script도 생성 -->
 <script type="text/javascript">
 
-	function duplication() {
+	$(function(){
 		
-		var f = document.myForm;
+		$("#check").click(function() {
+			 window.open("./login/idcheck1", "중복 체크", "width=400,height=300");
+		});
 		
-		alert("중복체크!");
-		f.action = "login/register";
-		f.submit();
 		
-	}
+		
+			
+		
+	});
+	
 	
 	function sendIt() {
 		
@@ -35,14 +39,14 @@
 <body>
 <div class="container" id="container">
 	<div class="form-container sign-in-container">
-		<form action="" name="myForm" method="post">
+		<form action="" name="myForm" method="post" autocomplete="off">
 			<h1>회원가입</h1>
 			<br/>
 				<p>아이디</p>
 			<div>
 				<input type="text" name="userid" placeholder="아이디를 입력하세요."
 				style="width:61%;"/>
-				<button class="btn2" onclick="duplication();">중복체크</button>
+				<button type="button" class="btn2" id="check">중복체크</button>
 			</div>
 			<br/>
 				<p>비밀번호</p>
