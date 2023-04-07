@@ -4,7 +4,7 @@
 PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.boot.hotel.mapper.HotelMapper">
+<mapper namespace="com.boot.hotel.mapper.MemberMapper">
 
 <select id="maxNum" resultType="int">
 	select nvl(max(num),0) from member

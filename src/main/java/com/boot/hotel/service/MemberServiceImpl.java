@@ -4,22 +4,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.boot.hotel.dto.MemberDTO;
-import com.boot.hotel.mapper.HotelMapper;
+import com.boot.hotel.mapper.MemberMapper;
 
 @Service
-public class HotelServiceImpl implements HotelService{
+public class MemberServiceImpl implements MemberService{
 
 	@Autowired
-	private HotelMapper hotelMapper;
+	private MemberMapper memberMapper;
 
 	@Override
 	public int maxNum() throws Exception {
-		return hotelMapper.maxNum();
+		return memberMapper.maxNum();
 	}
 
 	@Override
 	public void insertDataMember(MemberDTO dto) throws Exception {
-		hotelMapper.insertDataMember(dto);
+		memberMapper.insertDataMember(dto);
 	}
 	
 	
