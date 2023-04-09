@@ -19,7 +19,7 @@ public class HotelInfoController {
 	@GetMapping("/main")
 	public ModelAndView main() throws Exception{
 
-		//반환값은 MVC로
+		//諛섑솚媛믪� MVC濡�
 		ModelAndView mav = new ModelAndView();
 		
 		mav.setViewName("login/main");
@@ -30,8 +30,8 @@ public class HotelInfoController {
 	
 	@GetMapping("/hotel/list")
 	public ModelAndView register() throws Exception{
-		System.out.println("회원가입창 띄우기");
-		//반환값은 MVC로
+		System.out.println("�쉶�썝媛��엯李� �쓣�슦湲�");
+		//諛섑솚媛믪� MVC濡�
 		ModelAndView mav = new ModelAndView();
 		
 		mav.setViewName("login/listing");
