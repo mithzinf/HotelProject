@@ -21,8 +21,8 @@ public class HotelInfoDTO {
 	private int standard;
 	private int sweet;
 	private int deluxe;
-	private int check_in; 
-	private int check_out; 
+	private String check_in; 
+	private String check_out; 
 	private String hotel_infomation;//호텔 소개 글
 
 

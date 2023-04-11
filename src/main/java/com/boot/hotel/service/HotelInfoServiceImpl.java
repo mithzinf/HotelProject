@@ -14,15 +14,19 @@ public class HotelInfoServiceImpl implements HotelInfoService {
 	private HotelInfoMapper hotelInfoMapper;
 	
 	@Override
-	public int maxNum() throws Exception {
-	
+	public int maxNum() throws Exception {	
 		return hotelInfoMapper.maxNum();
 	}
 
 	@Override
-	public void getReadList(HotelInfoDTO dto) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public int getReadList(HotelInfoDTO dto) throws Exception {
+		return hotelInfoMapper.getReadList(dto);
 	}
 
+	@Override
+	public int getDataHotel(HotelInfoDTO dto) throws Exception {
+		return hotelInfoMapper.getDataHotel(dto);
+	}
+
+	
 }
