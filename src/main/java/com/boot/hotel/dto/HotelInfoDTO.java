@@ -54,4 +54,6 @@ public class HotelInfoDTO {
 	private int count;
 	private int ave;
 	 
+	private String searchKey; // 검색 조건 칼럼명
+	private String searchValue;
 }

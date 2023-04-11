@@ -34,19 +34,15 @@ public class HotelInfoController {
 	@GetMapping("/hotel/hotellist1")
 	public ModelAndView list1(HotelInfoDTO dto) throws Exception{
 	    ModelAndView mav = new ModelAndView();
+	    
+	    
+
+	    
 	    mav.setViewName("hotel/hotelSearchList");
 
-	    int maxNum = hotelInfoService.maxNum();
-
-	    // setNum 대신 setHotelId 사용
-	    dto.setHotel_id(maxNum + 1);
-
-
-	    hotelInfoService.getReadList(dto);
-
-	    mav.setViewName("redirect:/list.action");
 
 	    return mav;
 	}
+
 
 }
