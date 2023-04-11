@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>임시 로그인 페이지</h1>
+
+<form action="/login/list_ok" method="post">
+	<input type="hidden" name="userid" th:value="${dto.userid }">
+	<input type="hidden" name="username" th:value="${dto.username }">
+	<p th:text="${dto.userid}"></p>
+	<p th:text="${dto.username}"></p>
+	<p th:text="${dto.birth}"></p>
+	<button type="submit">list_ok로 전송</button>
+</form>
+</body>
+</html>

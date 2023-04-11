@@ -8,4 +8,6 @@ public interface HotelInfoService {
 	public int maxNum() throws Exception;
 	
 	public void getReadList(HotelInfoDTO dto) throws Exception;
+	
+
 }

@@ -12,8 +12,29 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 
 <insert id="insertDataMember" parameterType="com.boot.hotel.dto.MemberDTO">
 	insert into member (num,userid,pwd,username,birth,email,tel,point,regdate,auth)
-	values (#{num},#{userid},#{pwd},#{username},#{year}||'-'||#{month}||'-'||#{day},
+	values (#{num},#{userid},#{pwd},#{username},#{birth},
 	#{email1}||'@'||#{email2},#{tel1}||'-'||#{tel2}||'-'||#{tel3},0,sysdate,'일반')
 </insert>
+
+<select id="checkMemberId" parameterType="String" resultType="String">
+	select userId from member where userid=#{id}
+</select>
+
+<select id="checkMemberTel" parameterType="String" resultType="String">
+	select tel from member where tel=#{tel}
+</select>
+
+<select id="getReadDataMember" parameterType="String" resultType="com.boot.hotel.dto.MemberDTO">
+	select num,userid,pwd,username,birth,email,tel,point,regdate,auth 
+	from member where userid=#{userid}
+</select> 
+
+<select id="searchMemberId" parameterType="map" resultType="String">
+	select userid from member where username=#{username} and tel=#{tel}
+</select>
+
+<select id="searchMemberPwd" parameterType="map" resultType="String">
+	select pwd from member where userid=#{userid} and username=#{username} and tel=#{tel}
+</select>
 
 </mapper>
