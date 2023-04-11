@@ -15,10 +15,12 @@ public class HotelDetailServiceImpl implements HotelDetailService{
 	private HotelDetailMapper hotelDetailMapper;
 
 	@Override
-	public List<HotelInfoDTO> getListsDetailData() throws Exception {
+	public HotelInfoDTO getListsDetailData(int hotel_id) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 	
 	
