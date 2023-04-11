@@ -6,38 +6,12 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.boot.hotel.mapper.HotelInfoMapper">
 
-<select id="maxNum" resultType="int">
-	select nvl(max(num),0) from hotel_id 
-</select>
-
 <!-- 리스트 불러오기  -->
-<select id="getReadList" resultType="int" parameterType="com.boot.hotel.dto.HotelInfoDTO">
-	select * from (
-	select rownum rnum, data.* from (
-	select hotel_id,hotel_name,picture_num,category,addr1,addr2,tel,latitude,longitude,like_num,
-	standard,check_in,check_out,hotel_infomation
-	from hotel where ${searchKey} like '%' || #{searchValue} || '%'
-	order by num desc) data)
+<select id="getReadList" resultType="com.boot.hotel.dto.HotelInfoDTO" parameterType="Map">
+
 </select>
 
-<!-- 리스트 불러오기 안 되면 이걸로 해볼 것 
-	<select id="getReadList" parameterType="com.boot.hotel.dto.HotelInfoDTO"> 
-	SELECT hotel_id, hotel_name, picture_num, category, addr1, addr2, tel, latitude,
-	longitude, like_num, standard, check_in, check_out, hotel_infomation 
-	FROM hotel WHERE CONCAT(addr1, ' ', addr2) LIKE CONCAT('%',#{searchValue},'%')
-	</select> 
-	
-	
-	<select id="getReadList" parameterType="map" resultType="com.boot.hotel.dto.HotelInfoDTO">
-	SELECT hotel_id, hotel_name, picture_num, category, addr1, addr2, tel, latitude, longitude, 
-	like_num, standard, check_in, check_out, hotel_infomation 
-	FROM hotel WHERE CONCAT(addr1, ' ', addr2) LIKE CONCAT('%',#{searchValue},'%')
-	AND category = #{category} AND like_num >= #{likeNum} ORDER BY num DESC
-	</select>
-	
-	-->
 
-<!-- 검색 -->
 <select id="getDataHotel" resultType="int" parameterType="com.boot.hotel.dto.HotelInfoDTO">
 	select nvl(count(*),0) from hotel
 	where ${searchKey} like '%' || #{searchValue} || '%'

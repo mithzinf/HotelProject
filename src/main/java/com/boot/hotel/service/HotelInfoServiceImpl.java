@@ -18,15 +18,15 @@ public class HotelInfoServiceImpl implements HotelInfoService {
 		return hotelInfoMapper.maxNum();
 	}
 
-	@Override
-	public int getReadList(HotelInfoDTO dto) throws Exception {
-		return hotelInfoMapper.getReadList(dto);
-	}
-
-	@Override
-	public int getDataHotel(HotelInfoDTO dto) throws Exception {
-		return hotelInfoMapper.getDataHotel(dto);
-	}
+//	@Override
+//	public int getReadList(HotelInfoDTO dto) throws Exception {
+//		return hotelInfoMapper.getReadList(dto);
+//	}
+//
+//	@Override
+//	public int getDataHotel(HotelInfoDTO dto) throws Exception {
+//		return hotelInfoMapper.getDataHotel(dto);
+//	}
 
 	
 }
