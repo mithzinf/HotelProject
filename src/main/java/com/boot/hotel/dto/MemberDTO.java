@@ -11,9 +11,7 @@ public class MemberDTO {
 	private String userid;
 	private String pwd;
 	private String username;
-	private String year;
-	private String month;
-	private String day;
+	private String birth;
 	private String email1;
 	private String email2;
 	private String tel1;

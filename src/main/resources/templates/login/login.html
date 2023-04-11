@@ -5,25 +5,36 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="css/login.css"/>
+</head>
 <!-- 별도의 script도 생성 -->
+<script type="text/javascript">
 
+	function sendIt() {
+		
+		var f = document.myForm;
+		f.action="login/list";
+		f.submit();
+		
+	}
+
+</script>
 
 
 </head>
 <body>
 <div class="container" id="container">
 	<div class="form-container sign-in-container">
-		<form action="#">
+		<form action="#" name="myForm" method="post">
 			<h1>로그인</h1>
 			<div class="social-container">
-				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+				<a href="#" class="social"><img src="/image/google.png" alt="Google 로고"></a>
+				<a href="#" class="social"><img src="/image/kakao.png" alt="카카오 로고"></a>
+				<a href="#" class="social"><img src="/image/naver.png" alt="네이버 로고"></a>
 			</div>
-			<input type="email" placeholder="아이디" />
-			<input type="password" placeholder="비밀번호" />
-			<p><a href="#">아이디 찾기</a> &nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp; <a href="#">비밀번호 찾기</a></p>
-			<button>로그인</button>
+			<input type="text" name="userid" placeholder="아이디" />
+			<input type="password" name="pwd" placeholder="비밀번호" />
+			<p><b><a href="/login/searchId">아이디 찾기</a> &nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp; <a href="/login/searchPwd">비밀번호 찾기</a></b></p>
+			<button type="button" onclick="sendIt();">로그인</button>
 		</form>
 	</div>
 	<div class="overlay-container">
@@ -32,7 +43,7 @@
 			<div class="overlay-panel overlay-right">
 				<h1>환영합니다!</h1>
 				<p>처음 방문하시는 분은 아래 회원가입 버튼을 눌러주세요.</p>
-				<button class="ghost" id="register" onclick="location.href='login/register';"> 회원가입 </button>
+				<button class="ghost" id="register" onclick="location.href='login/terms';"> 회원가입 </button>
 			</div>
 		</div>
 	</div>
