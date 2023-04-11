@@ -5,7 +5,7 @@ import lombok.ToString;
 
 @Data
 @ToString
-public class Hotel_Facility_InDTO {
+public class HotelFacilityInDTO {
 	
 	
 	private int hotel_id;
