@@ -6,21 +6,24 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.boot.hotel.mapper.HotelDetailMapper">
 
-<select id="getListsDetailData"  parameterType="map" resultType="com.boot.hotel.dto.HotelInfoDTO">
-<!-- 모든 호텔 리스트 줄줄이 소세지 흠 이걸 내가 해야하는 관할인건지...아닌건지...-->
-SELECT hi.hotel_id, hi.standard, hi.sweet, hi.deluxe, hi.check_in, hi.check_out, hi.hotel_information, hf.info24, hf.free_parking, hf.free_wifi, hf.no_smoking,
-       hf.breakfast, hf.fitness, hf.restaurant, hf.cafe, hf.convenience, hfi.toiletries, hfi.shower, hfi.towel, hfi.tv, hfi.coffeemaker,
-       hfi.air_conditional, hfi.slipper, hfi.heating, hfi.table1, hfi.pc FROM hotel_info hi JOIN hotel_facility hf ON hi.hotel_id = hf.hotel_id JOIN hotel_facility_in hfi 
-       ON hi.hotel_id = hfi.hotel_id WHERE hi.hotel_id = #{hotel_id}
+<!-- hotel 테이블의 모든 정보를 select해오는 쿼리문 -->
+<select id="getHotelById"  parameterType="int" resultType="com.boot.hotel.dto.HotelDTO">
+	select hotel_id,hotel_name,category,like_num from hotel where hotel_id=#{hotel_id}
 </select>
-<!-- 
-<select id="getReadData" parameterType="int" resultType="com.boot.hotel.dto.HotelInfoDTO">
 
-모르겠어ㅠㅠㅠ
+
+<select id="getHotelInfoById" parameterType="int" resultType="com.boot.hotel.dto.HotelInfoDTO">
+	select standard,sweet,deluxe,check_in,check_out from hotel_info where hotel_id=#{hotel_id}
 </select>
- -->
 
+<select id="getHotelPicById" parameterType="int" resultType="com.boot.hotel.dto.HotelPictureDTO">
+	select picture_num,type,url from hotel_picture where hotel_id=#{hotel_id}
+</select>
 
+<select id="getHotelFacilityInById" parameterType="int" resultType="com.boot.hotel.dto.HotelFacilityDTO">
+	select * from hotel_facility_in where hotel_id=#{hotel_id}
+</select>
+ 
 
 
 
