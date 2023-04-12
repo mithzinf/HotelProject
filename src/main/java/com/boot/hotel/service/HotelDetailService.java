@@ -2,14 +2,18 @@ package com.boot.hotel.service;
 
 import java.util.List;
 
+import com.boot.hotel.dto.HotelDTO;
+import com.boot.hotel.dto.HotelFacilityInDTO;
 import com.boot.hotel.dto.HotelInfoDTO;
+import com.boot.hotel.dto.HotelPictureDTO;
 
 public interface HotelDetailService {
 	
-	//호텔 객실 리스트 처리
-	public  HotelInfoDTO getListsDetailData(int hotel_id) throws Exception;
+	public List<HotelDTO> getHotelById(int hotel_id) throws Exception;
 	
-	//특정 호텔의 객실 정보 불러오기
-	//public HotelInfoDTO getReadData(int hotel_id) throws Exception;
-
+	public List<HotelInfoDTO> getHotelInfoById(int hotel_id) throws Exception;
+	
+	public List<HotelPictureDTO> getHotelPicById(int hotel_id) throws Exception;
+	
+	public List<HotelFacilityInDTO> getHotelFacilityInById(int hotel_id) throws Exception;
 }

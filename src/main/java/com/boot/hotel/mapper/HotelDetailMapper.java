@@ -3,11 +3,20 @@ package com.boot.hotel.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+
+import com.boot.hotel.dto.HotelDTO;
+import com.boot.hotel.dto.HotelFacilityInDTO;
 //dao 생성
 import com.boot.hotel.dto.HotelInfoDTO;
+import com.boot.hotel.dto.HotelPictureDTO;
 @Mapper
 public interface HotelDetailMapper {
 
-	public HotelInfoDTO getListsDetailData(int hotel_id) throws Exception;
-	//boradMapper의 getReadData(int num)보고 따라한건데요..한 호텔당 보여줄 객실..ㅠ
+	public List<HotelDTO> getHotelById(int hotel_id) throws Exception;
+	
+	public List<HotelInfoDTO> getHotelInfoById(int hotel_id) throws Exception;
+	
+	public List<HotelPictureDTO> getHotelPicById(int hotel_id) throws Exception;
+	
+	public List<HotelFacilityInDTO> getHotelFacilityInById(int hotel_id) throws Exception;
 }
