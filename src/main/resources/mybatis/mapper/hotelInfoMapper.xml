@@ -7,15 +7,28 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.boot.hotel.mapper.HotelInfoMapper">
 
 <!-- 리스트 불러오기  -->
-<select id="getReadList" resultType="com.boot.hotel.dto.HotelInfoDTO" parameterType="Map">
+<select id="getHotelList1" resultType="com.boot.hotel.dto.HotelDTO" parameterType="map">
+    SELECT * FROM hotel WHERE hotel_id = #{hotel_id}
+</select>
+ 
+<select id="getHotelList2" resultType="com.boot.hotel.dto.HotelInfoDTO" parameterType="map">
+    SELECT hotel_id,standard,sweet,deluxehotel_infomation 
+    FROM hotel_info WHERE hotel_id = #{hotel_id}
+</select>
 
+<select id="getHotelList3" resultType="com.boot.hotel.dto.HotelPictureDTO" parameterType="map">
+    SELECT hotel_id, picture_num FROM hotel_picture WHERE hotel_id = #{hotel_id}
+</select>
+
+<select id="getHotelList4" resultType="com.boot.hotel.dto.ReviewDTO" parameterType="map">
+    SELECT hotel_id,review_num FROM review WHERE hotel_id = #{hotel_id}
+</select>
+
+<select id="getHotelList5" resultType="com.boot.hotel.dto.ReviewScoreDTO" parameterType="map">
+    SELECT hotel_id,ave FROM review_score WHERE hotel_id = #{hotel_id}
 </select>
 
 
-<select id="getDataHotel" resultType="int" parameterType="com.boot.hotel.dto.HotelInfoDTO">
-	select nvl(count(*),0) from hotel
-	where ${searchKey} like '%' || #{searchValue} || '%'
-</select>
 
 
 </mapper>
