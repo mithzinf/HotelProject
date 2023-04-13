@@ -1,13 +1,12 @@
 package com.boot.hotel.controller;
-
-
-
-
 import java.util.HashMap;
+
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,20 +17,28 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.boot.hotel.dto.MemberDTO;
+import com.boot.hotel.oauth2.dto.SessionUser;
 import com.boot.hotel.service.MemberService;
 
 @RestController
 @ResponseBody
 public class MemberController {
 	
+	//oauth2 회원가입 정보 입력을 위해
+	private String oauthId;
+	private String oauthName;
+	
+	@Autowired
+	private HttpSession httpSession;
+	
 	@Resource
 	private MemberService memberService;
+
 	
 	//메인화면 띄우기
 	@GetMapping("/")
 	public ModelAndView index() throws Exception{
 		
-		//반환값은 MVC로
 		ModelAndView mav = new ModelAndView();
 		
 		mav.setViewName("index");
@@ -41,19 +48,80 @@ public class MemberController {
 	}
 	
 	//로그인창 띄우기
-	@RequestMapping(value = "/login", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/login/login", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView login() throws Exception {
 	    System.out.println("로그인창 띄우기");
-	    // 반환값은 MVC로
+	    
 	    ModelAndView mav = new ModelAndView();
 
 	    mav.setViewName("login/login");
-
+	    httpSession.invalidate();
+	    this.oauthId = "";
+	    this.oauthName = "";
+	    
 	    return mav;
 	}
 	
+	//로그인시 맞는 아이디/비밀번호인지 확인
+	@PostMapping("/login/login_check")
+	public String login_check(@RequestParam String userid,
+			@RequestParam String pwd) throws Exception {
+		
+		System.out.println("로그인 체크 컨트롤러 진입");
+		
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("userid", userid);
+		paramMap.put("pwd", pwd);
+		System.out.println(userid);
+		if(memberService.memberLogin(paramMap)!=null) {
+			return "success";
+		}
+		
+		return null;
+		
+	}
+	
+	
+	
+	//아이디 비밀번호가 맞을시 일반 로그인 처리
+	@RequestMapping(value = "/login/login_ok", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView login_ok(MemberDTO dto) throws Exception {
+	    System.out.println("일반 로그인 처리 컨트롤러 진입");
+	    
+	    ModelAndView mav = new ModelAndView();
+	    
+	    Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("userid", dto.getUserid());
+		paramMap.put("pwd", dto.getPwd());
+		
+		MemberDTO dto2 = memberService.memberLogin(paramMap);
+			
+		SessionUser sessionUser = new SessionUser(dto2.getUserid(),dto2.getUsername());
+		httpSession.setAttribute("sessionUser", sessionUser);
+		    
+		System.out.println();
+
+		mav.setViewName("redirect:/list");
+		    
+		return mav;
+		
+	}
+	
+	//연동/일반 회원가입 선택 화면 띄우기
+	@GetMapping("/login/register_select")
+	public ModelAndView select() throws Exception{
+		System.out.println("연동/일반 회원가입 선택 창 띄우기");
+		//반환값은 MVC로
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("login/register_select");
+		
+		return mav;
+		
+	}
+	
 	//약관동의화면 띄우기
-	@GetMapping("/login/terms")
+	@RequestMapping(value = "/login/terms", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView terms() throws Exception{
 		System.out.println("컨트롤러에서 약관동의 화면 띄우기");
 		
@@ -65,14 +133,38 @@ public class MemberController {
 			
 	}
 	
-	//연동/일반 회원가입 선택 화면 띄우기
-	@GetMapping("/login/select")
-	public ModelAndView select() throws Exception{
-		System.out.println("연동/일반 회원가입 선택 창 띄우기");
-		//반환값은 MVC로
+	
+	//oauth 로그인시 가입된 계정인지 아닌지 판별하는 메소드
+	@RequestMapping(value = "/login/oauth_select", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView oauth_select() throws Exception{
+		System.out.println("oauth로그인시 가입된 계정인지 판별 컨트롤러 진입");
+		
+		//세션 값 가져옴
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+		
+		String id = "";
+		
+		//가져온 세션값의 아이디가 등록된 아이디인지 판별
+		id = memberService.checkMemberId(sessionUser.getId());
+		System.out.println(id);
+		
+		
+		//미가입된 계정이면 회원가입 페이지로
+		if(id==null) {
+			
+			ModelAndView mav = new ModelAndView();
+			
+			mav.setViewName("redirect:/login/terms");
+			
+			return mav;
+			
+		}
+		
+		//가입된 계정이면 로그인 화면으로
+		
 		ModelAndView mav = new ModelAndView();
 		
-		mav.setViewName("login/select");
+		mav.setViewName("redirect:/list");
 		
 		return mav;
 		
@@ -80,11 +172,31 @@ public class MemberController {
 	
 	
 	
+	
+	
 	//회원가입화면 띄우기
 	@RequestMapping(value = "/login/register", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView register() throws Exception{
 		System.out.println("회원가입창 띄우기");
-		//반환값은 MVC로
+		
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+		
+		if(sessionUser!=null) {
+			
+			this.oauthId = sessionUser.getId();
+			this.oauthName = sessionUser.getName();
+			httpSession.invalidate();
+			
+			ModelAndView mav = new ModelAndView();
+			
+			mav.addObject("oauthId", oauthId);
+	        mav.addObject("oauthName", oauthName);
+			mav.setViewName("login/register_oauth");
+			
+			return mav;
+			
+		}
+		
 		ModelAndView mav = new ModelAndView();
 		
 		mav.setViewName("login/register");
@@ -94,21 +206,46 @@ public class MemberController {
 	}
 	
 	
+	
+	
 	//회원가입 처리
 	@PostMapping("/login/register_ok")
 	public ModelAndView register_ok(MemberDTO dto) throws Exception{
-		//반환값은 MVC로
-		System.out.println("회원가입 컨트롤러 진입");
+
+		System.out.println("회원가입 처리 컨트롤러 진입");
 		ModelAndView mav = new ModelAndView();
+		
+		if(dto.getAuth()!=null) {
+			
+			int maxNum = memberService.maxNum();
+			dto.setNum(maxNum + 1);
+			dto.setAuth("소셜회원");
+			
+			String[] parts = dto.getEmail().split("@"); // "@" 기호를 기준으로 문자열을 분리
+
+			dto.setEmail1(parts[0]);
+			dto.setEmail2(parts[1]);
+			
+			memberService.insertDataSocialMember(dto);
+			
+			System.out.println("oauth 회원가입 성공!!");
+			
+			mav.setViewName("redirect:/login/login");
+			
+			return mav;
+			
+		}
+		
 		
 		int maxNum = memberService.maxNum();
 		dto.setNum(maxNum + 1);
+		dto.setAuth("일반회원");
 		
 		memberService.insertDataMember(dto);
 		
-		System.out.println("회원가입 성공!!");
+		System.out.println("일반 회원가입 성공!!");
 		
-		mav.setViewName("redirect:/login");
+		mav.setViewName("redirect:/login/login");
 		
 		return mav;
 		
@@ -153,18 +290,18 @@ public class MemberController {
 		
 		ModelAndView mav = new ModelAndView();
 		
-		mav.setViewName("redirect:/login");
+		mav.setViewName("redirect:/login/login");
 		
 		return mav;
 		
 	}
 	
 	//회원가입시 전화번호 체크
-	@PostMapping("/login/emailCheck")
+	@PostMapping("/login/telCheck")
 	public String emailCheck(@RequestParam("tel1") String tel1,
 			@RequestParam("tel2") String tel2, @RequestParam("tel3") String tel3) throws Exception{
 
-		System.out.println("이메일 체크 컨트롤러 진입");
+		System.out.println("회원가입시 전화번호 체크 컨트롤러 진입");
 		
 		StringBuilder sb = new StringBuilder();
 		
@@ -219,8 +356,6 @@ public class MemberController {
 	}
 	
 	
-	
-	
 	//비밀번호 찾기 페이지 진입
 	@GetMapping("/login/searchPwd")
 	public ModelAndView searchPwd() throws Exception{
@@ -261,43 +396,54 @@ public class MemberController {
 	}
 	
 	
+	//로그아웃 처리
+	@RequestMapping(value = "/login/logout", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView logout() throws Exception{
+		
+		//로그인할때 올린 세션을 삭제
+		httpSession.invalidate();
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/list");
+		
+		return mav;
+		
+	}
+	
 	
 	
 	//=======================================================================================
 	
 	
 	//임시 로그인 페이지 list 띄움
-	@PostMapping("/login/list")
-	public ModelAndView list(MemberDTO dto) throws Exception{
+	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView list() throws Exception{
 
-		System.out.println("임시 로그인 페이지 진입");
-		
-		//회원 전체 데이터 가져옴
-		MemberDTO dto1 = memberService.getReadDataMember(dto.getUserid());
+		System.out.println("리스트 출력 컨트롤러 진입");
 		
 		ModelAndView mav = new ModelAndView();
 		
-		mav.addObject("dto", dto1);
+		if(httpSession.getAttribute("sessionUser")!=null) {
+			
+			SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+			
+			String userid = sessionUser.getId();
+			String username = sessionUser.getName();
+			
+			mav.addObject("userid", userid);
+			mav.addObject("username", username);
+			
+		}
+		
+		
 		mav.setViewName("login/list");
 		
 		return mav;
 		
 	}
 	
-	//임시 로그인 페이지 list_ok 띄움
-	@PostMapping("/login/list_ok")
-	public ModelAndView list_ok(MemberDTO dto) throws Exception{
+	
+	
 
-		System.out.println("list_ok 컨트롤러 진입");
-		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("dto", dto);
-		mav.setViewName("login/list_ok");
-		
-		return mav;
-		
-	}
-	
-	
 	
 }

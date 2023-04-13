@@ -25,6 +25,13 @@ public class MemberServiceImpl implements MemberService{
 	public void insertDataMember(MemberDTO dto) throws Exception {
 		memberMapper.insertDataMember(dto);
 	}
+	
+	//소셜회원가입 처리 메소드
+	@Override
+	public void insertDataSocialMember(MemberDTO dto) throws Exception {
+		memberMapper.insertDataSocialMember(dto);
+		
+	}
 
 	//아이디 중복체크 메소드
 	@Override
@@ -51,6 +58,13 @@ public class MemberServiceImpl implements MemberService{
 	public String searchMemberPwd(Map<String, Object> params) throws Exception {
 		return memberMapper.searchMemberPwd(params);
 	}
+
+	@Override
+	public MemberDTO memberLogin(Map<String, Object> params) throws Exception {
+		return memberMapper.memberLogin(params);
+	}
+
+	
 
 
 

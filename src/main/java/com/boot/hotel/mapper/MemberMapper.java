@@ -13,6 +13,8 @@ public interface MemberMapper {
 	
 	public void insertDataMember(MemberDTO dto) throws Exception;
 	
+	public void insertDataSocialMember(MemberDTO dto) throws Exception;
+	
 	public String checkMemberId(String id) throws Exception;
 	
 	public String checkMemberTel(String tel) throws Exception;
@@ -22,5 +24,7 @@ public interface MemberMapper {
 	public String searchMemberId(Map<String, Object> params) throws Exception;
 	
 	public String searchMemberPwd(Map<String, Object> params) throws Exception;
+	
+	public MemberDTO memberLogin(Map<String, Object> params) throws Exception;
 	
 }
