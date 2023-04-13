@@ -6,18 +6,25 @@
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="css/register.css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- 별도의 script도 생성 -->
+<style>
+@import url('https://fonts.googleapis.com/css?family=Gowun+Batang&display=swap');
+.swal-footer {
+	text-align: center;
+}
+</style>
+
 <script type="text/javascript">
 
 	$(function(){
 		
 		$("#check").click(function() {
-			 window.open("./login/idcheck1", "중복 체크", "width=400,height=300");
+			 window.open("./login/idcheck1", "중복 체크", "width=450,height=270,left=600");
 		});
 		
 		
 		
-			
 		
 	});
 	
@@ -26,8 +33,223 @@
 		
 		var f = document.myForm;
 		
-		alert("가입 진행중.. 로그인 화면으로 이동합니다.");
-		f.action = "login/register_ok";
+		//영어+숫자 혼합 강제 정규화 표현식
+		var alphanumeric = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/;
+		//한글 강제 정규화 표현식
+		var koreanOnly = /^[가-힣]+$/;
+		
+		var event = window.event || arguments.callee.caller.arguments[0];
+		
+		//아이디 입력 오류 메시지
+		str_id = f.userid.value;
+		str_id = str_id.trim();
+		
+		if(str_id==""){
+			swal({
+				  title: "아이디 입력오류",
+				  text: "아이디를 입력하세요.",
+				  icon: "error",
+				  button: "확인",
+				});
+			event.preventDefault();
+			return;
+		}
+		
+		str_pwd1 = f.pwd.value;
+		str_pwd1 = str_pwd1.trim();
+
+		
+		//비밀번호 입력 오류메시지
+		if(str_pwd1.length<6 || str_pwd1.length>20){
+			swal({
+				  title: "비밀번호 입력오류",
+				  text: "비밀번호는 최소 6자, 최대 20자를 입력해야 합니다.",
+				  icon: "error",
+				  button: "확인",
+				});
+			event.preventDefault();
+			return;
+		}
+		
+		if(!alphanumeric.test(str_pwd1)){
+			swal({
+				  title: "비밀번호 입력오류",
+				  text: "비밀번호는 영어+숫자 혼합으로만 입력이 가능합니다.",
+				  icon: "error",
+				  button: "확인",
+				});
+			event.preventDefault();
+			return;
+		}
+		
+		//비밀번호 확인 입력 오류메시지
+		str_pwd2 = f.pwd2.value;
+		str_pwd2 = str_pwd2.trim();
+		
+		if(str_pwd2.length<6 || str_pwd2.length>20){
+			swal({
+				  title: "비밀번호확인 입력오류",
+				  text: "비밀번호확인은 최소 6자, 최대 20자를 입력해야 합니다.",
+				  icon: "error",
+				  button: "확인",
+				});
+			event.preventDefault();
+			return;
+		}
+		
+		if(!alphanumeric.test(str_pwd2)){
+			swal({
+				  title: "비밀번호확인 입력오류",
+				  text: "비밀번호확인은 영어+숫자 혼합으로만 입력이 가능합니다.",
+				  icon: "error",
+				  button: "확인",
+				});
+			event.preventDefault();
+			return;
+		}
+		
+		
+		//비밀번호, 비밀번호 확인을 같게 입력했는지 확인
+		if(str_pwd1!=str_pwd2){
+			
+			swal({
+				  title: "비밀번호 입력오류",
+				  text: "비밀번호와 비밀번호확인이 같지 않습니다.",
+				  icon: "error",
+				  button: "확인",
+				});
+			event.preventDefault();
+			return;
+			
+		}
+		
+		//이름 입력 오류메시지
+		str_name = f.username.value;
+		str_name = str_name.trim();
+		
+		if(str_name==""){
+			swal({
+				  title: "이름 입력오류",
+				  text: "이름을 입력하세요.",
+				  icon: "error",
+				  button: "확인",
+				});
+			event.preventDefault();
+			return;
+		}
+		
+		if(!koreanOnly.test(str_name)){
+			swal({
+				  title: "이름 입력오류",
+				  text: "이름은 한글만 입력 가능합니다.",
+				  icon: "error",
+				  button: "확인",
+				});
+			event.preventDefault();
+			return;
+		}
+		
+		str_birth = f.birth.value;
+		str_birth = str_birth.trim();
+		
+		if(str_birth==""){
+			swal({
+				  title: "생년월일 입력오류",
+				  text: "생년월일을 입력하세요.",
+				  icon: "error",
+				  button: "확인",
+				});
+			event.preventDefault();
+			return;
+		}
+
+		
+		
+		//이메일 입력 오류메시지
+		str_email1 = f.email1.value;
+		str_email1 = str_email1.trim();
+		str_email2 = f.email2.value;
+		str_email2 = str_email2.trim();
+		
+		if(str_email1=="" || str_email2==""){
+			
+			swal({
+				  title: "이메일 입력오류",
+				  text: "이메일을 입력하세요.",
+				  icon: "error",
+				  button: "확인",
+				});
+			event.preventDefault();
+			return;
+		}
+		
+		
+		//전화번호 입력 오류메시지
+		str_tel1 = f.tel1.value;
+		str_tel1 = str_tel1.trim();
+		str_tel2 = f.tel2.value;
+		str_tel2 = str_tel2.trim();
+		str_tel3 = f.tel3.value;
+		str_tel3 = str_tel3.trim();
+		
+		if(str_tel1=="" || str_tel2=="" || str_tel3==""){
+			
+			swal({
+				  title: "전화번호 입력오류",
+				  text: "전화번호를 입력하세요.",
+				  icon: "error",
+				  button: "확인",
+				});
+			event.preventDefault();
+			return;
+		}
+		
+		
+		if (confirm("회원가입을 하시겠습니까?")) {
+		    
+			//이미 가입된 전화번호가 있을시 오류창을 띄우는 ajax
+		    $.ajax({
+		        url: './login/emailCheck',
+		        type: 'post',
+		        data: {tel1:str_tel1,tel2:str_tel2,tel3:str_tel3},
+		        success: function(result) {
+		            if(result!="available") {
+		            	swal({
+		            		title: "회원가입 완료",
+		            		text: "회원가입이 완료되었습니다!",
+		            		icon: "success",
+		            		button: "로그인하기",
+		            		}).then(function() {
+		            			//비활성화된 아이디입력 input박스를 가입버튼을 누를때 활성화
+		            		    //그렇지 않으면 컨트롤러에서 값을 가져오지 못함
+		            			var input = document.getElementsByName("userid")[0];
+				                input.disabled = false;
+				                f.action="login/register_ok";
+				                f.submit();
+		            		});
+		            }
+		            else {
+		                swal({
+		  				  title: "전화번호 등록 오류",
+		  				  text: "이미 가입된 전화번호입니다. 다른 번호를 입력해주세요.",
+		  				  icon: "error",
+		  				  button: "확인",
+		  				});
+		            }
+		        },
+		    });
+		    event.preventDefault();
+		} 
+		else {
+		    event.preventDefault();
+		}
+		
+	}
+	
+	function back() {
+		
+		var f = document.myForm;
+		f.action="login/back";
 		f.submit();
 		
 	}
@@ -37,6 +259,19 @@
 
 </head>
 <body>
+
+<script>
+	//생년월일 초기값 설정
+	const birthdateInput = document.getElementById("birthdate");
+				
+	birthdateInput.addEventListener("click", function() {
+		if (this.value === "") {
+		this.value = "2000-01-01";
+	}
+});
+</script>
+
+
 <div class="container" id="container">
 	<div class="form-container sign-in-container">
 		<form action="" name="myForm" method="post" autocomplete="off">
@@ -44,8 +279,8 @@
 			<br/>
 				<p>아이디</p>
 			<div>
-				<input type="text" name="userid" placeholder="아이디를 입력하세요."
-				style="width:61%;"/>
+				<input type="text" name="userid" placeholder="ID중복체크를 해주세요."
+				style="width:61%;" disabled="disabled"/>
 				<button type="button" class="btn2" id="check">중복체크</button>
 			</div>
 			<br/>
@@ -59,29 +294,18 @@
 				<input type="text" name="username" placeholder="이름을 입력하세요." />
 			<br/>
 				<p>생년월일</p>
-			<div>
-				<select style="width: 100px;" name="year" >
-				<option>출생년도</option>
-				<option value="1991">1991</option>
-				</select>
-			&nbsp;
-				<select style="width: 60px;" name="month" >
-				<option>월</option>
-				<option value="12">12</option>
-				</select>
-			&nbsp;
-				<select style="width: 60px;" name="day" >
-				<option>일</option>
-				<option value="31">31</option>
-				</select>
+			<div style="width: 100%;">
+				<input type="date" name="birth" id="birthdate" value="">
 			</div>
+			
+				
 			<br/>
 				<p>이메일</p>
 				<div>
 				<input type="text" name="email1" placeholder="abcd1234"
 				style="width:30%;"/>
 				@
-				<input type="text" name="email2" placeholder="뒷주소"
+				<input type="text" name="email2" placeholder="도메인"
 				style="width:30%;"/>
 				</div>
 			<br/>
@@ -94,17 +318,21 @@
 				<input type="text" name="tel3" style="width:19%;"/>
 				</div>
 			<br/>
-				<button class="btn1" onclick="sendIt();">가입하기</button>
+			<div>
+				<button class="btn2" onclick="sendIt();" style="padding:12px 25px;"> 회원가입 </button>
+				&nbsp;
+				<button class="btn1" onclick="back();" style="padding:12px 30px;"> 로그인 화면으로 </button>
+			</div>
+				
 		</form>
 	</div>
 </div>
 
+
+
 <footer>
 	<p>
-		Created with <i class="fa fa-heart"></i> by
-		<a target="_blank" href="https://florin-pop.com">Florin Pop</a>
-		- Read how I created this and how you can join the challenge
-		<a target="_blank" href="https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/">here</a>.
+		footer자리..
 	</p>
 </footer>
 

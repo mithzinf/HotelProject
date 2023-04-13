@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boot.hotel.mapper.HotelDetailMapper">
+
+<!-- hotel 테이블의 모든 정보를 select해오는 쿼리문 -->
+<select id="getHotelById"  parameterType="int" resultType="com.boot.hotel.dto.HotelDTO">
+	select hotel_id,hotel_name,category,like_num from hotel where hotel_id=#{hotel_id}
+</select>
+
+
+<select id="getHotelInfoById" parameterType="int" resultType="com.boot.hotel.dto.HotelInfoDTO">
+	select standard,sweet,deluxe,check_in,check_out,hotel_information from hotel_info where hotel_id=#{hotel_id}
+</select>
+
+<select id="getHotelPicById" parameterType="int" resultType="com.boot.hotel.dto.HotelPictureDTO">
+	select picture_num,type,url from hotel_picture where hotel_id=#{hotel_id}
+</select>
+
+<select id="getHotelFacilityInById" parameterType="int" resultType="com.boot.hotel.dto.HotelFacilityDTO">
+	select * from hotel_facility_in where hotel_id=#{hotel_id}
+</select>
+ 
+
+
+
+</mapper>

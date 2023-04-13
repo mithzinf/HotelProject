@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="ThemeStarz">
+    
+    <link href="assets/fonts/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="assets/fonts/elegant-fonts.css" rel="stylesheet" type="text/css">
+    <link href="assets/fonts/weather-icons.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700,900,400italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/zabuto_calendar.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/owl.carousel.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/jquery.datepick.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+    <script src="https://kit.fontawesome.com/fe3b2ac5d6.js" crossorigin="anonymous"></script>
+    
+    
+<title>호텔 객실 상세 페이지</title>
+</head>
+
+
+<body>
+
+<div class="page-wrapper">
+    <div id="page-header">
+        <header>
+            <div class="container">
+                <div class="secondary-nav">
+                    <div class="nav-trigger"><a data-toggle="collapse" href="#secondary-nav" aria-expanded="false" aria-controls="secondary-nav"><i class="fa fa-user"></i></a></div>
+                    <div id="secondary-nav">
+                        <nav>
+                            <div class="left opacity-60">
+                                <a href=""><i class="fa fa-phone"></i>+1 781-903-1047</a>
+                                <a href="mailto:hello@example.com"><i class="fa fa-envelope"></i>itwill0406@gmail.com</a>
+                            </div>
+                            <!--end left-->
+                            <div class="right">
+                                <div class="element">
+                                    <a onclick="location.href='/login';" data-toggle="modal" 
+                                    data-tab="true" data-target="#sign-in-register-modal">로그인</a>
+                                </div>
+                                <!--end element-->
+                                <div class="element">
+                                    <a onclick="location.href='/register';" data-toggle="modal" 
+                                    data-tab="true" data-target="#sign-in-register-modal">회원가입</a>
+                                </div>
+                                <!--end element-->
+                                <div class="element">
+                                    <select>
+                                    	<option>마이페이지</option>
+                                    	<option>예약확인</option>
+                                    	<option>정보조회</option>
+                                    	<option>탈퇴하기</option>
+                                    </select>
+                                </div>
+                                <!--end element-->
+                            </div>
+                            <!--end right-->
+                        </nav>
+                    </div>
+                </div>
+                <!--end secondary-nav-->
+            </div>
+            <!--end container-->
+            <hr>
+            <div class="container">
+                <div class="primary-nav">
+                    <div class="left">
+                        <a href="index.html" id="brand">
+                        <img src="assets/img/logo.png" alt="" style="width: 100px; height: 100px;"></a>
+                        <a class="nav-trigger" data-toggle="collapse" href="#primary-nav" aria-expanded="false" aria-controls="primary-nav"><i class="fa fa-navicon"></i></a>
+                    </div>
+                    <!--end left-->
+                    <div class="right" >
+                        <nav id="primary-nav">
+                            <ul>
+                                <li><a href="index.html">메인으로</a></li>
+                                <li><a href="#">프로모션</a></li>
+                                <li><a href="#" class="has-child">고객페이지</a>
+                                    <ul class="child-nav">
+										<li><a href="faq.html">문의게시판</a></li>
+                                        <li><a href="grid.html">더보기</a></li>
+                                        <li><a href="sticky-footer.html">더보기</a></li>
+                                        <li><a href="terms-and-conditions.html">더보기</a></li>
+                                    </ul>
+                               </li>
+                                <li><a href="contact-us.html">Contact Us</a></li>
+                                <li class="submit"><a href="submit.html"><span>Submit</span>
+                                <i data-toggle="tooltip" data-placement="top" title="Submit">
+                                <img src="assets/img/plus.png" alt=""></i></a></li>
+                            </ul>
+                        </nav>
+                        <!--end nav-->
+                    </div>
+                    <!--end right-->
+                </div>
+                <!--end primary-nav-->
+            </div>
+            <!--end container-->
+        </header>
+        <!--end header-->
+    </div>
+    <!--end page-header-->
+
+    <div id="page-content">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Listing</a></li>
+                <li class="active">Detail</li>
+            </ol>
+            <!--end breadcrumb-->
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="sidebar">
+                        <div class="box filter">
+                            <h2>호텔 검색하기</h2>
+                            <form id="searchForm" action="/hotel/hotellist1" method="get">
+                                <div class="form-group">
+                                   <input type="text" class="form-control input-lg" id="searchValue" style="width: 100%;" placeholder="검색하세요">
+                                </div>
+                               <button type="submit" class="btn btn-primary btn-rounded form-control">검색</button>
+                            </form>
+                             <!--end form-filter-->
+                        </div>
+                        <!--end filter-->
+                        <!--end box-->
+                        <a href="#" class="advertising-banner">
+                            <span class="banner-badge">Advertising</span>
+                            <img src="assets/img/ad_banner.png" alt="">
+                        </a>
+                    </div>
+                    <!--end sidebar-->
+                </div>
+                <!--end col-md-3-->
+                <div class="col-md-9 col-sm-8">
+                    <div class="quick-navigation" data-fixed-after-touch="">
+                        <div class="wrapper">
+                            <ul>
+                                <li><a href="#description" class="scroll">Description</a></li>
+                                <li><a href="#map" class="scroll">Map</a></li>
+                                <li><a href="#facilities" class="scroll">Facilities</a></li>
+                                <li><a href="#additional-information" class="scroll">Additional Information</a></li>
+                                <li><a href="#reviews" class="scroll">Reviews</a>(23)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="main-content">
+                        <div class="title">
+                            <div class="left">
+                                <h1>[[${dto1[0].hotel_name}]]<span class="rating"><i class="fa fa-star"></i>9.9</span></h1>
+                                <h3><a href="#">Austria</a> (63 properties)</h3>
+                            </div>
+                            <div class="right">
+                                <a href="#map" class="icon scroll"><i class="fa fa-map-marker"></i>See on the map</a>
+                                <a href="#availability" class="btn btn-primary btn-rounded scroll">Reserve Today</a>
+                            </div>
+                        </div>
+                        <!--end title-->
+                        <section id="gallery">
+                            <div class="gallery-detail">
+                        <!-- 호텔 전경~객실 이미지 넣는 곳..모르겠다면?ㅋ -->
+                                <div class="one-item-carousel">
+                                   
+                                    <div class="image">
+                                        <img th:src="" alt="" style="width:100%; height:auto;">
+                                    </div>
+                                    
+                                    <div class="image">
+                                        <img src="assets/img/items/01.jpg" alt="" style="width:100%; height:auto;">
+                                    </div>
+                                    
+                                    <div class="image">
+                                        <img src="assets/img/items/01.jpg" alt="" style="width:100%; height:auto;">
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <h2>객실 설명</h2>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <section id="description">
+                                   
+                                    <p>
+                                   [[${dto2[0].hotel_information}]]
+                                    </p>
+                                </section>
+                                <section id="facilities">
+                                    <h2>Facilities</h2>
+                                    <ul class="bullets half">
+                                        <li>Sauna</li>
+                                        <li>Fireplace or fire pit</li>
+                                        <li>Outdoor Kitchen</li>
+                                        <li>Tennis Courts</li>
+                                        <li>Trees and Landscaping</li>
+                                        <li>Sun Room</li>
+                                        <li>Family Room</li>
+                                        <li>Concrete Flooring</li>
+                                    </ul>
+                                </section>
+                                <section id="map">
+                                    <h2>Map</h2>
+                                    <div id="map-item" class="map height-300 box"></div>
+                                    <!--end map-->
+                                </section>
+                            </div>
+                            <!--end col-md-8-->
+                            <div class="col-md-4">
+                                <div class="sidebar">
+                                    <aside class="box">
+                                        <dl>
+                                            <dt>1-Bed Rooms:</dt>
+                                            <dd>23</dd>
+                                            <dt>2-Bed Rooms:</dt>
+                                            <dd>48</dd>
+                                            <dt>Apartments:</dt>
+                                            <dd>12</dd>
+                                            <dt>Parking:</dt>
+                                            <dd>Free</dd>
+                                            <dt>Swimming:</dt>
+                                            <dd>Yes</dd>
+                                            <dt>Ski Center:</dt>
+                                            <dd>2km</dd>
+                                        </dl>
+                                    </aside>
+                                    <aside>
+                                        <h2>Contact</h2>
+                                        <address>
+                                            <strong>Your Company</strong><br>
+                                            4877 Spruce Drive<br>
+                                            West Newton, PA 15089<br>
+                                            <br>
+                                            +1 (734) 123-4567<br>
+                                            <a href="#">hello@example.com</a><br>
+                                            <strong>skype:</strong> your.company
+                                        </address>
+                                    </aside>
+                                </div>
+                                <!--end sidebar-->
+                            </div>
+                            <!--end col-md-4-->
+                        </div>
+                        <!--end row-->
+
+                        <section id="availability">
+                            <h2>Availability</h2>
+                            <form class="labels-uppercase" id="form-availability">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="form-availability-check-in">Check In</label>
+                                            <input type="text" class="form-control date" id="form-availability-check-in" name="check-in" placeholder="Check In">
+                                        </div>
+                                    </div>
+                                    <!--end col-md-3-->
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="form-availability-check-out">Check In</label>
+                                            <input type="text" class="form-control date" id="form-availability-check-out" name="check-out" placeholder="Check In">
+                                        </div>
+                                    </div>
+                                    <!--end col-md-3-->
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="invisible">Hidden label</label>
+                                            <button type="submit" class="btn btn-primary btn-rounded btn-framed form-control">Search</button>
+                                        </div>
+                                    </div>
+                                    <!--end col-md-3-->
+                                </div>
+                                <!--end row-->
+                            </form>
+
+                            <div class="form-reservations">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Room Type</th>
+                                            <th>Persons</th>
+                                            <th>Price</th>
+                                            <th>Rooms</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <form id="room_1">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr class="room">
+                                                <td class="room-type">
+                                                    <a href=""><h3>스탠다드</h3></a>
+                                                    <p>Consectetur adipiscing elit. Vivamus nec augue ac dui sodales euismod.
+                                                        Suspendisse at dui sit amet felis commodo dictum.
+                                                    </p>
+                                                    <ul class="info">
+                                                        <li>Breakfast Included</li>
+                                                        <li>VAT Included</li>
+                                                    </ul>
+                                                </td>
+                                                <td class="persons">2<i class="fa fa-user"></i></td>
+                                                <td class="price">[[${dto2[0].standard}]]</td>
+                                                <td class="rooms">
+                                                    <select class="framed" name="room_1_nights">
+                                                        <option value="1">0</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <button type="submit" class="btn btn-primary btn-rounded">Reserve Now</button>
+                                                    </div>
+                                                    <!--end form-group-->
+                                                </td>
+                                            </tr>
+                                            <!--end tr.room-->
+                                        </tbody>
+                                    </table>
+                                    <!--end table-->
+                                </form>
+                                <!--edn form#room_1-->
+                                <form id="room_2">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr class="room">
+                                            <td class="room-type">
+                                                <a href=""><h3>스위트룸</h3></a>
+                                                <p>Consectetur adipiscing elit. Vivamus nec augue ac dui sodales euismod.
+                                                    Suspendisse at dui sit amet felis commodo dictum.
+                                                </p>
+                                                <ul class="info">
+                                                    <li>Breakfast Included</li>
+                                                    <li>VAT Included</li>
+                                                </ul>
+                                            </td>
+                                            <td class="persons">4<i class="fa fa-user"></i></td>
+                                            <td class="price">[[${dto2[0].sweet}]]</td>
+                                            <td class="rooms">
+                                                <select class="framed" name="room_2_nights">
+                                                    <option value="1">0</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-primary btn-rounded">Reserve Now</button>
+                                                </div>
+                                                <!--end form-group-->
+                                            </td>
+                                        </tr>
+                                        <!--end tr.room-->
+                                        </tbody>
+                                    </table>
+                                    <!--end table-->
+                                </form>
+                                <!--edn form#room_2-->
+                                <form id="room_3">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr class="room">
+                                            <td class="room-type">
+                                                <a href=""><h3>디럭스</h3></a>
+                                                <p>Consectetur adipiscing elit. Vivamus nec augue ac dui sodales euismod.
+                                                    Suspendisse at dui sit amet felis commodo dictum.
+                                                </p>
+                                                <ul class="info">
+                                                    <li>Breakfast Included</li>
+                                                    <li>VAT Included</li>
+                                                </ul>
+                                            </td>
+                                            <td class="persons">4<i class="fa fa-user"></i></td>
+                                            <td class="price">[[${dto2[0].deluxe}]]</td>
+                                            <td class="rooms">
+                                                <select class="framed" name="room_3_nights">
+                                                    <option value="1">0</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-primary btn-rounded">Reserve Now</button>
+                                                </div>
+                                                <!--end form-group-->
+                                            </td>
+                                        </tr>
+                                        <!--end tr.room-->
+                                        </tbody>
+                                    </table>
+                                    <!--end table-->
+                                </form>
+                                <!--edn form#room_3-->
+                            </div>
+                            <!--end form-reservations-->
+                        </section>
+                        <section id="additional-information">
+                            <h2>Additional Information</h2>
+                            <dl class="info">
+                                <dt>Check-in:</dt>
+							<dd th:text="${dto2[0].check_in}"></dd>
+								<dt>Check-out:</dt>
+							<dd><strong><span th:text="${dto2[0].check_out}"></span></strong></dd>
+                            </dl>
+                            <!--end info-->
+                        </section>
+                        <section id="reviews">
+                            <div class="title">
+                                <h2 class="pull-left">Reviews</h2>
+                                <a href="#write-a-review" class="btn btn-primary btn-rounded pull-right scroll">Write a Review</a>
+                            </div>
+                            <h3>Overall Score</h3>
+                            <ul class="rating-score">
+                                <li class="overall"><i class="fa fa-star"></i>9.9</li>
+                                <li><span>9.6</span>
+                                    <figure>Cleanliness</figure>
+                                </li>
+                                <li><span>10</span>
+                                    <figure>Comfort</figure>
+                                </li>
+                                <li><span>9.4</span>
+                                    <figure>Location</figure>
+                                </li>
+                                <li><span>9.8</span>
+                                    <figure>Facilities</figure>
+                                </li>
+                                <li><span>10</span>
+                                    <figure>Staff</figure>
+                                </li>
+                                <li><span>10</span>
+                                    <figure>Value for money</figure>
+                                </li>
+                            </ul>
+                            <div class="reviews">
+                                <div class="review">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <aside class="name">John Doe</aside>
+                                            <aside class="date">10.03.2015</aside>
+                                        </div>
+                                        <!--end col-md-3-->
+                                        <div class="col-md-9">
+                                            <div class="comment">
+                                                <div class="comment-title">
+                                                    <figure class="rating">9.5</figure>
+                                                    <h4>Beautiful Holiday</h4>
+                                                </div>
+                                                <!--end title-->
+                                                <p>Consectetur adipiscing elit. Vivamus nec augue ac dui sodales euismod.
+                                                    Suspendisse at dui sit amet felis commodo dictum. Class aptent taciti
+                                                    sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+                                                    Integer commodo eleifend erat, vitae tincidunt urna volutpat et.
+                                                    Mauris laoreet, sem ut sodales sodales, massa turpis posuere lectus, non
+                                                    aliquet massa nisl ac orci.
+                                                </p>
+                                                <div class="clearfix options">
+                                                    <span class="pull-left"><a href="" class="btn btn-framed btn-default btn-rounded btn-small icon"><i class="fa fa-thumbs-up font-color-default"></i>3</a>Helpful Review?</span>
+                                                    <span class="pull-right"><a href="" class="link icon font-color-grey"><i class="fa fa-flag"></i>Report</a></span>
+                                                </div>
+                                                <!--end options-->
+                                                <div class="answer">
+                                                    <h4>James Green, CEO of the Mountain Paradise Hotel</h4>
+                                                    <p>Phasellus venenatis vel orci et lacinia. Duis sollicitudin arcu et hendrerit
+                                                        tempor. Aliquam at urna fringilla, auctor tellus eget, vehicula lorem.
+                                                        Pellentesque ornare faucibus sapien eget max
+                                                    </p>
+                                                </div>
+                                                <!--end answer-->
+                                            </div>
+                                            <!--end comment-->
+                                        </div>
+                                        <!--end col-md-9-->
+                                    </div>
+                                    <!--end row-->
+                                </div>
+                                <!--end review-->
+                                <div class="review">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <aside class="name">Peter Green</aside>
+                                            <aside class="date">10.03.2015</aside>
+                                        </div>
+                                        <!--end col-md-3-->
+                                        <div class="col-md-9">
+                                            <div class="comment">
+                                                <div class="comment-title">
+                                                    <figure class="rating">9.8</figure>
+                                                    <h4>Very Good Hotel</h4>
+                                                </div>
+                                                <!--end title-->
+                                                <p>In eleifend odio vel augue mattis, et pharetra dolor ullamcorper. Nulla
+                                                    ut porttitor mauris. Sed tincidunt, urna non cursus suscipit, quam velit
+                                                    laoreet libero, sit amet tincidunt ex nunc eget eros.
+                                                </p>
+                                                <div class="clearfix options">
+                                                    <span class="pull-left"><a href="" class="btn btn-framed btn-default btn-rounded btn-small icon"><i class="fa fa-thumbs-up font-color-default"></i>10</a>Helpful Review?</span>
+                                                    <span class="pull-right"><a href="" class="link icon font-color-grey"><i class="fa fa-flag"></i>Report</a></span>
+                                                </div>
+                                                <!--end options-->
+                                            </div>
+                                            <!--end comment-->
+                                        </div>
+                                        <!--end col-md-9-->
+                                    </div>
+                                    <!--end row-->
+                                </div>
+                                <!--end review-->
+                            </div>
+                            <!--end reviews-->
+                        </section>
+                        <section id="write-a-review">
+                            <h2>Write a Review</h2>
+                            <form  class="labels-uppercase clearfix" id="form_reply_1">
+                                <div class="alert alert-dark fade in center" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" data-switch="#review-write">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <span class="sr-only">Error:</span>
+                                    <a href="#tab-sign-in" data-toggle="modal" data-tab="true" data-target="#sign-in-register-modal">Please Sign in to write a review</a>
+                                </div>
+                                <div class="review write switch" id="review-write">
+                                    <aside class="name">John Doe</aside>
+                                    <div class="comment">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="comment-title">
+                                                    <h4>Review Your Stay</h4>
+                                                </div>
+                                                <!--end title-->
+                                                <div class="form-group">
+                                                    <label for="form_reply_1-name">Title of your review<em>*</em></label>
+                                                    <input type="text" class="form-control" id="form_reply_1-name" name="name" placeholder="Beautiful holiday!" required="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="form_reply_1-message">Your Answer<em>*</em></label>
+                                                    <textarea class="form-control" id="form_reply_1-message" rows="8" name="answer" required="" placeholder="Describe your stay"></textarea>
+                                                </div>
+                                                <!--end form-group-->
+                                                <div class="form-group pull-right">
+                                                    <button type="submit" class="btn btn-primary btn-rounded">Send Review</button>
+                                                </div>
+                                                <!--end form-group-->
+                                            </div>
+                                            <!--end col-md-8-->
+                                            <div class="col-md-4">
+                                                <div class="comment-title">
+                                                    <h4>Rating</h4>
+                                                </div>
+                                                <!--end title-->
+                                                <dl class="visitor-rating">
+                                                    <dt>Cleanliness</dt>
+                                                    <dd class="star-rating active" data-name="cleanliness"></dd>
+                                                    <dt>Comfort</dt>
+                                                    <dd class="star-rating active" data-name="comfort"></dd>
+                                                    <dt>Location</dt>
+                                                    <dd class="star-rating active" data-name="location"></dd>
+                                                    <dt>Facilities</dt>
+                                                    <dd class="star-rating active" data-name="facilities"></dd>
+                                                    <dt>Staff</dt>
+                                                    <dd class="star-rating active" data-name="staff"></dd>
+                                                    <dt>Value for money</dt>
+                                                    <dd class="star-rating active" data-name="value"></dd>
+                                                </dl>
+                                            </div>
+                                            <!--end col-md-4-->
+                                        </div>
+                                        <!--end row-->
+                                    </div>
+                                    <!--end comment-->
+                                </div>
+                                <!--end review-->
+                            </form>
+                            <!--end form-->
+                        </section>
+                    </div>
+                    <!--end main-content-->
+                </div>
+                <!--end col-md-9-->
+            </div>
+            <!--end row-->
+        </div>
+        <!--end container-->
+    </div>
+    <!--end page-content-->
+
+    <footer id="page-footer">
+        <div class="row-one">
+            <div class="container">
+                <div class="logos">
+                    <div class="logo">
+                        <a href="#"><img src="assets/img/logo-1.png" alt=""></a>
+                    </div>
+                    <!--/ .logo-->
+                    <div class="logo">
+                        <a href="#"><img src="assets/img/logo-2.png" alt=""></a>
+                    </div>
+                    <!--/ .logo-->
+                    <div class="logo">
+                        <a href="#"><img src="assets/img/logo-3.png" alt=""></a>
+                    </div>
+                    <!--/ .logo-->
+                    <div class="logo">
+                        <a href="#"><img src="assets/img/logo-4.png" alt=""></a>
+                    </div>
+                    <!--/ .logo-->
+                    <div class="logo">
+                        <a href="#"><img src="assets/img/logo-5.png" alt=""></a>
+                    </div>
+                    <!--/ .logo-->
+                </div>
+                <!--/ .logos-->
+            </div>
+        </div>
+        <!--end row-one-->
+        <div class="row-two clearfix">
+            <div class="container">
+                <div class="copyright pull-left">(C) 2016 Your Company, All Rights Reserved</div>
+                <div class="footer-nav pull-right">
+                    <a href="index.html">Home</a>
+                    <a href="about-us.html">About Us</a>
+                    <a href="listing.html">Listing</a>
+                    <a href="contact-us.html">Contact Us</a>
+                </div>
+            </div>
+            <div class="bg-transfer"><img src="assets/img/footer-bg.jpg" alt=""></div>
+        </div>
+        <!--end row-two-->
+    </footer>
+    <!--end page-footer-->
+</div>
+<!--end page-wrapper-->
+
+<script type="text/javascript" src="assets/js/jquery-2.2.1.min.js"></script>
+<script type="text/javascript" src="assets/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js"></script>
+<script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="assets/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="assets/js/icheck.min.js"></script>
+<script type="text/javascript" src="assets/js/markerwithlabel_packed.js"></script>
+<script type="text/javascript" src="assets/js/owl.carousel.js"></script>
+<script type="text/javascript" src="assets/js/masonry.pkgd.min.js"></script>
+<script type="text/javascript" src="assets/js/jquery.simpleWeather.min.js"></script>
+
+<script type="text/javascript" src="assets/js/maps.js"></script>
+<script type="text/javascript" src="assets/js/custom.js"></script>
+
+<!--[if lte IE 9]>
+<script src="assets/js/ie.js"></script>
+<![endif]-->
+
+<script>
+    var _latitude = 48.47292127;
+    var _longitude = 4.28672791;
+    var element = "map-item";
+    simpleMap(_latitude,_longitude, element);
+</script>
+
+
+</body>
+</html>
