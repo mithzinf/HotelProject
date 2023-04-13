@@ -38,15 +38,22 @@
                             <!--end left-->
                             <div class="right">
                                 <div class="element">
-                                    <a onclick="location.href='/login';" data-tab="true" data-target="#sign-in-register-modal">로그인</a>
+                                    <a onclick="location.href='/login';" data-toggle="modal" 
+                                    data-tab="true" data-target="#sign-in-register-modal">로그인</a>
                                 </div>
                                 <!--end element-->
                                 <div class="element">
-                                    <a href="#tab-register" data-toggle="modal" data-tab="true" data-target="#sign-in-register-modal">회원가입</a>
+                                    <a onclick="location.href='/register';" data-toggle="modal" 
+                                    data-tab="true" data-target="#sign-in-register-modal">회원가입</a>
                                 </div>
                                 <!--end element-->
                                 <div class="element">
-                                    <a href="#tab-register" data-toggle="modal" data-tab="true" data-target="#sign-in-register-modal">마이페이지</a>
+                                    <select>
+                                    	<option>마이페이지</option>
+                                    	<option>예약확인</option>
+                                    	<option>정보조회</option>
+                                    	<option>탈퇴하기</option>
+                                    </select>
                                 </div>
                                 <!--end element-->
                             </div>
@@ -61,54 +68,28 @@
             <div class="container">
                 <div class="primary-nav">
                     <div class="left">
-                        <a href="index.html" id="brand"><img src="assets/img/logo.png" alt="" style="width: 100px; height: 100px;"></a>
+                        <a href="index.html" id="brand">
+                        <img src="assets/img/logo.png" alt="" style="width: 100px; height: 100px;"></a>
                         <a class="nav-trigger" data-toggle="collapse" href="#primary-nav" aria-expanded="false" aria-controls="primary-nav"><i class="fa fa-navicon"></i></a>
                     </div>
                     <!--end left-->
                     <div class="right" >
                         <nav id="primary-nav">
                             <ul>
-                                <li><a href="index.html">Home</a></li>
-                                <li><a href="about-us.html">About Us</a></li>
-                                <li>
-                                    <a href="#" class="has-child">Listing</a>
+                                <li><a href="index.html">메인으로</a></li>
+                                <li><a href="#">프로모션</a></li>
+                                <li><a href="#" class="has-child">고객페이지</a>
                                     <ul class="child-nav">
-                                        <li><a href="listing.html">List Listing</a></li>
-                                        <li><a href="listing-matrix.html">Matrix Listing</a></li>
+										<li><a href="faq.html">문의게시판</a></li>
+                                        <li><a href="grid.html">더보기</a></li>
+                                        <li><a href="sticky-footer.html">더보기</a></li>
+                                        <li><a href="terms-and-conditions.html">더보기</a></li>
                                     </ul>
-                                </li>
-                                <li class="active">
-                                    <a href="#" class="has-child">Pages</a>
-                                    <ul class="child-nav">
-                                        <li><a href="404.html">404</a></li>
-                                        <li>
-                                            <a href="#" class="has-child">Admin</a>
-                                            <ul class="child-nav">
-                                                <li><a href="edit.html">Edit Accommodation</a></li>
-                                                <li><a href="my-accommodations.html">My Accommodations</a></li>
-                                                <li><a href="profile.html">Profile</a></li>
-                                                <li><a href="reservations.html">Reservations</a></li>
-                                                <li><a href="reviews.html">Reviews</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="about-us.html">About Us</a></li>
-                                        <li><a href="detail.html">Accommodation Detail</a></li>
-                                        <li><a href="become-an-affiliate.html">Become an Affiliate</a></li>
-                                        <li>
-                                            <a href="#" class="has-child">Blog</a>
-                                            <ul class="child-nav">
-                                                <li><a href="blog.html">Blog Listing</a></li>
-                                                <li><a href="blog-detail.html">Blog Detail</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="faq.html">FAQ</a></li>
-                                        <li><a href="grid.html">Grid</a></li>
-                                        <li><a href="sticky-footer.html">Sticky Footer</a></li>
-                                        <li><a href="terms-and-conditions.html">Terms & Conditions</a></li>
-                                    </ul>
-                                </li>
+                               </li>
                                 <li><a href="contact-us.html">Contact Us</a></li>
-                                <li class="submit"><a href="submit.html"><span>Submit</span><i data-toggle="tooltip" data-placement="top" title="Submit"><img src="assets/img/plus.png" alt=""></i></a></li>
+                                <li class="submit"><a href="submit.html"><span>Submit</span>
+                                <i data-toggle="tooltip" data-placement="top" title="Submit">
+                                <img src="assets/img/plus.png" alt=""></i></a></li>
                             </ul>
                         </nav>
                         <!--end nav-->
@@ -126,40 +107,23 @@
     <div id="page-content">
         <div class="container">
             <ol class="breadcrumb">
-                <li><a href="#">홈으로</a></li>
-                <li><a href="#">호텔 리스트 검색</a></li>
-                <li class="active">호텔 상세 페이지</li>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Listing</a></li>
+                <li class="active">Detail</li>
             </ol>
             <!--end breadcrumb-->
             <div class="row">
-                <div class="col-md-3 col-sm-4">
+                <div class="col-md-3">
                     <div class="sidebar">
                         <div class="box filter">
-                            <h2>Search</h2>
-                            <form id="form-filter" class="labels-uppercase">
+                            <h2>호텔 검색하기</h2>
+                            <form id="searchForm" action="/hotel/hotellist1" method="get">
                                 <div class="form-group">
-                                    <label for="form-filter-destination">Destination</label>
-                                    <input type="text" class="form-control" id="form-filter-destination" name="destination" placeholder="도착지">
+                                   <input type="text" class="form-control input-lg" id="searchValue" style="width: 100%;" placeholder="검색하세요">
                                 </div>
-                                <!--end form-group-->
-                                <div class="form-group-inline">
-                                    <div class="form-group">
-                                        <label for="form-filter-check-in">Check In</label>
-                                        <input type="text" class="form-control date" id="form-filter-check-in" name="check-in" placeholder="Check-In">
-                                    </div>
-                                    <!--end form-group-->
-                                    <div class="form-group">
-                                        <label for="form-filter-check-out">Nights</label>
-                                        <input type="number" class="form-control" id="form-filter-check-out" name="check-out">
-                                    </div>
-                                    <!--end form-group-->
-                                </div>
-                                <!--end form-group-inline-->
-                                <div class="form-group center">
-                                    <button type="submit" class="btn btn-primary btn-rounded form-control">검색</button>
-                                </div>
+                               <button type="submit" class="btn btn-primary btn-rounded form-control">검색</button>
                             </form>
-                            <!--end form-filter-->
+                             <!--end form-filter-->
                         </div>
                         <!--end filter-->
                         <!--end box-->
@@ -186,7 +150,7 @@
                     <div class="main-content">
                         <div class="title">
                             <div class="left">
-                                <h1><b th:text=${dto.hotel_name}></b><span class="rating"><i class="fa fa-star"></i>9.9</span></h1>
+                                <h1>[[${dto1[0].hotel_name}]]<span class="rating"><i class="fa fa-star"></i>9.9</span></h1>
                                 <h3><a href="#">Austria</a> (63 properties)</h3>
                             </div>
                             <div class="right">
@@ -197,68 +161,30 @@
                         <!--end title-->
                         <section id="gallery">
                             <div class="gallery-detail">
-                                <div class="ribbon"><div class="offer-number">20%</div><figure>할인!</figure></div>
+                        <!-- 호텔 전경~객실 이미지 넣는 곳..모르겠다면?ㅋ -->
                                 <div class="one-item-carousel">
+                                   
                                     <div class="image">
-                                        <a href="#reviews" class="review scroll">
-                                            <div class="rating">
-                                                <div class="rating-title">
-                                                    <figure class="rating">9.8</figure>
-                                                    <h4>조식이 맛있어요</h4>
-                                                </div>
-                                                <p>스팸을 구워주고 맛있습니다..</p>
-                                            </div>
-                                        </a>
-                                        <img src="assets/img/items/01.jpg" alt="">
+                                        <img th:src="" alt="" style="width:100%; height:auto;">
                                     </div>
+                                    
                                     <div class="image">
-                                        <a href="#reviews" class="review scroll">
-                                            <div class="rating">
-                                                <div class="rating-title">
-                                                    <figure class="rating">9.9</figure>
-                                                    <h4>Beautiful Holiday</h4>
-                                                </div>
-                                                <p>Class aptent taciti sociosqu ad litora
-                                                    torquent per conubia nostra, per inceptos
-                                                </p>
-                                            </div>
-                                        </a>
-                                        <img src="assets/img/items/02_b.jpg" alt="">
+                                        <img src="assets/img/items/01.jpg" alt="" style="width:100%; height:auto;">
                                     </div>
+                                    
                                     <div class="image">
-                                        <a href="#reviews" class="review scroll">
-                                            <div class="rating">
-                                                <div class="rating-title">
-                                                    <figure class="rating">9.8</figure>
-                                                    <h4>Very Good Hotel</h4>
-                                                </div>
-                                                <p>Consectetur adipiscing elit. Vivamus nec augue ac dui sodales euismod. Suspendisse
-                                                    at dui sit amet felis commodo dictum. Class aptent taciti sociosqu ad litora
-                                                    torquent per conubia nostra, per inceptos
-                                                </p>
-                                            </div>
-                                        </a>
-                                        <img src="assets/img/items/03_b.jpg" alt="">
+                                        <img src="assets/img/items/01.jpg" alt="" style="width:100%; height:auto;">
                                     </div>
                                 </div>
                             </div>
                         </section>
-                        <h2>Description</h2>
+                        <h2>객실 설명</h2>
                         <div class="row">
                             <div class="col-md-8">
                                 <section id="description">
-                                    <h3>Spend Great Time in Our Hotel!</h3>
-                                    <p>Consectetur adipiscing elit. Vivamus nec augue ac dui sodales euismod. Suspendisse
-                                        at dui sit amet felis commodo dictum. Class aptent taciti sociosqu ad litora
-                                        torquent per conubia nostra, per inceptos himenaeos. Integer commodo eleifend erat,
-                                        vitae tincidunt urna volutpat et. Mauris laoreet, sem ut sodales sodales,
-                                        massa turpis posuere lectus, non aliquet massa nisl ac orci.
-                                    </p>
-                                    <p>Aenean non dapibus neque. Praesent tempus aliquet felis, auctor aliquet ligula bibendum
-                                        id. Phasellus ut finibus ligula. Suspendisse sodales lacus vel viverra egestas. Donec
-                                        eu interdum sem, sed tempus odio. Interdum et malesuada fames ac ante ipsum primis in
-                                        faucibus. In ut ante lacinia, interdum ante eu, posuere ex. Donec iaculis elit
-                                        consectetur nisi finibus, a vestibulum nibh mattis. Aliquam erat volutpat.
+                                   
+                                    <p>
+                                   [[${dto2[0].hotel_information}]]
                                     </p>
                                 </section>
                                 <section id="facilities">
@@ -317,48 +243,7 @@
                             <!--end col-md-4-->
                         </div>
                         <!--end row-->
-                        <section>
-                            <h2>Why Choose This Hotel?</h2>
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4">
-                                    <div class="feature">
-                                        <aside class="circle">
-                                            <i class="icon_box-checked"></i>
-                                        </aside>
-                                        <figure>
-                                            <h3>200+ Reviews</h3>
-                                        </figure>
-                                    </div>
-                                    <!--end feature-->
-                                </div>
-                                <!--end col-md-4-->
-                                <div class="col-md-4 col-sm-4">
-                                    <div class="feature">
-                                        <aside class="circle">
-                                            <i class="icon_box-checked"></i>
-                                        </aside>
-                                        <figure>
-                                            <h3>Low Prices</h3>
-                                        </figure>
-                                    </div>
-                                    <!--end feature-->
-                                </div>
-                                <!--end col-md-4-->
-                                <div class="col-md-4 col-sm-4">
-                                    <div class="feature">
-                                        <aside class="circle">
-                                            <i class="icon_box-checked"></i>
-                                        </aside>
-                                        <figure>
-                                            <h3>Great Position</h3>
-                                        </figure>
-                                    </div>
-                                    <!--end feature-->
-                                </div>
-                                <!--end col-md-4-->
-                            </div>
-                            <!--end row-->
-                        </section>
+
                         <section id="availability">
                             <h2>Availability</h2>
                             <form class="labels-uppercase" id="form-availability">
@@ -407,7 +292,7 @@
                                         <tbody>
                                             <tr class="room">
                                                 <td class="room-type">
-                                                    <a href=""><h3>Double Room</h3><figure class="label label-danger">1 Room Left!</figure></a>
+                                                    <a href=""><h3>스탠다드</h3></a>
                                                     <p>Consectetur adipiscing elit. Vivamus nec augue ac dui sodales euismod.
                                                         Suspendisse at dui sit amet felis commodo dictum.
                                                     </p>
@@ -417,9 +302,10 @@
                                                     </ul>
                                                 </td>
                                                 <td class="persons">2<i class="fa fa-user"></i></td>
-                                                <td class="price">$96</td>
+                                                <td class="price">[[${dto2[0].standard}]]</td>
                                                 <td class="rooms">
                                                     <select class="framed" name="room_1_nights">
+                                                        <option value="1">0</option>
                                                         <option value="1">1</option>
                                                         <option value="2">2</option>
                                                         <option value="3">3</option>
@@ -444,7 +330,7 @@
                                         <tbody>
                                         <tr class="room">
                                             <td class="room-type">
-                                                <a href=""><h3>Family Suite</h3></a>
+                                                <a href=""><h3>스위트룸</h3></a>
                                                 <p>Consectetur adipiscing elit. Vivamus nec augue ac dui sodales euismod.
                                                     Suspendisse at dui sit amet felis commodo dictum.
                                                 </p>
@@ -453,10 +339,11 @@
                                                     <li>VAT Included</li>
                                                 </ul>
                                             </td>
-                                            <td class="persons">4+1<i class="fa fa-user"></i></td>
-                                            <td class="price">$176</td>
+                                            <td class="persons">4<i class="fa fa-user"></i></td>
+                                            <td class="price">[[${dto2[0].sweet}]]</td>
                                             <td class="rooms">
                                                 <select class="framed" name="room_2_nights">
+                                                    <option value="1">0</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
                                                     <option value="3">3</option>
@@ -481,7 +368,7 @@
                                         <tbody>
                                         <tr class="room">
                                             <td class="room-type">
-                                                <a href=""><h3>Apartment</h3></a>
+                                                <a href=""><h3>디럭스</h3></a>
                                                 <p>Consectetur adipiscing elit. Vivamus nec augue ac dui sodales euismod.
                                                     Suspendisse at dui sit amet felis commodo dictum.
                                                 </p>
@@ -490,10 +377,11 @@
                                                     <li>VAT Included</li>
                                                 </ul>
                                             </td>
-                                            <td class="persons">2+2<i class="fa fa-user"></i></td>
-                                            <td class="price">$250</td>
+                                            <td class="persons">4<i class="fa fa-user"></i></td>
+                                            <td class="price">[[${dto2[0].deluxe}]]</td>
                                             <td class="rooms">
                                                 <select class="framed" name="room_3_nights">
+                                                    <option value="1">0</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
                                                     <option value="3">3</option>
@@ -520,15 +408,9 @@
                             <h2>Additional Information</h2>
                             <dl class="info">
                                 <dt>Check-in:</dt>
-                                <dd>14:00 - 00:00</dd>
-                                <dt>Check-out:</dt>
-                                <dd><strong>Late Check-out: until 12:00 </strong></dd>
-                                <dt>Cancellation:</dt>
-                                <dd>Cancellation and prepayment policies vary according to room type.</dd>
-                                <dt>Children:</dt>
-                                <dd>All children are welcome.</dd>
-                                <dt>Pets:</dt>
-                                <dd>Pets are not allowed</dd>
+							<dd th:text="${dto2[0].check_in}"></dd>
+								<dt>Check-out:</dt>
+							<dd><strong><span th:text="${dto2[0].check_out}"></span></strong></dd>
                             </dl>
                             <!--end info-->
                         </section>
