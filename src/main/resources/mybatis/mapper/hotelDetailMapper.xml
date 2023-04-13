@@ -13,7 +13,7 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 
 
 <select id="getHotelInfoById" parameterType="int" resultType="com.boot.hotel.dto.HotelInfoDTO">
-	select standard,sweet,deluxe,check_in,check_out from hotel_info where hotel_id=#{hotel_id}
+	select standard,sweet,deluxe,check_in,check_out,hotel_information from hotel_info where hotel_id=#{hotel_id}
 </select>
 
 <select id="getHotelPicById" parameterType="int" resultType="com.boot.hotel.dto.HotelPictureDTO">

@@ -25,19 +25,20 @@ public class HotelDetailController {
 
    @GetMapping("/detail")
    public ModelAndView detail(HttpServletRequest request) throws Exception {
-      System.out.println("들어왓니? 폼에 담아서 보내라구요?우헤헤..");
+     
      
       int hotel_id = Integer.parseInt(request.getParameter("hotel_id"));
      //질문 : 이걸 써야하는지 잘 모르겠음 ㅎㅎ
     //  String pageNum = request.getParameter("pageNum");
       
       //hotel_id가 흘러들어왔는지 확인하는 syso문
-      System.out.println(hotel_id);
+     
       
       List<HotelDTO> dto1 = hotelDetailService.getHotelById(hotel_id);
       List<HotelInfoDTO> dto2 = hotelDetailService.getHotelInfoById(hotel_id);
       List<HotelPictureDTO> dto3 = hotelDetailService.getHotelPicById(hotel_id);
       List<HotelFacilityInDTO> dto4 = hotelDetailService.getHotelFacilityInById(hotel_id);
+      
       
       ModelAndView mav = new ModelAndView();
 

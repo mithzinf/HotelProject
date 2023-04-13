@@ -19,7 +19,7 @@ public class HotelDetailServiceImpl implements HotelDetailService{
 
 	@Override
 	public List<HotelDTO> getHotelById(int hotel_id) throws Exception {
-		
+		// TODO Auto-generated method stub
 		return hotelDetailMapper.getHotelById(hotel_id);
 	}
 
@@ -40,6 +40,9 @@ public class HotelDetailServiceImpl implements HotelDetailService{
 		// TODO Auto-generated method stub
 		return hotelDetailMapper.getHotelFacilityInById(hotel_id);
 	}
+
+
+
 
 
 	

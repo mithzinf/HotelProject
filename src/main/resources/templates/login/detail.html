@@ -161,11 +161,11 @@
                         <!--end title-->
                         <section id="gallery">
                             <div class="gallery-detail">
-                        
+                        <!-- 호텔 전경~객실 이미지 넣는 곳..모르겠다면?ㅋ -->
                                 <div class="one-item-carousel">
                                    
                                     <div class="image">
-                                        <img src="assets/img/items/01.jpg" alt="" style="width:100%; height:auto;">
+                                        <img th:src="" alt="" style="width:100%; height:auto;">
                                     </div>
                                     
                                     <div class="image">
@@ -184,7 +184,7 @@
                                 <section id="description">
                                    
                                     <p>
-                                   두근두근 객실설명 미친!!
+                                   [[${dto2[0].hotel_information}]]
                                     </p>
                                 </section>
                                 <section id="facilities">
@@ -292,7 +292,7 @@
                                         <tbody>
                                             <tr class="room">
                                                 <td class="room-type">
-                                                    <a href=""><h3>스탠다드</h3><figure class="label label-danger">1 Room Left!</figure></a>
+                                                    <a href=""><h3>스탠다드</h3></a>
                                                     <p>Consectetur adipiscing elit. Vivamus nec augue ac dui sodales euismod.
                                                         Suspendisse at dui sit amet felis commodo dictum.
                                                     </p>
@@ -302,9 +302,10 @@
                                                     </ul>
                                                 </td>
                                                 <td class="persons">2<i class="fa fa-user"></i></td>
-                                                <td class="price">$96</td>
+                                                <td class="price">[[${dto2[0].standard}]]</td>
                                                 <td class="rooms">
                                                     <select class="framed" name="room_1_nights">
+                                                        <option value="1">0</option>
                                                         <option value="1">1</option>
                                                         <option value="2">2</option>
                                                         <option value="3">3</option>
@@ -339,9 +340,10 @@
                                                 </ul>
                                             </td>
                                             <td class="persons">4<i class="fa fa-user"></i></td>
-                                            <td class="price">$176</td>
+                                            <td class="price">[[${dto2[0].sweet}]]</td>
                                             <td class="rooms">
                                                 <select class="framed" name="room_2_nights">
+                                                    <option value="1">0</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
                                                     <option value="3">3</option>
@@ -376,9 +378,10 @@
                                                 </ul>
                                             </td>
                                             <td class="persons">4<i class="fa fa-user"></i></td>
-                                            <td class="price">$250</td>
+                                            <td class="price">[[${dto2[0].deluxe}]]</td>
                                             <td class="rooms">
                                                 <select class="framed" name="room_3_nights">
+                                                    <option value="1">0</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
                                                     <option value="3">3</option>
@@ -405,15 +408,9 @@
                             <h2>Additional Information</h2>
                             <dl class="info">
                                 <dt>Check-in:</dt>
-                                <dd>14:00 - 00:00</dd>
-                                <dt>Check-out:</dt>
-                                <dd><strong>Late Check-out: until 12:00 </strong></dd>
-                                <dt>Cancellation:</dt>
-                                <dd>Cancellation and prepayment policies vary according to room type.</dd>
-                                <dt>Children:</dt>
-                                <dd>All children are welcome.</dd>
-                                <dt>Pets:</dt>
-                                <dd>Pets are not allowed</dd>
+							<dd th:text="${dto2[0].check_in}"></dd>
+								<dt>Check-out:</dt>
+							<dd><strong><span th:text="${dto2[0].check_out}"></span></strong></dd>
                             </dl>
                             <!--end info-->
                         </section>
