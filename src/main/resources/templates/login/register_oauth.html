@@ -3,7 +3,7 @@
 <head>
 <base href="/" />
 <meta charset="UTF-8">
-<title>일반 회원가입</title>
+<title>소셜 회원가입</title>
 <link rel="stylesheet" type="text/css" href="css/register.css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -13,6 +13,11 @@
 .swal-footer {
 	text-align: center;
 }
+
+.container {
+	min-height: 770px;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -33,122 +38,10 @@
 		
 		var f = document.myForm;
 		
-		//영어+숫자 혼합 강제 정규화 표현식
-		var alphanumeric = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/;
-		//한글 강제 정규화 표현식
-		var koreanOnly = /^[가-힣]+$/;
-		
 		var event = window.event || arguments.callee.caller.arguments[0];
-		
-		//아이디 입력 오류 메시지
-		str_id = f.userid.value;
-		str_id = str_id.trim();
-		
-		if(str_id==""){
-			swal({
-				  title: "아이디 입력오류",
-				  text: "아이디를 입력하세요.",
-				  icon: "error",
-				  button: "확인",
-				});
-			event.preventDefault();
-			return;
-		}
-		
-		str_pwd1 = f.pwd.value;
-		str_pwd1 = str_pwd1.trim();
 
 		
-		//비밀번호 입력 오류메시지
-		if(str_pwd1.length<6 || str_pwd1.length>20){
-			swal({
-				  title: "비밀번호 입력오류",
-				  text: "비밀번호는 최소 6자, 최대 20자를 입력해야 합니다.",
-				  icon: "error",
-				  button: "확인",
-				});
-			event.preventDefault();
-			return;
-		}
-		
-		if(!alphanumeric.test(str_pwd1)){
-			swal({
-				  title: "비밀번호 입력오류",
-				  text: "비밀번호는 영어+숫자 혼합으로만 입력이 가능합니다.",
-				  icon: "error",
-				  button: "확인",
-				});
-			event.preventDefault();
-			return;
-		}
-		
-		//비밀번호 확인 입력 오류메시지
-		str_pwd2 = f.pwd2.value;
-		str_pwd2 = str_pwd2.trim();
-		
-		if(str_pwd2.length<6 || str_pwd2.length>20){
-			swal({
-				  title: "비밀번호확인 입력오류",
-				  text: "비밀번호확인은 최소 6자, 최대 20자를 입력해야 합니다.",
-				  icon: "error",
-				  button: "확인",
-				});
-			event.preventDefault();
-			return;
-		}
-		
-		if(!alphanumeric.test(str_pwd2)){
-			swal({
-				  title: "비밀번호확인 입력오류",
-				  text: "비밀번호확인은 영어+숫자 혼합으로만 입력이 가능합니다.",
-				  icon: "error",
-				  button: "확인",
-				});
-			event.preventDefault();
-			return;
-		}
-		
-		
-		//비밀번호, 비밀번호 확인을 같게 입력했는지 확인
-		if(str_pwd1!=str_pwd2){
-			
-			swal({
-				  title: "비밀번호 입력오류",
-				  text: "비밀번호와 비밀번호확인이 같지 않습니다.",
-				  icon: "error",
-				  button: "확인",
-				});
-			event.preventDefault();
-			return;
-			
-		}
-		
-		//이름 입력 오류메시지
-		str_name = f.username.value;
-		str_name = str_name.trim();
-		
-		if(str_name==""){
-			swal({
-				  title: "이름 입력오류",
-				  text: "이름을 입력하세요.",
-				  icon: "error",
-				  button: "확인",
-				});
-			event.preventDefault();
-			return;
-		}
-		
-		if(!koreanOnly.test(str_name)){
-			swal({
-				  title: "이름 입력오류",
-				  text: "이름은 한글만 입력 가능합니다.",
-				  icon: "error",
-				  button: "확인",
-				});
-			event.preventDefault();
-			return;
-		}
-		
+		//생년월일 입력 오류 메시지
 		str_birth = f.birth.value;
 		str_birth = str_birth.trim();
 		
@@ -163,25 +56,6 @@
 			return;
 		}
 
-		
-		
-		//이메일 입력 오류메시지
-		str_email1 = f.email1.value;
-		str_email1 = str_email1.trim();
-		str_email2 = f.email2.value;
-		str_email2 = str_email2.trim();
-		
-		if(str_email1=="" || str_email2==""){
-			
-			swal({
-				  title: "이메일 입력오류",
-				  text: "이메일을 입력하세요.",
-				  icon: "error",
-				  button: "확인",
-				});
-			event.preventDefault();
-			return;
-		}
 		
 		
 		//전화번호 입력 오류메시지
@@ -222,8 +96,13 @@
 		            		}).then(function() {
 		            			//비활성화된 아이디입력 input박스를 가입버튼을 누를때 활성화
 		            		    //그렇지 않으면 컨트롤러에서 값을 가져오지 못함
-		            			var input = document.getElementsByName("userid")[0];
-				                input.disabled = false;
+		            			var userInput = document.getElementsByName("userid")[0];
+		            			var userNameInput = document.getElementsByName("username")[0];
+		            			var emailInput = document.getElementsByName("email")[0];
+		            			userInput.disabled = false;
+		            			userNameInput.disabled = false;
+		            			emailInput.disabled = false;
+		            			
 				                f.action="login/register_ok";
 				                f.submit();
 		            		});
@@ -276,23 +155,13 @@
 <div class="container" id="container">
 	<div class="form-container sign-in-container">
 		<form action="" name="myForm" method="post" autocomplete="off">
-			<h1>회원가입</h1>
+			<h1>소셜로그인 회원가입</h1>
 			<br/>
 				<p>아이디</p>
-			<div>
-				<input type="text" name="userid" placeholder="ID중복체크를 해주세요."
-				style="width:61%;" disabled="disabled"/>
-				<button type="button" class="btn2" id="check">중복체크</button>
-			</div>
-			<br/>
-				<p>비밀번호</p>
-				<input type="password" name="pwd" placeholder="비밀번호를 입력하세요." />
-			<br/>
-				<p>비밀번호 확인</p>
-				<input type="password" name="pwd2" placeholder="비밀번호를 입력하세요." />
+				<input type="text" name="userid" th:value="${oauthId}" disabled="disabled"/>
 			<br/>
 				<p>이름</p>
-				<input type="text" name="username" placeholder="이름을 입력하세요." />
+				<input type="text" name="username" th:value="${oauthName}" disabled="disabled" />
 			<br/>
 				<p>생년월일</p>
 			<div style="width: 100%;">
@@ -302,13 +171,7 @@
 				
 			<br/>
 				<p>이메일</p>
-				<div>
-				<input type="text" name="email1" placeholder="abcd1234"
-				style="width:30%;"/>
-				@
-				<input type="text" name="email2" placeholder="도메인"
-				style="width:30%;"/>
-				</div>
+				<input type="text" name="email" th:value="${oauthId}" disabled="disabled"/>
 			<br/>
 				<p>전화번호</p>
 				<div>
@@ -319,6 +182,7 @@
 				<input type="text" name="tel3" style="width:19%;"/>
 				</div>
 			<br/>
+			<input type="hidden" name="auth" th:value="oauth">
 			<div>
 				<button class="btn2" onclick="sendIt();" style="padding:12px 25px;"> 회원가입 </button>
 				&nbsp;

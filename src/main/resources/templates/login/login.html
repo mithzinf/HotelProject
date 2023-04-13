@@ -3,8 +3,10 @@
 <head>
 <base href="/" />
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>로그인</title>
 <link rel="stylesheet" type="text/css" href="css/login.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <!-- 별도의 script도 생성 -->
 <script type="text/javascript">
@@ -12,8 +14,58 @@
 	function sendIt() {
 		
 		var f = document.myForm;
-		f.action="login/list";
-		f.submit();
+		
+		//아이디 입력 오류 메시지
+		str_id = f.userid.value;
+		str_id = str_id.trim();
+		
+		if(str_id==""){
+			swal({
+				  title: "아이디 입력오류",
+				  text: "아이디를 입력하세요.",
+				  icon: "error",
+				  button: "확인",
+				});
+			event.preventDefault();
+			return;
+		}
+		
+		//아이디 입력 오류 메시지
+		str_pwd = f.pwd.value;
+		str_pwd = str_pwd.trim();
+		
+		if(str_pwd==""){
+			swal({
+				  title: "비밀번호 입력오류",
+				  text: "비밀번호를 입력하세요.",
+				  icon: "error",
+				  button: "확인",
+				});
+			event.preventDefault();
+			return;
+		}
+		
+
+		$.ajax({
+	        url: './login/login_check',
+	        type: 'post',
+	        data: {userid:str_id,pwd:str_pwd},
+	        success: function(result) {
+	            if(result!="") {
+	            	f.action="login/login_ok";
+	        		f.submit();
+	            }
+	            else {
+	                swal({
+	  				  title: "로그인 오류",
+	  				  text: "아이디나 비밀번호가 틀렸습니다.",
+	  				  icon: "error",
+	  				  button: "확인",
+	  				});
+	            }
+	        },
+	    });
+		event.preventDefault();
 		
 	}
 
@@ -24,12 +76,15 @@
 <body>
 <div class="container" id="container">
 	<div class="form-container sign-in-container">
+		<div style="text-align: center; width: 400px;">
+		<a href="list">[ 리스트 페이지 ]</a>
+		</div>
 		<form action="#" name="myForm" method="post">
 			<h1>로그인</h1>
 			<div class="social-container">
-				<a href="#" class="social"><img src="/image/google.png" alt="Google 로고"></a>
-				<a href="#" class="social"><img src="/image/kakao.png" alt="카카오 로고"></a>
-				<a href="#" class="social"><img src="/image/naver.png" alt="네이버 로고"></a>
+				<a href="/oauth2/authorization/google" class="social"><img src="/image/google.png" alt="Google 로고"></a>
+				<a href="/oauth2/authorization/kakao" class="social"><img src="/image/kakao.png" alt="카카오 로고"></a>
+				<a href="/oauth2/authorization/naver" class="social"><img src="/image/naver.png" alt="네이버 로고"></a>
 			</div>
 			<input type="text" name="userid" placeholder="아이디" />
 			<input type="password" name="pwd" placeholder="비밀번호" />
@@ -43,11 +98,18 @@
 			<div class="overlay-panel overlay-right">
 				<h1>환영합니다!</h1>
 				<p>처음 방문하시는 분은 아래 회원가입 버튼을 눌러주세요.</p>
-				<button class="ghost" id="register" onclick="location.href='login/terms';"> 회원가입 </button>
+				<button class="ghost" id="register" onclick="location.href='login/register_select';"> 회원가입 </button>
+			</div>
+			<div th:if="${fail != null}">
+				<script>
+					alert("ㅇㅇ");
+				</script>
 			</div>
 		</div>
 	</div>
 </div>
+
+
 
 <footer>
 	<p>
@@ -59,4 +121,5 @@
 </footer>
 
 </body>
+
 </html>

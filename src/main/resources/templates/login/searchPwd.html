@@ -3,7 +3,7 @@
 <head>
 <base href="/" />
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>비밀번호 찾기</title>
 <link rel="stylesheet" type="text/css" href="css/searchId.css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -153,14 +153,14 @@ body {
 	            		icon: "success",
 	            		button: "로그인하기",
 	            		}).then(function() {
-			                f.action="login";
+			                f.action="login/login";
 			                f.submit();
 	            		});
 	            }
 	            else {
 	                swal({
 	  				  title: "비밀번호 찾기 오류",
-	  				  text: "비밀번호를 찾을 수 없습니다. 다시 입력해주세요.",
+	  				  text: "입력하신 정보로 비밀번호를 찾을 수 없습니다. 틀린 문항이 있는지 다시 한 번 확인해보세요.",
 	  				  icon: "error",
 	  				  button: "확인",
 	  				});

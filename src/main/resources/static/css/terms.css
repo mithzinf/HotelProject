@@ -14,7 +14,7 @@ body {
 	flex-direction: column;
 	font-family: 'Gowun Batang', sans-serif;
 	height: 100%;
-	margin: 100px 0 50px;
+	margin: 50px 0 50px;
 	color: #000;
 	width: 100%;
 }
@@ -46,6 +46,30 @@ a {
 	text-decoration: none;
 	margin: 15px 0;
 }
+
+img {
+	width:20px;
+	height:20px;
+	vertical-align: bottom;
+}
+
+textarea {
+	
+	resize: none;
+	font-size: 11px;
+	width:400px;
+	height:90px;
+
+}
+
+u {
+  text-decoration: underline;
+}
+
+#checkbox1, #checkbox2, #checkbox3, #checkboxAll {
+    display: none;
+}
+
 
 button {
 	border-radius: 20px;
@@ -89,6 +113,20 @@ button.btn2{
 	cursor: pointer;
 }
 
+button.btn3{
+	border-radius: 20px;
+	border: 1px solid #D3D3D3;
+	background-color: #D3D3D3;
+	color: #FFFFFF;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 12px 15px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	transition: transform 80ms ease-in;
+	cursor: pointer;
+}
+
 button:active {
 	transform: scale(0.95);
 }
@@ -118,7 +156,7 @@ input {
 	border: none;
 	padding: 12px 15px;
 	margin: 8px 0;
-	width: 68%;
+	width: 65%;
 }
 
 select {
@@ -130,10 +168,6 @@ select {
 	font-size: 12px;
 }
 
-div {
-	width: 100%;
-}
-
 .container {
 
 	background-color: #fff;
@@ -143,8 +177,8 @@ div {
 	position: relative;
 	overflow: auto;
 	width: 100%;
-	max-width: 400px;
-	min-height: 450px;
+	max-width: 500px;
+	min-height: 600px;
 }
 
 .form-container {
@@ -155,30 +189,4 @@ div {
 	left: 0;
 	width: 100%;
 	z-index: 2;
-}
-
-
-footer {
-    background-color: #222;
-    color: #fff;
-    font-size: 14px;
-    bottom: 0;
-    position: fixed;
-    left: 0;
-    right: 0;
-    text-align: center;
-    z-index: 999;
-}
-
-footer p {
-    margin: 10px 0;
-}
-
-footer i {
-    color: red;
-}
-
-footer a {
-    color: #3c97bf;
-    text-decoration: none;
 }
