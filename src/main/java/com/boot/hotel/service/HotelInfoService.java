@@ -11,16 +11,7 @@ import com.boot.hotel.dto.ReviewScoreDTO;
 
 public interface HotelInfoService {
 
-<<<<<<< HEAD
-	
-	public int maxNum() throws Exception;
-	
-	public int getReadList(HotelInfoDTO dto) throws Exception;
-	
-	public int getDataHotel(HotelInfoDTO dto) throws Exception;
 
-=======
->>>>>>> 125184fab341ee92a7146d993a93613f4c8d9c2a
 
     List<HotelDTO> getHotelList1(Map<String, Object> paramMap) throws Exception;
 
