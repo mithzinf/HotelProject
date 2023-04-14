@@ -24,13 +24,12 @@ import com.boot.hotel.service.MemberService;
 @ResponseBody
 public class MemberController {
 	
-	//oauth2 회원가입 정보 입력을 위해
-	private String oauthId;
-	private String oauthName;
-	
+	//세션 주입
+	//Autowired로 주입받아 다른 컨트롤러에도 세션을 쓰게함
 	@Autowired
 	private HttpSession httpSession;
 	
+	//서비스와 연결
 	@Resource
 	private MemberService memberService;
 
@@ -55,12 +54,12 @@ public class MemberController {
 	    ModelAndView mav = new ModelAndView();
 
 	    mav.setViewName("login/login");
+	    //로그인이 안된 상태여야 하므로 이 페이지에 진입시 세션을 초기화
 	    httpSession.invalidate();
-	    this.oauthId = "";
-	    this.oauthName = "";
 	    
 	    return mav;
 	}
+	
 	
 	//로그인시 맞는 아이디/비밀번호인지 확인
 	@PostMapping("/login/login_check")
@@ -69,14 +68,16 @@ public class MemberController {
 		
 		System.out.println("로그인 체크 컨트롤러 진입");
 		
+		//2개 이상의 매개변수를 넣기 위해 맵퍼로 담음
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("userid", userid);
 		paramMap.put("pwd", pwd);
-		System.out.println(userid);
+
+		//아이디, 비밀번호가 맞다면 ajax로 성공을 반환
 		if(memberService.memberLogin(paramMap)!=null) {
 			return "success";
 		}
-		
+
 		return null;
 		
 	}
@@ -90,16 +91,16 @@ public class MemberController {
 	    
 	    ModelAndView mav = new ModelAndView();
 	    
+	    //로그인한 사용자의 아이디, 이름을 출력
 	    Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("userid", dto.getUserid());
 		paramMap.put("pwd", dto.getPwd());
 		
 		MemberDTO dto2 = memberService.memberLogin(paramMap);
 			
+		//출력한 값을 세션에 등록
 		SessionUser sessionUser = new SessionUser(dto2.getUserid(),dto2.getUsername());
 		httpSession.setAttribute("sessionUser", sessionUser);
-		    
-		System.out.println();
 
 		mav.setViewName("redirect:/list");
 		    
@@ -111,7 +112,7 @@ public class MemberController {
 	@GetMapping("/login/register_select")
 	public ModelAndView select() throws Exception{
 		System.out.println("연동/일반 회원가입 선택 창 띄우기");
-		//반환값은 MVC로
+		
 		ModelAndView mav = new ModelAndView();
 		
 		mav.setViewName("login/register_select");
@@ -146,7 +147,6 @@ public class MemberController {
 		
 		//가져온 세션값의 아이디가 등록된 아이디인지 판별
 		id = memberService.checkMemberId(sessionUser.getId());
-		System.out.println(id);
 		
 		
 		//미가입된 계정이면 회원가입 페이지로
@@ -181,22 +181,23 @@ public class MemberController {
 		
 		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
 		
+		//oauth 회원가입 요청일시 
 		if(sessionUser!=null) {
 			
-			this.oauthId = sessionUser.getId();
-			this.oauthName = sessionUser.getName();
-			httpSession.invalidate();
-			
+			System.out.println("소셜 회원가입창 진입");
 			ModelAndView mav = new ModelAndView();
 			
-			mav.addObject("oauthId", oauthId);
-	        mav.addObject("oauthName", oauthName);
+			//세션에 있는 값을 자동으로 input박스에 넣기 위함
+			mav.addObject("oauthId", sessionUser.getId());
+	        mav.addObject("oauthName", sessionUser.getName());
 			mav.setViewName("login/register_oauth");
 			
 			return mav;
 			
 		}
 		
+		//일반 회원가입 요청일시
+		System.out.println("일반 회원가입창 진입");
 		ModelAndView mav = new ModelAndView();
 		
 		mav.setViewName("login/register");
@@ -215,13 +216,15 @@ public class MemberController {
 		System.out.println("회원가입 처리 컨트롤러 진입");
 		ModelAndView mav = new ModelAndView();
 		
+		//소셜 회원가입 처리일시
 		if(dto.getAuth()!=null) {
 			
 			int maxNum = memberService.maxNum();
 			dto.setNum(maxNum + 1);
 			dto.setAuth("소셜회원");
 			
-			String[] parts = dto.getEmail().split("@"); // "@" 기호를 기준으로 문자열을 분리
+			//이메일을 dto의 email1,2에 나눠서 저장하기 위함
+			String[] parts = dto.getEmail().split("@");
 
 			dto.setEmail1(parts[0]);
 			dto.setEmail2(parts[1]);
@@ -236,7 +239,7 @@ public class MemberController {
 			
 		}
 		
-		
+		//일반 회원가입 처리일시
 		int maxNum = memberService.maxNum();
 		dto.setNum(maxNum + 1);
 		dto.setAuth("일반회원");
@@ -296,6 +299,7 @@ public class MemberController {
 		
 	}
 	
+	
 	//회원가입시 전화번호 체크
 	@PostMapping("/login/telCheck")
 	public String emailCheck(@RequestParam("tel1") String tel1,
@@ -309,10 +313,12 @@ public class MemberController {
 		
 		String result = memberService.checkMemberTel(tel);
 		
+		//이미 가입된 전화번호일시 ajax에 이미 가입된 번호라고 송신
 		if(result!=null) {
-			return "available";
+			return "unavailable";
 		}
 		
+		//아니면 가입 가능
 		return tel;
 		
 			
@@ -437,6 +443,30 @@ public class MemberController {
 		
 		
 		mav.setViewName("login/list");
+		
+		return mav;
+		
+	}
+	
+	@GetMapping("/login/main")
+	public ModelAndView main() throws Exception{
+		
+		System.out.println("임시 메인 페이지 컨트롤러 진입");
+		ModelAndView mav = new ModelAndView();
+		
+		if(httpSession.getAttribute("sessionUser")!=null) {
+			
+			SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+			
+			String userid = sessionUser.getId();
+			String username = sessionUser.getName();
+			
+			mav.addObject("userid", userid);
+			mav.addObject("username", username);
+			
+		}
+		
+		mav.setViewName("login/maintest");
 		
 		return mav;
 		
