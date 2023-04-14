@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boot.hotel.mapper.PaymentMapper">
+
+<!-- 최신 예약 번호 조회 -->
+<select id="maxResNum" resultType="int">
+	select nvl(max(res_num), 0) from reservation
+</select>
+<!-- 새로운 예약 생성 -->
+<insert id="createReservation" parameterType="com.boot.hotel.dto.HotelReservationDTO">
+	insert into reservation (res_num, userid, username, hotel_id, category, hotel_name, room, people, status, request, inq_date)
+	values (#{res_num}, #{userid}, #{username}, #{hotel_id}, #{category}, #{hotel_name}, #{room}, #{people}, #{status}, #{request}, #{inq_date, jdbcType=DATE})
+</insert>
+
+<!-- 최근 결제 번호 -->
+<select id="maxPayNum" resultType="int">
+	select nvl(max(pay_num),0) from pay
+</select>
+<!-- 결제한 내역 입력하는 거 -->
+<insert id="insertPayment" parameterType="com.boot.hotel.dto.PaymentDTO">
+    insert into pay (pay_num, res_num, hotel_id, userid, username, method, price, date_num, people)
+    values (#{pay_num}, #{res_num}, #{hotel_id1}, #{userid1}, #{username1}, #{method}, #{price}, #{date_num}, #{people1})
+</insert>
+
+
+
+
+
+
+
+
+
+
+</mapper>

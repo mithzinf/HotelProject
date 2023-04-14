@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="ThemeStarz">
+
+<link href="assets/fonts/font-awesome.css" rel="stylesheet" type="text/css">
+<link href="assets/fonts/elegant-fonts.css" rel="stylesheet" type="text/css">
+<link href='https://fonts.googleapis.com/css?family=Lato:400,300,700,900,400italic' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" type="text/css">
+<link rel="stylesheet" href="assets/css/zabuto_calendar.min.css" type="text/css">
+<link rel="stylesheet" href="assets/css/owl.carousel.css" type="text/css">
+<link rel="stylesheet" href="assets/css/style.css" type="text/css">
+
+<script type="text/javascript" src="/assets/js/jquery-2.2.1.min.js"></script>
+<script type="text/javascript" src="/assets/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/http://maps.google.com/maps/api/js"></script>
+<script type="text/javascript" src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="/assets/js/icheck.min.js"></script>
+<script type="text/javascript" src="/assets/js/owl.carousel.js"></script>
+<script type="text/javascript" src="/assets/js/masonry.pkgd.min.js"></script>
+<script type="text/javascript" src="/assets/js/table-fixed-header.js"></script>
+
+<script type="text/javascript" src="/assets/js/maps.js"></script>
+<script type="text/javascript" src="/assets/js/custom.js"></script>
+
+
+<title>결제내역</title>
+</head>
+<body>
+<div class="page-wrapper">
+    
+	    <div id="page-header">
+        <header>
+            <div class="container">
+                <div class="secondary-nav">
+                    <div class="nav-trigger"><a data-toggle="collapse" href="#secondary-nav" aria-expanded="false" aria-controls="secondary-nav"><i class="fa fa-user"></i></a></div>
+                    <div id="secondary-nav">
+                        <nav>
+                            <div class="left opacity-60">
+                                <a href=""><i class="fa fa-phone"></i>+1 781-903-1047</a>
+                                <a href="mailto:hello@example.com"><i class="fa fa-envelope"></i>hello@example.com</a>
+                            </div>
+                            <!--end left-->
+                            <div class="right">
+                                <div class="element">
+                                    <select>
+                                        <option>$</option>
+                                        <option>€</option>
+                                    </select>
+                                </div>
+                                <!--end element-->
+                                <div class="element">
+                                    <a href="#tab-sign-in" data-toggle="modal" data-tab="true" data-target="#sign-in-register-modal">Sign In</a>
+                                </div>
+                                <!--end element-->
+                                <div class="element">
+                                    <a href="#tab-register" data-toggle="modal" data-tab="true" data-target="#sign-in-register-modal">Register</a>
+                                </div>
+                                <!--end element-->
+                                <div class="element">
+                                    <select>
+                                        <option>EN</option>
+                                        <option>DE</option>
+                                        <option>RU</option>
+                                        <option>ES</option>
+                                    </select>
+                                </div>
+                                <!--end element-->
+                            </div>
+                            <!--end right-->
+                        </nav>
+                    </div>
+                </div>
+                <!--end secondary-nav-->
+            </div>
+            <!--end container-->
+            <hr>
+            <div class="container">
+                <div class="primary-nav">
+                    <div class="left">
+                        <a href="index.html" id="brand"></a>
+                        <a class="nav-trigger" data-toggle="collapse" href="#primary-nav" aria-expanded="false" aria-controls="primary-nav"><i class="fa fa-navicon"></i></a>
+                    </div>
+                    <!--end left-->
+                    <div class="right" >
+                        <nav id="primary-nav">
+                            <ul>
+                                <li><a href="index.html">Home</a></li>
+                                <li><a href="about-us.html">About Us</a></li>
+                                <li>
+                                    <a href="#" class="has-child">Listing</a>
+                                    <ul class="child-nav">
+                                        <li><a href="listing.html">List Listing</a></li>
+                                        <li><a href="listing-matrix.html">Matrix Listing</a></li>
+                                    </ul>
+                                </li>
+                                <li class="active">
+                                    <a href="#" class="has-child">Pages</a>
+                                    <ul class="child-nav">
+                                        <li><a href="404.html">404</a></li>
+                                        <li>
+                                            <a href="#" class="has-child">Admin</a>
+                                            <ul class="child-nav">
+                                                <li><a href="edit.html">Edit Accommodation</a></li>
+                                                <li><a href="my-accommodations.html">My Accommodations</a></li>
+                                                <li><a href="profile.html">Profile</a></li>
+                                                <li><a href="reservations.html">Reservations</a></li>
+                                                <li><a href="reviews.html">Reviews</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="about-us.html">About Us</a></li>
+                                        <li><a href="detail.html">Accommodation Detail</a></li>
+                                        <li><a href="become-an-affiliate.html">Become an Affiliate</a></li>
+                                        <li>
+                                            <a href="#" class="has-child">Blog</a>
+                                            <ul class="child-nav">
+                                                <li><a href="blog.html">Blog Listing</a></li>
+                                                <li><a href="blog-detail.html">Blog Detail</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="faq.html">FAQ</a></li>
+                                        <li><a href="grid.html">Grid</a></li>
+                                        <li><a href="sticky-footer.html">Sticky Footer</a></li>
+                                        <li><a href="terms-and-conditions.html">Terms & Conditions</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="contact-us.html">Contact Us</a></li>
+                                <li class="submit"><a href="submit.html"><span>Submit</span><i data-toggle="tooltip" data-placement="top" title="Submit"><img src="assets/img/plus.png" alt=""></i></a></li>
+                            </ul>
+                        </nav>
+                        <!--end nav-->
+                    </div>
+                    <!--end right-->
+                </div>
+                <!--end primary-nav-->
+            </div>
+            <!--end container-->
+        </header>
+        <!--end header-->
+    </div>
+    <!--end page-header-->
+	
+	
+	
+	
+	
+	
+	
+	
+	<h1>결제내역</h1>
+
+	<div>
+		<p>결제번호<td th:text="${payDto.pay_num}"></td></p>
+		
+		<p>사용자이름<td th:text="${resDto.username}"></td></p>
+		
+		<p>호텔이름<td th:text="${resDto.hotel_name}"></td></p>
+		
+		<p>방종류<td th:text="${resDto.room}"></td></p>
+		
+		<p>가격<td th:text="${payDto.price}"></td></p>
+		
+		<p>숙박일수<td th:text="${payDto.date_num}"></td></p>
+		
+		<p>예약인원<td th:text="${resDto.people}"></td></p>
+		
+		<p>요청사항<td th:text="${resDto.request}"></td></p>
+		
+		<p>예약날짜<td th:text="${resDto.inq_date}"></td></p>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</div>
+
+
+
+</body>
+</html>
