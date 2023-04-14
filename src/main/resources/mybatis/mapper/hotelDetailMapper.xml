@@ -8,7 +8,7 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- hotel 테이블의 모든 정보를 select해오는 쿼리문 -->
 <select id="getHotelById"  parameterType="int" resultType="com.boot.hotel.dto.HotelDTO">
-	select hotel_id,hotel_name,category,like_num from hotel where hotel_id=#{hotel_id}
+	select hotel_id,hotel_name,category,addr1,addr2,like_num from hotel where hotel_id=#{hotel_id}
 </select>
 
 
