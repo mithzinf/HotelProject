@@ -49,7 +49,7 @@ public class HotelDetailController {
       mav.addObject("dto4", dto4);
      
       //mav.addObject("hotel_id",hotel_id);
-      mav.setViewName("login/detail"); //templates.login의 detail.html로 가게 하려고...
+      mav.setViewName("hotel/detail"); //templates.login의 detail.html로 가게 하려고...
       
       return mav;
       

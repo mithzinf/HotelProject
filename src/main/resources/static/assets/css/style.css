@@ -5033,6 +5033,7 @@ body::before {
     display: block;
     border: none;
     margin-right: 0;
+    font-size: 20px;
   }
 
   .page-wrapper {

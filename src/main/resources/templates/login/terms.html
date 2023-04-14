@@ -100,11 +100,17 @@
 			
 		});
 		
+		//1,2,3번 항목에 체크가 될시 약관 동의 하기 버튼 활성화
+		//또한 전체 동의 체크항목도 자동으로 체크되게 설정
 		$('#checkbox1,#checkbox2,#checkbox3').change(function() {
 			if ($('#checkbox1').is(':checked') && $('#checkbox2').is(':checked') && $('#checkbox3').is(':checked')) {
 				$('#register').removeClass('btn3').addClass('btn2').prop('disabled', false);
+				checkboxAll.prop('checked', true);
+				imageAll.attr('src', '/image/checked.png')
 			} else {
 				$('#register').removeClass('btn2').addClass('btn3').prop('disabled', true);
+				checkboxAll.prop('checked', false);
+				imageAll.attr('src', '/image/unchecked.png')
 			}
 		});
 		

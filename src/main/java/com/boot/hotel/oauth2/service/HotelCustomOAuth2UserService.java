@@ -2,7 +2,6 @@ package com.boot.hotel.oauth2.service;
 
 import java.util.Collections;
 
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import com.boot.hotel.oauth2.dto.BaseAuthUser;
 import com.boot.hotel.oauth2.dto.OAuthAttributes;
 import com.boot.hotel.oauth2.dto.SessionUser;
 
