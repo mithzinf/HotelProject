@@ -151,7 +151,8 @@
                         <div class="title">
                             <div class="left">
                                 <h1>[[${dto1[0].hotel_name}]]<span class="rating"><i class="fa fa-star"></i>9.9</span></h1>
-                                <h3><a href="#">Austria</a> (63 properties)</h3>
+                                <h3><a href="#">[[${dto1[0].addr1}]]</a></h3>
+                                <h3><a href="#">[[${dto1[0].addr2}]]</a></h3>
                             </div>
                             <div class="right">
                                 <a href="#map" class="icon scroll"><i class="fa fa-map-marker"></i>See on the map</a>
@@ -163,17 +164,17 @@
                             <div class="gallery-detail">
                         <!-- 호텔 전경~객실 이미지 넣는 곳..모르겠다면?ㅋ -->
                                 <div class="one-item-carousel">
-                                   
-                                    <div class="image">
-                                        <img th:src="" alt="" style="width:100%; height:auto;">
-                                    </div>
+                                <!--  [[${dto3[0].hotel_id}]] + "_deluxe" --> 
+								<div class="image">
+  									<img th:src="@{/assets/img/items/__${hotel_id}__deluxe.jpg}" alt="" style="width:100%; height:auto;">
+								</div>
                                     
                                     <div class="image">
                                         <img src="assets/img/items/01.jpg" alt="" style="width:100%; height:auto;">
                                     </div>
                                     
                                     <div class="image">
-                                        <img src="assets/img/items/01.jpg" alt="" style="width:100%; height:auto;">
+                                        <img th:src="hotel_id[].deluex1" alt="" style="width:100%; height:auto;">
                                     </div>
                                 </div>
                             </div>
