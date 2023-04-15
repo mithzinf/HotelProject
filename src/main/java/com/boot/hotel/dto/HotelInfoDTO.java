@@ -15,9 +15,4 @@ public class HotelInfoDTO {
 	private String check_in; 
 	private String check_out; 
 	private String hotel_information;//호텔 소개 글
-
-
-	
-
-
 }
