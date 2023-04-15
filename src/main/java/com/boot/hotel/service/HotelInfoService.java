@@ -11,8 +11,6 @@ import com.boot.hotel.dto.ReviewScoreDTO;
 
 public interface HotelInfoService {
 
-
-
 	
 	public List<Map<String, Object>> getHotelList1(Map<String, Object> paramMap);
 	public List<Map<String, Object>> getHotelList2(Map<String, Object> paramMap);
@@ -20,11 +18,4 @@ public interface HotelInfoService {
 	
 	public int getHotelCount();
 	
-	}
-	
-//
-//public List<HotelDTO> getHotelList1();
-//public List<HotelInfoDTO> getHotelList2();
-//public List<HotelPictureDTO> getHotelList3();
-//public List<ReviewDTO> getHotelList4();
-//public List<ReviewScoreDTO> getHotelList5();
+}
