@@ -11,16 +11,11 @@ import com.boot.hotel.dto.ReviewScoreDTO;
 
 public interface HotelInfoService {
 
-
-    List<HotelDTO> getHotelList1(Map<String, Object> paramMap) throws Exception;
-
-    List<HotelInfoDTO> getHotelList2(Map<String, Object> paramMap) throws Exception;
-
-    List<HotelPictureDTO> getHotelList3(Map<String, Object> paramMap) throws Exception;
-
-    List<ReviewDTO> getHotelList4(Map<String, Object> paramMap) throws Exception;
-
-    List<ReviewScoreDTO> getHotelList5(Map<String, Object> paramMap) throws Exception;
-
+	
+	public List<Map<String, Object>> getHotelList1(Map<String, Object> paramMap);
+	public List<Map<String, Object>> getHotelList2(Map<String, Object> paramMap);
+	public List<Map<String, Object>> getHotelList3(Map<String, Object> paramMap);
+	
+	public int getHotelCount();
 	
 }

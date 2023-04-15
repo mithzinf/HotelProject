@@ -8,27 +8,28 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- 리스트 불러오기  -->
 <select id="getHotelList1" resultType="com.boot.hotel.dto.HotelDTO" parameterType="map">
-    SELECT * FROM hotel WHERE hotel_id = #{hotel_id}
+    SELECT * FROM hotel
 </select>
  
 <select id="getHotelList2" resultType="com.boot.hotel.dto.HotelInfoDTO" parameterType="map">
-    SELECT hotel_id,standard,sweet,deluxehotel_infomation 
-    FROM hotel_info WHERE hotel_id = #{hotel_id}
+    SELECT hotel_id,standard,hotel_information 
+    FROM hotel_info
 </select>
 
 <select id="getHotelList3" resultType="com.boot.hotel.dto.HotelPictureDTO" parameterType="map">
-    SELECT hotel_id, picture_num FROM hotel_picture WHERE hotel_id = #{hotel_id}
+    SELECT hotel_id, picture_num FROM hotel_picture
 </select>
 
-<select id="getHotelList4" resultType="com.boot.hotel.dto.ReviewDTO" parameterType="map">
-    SELECT hotel_id,review_num FROM review WHERE hotel_id = #{hotel_id}
+<select id="getHotelCount" resultType="int">
+    SELECT COUNT(*) FROM hotel 
 </select>
 
-<select id="getHotelList5" resultType="com.boot.hotel.dto.ReviewScoreDTO" parameterType="map">
-    SELECT hotel_id,ave FROM review_score WHERE hotel_id = #{hotel_id}
-</select>
+<!-- <select id="getHotelList4" resultType="com.boot.hotel.dto.ReviewDTO" > -->
+<!--     SELECT hotel_id, review_num FROM review -->
+<!-- </select> -->
 
-
-
+<!-- <select id="getHotelList5" resultType="com.boot.hotel.dto.ReviewScoreDTO" > -->
+<!--     SELECT hotel_id,ave FROM review_score -->
+<!-- </select> -->
 
 </mapper>
