@@ -3,7 +3,7 @@
 
 <meta charset="UTF-8">
 
-<div layout:fragment="content">
+<div layout:fragment="content" class="content-padding">
 
 <link rel="stylesheet" type="text/css" href="css/searchId.css"/>
 
@@ -33,6 +33,10 @@
 	text-align: center;
 }
 
+.login-h1{
+	line-height: 1.5;
+}
+
 </style>
 
 
@@ -42,14 +46,12 @@
 		<div class="login-form-container login-sign-in-container">
 			<form action="#" name="myForm" method="post" class="login-form">
 				<h1 class="login-h1">회원가입 방식을 <br/>선택해주세요.</h1>
-				<br/>
 					<p class="login-p">연동 회원가입</p>
 					<div>
 						<a href="/oauth2/authorization/google" class="login-social"><img class="login-img" src="/image/google.png" alt="Google 로고"></a>
 						<a href="/oauth2/authorization/kakao" class="login-social"><img class="login-img" src="/image/kakao.png" alt="카카오 로고"></a>
 						<a href="/oauth2/authorization/naver" class="login-social"><img class="login-img" src="/image/naver.png" alt="네이버 로고"></a>
 					</div>
-					<br>
 					<p class="login-p">일반 회원가입</p>
 					<div>
 						

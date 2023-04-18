@@ -4,14 +4,15 @@
 
 <meta charset="UTF-8">
 
-<div layout:fragment="content">
+<div layout:fragment="content" class="content-padding">
 <!-- 대충 이자리에 개별 CSS가 있다면 선언 -->
 
 
 
 <!-- 이자리에 html 가운데 코드 작성 -->
-<h1>콘텐트 자리</h1>
+<h1>콘텐트 자리[[${session.sessionUser}]]</h1>
 
+<!-- 세션값 불러오는 방법 : [[${session.sessionUser}]]</h1> -->
 
 
 

@@ -106,6 +106,10 @@
 	height: 45px;
 }
 
+.div {
+	width: 75%;
+}
+
 .login-input[type="password"] {
 	background-color: #eee;
 	border: none;

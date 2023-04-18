@@ -27,7 +27,7 @@
     margin-block-end: 0.67em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
-    line-height: 1.2;
+    line-height: 0.5;
 }
 
 .login-h2 {
@@ -35,13 +35,12 @@
 }
 
 .login-p {
-	width:65%;
+	width:75%;
 	font-size: 14px;
-	line-height: 1.5;
+	line-height: 0.3;
 	text-align: left;
-	margin: 15px 0 15px;
 	opacity: 1;
-
+	margin-top: 30px;
 }
 
 .login-span {
@@ -121,12 +120,13 @@
 	text-align: center;
 }
 
-.login-input {
+.login-input[type="text"] {
 	background-color: #eee;
 	border: none;
 	padding: 12px 15px;
 	margin: 8px 0;
-	width: 68%;
+	width: 100%;
+	height: 35px;
 }
 
 .login-select {
@@ -139,7 +139,7 @@
 }
 
 .login-div {
-	width: 100%;
+	width: 75%;
 }
 
 .login-container {

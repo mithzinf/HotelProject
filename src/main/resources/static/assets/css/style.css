@@ -26,14 +26,21 @@ Body copy:		'Lato', sans-serif; 14px;
 Headers:		'Lato', sans-serif;
 
 -------------------------------------------------------------------*/
+
+.content-padding {
+	padding-top: 70px;
+}
+
 /* 1. Header */
 #page-header header {
   -moz-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.07);
   -webkit-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.07);
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.07);
   background-color: #fff;
-  position: relative;
+  position: fixed;
   z-index: 999;
+  width: 100%;
+  height: 70px;
 }
 #page-header hr {
   margin: 0;

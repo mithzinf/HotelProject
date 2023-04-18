@@ -1,24 +1,73 @@
 <!DOCTYPE html>
-<html>
-<head>
-<base href="/" />
+<html layout:decorate="~{/layout/layout}">
+
 <meta charset="UTF-8">
-<title>소셜 회원가입</title>
+
+<div layout:fragment="content" class="content-padding">
+
 <link rel="stylesheet" type="text/css" href="css/register.css"/>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<!-- 별도의 script도 생성 -->
+
+
 <style>
 @import url('https://fonts.googleapis.com/css?family=Gowun+Batang&display=swap');
 .swal-footer {
 	text-align: center;
 }
 
-.container {
+.login-container {
 	min-height: 770px;
 }
 
 </style>
+
+
+
+<div class="login-body">
+	<div class="login-container" id="login-container">
+		<div class="login-form-container login-sign-in-container">
+			<form action="" name="myForm" method="post" class="login-form">
+			<br/>
+				<h1 class="login-h1">소셜로그인 회원가입</h1>
+				<br/><br/>
+					<p class="login-p">아이디</p>
+					<input class="login-input" type="text" name="userid" th:value="${oauthId}" disabled="disabled"/>
+				<br/>
+					<p class="login-p">이름</p>
+					<input class="login-input" type="text" name="username" th:value="${oauthName}" disabled="disabled" />
+				<br/>
+					<p class="login-p">생년월일</p>
+				<div style="width: 100%;">
+					<input class="login-input" type="date" name="birth" id="birthdate" value="" onclick="showCalendar()">
+				</div>
+				
+					
+				<br/>
+					<p class="login-p">이메일</p>
+					<input class="login-input" type="text" name="email" th:value="${oauthId}" disabled="disabled"/>
+				<br/>
+					<p class="login-p">전화번호</p>
+					<div>
+					<input class="login-input" type="text" name="tel1" style="width:17%;"/>
+					<span class="login-span">&nbsp;-&nbsp;</span>
+					<input class="login-input" type="text" name="tel2" style="width:20%;"/>
+					<span class="login-span">&nbsp;-&nbsp;</span>
+					<input class="login-input" type="text" name="tel3" style="width:20%;"/>
+					</div>
+				<br/><br/>
+				<input class="login-input" type="hidden" name="auth" th:value="oauth">
+				<div>
+					<button class="login-button-btn2" onclick="sendIt();" style="padding:12px 25px;"> 회원가입 </button>
+					&nbsp;
+					<button class="login-button-btn1" onclick="back();" style="padding:12px 30px;"> 로그인 화면으로 </button>
+				</div>
+					
+			</form>
+		</div>
+	</div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script type="text/javascript">
 
@@ -144,62 +193,6 @@
 	}
 	
 </script>
-
-
-</head>
-<body>
-
-
-
-
-<div class="container" id="container">
-	<div class="form-container sign-in-container">
-		<form action="" name="myForm" method="post" autocomplete="off">
-			<h1>소셜로그인 회원가입</h1>
-			<br/>
-				<p>아이디</p>
-				<input type="text" name="userid" th:value="${oauthId}" disabled="disabled"/>
-			<br/>
-				<p>이름</p>
-				<input type="text" name="username" th:value="${oauthName}" disabled="disabled" />
-			<br/>
-				<p>생년월일</p>
-			<div style="width: 100%;">
-				<input type="date" name="birth" id="birthdate" value="" onclick="showCalendar()">
-			</div>
-			
-				
-			<br/>
-				<p>이메일</p>
-				<input type="text" name="email" th:value="${oauthId}" disabled="disabled"/>
-			<br/>
-				<p>전화번호</p>
-				<div>
-				<input type="text" name="tel1" style="width:19%;"/>
-				-
-				<input type="text" name="tel2" style="width:19%;"/>
-				-
-				<input type="text" name="tel3" style="width:19%;"/>
-				</div>
-			<br/>
-			<input type="hidden" name="auth" th:value="oauth">
-			<div>
-				<button class="btn2" onclick="sendIt();" style="padding:12px 25px;"> 회원가입 </button>
-				&nbsp;
-				<button class="btn1" onclick="back();" style="padding:12px 30px;"> 로그인 화면으로 </button>
-			</div>
-				
-		</form>
-	</div>
-</div>
-
-
-
-<footer>
-	<p>
-		footer자리..
-	</p>
-</footer>
 
 </body>
 </html>
