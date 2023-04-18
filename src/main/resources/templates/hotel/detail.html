@@ -161,23 +161,10 @@
                         </div>
                         <!--end title-->
                         <section id="gallery">
-                            <div class="gallery-detail">
-                        <!-- 호텔 전경~객실 이미지 넣는 곳..모르겠다면?ㅋ -->
-                                <div class="one-item-carousel">
-                                <!--  [[${dto3[0].hotel_id}]] + "_deluxe" --> 
-								<div class="image">
-  									<img th:src="@{/assets/img/items/__${hotel_id}__deluxe.jpg}" alt="" style="width:100%; height:auto;">
-								</div>
-                                    
-                                    <div class="image">
-                                        <img src="assets/img/items/01.jpg" alt="" style="width:100%; height:auto;">
-                                    </div>
-                                    
-                                    <div class="image">
-                                        <img th:src="hotel_id[].deluex1" alt="" style="width:100%; height:auto;">
-                                    </div>
-                                </div>
-                            </div>
+                                <!--  호텔 아이디별 전경사진 뜨게 하는..코딩이다 어쩔래--> 
+										<div th:if="${#lists.size(searchHotelDetail)}!=null" th:each="dto:${searchHotelDetail}">
+											<img th:src="@{|/hotel/${dto.URL}|}"/>
+										</div>
                         </section>
                         <h2>객실 설명</h2>
                         <div class="row">
@@ -189,7 +176,7 @@
                                     </p>
                                 </section>
                                 <section id="facilities">
-                                    <h2>Facilities</h2>
+                                    <h2>객실 시설</h2>
                                     <ul class="bullets half">
                                         <li>Sauna</li>
                                         <li>Fireplace or fire pit</li>

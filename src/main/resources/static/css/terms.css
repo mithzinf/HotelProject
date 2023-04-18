@@ -6,7 +6,7 @@
 	box-sizing: border-box;
 }
 
-body {
+.login-body {
 	background: #f6f5f7;
 	display: flex;
 	justify-content: center;
@@ -19,41 +19,43 @@ body {
 	width: 100%;
 }
 
-h1 {
+.login-h1 {
 	font-weight: bold;
 	margin: 0;
+	line-height: 1.5;
 }
 
-h2 {
+.login-h2 {
 	text-align: center;
 }
 
-p {
+.login-p {
 	width:65%;
 	font-size: 14px;
 	line-height: 0;
 	text-align: left;
+	margin: 15px 0 15px;
 
 }
 
-span {
+.login-span {
 	font-size: 12px;
 }
 
-a {
+.login-a {
 	color: #000;
 	font-size: 14px;
 	text-decoration: none;
 	margin: 15px 0;
 }
 
-img {
+.login-img {
 	width:20px;
 	height:20px;
 	vertical-align: bottom;
 }
 
-textarea {
+.login-textarea {
 	
 	resize: none;
 	font-size: 11px;
@@ -62,21 +64,19 @@ textarea {
 
 }
 
-u {
+.login-u {
   text-decoration: underline;
 }
 
-#checkbox1, #checkbox2, #checkbox3, #checkboxAll {
-    display: none;
-}
 
 
-button {
+
+.login-button {
 	border-radius: 20px;
 	border: 1px solid #FF4B2B;
 	background-color: #FF4B2B;
 	color: #FFFFFF;
-	font-size: 12px;
+	font-size: 15px;
 	font-weight: bold;
 	padding: 12px 45px;
 	letter-spacing: 1px;
@@ -85,12 +85,12 @@ button {
 	cursor: pointer;
 }
 
-button.btn1{
+.login-button-btn1{
 	border-radius: 20px;
 	border: 1px solid #FF4B2B;
 	background-color: #FF4B2B;
 	color: #FFFFFF;
-	font-size: 12px;
+	font-size: 15px;
 	font-weight: bold;
 	padding: 12px 45px;
 	letter-spacing: 1px;
@@ -99,12 +99,12 @@ button.btn1{
 	cursor: pointer;
 }
 
-button.btn2{
+.login-button-btn2{
 	border-radius: 20px;
 	border: 1px solid #488f3e;
 	background-color: #488f3e;
 	color: #FFFFFF;
-	font-size: 12px;
+	font-size: 15px;
 	font-weight: bold;
 	padding: 12px 15px;
 	letter-spacing: 1px;
@@ -113,12 +113,12 @@ button.btn2{
 	cursor: pointer;
 }
 
-button.btn3{
+.login-button-btn3{
 	border-radius: 20px;
 	border: 1px solid #D3D3D3;
 	background-color: #D3D3D3;
 	color: #FFFFFF;
-	font-size: 12px;
+	font-size: 15px;
 	font-weight: bold;
 	padding: 12px 15px;
 	letter-spacing: 1px;
@@ -127,39 +127,41 @@ button.btn3{
 	cursor: pointer;
 }
 
-button:active {
+.login-button:active {
 	transform: scale(0.95);
 }
 
-button:focus {
+.login-button:focus {
 	outline: none;
 }
 
-button.ghost {
+.login-button-ghost {
 	background-color: transparent;
 	border-color: #FFFFFF;
 }
 
-form {
+.login-form {
 	background-color: #FFFFFF;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
 	padding: 0 50px;
-	height: 100%;
+	height: 95%;
 	text-align: center;
 }
 
-input {
+.login-input[type="checkbox"] {
 	background-color: #eee;
 	border: none;
 	padding: 12px 15px;
 	margin: 8px 0;
 	width: 65%;
+	display: none;
 }
 
-select {
+
+.login-select {
 	margin: 5px 0 0;
 	border-radius: 10px;
 	width: 70px;
@@ -168,7 +170,7 @@ select {
 	font-size: 12px;
 }
 
-.container {
+.login-container {
 
 	background-color: #fff;
 	border-radius: 10px;
@@ -181,7 +183,7 @@ select {
 	min-height: 600px;
 }
 
-.form-container {
+.login-form-container {
 	position: absolute;
 	top: 0;
 	height: 100%;

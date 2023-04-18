@@ -1,14 +1,53 @@
 <!DOCTYPE html>
-<html>
-<head>
-<base href="/" />
+<html layout:decorate="~{/layout/layout}">
+
 <meta charset="UTF-8">
-<title>로그인</title>
+
+<div layout:fragment="content">
+
+
 <link rel="stylesheet" type="text/css" href="css/login.css"/>
+
+<div class="login-body">
+	<div class="login-container" id="login-container">
+		<div class="login-form-container login-sign-in-container">
+			<form action="#" name="myForm" method="post" class="login-form">
+				<h1 class="login-h1">로그인</h1>
+				<div class="login-social-container">
+					<a href="/oauth2/authorization/google" class="login-social"><img class="login-img" src="/image/google.png" alt="Google 로고"></a>
+					<a href="/oauth2/authorization/kakao" class="login-social"><img class="login-img" src="/image/kakao.png" alt="카카오 로고"></a>
+					<a href="/oauth2/authorization/naver" class="login-social"><img class="login-img" src="/image/naver.png" alt="네이버 로고"></a>
+				</div>
+				<input class="login-input" type="text" name="userid" placeholder="아이디"/>
+				<input class="login-input" type="password" name="pwd" placeholder="비밀번호" />
+				<br/>
+				<p><b><a class="login-a" href="/login/searchId">아이디 찾기</a> &nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp; <a class="login-a" href="/login/searchPwd">비밀번호 찾기</a></b></p>
+				<br/>
+				<button class="login-button" type="button" onclick="sendIt();">로그인</button>
+			</form>
+		</div>
+		<div class="login-overlay-container">
+			<div class="login-overlay">
+	
+				<div class="login-overlay-panel login-overlay-right">
+					<h1 class="login-h1">환영합니다!</h1>
+					<p class="login-p" style="color: #fff;">처음 방문하시는 분은 아래 회원가입 버튼을 눌러주세요.</p>
+					<button class="login-button-ghost" id="register" onclick="location.href='login/register_select';"> 회원가입 </button>
+				</div>
+				<div th:if="${fail != null}">
+					<script>
+						
+					</script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-</head>
-<!-- 별도의 script도 생성 -->
+
 <script type="text/javascript">
 
 	function sendIt() {
@@ -71,55 +110,5 @@
 
 </script>
 
-
-</head>
-<body>
-<div class="container" id="container">
-	<div class="form-container sign-in-container">
-		<div style="text-align: center; width: 400px;">
-		<a href="list">[ 리스트 페이지 ]</a>
-		</div>
-		<form action="#" name="myForm" method="post">
-			<h1>로그인</h1>
-			<div class="social-container">
-				<a href="/oauth2/authorization/google" class="social"><img src="/image/google.png" alt="Google 로고"></a>
-				<a href="/oauth2/authorization/kakao" class="social"><img src="/image/kakao.png" alt="카카오 로고"></a>
-				<a href="/oauth2/authorization/naver" class="social"><img src="/image/naver.png" alt="네이버 로고"></a>
-			</div>
-			<input type="text" name="userid" placeholder="아이디" />
-			<input type="password" name="pwd" placeholder="비밀번호" />
-			<p><b><a href="/login/searchId">아이디 찾기</a> &nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp; <a href="/login/searchPwd">비밀번호 찾기</a></b></p>
-			<button type="button" onclick="sendIt();">로그인</button>
-		</form>
-	</div>
-	<div class="overlay-container">
-		<div class="overlay">
-
-			<div class="overlay-panel overlay-right">
-				<h1>환영합니다!</h1>
-				<p>처음 방문하시는 분은 아래 회원가입 버튼을 눌러주세요.</p>
-				<button class="ghost" id="register" onclick="location.href='login/register_select';"> 회원가입 </button>
-			</div>
-			<div th:if="${fail != null}">
-				<script>
-					alert("ㅇㅇ");
-				</script>
-			</div>
-		</div>
-	</div>
-</div>
-
-
-
-<footer>
-	<p>
-		Created with <i class="fa fa-heart"></i> by
-		<a target="_blank" href="https://florin-pop.com">Florin Pop</a>
-		- Read how I created this and how you can join the challenge
-		<a target="_blank" href="https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/">here</a>.
-	</p>
-</footer>
-
-</body>
 
 </html>

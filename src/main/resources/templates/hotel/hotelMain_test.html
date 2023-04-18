@@ -2,6 +2,7 @@
 
 <html lang="en-US">
 <head>
+	<base href="/" />
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="ThemeStarz">
@@ -13,8 +14,9 @@
     <link rel="stylesheet" href="assets/css/zabuto_calendar.min.css" type="text/css">
     <link rel="stylesheet" href="assets/css/owl.carousel.css" type="text/css">
     <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+    <script src="https://kit.fontawesome.com/fe3b2ac5d6.js" crossorigin="anonymous"></script>
 
-    <title>Accommodo - Accommodation HTML Template Full of Useful Features</title>
+    <title>서울어때(디자인 수정중)</title>
 
 </head>
 
@@ -29,31 +31,24 @@
                         <nav>
                             <div class="left opacity-60">
                                 <a href=""><i class="fa fa-phone"></i>+1 781-903-1047</a>
-                                <a href="mailto:hello@example.com"><i class="fa fa-envelope"></i>hello@example.com</a>
+                                <a href="mailto:hello@example.com"><i class="fa fa-envelope"></i>itwill0406@gmail.com</a>
                             </div>
                             <!--end left-->
                             <div class="right">
-                                <div class="element">
-                                    <select>
-                                        <option>$</option>
-                                        <option>€</option>
-                                    </select>
-                                </div>
+								<div class="element">
+								    <a th:href="@{/login/login}" style="cursor: pointer;">로그인</a>
+								</div>
+								<!--end element-->
+								<div class="element">
+								    <a th:href="@{/login/register_select}" style="cursor: pointer;">회원가입</a>
+								</div>
                                 <!--end element-->
                                 <div class="element">
-                                    <a href="#tab-sign-in" data-toggle="modal" data-tab="true" data-target="#sign-in-register-modal">Sign In</a>
-                                </div>
-                                <!--end element-->
-                                <div class="element">
-                                    <a href="#tab-register" data-toggle="modal" data-tab="true" data-target="#sign-in-register-modal">Register</a>
-                                </div>
-                                <!--end element-->
-                                <div class="element">
-                                    <select>
-                                        <option>EN</option>
-                                        <option>DE</option>
-                                        <option>RU</option>
-                                        <option>ES</option>
+                                    <select style="font-size:10px;">
+                                    	<option>마이페이지</option>
+                                    	<option>예약확인</option>
+                                    	<option>정보조회</option>
+                                    	<option>탈퇴하기</option>
                                     </select>
                                 </div>
                                 <!--end element-->
@@ -66,57 +61,30 @@
             </div>
             <!--end container-->
             <hr>
-            <div class="container">
-                <div class="primary-nav">
+            <div class="container" style="height:70px;">
+                <div class="primary-nav" style="height:70px;">
                     <div class="left">
-                        <a href="index.html" id="brand"><img src="assets/img/logo.png" alt=""></a>
+                         <a th:href="@{/nav/index}" id="brand"><img src="assets/img/logo1.png" alt="" style="width: 170px; height: 40px;"></a>
                         <a class="nav-trigger" data-toggle="collapse" href="#primary-nav" aria-expanded="false" aria-controls="primary-nav"><i class="fa fa-navicon"></i></a>
                     </div>
                     <!--end left-->
                     <div class="right" >
                         <nav id="primary-nav">
                             <ul>
-                                <li class="active"><a href="index.html">Home</a></li>
-                                <li><a href="about-us.html">About Us</a></li>
-                                <li>
-                                    <a href="#" class="has-child">Listing</a>
+                                <li> <a th:href="@{/main}">메인으로</a></li>
+                                 <li><a href="#">프로모션</a></li>
+                                <li><a href="#" class="has-child">고객페이지</a>
                                     <ul class="child-nav">
-                                        <li><a href="listing.html">List Listing</a></li>
-                                        <li><a href="listing-matrix.html">Matrix Listing</a></li>
+										<li><a href="faq.html">문의게시판</a></li>
+                                        <li><a href="grid.html">더보기</a></li>
+                                        <li><a href="sticky-footer.html">더보기</a></li>
+                                        <li><a href="terms-and-conditions.html">더보기</a></li>
                                     </ul>
-                                </li>
-                                <li>
-                                    <a href="#" class="has-child">Pages</a>
-                                    <ul class="child-nav">
-                                        <li><a href="404.html">404</a></li>
-                                        <li>
-                                            <a href="#" class="has-child">Admin</a>
-                                            <ul class="child-nav">
-                                                <li><a href="edit.html">Edit Accommodation</a></li>
-                                                <li><a href="my-accommodations.html">My Accommodations</a></li>
-                                                <li><a href="profile.html">Profile</a></li>
-                                                <li><a href="reservations.html">Reservations</a></li>
-                                                <li><a href="reviews.html">Reviews</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="about-us.html">About Us</a></li>
-                                        <li><a href="detail.html">Accommodation Detail</a></li>
-                                        <li><a href="become-an-affiliate.html">Become an Affiliate</a></li>
-                                        <li>
-                                            <a href="#" class="has-child">Blog</a>
-                                            <ul class="child-nav">
-                                                <li><a href="blog.html">Blog Listing</a></li>
-                                                <li><a href="blog-detail.html">Blog Detail</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="faq.html">FAQ</a></li>
-                                        <li><a href="grid.html">Grid</a></li>
-                                        <li><a href="sticky-footer.html">Sticky Footer</a></li>
-                                        <li><a href="terms-and-conditions.html">Terms & Conditions</a></li>
-                                    </ul>
-                                </li>
+                                </li>                                    
                                 <li><a href="contact-us.html">Contact Us</a></li>
-                                <li class="submit"><a href="submit.html"><span>Submit</span><i data-toggle="tooltip" data-placement="top" title="Submit"><img src="assets/img/plus.png" alt=""></i></a></li>
+                                <li class="submit"><a href="submit.html"><span>Submit</span>
+                                <i data-toggle="tooltip" data-placement="top" title="Submit">
+                                <img src="assets/img/plus.png" alt=""></i></a></li>
                             </ul>
                         </nav>
                         <!--end nav-->
@@ -139,43 +107,35 @@
                         <div class="caption">
                             <div class="inner">
                                 <div class="container">
-                                    <h1 class="center">Find Your Best Holiday</h1>
+                                    <h1 class="center"></h1>
                                     <div class="row no-gutters">
                                         <div class="col-md-6 col-sm-6">
                                             <div class="form-group">
                                                 <label class="label-on-input" for="address-autocomplete">Location</label>
-                                                <input type="text" class="form-control" id="address-autocomplete" name="location" placeholder="Enter Location or Place Name">
+                                                <input type="text" class="form-control" id="address-autocomplete" name="location" placeholder="장소를 검색하세요">
                                             </div>
                                         </div>
                                         <div class="col-md-2 col-sm-2">
                                             <div class="form-group">
                                                 <label class="label-on-input" for="form-check-in">Check In</label>
-                                                <input type="text" class="form-control date" id="form-check-in" name="nights" placeholder="Check In Date">
+                                                <input type="text" class="form-control date" id="form-check-in" name="nights" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-md-2 col-sm-2">
                                             <div class="form-group">
                                                 <label class="label-on-input" for="form-nights">Nights</label>
-                                                <input type="number" class="form-control" id="form-nights" name="nights" placeholder="Nights">
+                                                <input type="number" class="form-control" id="form-nights" name="nights" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-md-2 col-sm-2">
                                             <div class="form-group">
-                                                <button type="submit" class="btn btn-default">Search</button>
+                                                <a th:href="@{/hotel/hotellist}" class="btn btn-default">검색하기</a>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="favorite-search">
-                                        <span>Favorite Searches</span>
-                                        <a href="">Bourges</a>
-                                        <a href="">Orléans</a>
-                                        <a href="">Rouen</a>
-                                        <a href="">Toulouse</a>
-                                    </div>
-                                    <!--end favorite-searches-->
                                 </div>
                                 <!--end container-->
-                                <div class="bg-transfer"><img src="assets/img/bg-hero.jpg" alt=""></div>
+                                <div class="bg-transfer"><img src="assets/img/seoul.jpg" alt=""></div>
                                 <!--end bg-transfer-->
                             </div>
                             <!--end inner-->
@@ -184,56 +144,8 @@
                         <div class="options">
                             <div class="container">
                                 <div class="wrapper">
-                                    <h2>Further Options</h2>
-                                    <div class="row">
-                                        <div class="col-md-8 col-sm-7">
-                                            <ul class="checkboxes inline list-unstyled">
-                                                <li><label><input type="checkbox" name="hotel">Hotel</label></li>
-                                                <li><label><input type="checkbox" name="apartment">Apartment</label></li>
-                                                <li><label><input type="checkbox" name="breakfast-only">Breakfast Only</label></li>
-                                                <li><label><input type="checkbox" name="spa-wellness">Spa & Wellness</label></li>
-                                                <li><label><input type="checkbox" name="ski-center">Ski Center</label></li>
-                                                <li><label><input type="checkbox" name="cottage">Cottage</label></li>
-                                                <li><label><input type="checkbox" name="hostel">Hostel</label></li>
-                                                <li><label><input type="checkbox" name="boat">Boat</label></li>
-                                            </ul>
-                                            <!--end checkboxes-->
-                                        </div>
-                                        <!--end col-md-8-->
-                                        <div class="col-md-4 col-sm-5">
-                                            <div class="row">
-                                                <div class="col-md-6 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>Rate (per Night)</label>
-                                                        <select class="form-control framed white">
-                                                            <option value="">$0 - $100</option>
-                                                            <option value="">$100 - $200</option>
-                                                            <option value="">$200+</option>
-                                                        </select>
-                                                    </div>
-                                                    <!--end form-group-->
-                                                </div>
-                                                <!--end col-md-6-->
-                                                <div class="col-md-6 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>Star Rating</label>
-                                                        <select class="form-control framed white">
-                                                            <option value="">1</option>
-                                                            <option value="">2</option>
-                                                            <option value="">3</option>
-                                                            <option value="">4</option>
-                                                            <option value="">5</option>
-                                                        </select>
-                                                    </div>
-                                                    <!--end form-group-->
-                                                </div>
-                                                <!--end col-md-6-->
-                                            </div>
-                                            <!--end row-->
-                                        </div>
-                                        <!--end col-md-4-->
-                                    </div>
-                                    <!--end row-->
+                                    <h2></h2>
+                                    <h1 style="text-align: center">6가지 아이콘 넣으면 될듯요!</h1>
                                 </div>
                                 <!--end wrapper-->
                             </div>
@@ -243,44 +155,16 @@
                     </div>
                     <!--end hero-wrapper-->
                     <div id="options-hidden" class="collapse">
-                        <div class="container">
-                            <div class="wrapper">
-                                <h2>Facilities</h2>
-                                <div class="row">
-                                    <div class="col-md-8 col-sm-6">
-                                        <ul class="checkboxes inline">
-                                            <li><label><input type="checkbox" name="wi-fi">Wi-fi</label></li>
-                                            <li><label><input type="checkbox" name="free-parking">Free Parking</label></li>
-                                            <li><label><input type="checkbox" name="airport">Airport Shuttle</label></li>
-                                            <li><label><input type="checkbox" name="family-rooms">Family Rooms</label></li>
-                                            <li><label><input type="checkbox" name="pets">Pets Allowed</label></li>
-                                            <li><label><input type="checkbox" name="restaurant">Restaurant</label></li>
-                                            <li><label><input type="checkbox" name="indoor-pool">Indoor Pool</label></li>
-                                            <li><label><input type="checkbox" name="brakfast-only">Breakfast Only</label></li>
-                                        </ul>
-                                        <!--end checkboxes-->
-                                    </div>
-                                    <!--end col-md-8-->
-                                    <div class="col-md-4"></div>
-                                    <!--end col-md-4-->
-                                </div>
-                                <!--end row-->
-                            </div>
-                            <!--end wrapper-->
-                        </div>
+                        <div class="container"></div>
                         <!--end container-->
                     </div>
                 </div>
                 <!--end hero-inner-->
-                <div class="plate">
-                    <a data-toggle="collapse" href="#options-hidden" aria-expanded="false" aria-controls="options-hidden">View Further Options</a>
-                </div>
-                <!--end plate-->
             </form>
             <!--end form-->
             <div class="map-wrapper">
                 <div class="plate white">
-                    <a href="#" data-switch="#form-hero">Show Map</a>
+                    <a href="#" data-switch="#form-hero">지도...</a>
                 </div>
                 <!--end plate-->
                 <div id="map-item" class="map height-100"></div>
@@ -292,14 +176,14 @@
         <div class="block">
             <div class="container">
                 <div class="title">
-                    <h2>Top Accommodations</h2>
+                    <h2>요즘 뜨는 호텔</h2>
                 </div>
                 <div class="row">
                     <div class="col-md-3 col-sm-6">
                         <div class="item big equal-height" data-map-latitude="48.87" data-map-longitude="2.29" data-id="1">
                             <div class="item-wrapper">
                                 <div class="image">
-                                    <div class="mark-circle description" data-toggle="tooltip" data-placement="right" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin quis erat vel quam aliquet hendrerit semper eget elit. Aenean tincidunt ultrices bibendum. Proin nisi erat, iaculis non pulvinar a, scelerisque ut est. "><i class="fa fa-question"></i></div>
+                                    <div class="mark-circle description" data-toggle="tooltip" data-placement="right" title=""><i class="fa fa-question"></i></div>
                                     <div class="mark-circle map" data-toggle="tooltip" data-placement="right" title="Show on map"><i class="fa fa-map-marker"></i></div>
                                     <div class="mark-circle top" data-toggle="tooltip" data-placement="right" title="Top accommodation"><i class="fa fa-thumbs-up"></i></div>
                                     <a href="detail.html" class="wrapper">
@@ -595,7 +479,7 @@
                                         </div>
                                         <div class="wrapper">
                                             <div class="gallery">
-                                                <img src="assets/img/items/05.jpg" alt="">
+                                                <img src="assets/img/items/01.jpg" alt="">
                                             </div>
                                         </div>
                                     </div>
@@ -623,7 +507,7 @@
                                         </div>
                                         <div class="wrapper">
                                             <div class="gallery">
-                                                <img src="assets/img/items/07.jpg" alt="">
+                                                <img src="assets/img/items/01.jpg" alt="">
                                             </div>
                                         </div>
                                     </div>
@@ -651,7 +535,7 @@
                                         </div>
                                         <div class="wrapper">
                                             <div class="gallery">
-                                                <img src="assets/img/items/08.jpg" alt="">
+                                                <img src="assets/img/items/02.jpg" alt="">
                                             </div>
                                         </div>
                                     </div>
@@ -680,7 +564,7 @@
                                         </div>
                                         <div class="wrapper">
                                             <div class="gallery">
-                                                <img src="assets/img/items/03.jpg" alt="">
+                                                <img src="assets/img/items/02.jpg" alt="">
                                             </div>
                                         </div>
                                     </div>
@@ -736,7 +620,7 @@
                                         </div>
                                         <div class="wrapper">
                                             <div class="gallery">
-                                                <img src="assets/img/items/04.jpg" alt="">
+                                                <img src="assets/img/items/03.jpg" alt="">
                                             </div>
                                         </div>
                                     </div>
@@ -764,7 +648,7 @@
                                         </div>
                                         <div class="wrapper">
                                             <div class="gallery">
-                                                <img src="assets/img/items/06.jpg" alt="">
+                                                <img src="assets/img/items/01.jpg" alt="">
                                             </div>
                                         </div>
                                     </div>
@@ -784,72 +668,13 @@
                         <!--end row-->
                         <a href="listing.html" class="pull-right">View All</a>
                     </div>
-                    <div class="col-md-3 col-sm-4">
-                        <a href="#" class="advertising-banner">
-                            <img src="assets/img/ad-banner-02.jpg" alt="">
-                        </a>
-                    </div>
                 </div>
             </div>
             <!--end container-->
         </div>
         <!--end block-->
 
-        <div class="block">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4 col-sm-4">
-                        <div class="feature">
-                            <aside class="circle">
-                                <i class="icon_house_alt"></i>
-                            </aside>
-                            <figure>
-                                <h3>200+ Accommodations</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum luctus posuere mattis.
-                                    Donec id nulla nisl.
-                                </p>
-                            </figure>
-                        </div>
-                        <!--end feature-->
-                    </div>
-                    <!--end col-md-4-->
-                    <div class="col-md-4 col-sm-4">
-                        <div class="feature">
-                            <aside class="circle">
-                                <i class="icon_box-checked"></i>
-                            </aside>
-                            <figure>
-                                <h3>Easy Booking System</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum luctus posuere mattis.
-                                    Donec id nulla nisl.
-                                </p>
-                            </figure>
-                        </div>
-                        <!--end feature-->
-                    </div>
-                    <!--end col-md-4-->
-                    <div class="col-md-4 col-sm-4">
-                        <div class="feature">
-                            <aside class="circle">
-                                <i class="icon_headphones"></i>
-                            </aside>
-                            <figure>
-                                <h3>Great Support</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum luctus posuere mattis.
-                                    Donec id nulla nisl.
-                                </p>
-                            </figure>
-                        </div>
-                        <!--end feature-->
-                    </div>
-                    <!--end col-md-4-->
-                </div>
-                <!--end row-->
-            </div>
-            <!--end container-->
-            <div class="space"></div>
-        </div>
-        <!--end block-->
+
 
         <div class="block">
             <div class="container">
@@ -935,11 +760,11 @@
                         <div class="col-md-10 col-md-offset-1">
                             <div class="form-group-inline vertical-align-middle no-margin">
                                 <div class="form-group">
-                                    <h3 class="font-color-white no-margin"> Save up to 50% off your next trip</h3>
-                                    <p class="font-color-white no-margin">Secret Deals – for our subscribers only</p>
+                                    <h3 class="font-color-white no-margin">첫 숙소 예약은 반값에!</h3>
+                                    <p class="font-color-white no-margin">쿠폰 받아 가세요</p>
                                 </div>
                                 <div class="form-group width-50">
-                                    <input type="email" class="form-control input-dark" name="location" placeholder="Your email">
+                                    <button style="width: 100px; height: 80px;">쿠폰 받기</button>
                                 </div>
                             </div>
                         </div>
@@ -950,81 +775,7 @@
         </div>
         <!--end block-->
 
-        <div class="block">
-            <div class="container">
-                <div class="title">
-                    <h2>Our Picks</h2>
-                </div>
-                <!--end title-->
-                <div class="grid masonry">
-                    <div class="grid-item">
-                        <a href="#">
-                            <h3>Switzerland</h3>
-                            <img src="assets/img/items/pick-01.jpg" alt="">
-                        </a>
-                    </div>
-                    <div class="grid-item">
-                        <a href="#">
-                            <h3>Prague</h3>
-                            <img src="assets/img/items/pick-02.jpg" alt="">
-                        </a>
-                    </div>
-                    <div class="grid-item grid-item--width2">
-                        <a href="#">
-                            <h3>Norway</h3>
-                            <img src="assets/img/items/pick-03.jpg" alt="">
-                        </a>
-                    </div>
-                    <div class="grid-item grid-item--width2">
-                        <a href="#">
-                            <h3>Machu Picchu</h3>
-                            <img src="assets/img/items/pick-04.jpg" alt="">
-                        </a>
-                    </div>
-                    <div class="grid-item">
-                        <a href="#">
-                            <h3>Tuscany</h3>
-                            <img src="assets/img/items/pick-05.jpg" alt="">
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--end block-->
-
-        <div class="block">
-            <div class="container">
-                <div class="title">
-                    <h2>Favorite Destinations</h2>
-                </div>
-                <!--end title-->
-               <ul class="list-links">
-                   <li><a href="#">Tenerife<span>23</span></a></li>
-                   <li><a href="#">Al Madinah<span>12</span></a></li>
-                   <li><a href="#">Koh Samui<span>76</span></a></li>
-                   <li><a href="#">Cotswolds<span>52</span></a></li>
-                   <li><a href="#">Lake District<span>63</span></a></li>
-                   <li><a href="#">Cornwall<span>15</span></a></li>
-                   <li><a href="#">Algarve<span>19</span></a></li>
-                   <li><a href="#">Ibiza<span>90</span></a></li>
-                   <li><a href="#">New Forest<span>57</span></a></li>
-                   <li><a href="#">Phuket Province<span>82</span></a></li>
-                   <li><a href="#">Loch Lomond<span>24</span></a></li>
-                   <li><a href="#">Gran Canaria<span>23</span></a></li>
-                   <li><a href="#">Majorca<span>33</span></a></li>
-                   <li><a href="#">Isle of Wight<span>74</span></a></li>
-                   <li><a href="#">Jersey<span>51</span></a></li>
-                   <li><a href="#">Isle of Man<span>23</span></a></li>
-                   <li><a href="#">Santoríni<span>36</span></a></li>
-                   <li><a href="#">Mykonos<span>55</span></a></li>
-                   <li><a href="#">Lanzarote<span>78</span></a></li>
-                   <li><a href="#">Bali<span>17</span></a></li>
-               </ul>
-                <!--end list-links-->
-            </div>
-            <!--end container-->
-        </div>
-        <!--end block-->
+       
 
         <div class="container">
             <div class="block">
@@ -1033,12 +784,10 @@
                     <div class="row">
                         <div class="col-md-3 col-sm-3">
                             <div class="review-single">
-                                <a href="detail.html#reviews"><h3>White Doe Inn</h3></a>
-                                <figure class="location">Austria</figure>
+								<a href="detail.html#reviews"><h3>리뷰 0</h3></a>
+                                <figure class="location">역삼역</figure>
                                 <div class="rating"><i class="fa fa-star"></i>8.9</div>
-                                <p>Donec bibendum at neque pellentesque viverra. Fusce rhoncus elementum commodo.
-                                    In ac nibh nec turpis finibus eleme
-                                </p>
+                                <p>상세 리뷰 기재하는 칸</p>
                                 <a href="detail.html#reviews" class="link icon">Full Review<i class="arrow_right"></i></a>
                             </div>
                             <!--end review-->
@@ -1046,12 +795,21 @@
                         <!--end col-md-3-->
                         <div class="col-md-3 col-sm-3">
                             <div class="review-single">
-                                <a href="detail.html#reviews"><h3>Mountain Valley Motel</h3></a>
-                                <figure class="location">Scotland</figure>
+                               <a href="detail.html#reviews"><h3>리뷰 1</h3></a>
+                                <figure class="location">교대역</figure>
+                                <div class="rating"><i class="fa fa-star"></i>8.2</div>
+                                <p>상세 리뷰 기재하는 칸</p>
+                                <a href="detail.html#reviews" class="link icon">Full Review<i class="arrow_right"></i></a>
+                            </div>
+                            <!--end review-->
+                        </div>
+                        <!--end col-md-3-->
+                        <div class="col-md-3 col-sm-3">
+                            <div class="review-single">
+                               <a href="detail.html#reviews"><h3>리뷰 2</h3></a>
+                                <figure class="location">강남구</figure>
                                 <div class="rating"><i class="fa fa-star"></i>9.3</div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae odio ac dui
-                                    fermentum tempus. Phasellus sit amet
-                                </p>
+                                <p>상세 리뷰 기재하는 칸</p>
                                 <a href="detail.html#reviews" class="link icon">Full Review<i class="arrow_right"></i></a>
                             </div>
                             <!--end review-->
@@ -1059,24 +817,10 @@
                         <!--end col-md-3-->
                         <div class="col-md-3 col-sm-3">
                             <div class="review-single">
-                                <a href="detail.html#reviews"><h3>Camp Shoresh</h3></a>
-                                <figure class="location">France</figure>
-                                <div class="rating"><i class="fa fa-star"></i>9.6</div>
-                                <p>Sed posuere nunc sit amet arcu rutrum porttitor. Quisque ut ante lacus. Fusce a
-                                    lacus fermentum ante iaculis convallis
-                                </p>
-                                <a href="detail.html#reviews" class="link icon">Full Review<i class="arrow_right"></i></a>
-                            </div>
-                            <!--end review-->
-                        </div>
-                        <!--end col-md-3-->
-                        <div class="col-md-3 col-sm-3">
-                            <div class="review-single">
-                                <a href="detail.html#reviews"><h3>Primal Court Resort</h3></a>
-                                <figure class="location">Switzerland</figure>
+                                <a href="detail.html#reviews"><h3>리뷰 3</h3></a>
+                                <figure class="location">강남구</figure>
                                 <div class="rating"><i class="fa fa-star"></i>9.4</div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae odio ac dui fermentum tempus.
-                                </p>
+                                <p>상세 리뷰 기재하는 칸</p>
                                 <a href="detail.html#reviews" class="link icon">Full Review<i class="arrow_right"></i></a>
                             </div>
                             <!--end review-->
