@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- css를 받아오기 위한 상대경로 설정 -->
+	<base href="/" />
+	
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="ThemeStarz">
+    
+	<!-- 전체에 적용할 CSS 선언 자리 -->
+    <link href="assets/fonts/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="assets/fonts/elegant-fonts.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700,900,400italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/zabuto_calendar.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/owl.carousel.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+    <script src="https://kit.fontawesome.com/fe3b2ac5d6.js" crossorigin="anonymous"></script>
+
+    <title>서울어때</title>
+
+</head>
+
+<body>
+
+<!-- 네비게이션 바 자리 -->
+<nav th:replace="layout/navbar :: navbarFragment"></nav>
+
+<!-- 콘텐트 자리 -->
+<th:block layout:fragment="content"></th:block>
+
+<!-- footer 자리 -->
+<th:block th:replace="layout/footer :: footerFragment"></th:block>
+
+
+<!-- 전체에 적용할 JS 선언 자리 -->
+<script type="text/javascript" src="assets/js/jquery-2.2.1.min.js"></script>
+<script type="text/javascript" src="assets/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=places"></script>
+<script type="text/javascript" src="assets/js/infobox.js"></script>
+<script type="text/javascript" src="assets/js/markerclusterer_packed.js"></script>
+<script type="text/javascript" src="assets/js/richmarker-compiled.js"></script>
+<script type="text/javascript" src="assets/js/markerwithlabel_packed.js"></script>
+<script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="assets/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="assets/js/icheck.min.js"></script>
+<script type="text/javascript" src="assets/js/owl.carousel.js"></script>
+<script type="text/javascript" src="assets/js/masonry.pkgd.min.js"></script>
+
+<script type="text/javascript" src="assets/js/maps.js"></script>
+<script type="text/javascript" src="assets/js/custom.js"></script>
+
+</body>
+</html>
