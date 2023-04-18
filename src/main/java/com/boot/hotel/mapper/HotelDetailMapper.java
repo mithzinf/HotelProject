@@ -1,6 +1,7 @@
 package com.boot.hotel.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -19,4 +20,6 @@ public interface HotelDetailMapper {
 	public List<HotelPictureDTO> getHotelPicById(int hotel_id) throws Exception;
 	
 	public List<HotelFacilityInDTO> getHotelFacilityInById(int hotel_id) throws Exception;
+	
+	public List<String> searchHotelDetail(Map<String, Object> params) throws Exception;
 }

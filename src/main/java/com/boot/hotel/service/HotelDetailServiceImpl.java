@@ -1,6 +1,7 @@
 package com.boot.hotel.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,7 +42,14 @@ public class HotelDetailServiceImpl implements HotelDetailService{
 		return hotelDetailMapper.getHotelFacilityInById(hotel_id);
 	}
 
+	@Override
+	public List<String> searchHotelDetail(Map<String, Object> params) throws Exception {
+		
+		return hotelDetailMapper.searchHotelDetail(params);
+	}
 
+
+	
 
 
 

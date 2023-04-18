@@ -17,14 +17,16 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 </select>
 
 <select id="getHotelPicById" parameterType="int" resultType="com.boot.hotel.dto.HotelPictureDTO">
-	select picture_num,type,url from hotel_picture where hotel_id=#{hotel_id}
+	select hotel_id,picture_num,type,url from hotel_picture where hotel_id=#{hotel_id}
 </select>
 
 <select id="getHotelFacilityInById" parameterType="int" resultType="com.boot.hotel.dto.HotelFacilityDTO">
 	select * from hotel_facility_in where hotel_id=#{hotel_id}
 </select>
  
-
-
+<!-- parameterType: 매개변수의 성깔 : 매개변수 1개면 그 매개변수의 성질머리 적고 2개 이상이면 map -->
+<select id="searchHotelDetail" parameterType="map" resultType="map">
+	select url from hotel_picture where hotel_id=#{hotel_id} and type=#{type}
+</select>
 
 </mapper>
