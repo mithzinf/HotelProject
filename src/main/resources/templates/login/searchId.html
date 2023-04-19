@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html>
-<head>
-<base href="/" />
+<html layout:decorate="~{/layout/layout}">
+
 <meta charset="UTF-8">
-<title>아이디 찾기</title>
+
+<div layout:fragment="content" class="content-padding">
+
 <link rel="stylesheet" type="text/css" href="css/searchId.css"/>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<!-- 별도의 script도 생성 -->
+
+
 <style>
 @import url('https://fonts.googleapis.com/css?family=Gowun+Batang&display=swap');
 
@@ -20,6 +20,42 @@
 }
 
 </style>
+
+
+<div class="login-body">
+	<div class="login-container" id="login-container">
+		<div class="login-form-container login-sign-in-container">
+			<form action="#" name="myForm" method="post" class="login-form">
+				<h1 class="login-h1">아이디 찾기</h1>
+					<p class="login-p">이름</p>
+				<div class="login-div">
+					<input class="login-input" type="text" name="username"
+					placeholder="이름을 입력하세요.">
+				</div>
+					<p class="login-p">전화번호</p>
+				<div class="login-div">
+					<input class="login-input" type="text" name="tel1" style="width:24%;"/>
+					<span class="login-span">&nbsp;-&nbsp;</span>
+					<input class="login-input" type="text" name="tel2" style="width:28%;"/>
+					<span class="login-span">&nbsp;-&nbsp;</span>
+					<input class="login-input" type="text" name="tel3" style="width:28%;"/>
+				</div>
+					<br/><br/>
+				<div class="login-div">
+					<button class="login-button-btn2" onclick="sendIt();" style="padding:12px 24px;"> 찾기 </button>
+					&nbsp;
+					<button class="login-button-btn1" onclick="back();" style="padding:12px 20px;"> 뒤로가기 </button>
+				</div>
+					
+			</form>
+		</div>
+	</div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
 <script type="text/javascript">
 
@@ -124,46 +160,6 @@
 
 </script>
 
-
-</head>
-<body>
-
-
-<div class="container" id="container">
-	<div class="form-container sign-in-container">
-		<form action="#" name="myForm" method="post">
-			<h1>아이디 찾기</h1>
-			<br/>
-				<p>이름</p>
-				<div>
-				<input type="text" name="username" placeholder="이름을 입력하세요.">
-				</div>
-				<p>전화번호</p>
-				<div>
-				<input type="text" name="tel1" style="width:19%;"/>
-				-
-				<input type="text" name="tel2" style="width:19%;"/>
-				-
-				<input type="text" name="tel3" style="width:19%;"/>
-				</div>
-				<br>
-			<div>
-				<button class="btn2" onclick="sendIt();" style="padding:12px 24px;"> 찾기 </button>
-				&nbsp;
-				<button class="btn1" onclick="back();" style="padding:12px 20px;"> 뒤로가기 </button>
-			</div>
-				
-		</form>
-	</div>
-</div>
-
-
-
-<footer>
-	<p>
-		footer자리..
-	</p>
-</footer>
 
 </body>
 </html>

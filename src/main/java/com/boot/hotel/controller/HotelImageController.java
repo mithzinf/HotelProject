@@ -89,7 +89,7 @@ public class HotelImageController {
 		return mav;
 	}
 	
-	@GetMapping("/nav/index")
+	@RequestMapping(value = "/nav/index", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView navtest(HttpServletRequest request) throws Exception {
 		System.out.println("네비");
 		ModelAndView  mav = new ModelAndView();

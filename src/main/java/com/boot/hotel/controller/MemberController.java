@@ -102,7 +102,7 @@ public class MemberController {
 		SessionUser sessionUser = new SessionUser(dto2.getUserid(),dto2.getUsername());
 		httpSession.setAttribute("sessionUser", sessionUser);
 
-		mav.setViewName("redirect:/list");
+		mav.setViewName("redirect:/nav/index");
 		    
 		return mav;
 		
@@ -164,7 +164,7 @@ public class MemberController {
 		
 		ModelAndView mav = new ModelAndView();
 		
-		mav.setViewName("redirect:/list");
+		mav.setViewName("redirect:/nav/index");
 		
 		return mav;
 		
@@ -406,11 +406,13 @@ public class MemberController {
 	@RequestMapping(value = "/login/logout", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView logout() throws Exception{
 		
+		System.out.println("로그아웃 컨트롤러 진입");
+		
 		//로그인할때 올린 세션을 삭제
 		httpSession.invalidate();
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/list");
+		mav.setViewName("redirect:/nav/index");
 		
 		return mav;
 		
