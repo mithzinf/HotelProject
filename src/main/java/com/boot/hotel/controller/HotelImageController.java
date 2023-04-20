@@ -1,8 +1,6 @@
 package com.boot.hotel.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -79,19 +77,23 @@ public class HotelImageController {
 	}
 	
 	
-	@GetMapping("/hotel/test")
-	public ModelAndView test(HttpServletRequest request) throws Exception {
+	@GetMapping("/hotel/main1")
+	public ModelAndView test() throws Exception {
 		
-		ModelAndView  mav = new ModelAndView();
 		
-		mav.setViewName("hotel/hotelMain_test");
+		
+		
+		
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("hotel/hotelMain");
 		
 		return mav;
 	}
 	
 	@RequestMapping(value = "/nav/index", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView navtest(HttpServletRequest request) throws Exception {
-		System.out.println("네비");
+
 		ModelAndView  mav = new ModelAndView();
 		
 		mav.setViewName("layout/index");

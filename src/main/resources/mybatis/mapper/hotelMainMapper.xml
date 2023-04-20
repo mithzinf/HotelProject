@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boot.hotel.mapper.HotelMainMapper">
+
+<select id="getHotelMain" parameterType="int" resultType="map">
+	 SELECT h.hotel_name, h.category, hp.url,
+	 SUBSTR(addr1, 7, INSTR(addr1, '구') -6) as addr
+	 FROM hotel h
+     INNER JOIN hotel_picture hp ON h.hotel_id = hp.hotel_id
+     WHERE h.hotel_id = #{hotelId} AND hp.type = 'title'
+</select>
+
+
+<!-- 검색값 출력하는 쿼리문 -->
+<select id="searchMainHotelTest" parameterType="map" resultType="map">
+	select h.hotel_name, hi.hotel_information, hp.url
+	from hotel h
+	inner join hotel_info hi on h.hotel_id = hi.hotel_id
+	inner join hotel_picture hp on h.hotel_id = hp.hotel_id
+	where (hotel_name like '%' || #{searchValue} || '%'
+	or addr1 like '%' || #{searchValue} || '%') and hp.type = 'title'
+</select>
+
+</mapper>
