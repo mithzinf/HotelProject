@@ -16,7 +16,7 @@
                     </div>
                     <!--end left-->
                     
-	                    <div class="right" th:if="${session.sessionUser == null}">
+	                    <div class="right" th:if="${session.sessionUser == null || session.sessionUserRegister != null}">
 	                        <nav id="primary-nav">
 	                            <ul>
 	                                <li><a href="login/login">로그인</a></li>
@@ -33,17 +33,17 @@
 	                        </nav>
 	                        <!--end nav-->
 	                    </div>
-	                    <div class="right" th:if="${session.sessionUser != null}">
+	                    <div class="right" th:if="${session.sessionUser != null && session.sessionUserRegister == null}">
 	                        <nav id="primary-nav">
 	                            <ul>
 	                            	<li><strong>[ [[${session.sessionUser.name}]] ]</strong> 님 환영합니다! &nbsp;&nbsp;</li>
 	                                <li><a href="login/logout">로그아웃</a></li>
 	                                <li><a href="hotel/main" class="has-child">마이페이지</a>
 	                                    <ul class="child-nav">
-											<li><a href="hotel/main">내정보</a></li>
+											<li><a href="login/mypage">내정보</a></li>
 	                                        <li><a href="hotel/main">호텔 찜 목록</a></li>
 	                                        <li><a href="hotel/main">예약내역</a></li>
-	                                        <li><a href="hotel/main">회원탈퇴</a></li>
+	                                        <li><a href="login/delete">회원탈퇴</a></li>
 	                                    </ul>
 	                                </li> 
 	                                <li><a href="/nav/index" class="has-child">더보기</a>

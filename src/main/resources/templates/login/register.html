@@ -265,45 +265,56 @@
 			return;
 		}
 		
+		swal({
+			  title: "회원가입",
+			  text: "회원가입을 하시겠습니까?",
+			  icon: "warning",
+			  buttons: ["취소", "확인"],
+			  className: "text-center",
+		}).then((willregister) => {
+		    if (willregister) {
+		    	
+		    	//이미 가입된 전화번호가 있을시 오류창을 띄우는 ajax
+			    $.ajax({
+			        url: './login/telCheck',
+			        type: 'post',
+			        data: {tel1:str_tel1,tel2:str_tel2,tel3:str_tel3},
+			        success: function(result) {
+			            if(result!="unavailable") {
+			            	swal({
+			            		title: "회원가입 완료",
+			            		text: "회원가입이 완료되었습니다!",
+			            		icon: "success",
+			            		button: "로그인하기",
+			            		}).then(function() {
+			            			//비활성화된 아이디입력 input박스를 가입버튼을 누를때 활성화
+			            		    //그렇지 않으면 컨트롤러에서 값을 가져오지 못함
+			            			var input = document.getElementsByName("userid")[0];
+					                input.disabled = false;
+					                f.action="login/register_ok";
+					                f.submit();
+			            		});
+			            }
+			            else {
+			                swal({
+			  				  title: "전화번호 등록 오류",
+			  				  text: "이미 가입된 전화번호입니다. 다른 번호를 입력해주세요.",
+			  				  icon: "error",
+			  				  button: "확인",
+			  				});
+			            }
+			        },
+			    });
+			    event.preventDefault();
+		    	
+		    } else {
+		    	event.preventDefault();
+		    }
+
+		});
+		event.preventDefault();
 		
-		if (confirm("회원가입을 하시겠습니까?")) {
-		    
-			//이미 가입된 전화번호가 있을시 오류창을 띄우는 ajax
-		    $.ajax({
-		        url: './login/telCheck',
-		        type: 'post',
-		        data: {tel1:str_tel1,tel2:str_tel2,tel3:str_tel3},
-		        success: function(result) {
-		            if(result!="unavailable") {
-		            	swal({
-		            		title: "회원가입 완료",
-		            		text: "회원가입이 완료되었습니다!",
-		            		icon: "success",
-		            		button: "로그인하기",
-		            		}).then(function() {
-		            			//비활성화된 아이디입력 input박스를 가입버튼을 누를때 활성화
-		            		    //그렇지 않으면 컨트롤러에서 값을 가져오지 못함
-		            			var input = document.getElementsByName("userid")[0];
-				                input.disabled = false;
-				                f.action="login/register_ok";
-				                f.submit();
-		            		});
-		            }
-		            else {
-		                swal({
-		  				  title: "전화번호 등록 오류",
-		  				  text: "이미 가입된 전화번호입니다. 다른 번호를 입력해주세요.",
-		  				  icon: "error",
-		  				  button: "확인",
-		  				});
-		            }
-		        },
-		    });
-		    event.preventDefault();
-		} 
-		else {
-		    event.preventDefault();
-		}
+		
 		
 	}
 	
@@ -327,5 +338,4 @@
 	
 </script>
 
-</body>
 </html>

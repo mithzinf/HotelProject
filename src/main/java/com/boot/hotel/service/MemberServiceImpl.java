@@ -64,6 +64,18 @@ public class MemberServiceImpl implements MemberService{
 		return memberMapper.memberLogin(params);
 	}
 
+	@Override
+	public MemberDTO readDataMember(String userid) throws Exception {
+		return memberMapper.getReadDataMember(userid);
+	}
+	
+	@Override
+	public void memberDelete(String userid) throws Exception {
+		memberMapper.memberDelete(userid);
+	}
+
+	
+
 	
 
 

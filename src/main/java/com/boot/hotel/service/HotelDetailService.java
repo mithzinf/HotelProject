@@ -18,7 +18,7 @@ public interface HotelDetailService {
 	
 	public List<HotelFacilityInDTO> getHotelFacilityInById(int hotel_id) throws Exception;
 	
-	public List<String> searchHotelDetail(Map<String, Object> params) throws Exception;
+	public List<Map<String,Object>> searchHotelDetail(Map<String, Object> params) throws Exception;
 	
 	//List<String>이 뭘까? : List<String>은 HotelDetailService 인터페이스에서 'searchHotelDetail() 메서드가 반환하는 값의 타입이 
 	//List<String>이라는 것...... String값들을 담은 리스트를 반환하는 것을 의미한다...
