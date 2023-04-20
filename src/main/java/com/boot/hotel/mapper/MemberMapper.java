@@ -27,4 +27,8 @@ public interface MemberMapper {
 	
 	public MemberDTO memberLogin(Map<String, Object> params) throws Exception;
 	
+	public MemberDTO readDataMember(String userid) throws Exception;
+	
+	public void memberDelete(String userid) throws Exception;
+	
 }

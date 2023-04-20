@@ -95,6 +95,20 @@
 	cursor: pointer;
 }
 
+.login-button-btn3{
+	border-radius: 20px;
+	border: 1px solid #D3D3D3;
+	background-color: #D3D3D3;
+	color: #FFFFFF;
+	font-size: 15px;
+	font-weight: bold;
+	padding: 12px 15px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	transition: transform 80ms ease-in;
+	cursor: pointer;
+}
+
 .login-button:active {
 	transform: scale(0.95);
 }

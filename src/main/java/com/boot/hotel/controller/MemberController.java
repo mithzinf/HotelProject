@@ -128,7 +128,7 @@ public class MemberController {
 		System.out.println("컨트롤러에서 약관동의 화면 띄우기");
 		
 		ModelAndView mav = new ModelAndView();
-			
+		
 		mav.setViewName("login/terms");
 			
 		return mav;
@@ -149,9 +149,19 @@ public class MemberController {
 		//가져온 세션값의 아이디가 등록된 아이디인지 판별
 		id = memberService.checkMemberId(sessionUser.getId());
 		
-		
 		//미가입된 계정이면 회원가입 페이지로
 		if(id==null) {
+			
+			String oauthid = sessionUser.getId();
+			String oauthname = sessionUser.getName();
+			
+			//기존 세션 삭제
+			httpSession.invalidate();
+			
+			//회원가입 전용 세션 객체를 생성후 등록, 로그인 세션과 다름
+			//그렇지 않으면 회원가입 도중 메인으로 넘어가도 로그인 상태가 되기 때문에
+			SessionUser sessionUserRegister = new SessionUser(oauthid,oauthname);
+			httpSession.setAttribute("sessionUserRegister", sessionUserRegister);
 			
 			ModelAndView mav = new ModelAndView();
 			
@@ -180,17 +190,17 @@ public class MemberController {
 	public ModelAndView register() throws Exception{
 		System.out.println("회원가입창 띄우기");
 		
-		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+		SessionUser sessionUserRegister = (SessionUser) httpSession.getAttribute("sessionUserRegister");
 		
 		//oauth 회원가입 요청일시 
-		if(sessionUser!=null) {
+		if(sessionUserRegister!=null) {
 			
 			System.out.println("소셜 회원가입창 진입");
 			ModelAndView mav = new ModelAndView();
 			
 			//세션에 있는 값을 자동으로 input박스에 넣기 위함
-			mav.addObject("oauthId", sessionUser.getId());
-	        mav.addObject("oauthName", sessionUser.getName());
+			mav.addObject("oauthId", sessionUserRegister.getId());
+	        mav.addObject("oauthName", sessionUserRegister.getName());
 			mav.setViewName("login/register_oauth");
 			
 			return mav;
@@ -423,57 +433,74 @@ public class MemberController {
 	
 	
 	
-	//=======================================================================================
 	
 	
-	//임시 로그인 페이지 list 띄움
-	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView list() throws Exception{
-
-		System.out.println("리스트 출력 컨트롤러 진입");
+	//=======================================작업중..================================================
+	//=======================================작업중..================================================
+	//=======================================작업중..================================================
+	
+	
+	//로그아웃 처리
+	@RequestMapping(value = "/login/mypage", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView mypage() throws Exception{
+		
+		System.out.println("마이페이지 컨트롤러 진입");
+		
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+		
+		MemberDTO dto1 = memberService.getReadDataMember(sessionUser.getId());
+		
+		System.out.println(dto1);
+		
 		
 		ModelAndView mav = new ModelAndView();
-		
-		if(httpSession.getAttribute("sessionUser")!=null) {
-			
-			SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
-			
-			String userid = sessionUser.getId();
-			String username = sessionUser.getName();
-			
-			mav.addObject("userid", userid);
-			mav.addObject("username", username);
-			
-		}
-		
-		
-		mav.setViewName("login/list");
+		mav.setViewName("login/mypage");
 		
 		return mav;
 		
 	}
 	
-	@GetMapping("/login/main")
-	public ModelAndView main() throws Exception{
+	
+	
+	
+	
+	
+	//===============================================================================================
+	//===============================================================================================
+	//===============================================================================================
+	
+	
+	
+	
+	
+	
+	//회원탈퇴 페이지 진입
+	@RequestMapping(value = "/login/delete", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView delete() throws Exception{
 		
-		System.out.println("임시 메인 페이지 컨트롤러 진입");
+		System.out.println("회원탈퇴 컨트롤러 진입");
+		
 		ModelAndView mav = new ModelAndView();
-		
-		if(httpSession.getAttribute("sessionUser")!=null) {
-			
-			SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
-			
-			String userid = sessionUser.getId();
-			String username = sessionUser.getName();
-			
-			mav.addObject("userid", userid);
-			mav.addObject("username", username);
-			
-		}
-		
-		mav.setViewName("login/maintest");
+		mav.setViewName("login/delete");
 		
 		return mav;
+		
+	}
+	
+	
+	//회원탈퇴 처리
+	@RequestMapping(value = "/login/delete_ok", method = { RequestMethod.GET, RequestMethod.POST })
+	public String delete_ok() throws Exception{
+		
+		System.out.println("회원탈퇴 처리 컨트롤러 진입");
+		
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+		
+		memberService.memberDelete(sessionUser.getId());
+		
+		httpSession.invalidate();
+		
+		return "delete";
 		
 	}
 	

@@ -47,4 +47,19 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 	select userid, username from member where userid=#{userid} and pwd=#{pwd}
 </select>
 
+<select id="readDataMember" parameterType="String" resultType="com.boot.hotel.dto.MemberDTO">
+	select userid, username, birth, point, regdate, auth,
+	substr(email, 1, instr(email,'@') -1) as email1,
+	substr(email, instr(email,'@') +1) as email2,
+	substr(tel, 1, instr(tel,'-') -1) as tel1,
+	substr(tel, instr(tel,'-',1,1) +1, instr(tel,'-',1,2) -instr(tel,'-',1,1) -1) as tel2,
+	substr(tel, instr(tel,'-',1,2) +1 ) as tel3
+	from member where userid=#{userid}
+</select>
+
+
+<delete id="memberDelete" parameterType="String">
+	delete from member where userid=#{userid}
+</delete>
+
 </mapper>

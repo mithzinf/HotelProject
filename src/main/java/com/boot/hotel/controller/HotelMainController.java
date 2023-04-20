@@ -9,6 +9,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +25,7 @@ public class HotelMainController {
 	private HotelMainService hotelMainService;
 
 	//호텔 메인페이지 진입
-	@GetMapping("/hotel/main")
+	@RequestMapping(value = "/hotel/main", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView main() throws Exception {
 		
 		ModelAndView mav = new ModelAndView();
