@@ -14,12 +14,17 @@
 }
 
 .login-container {
-
 	max-width: 500px;
-	min-height: 750px;
-	
+	min-height: 750px;	
 }
 
+.login-p {
+	margin-top: 22px;
+}
+
+.login-input[type="text"]{
+	font-weight: 1000;
+}
 </style>
 
 <div class="login-body">
@@ -28,36 +33,39 @@
 			<form action="" name="myForm" method="post" class="login-form">
 			<br/>
 				<h1 class="login-h1">회원 정보</h1>
-				<br/><br/>
-					<p class="login-p">아이디</p>
-					<input class="login-input" type="text" name="userid" disabled="disabled"/>	
 				<br/>
+					<p class="login-p">아이디 ([[${dto.auth}]])</p> 
+					<input class="login-input" type="text" name="userid" disabled="disabled" th:value="${dto.userid}"/>	
+	
 					<p class="login-p">이름</p>
-					<input class="login-input" type="text" name="username" disabled="disabled">
-				<br/>
+					<input class="login-input" type="text" name="username" disabled="disabled" th:value="${dto.username}">
+				
 					<p class="login-p">생년월일</p>
-				<input class="login-input" type="text" name="birth" disabled="disabled">
-				<br/>
+				<input class="login-input" type="text" name="birth" disabled="disabled" th:value="${dto.birth}">
+				
 					<p class="login-p" disabled="disabled">이메일</p>
 				<div>
-					<input class="login-input" type="text" name="email1" style="width:32%;" disabled="disabled"/>
+					<input class="login-input" type="text" name="email1" style="width:32%;" disabled="disabled" th:value="${dto.email1}"/>
 					<span class="login-span">@</span>
-					<input class="login-input" type="text" name="email2" style="width:32%;" disabled="disabled"/>
+					<input class="login-input" type="text" name="email2" style="width:32%;" disabled="disabled" th:value="${dto.email2}"/>
 				</div>
-				<br/>
+				
 					<p class="login-p">전화번호</p>
 				<div>
-					<input class="login-input" type="text" name="tel1" style="width:17%;" disabled="disabled"/>
+					<input class="login-input" type="text" name="tel1" style="width:17%;" disabled="disabled" th:value="${dto.tel1}"/>
 					<span class="login-span">&nbsp;-&nbsp;</span>
-					<input class="login-input" type="text" name="tel2" style="width:20%;" disabled="disabled"/>
+					<input class="login-input" type="text" name="tel2" style="width:20%;" disabled="disabled" th:value="${dto.tel2}"/>
 					<span class="login-span">&nbsp;-&nbsp;</span>
-					<input class="login-input" type="text" name="tel3" style="width:20%;" disabled="disabled"/>
+					<input class="login-input" type="text" name="tel3" style="width:20%;" disabled="disabled" th:value="${dto.tel3}"/>
 				</div>
+				
+				<p class="login-p">가입날짜</p>
+					<input class="login-input" type="text" name="userid" disabled="disabled" th:value="${dto.regdate}"/>	
 				<br/><br/>
 				<div>
 					<button class="login-button-btn2" onclick="sendIt();" style="padding:12px 25px;"> 정보수정 </button>
 					&nbsp;
-					<button class="login-button-btn3" onclick="back();" style="padding:12px 30px;"> 회원탈퇴 </button>
+					<button class="login-button-btn3" onclick="getout();" style="padding:12px 30px;"> 회원탈퇴 </button>
 				</div>
 					
 			</form>
@@ -71,18 +79,18 @@
 <script type="text/javascript">
 
 	
-	function sendit() {
+	function sendIt() {
 		
 		var f = document.myForm;
-		f.action="login/mypage";
+		f.action="login/update";
 		f.submit();
 		
 	}
 	
-	function back() {
-		
+	function getout() {
+
 		var f = document.myForm;
-		f.action="login/mypage";
+		f.action="login/delete";
 		f.submit();
 		
 	}

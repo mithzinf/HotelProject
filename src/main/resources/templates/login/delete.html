@@ -30,11 +30,6 @@ p {
 	margin-bottom: 20px;
 }
 
-ul {
-	opacity: 1;
-	color: #000;
-}
-
 img {
 	width:20px;
 	height:20px;
@@ -56,7 +51,7 @@ img {
 				<p style="font-size: 24px;">이제 더 가시면..</p>
 				<p style="color: red; font-size: 28px;">혜택이 영영 사라져요</p>
 				<br/><br/>
-				<ul style="text-align: left;">
+				<ul style="text-align: left; opacity: 1; color: #000;">
 					<li style="margin-bottom: 12px;">탈퇴하신 뒤에는 <strong>적립 포인트 복구가 불가능합니다.</strong></li>
 					<li style="margin-bottom: 12px;"><strong>등록된 리뷰는 자동으로 삭제되지 않습니다.</strong> 탈퇴 전 개별적으로 삭제해 주세요.</li>
 					<li style="margin-bottom: 12px;">동일한 아이디로 재가입은 가능하나, 계정 정보 및 찜 목록 등 서비스 이용정보는 복구가 불가합니다.</li>
@@ -72,7 +67,7 @@ img {
 				</div>
 				<br/>
 				<div>
-					<button class="login-button-btn3" onclick="sendIt();" style="padding:12px 25px;" id="delete"> 회원탈퇴 </button>
+					<button class="login-button-btn3" onclick="sendIt();" style="padding:12px 25px;" id="delete" disabled="disabled"> 회원탈퇴 </button>
 					&nbsp;
 					<button class="login-button-btn1" onclick="back();" style="padding:12px 30px;"> 탈퇴취소 </button>
 				</div>
@@ -131,7 +126,7 @@ img {
 		
 		swal({
 			  title: "회원탈퇴",
-			  text: "탈퇴를 하시게 되면 회원 데이터를 복구 할 수 없습니다. \n정말 탈퇴하시겠습니까?",
+			  text: "탈퇴하시게 되면 두 번 다시 회원 데이터를 복구할 수 없습니다. \n정말 탈퇴하시겠습니까?",
 			  icon: "warning",
 			  buttons: ["취소", "확인"],
 			  className: "text-center",
@@ -155,8 +150,7 @@ img {
 		    	});
 		    	
 		    } else {
-		    	f.action="hotel/main";
-		    	f.submit();
+		    	
 		    }
 
 		});

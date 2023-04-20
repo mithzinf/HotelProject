@@ -315,14 +315,37 @@ public class MemberController {
 	@PostMapping("/login/telCheck")
 	public String emailCheck(@RequestParam("tel1") String tel1,
 			@RequestParam("tel2") String tel2, @RequestParam("tel3") String tel3) throws Exception{
-
-		System.out.println("회원가입시 전화번호 체크 컨트롤러 진입");
 		
 		StringBuilder sb = new StringBuilder();
 		
 		String tel = sb.append(tel1).append("-").append(tel2).append("-").append(tel3).toString();
 		
-		String result = memberService.checkMemberTel(tel);
+		String result = "";
+		
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+		
+		if(sessionUser!=null) {
+			
+			System.out.println("회원 정보 수정시 전화번호 체크 컨트롤러 진입");
+			
+			Map<String, Object> paramMap = new HashMap<>();
+			paramMap.put("userid", sessionUser.getId());
+			paramMap.put("tel",tel);
+			
+			//가입된 전화번호를 찾되, 기존에 등록된 자신의 전화번호는 수정되게 해야한다.
+			result = memberService.checkMemberTelUpdate(paramMap);
+			
+			if(result!=null) {
+				return "unavailable";
+			}
+			
+			return tel;
+			
+		}
+		
+		System.out.println("회원가입시 전화번호 체크 컨트롤러 진입");
+		
+		result = memberService.checkMemberTel(tel);
 		
 		//이미 가입된 전화번호일시 ajax에 이미 가입된 번호라고 송신
 		if(result!=null) {
@@ -331,8 +354,7 @@ public class MemberController {
 		
 		//아니면 가입 가능
 		return tel;
-		
-			
+
 	}
 	
 	//아이디 찾기 페이지 진입
@@ -422,11 +444,11 @@ public class MemberController {
 		//로그인할때 올린 세션을 삭제
 		httpSession.invalidate();
 		
-		String referer = request.getHeader("Referer");
+		//String referer = request.getHeader("Referer");
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:" + referer);
-		
+		//mav.setViewName("redirect:" + referer);
+		mav.setViewName("redirect:/hotel/main");
 		return mav;
 		
 	}
@@ -440,7 +462,7 @@ public class MemberController {
 	//=======================================작업중..================================================
 	
 	
-	//로그아웃 처리
+	//마이페이지 진입
 	@RequestMapping(value = "/login/mypage", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView mypage() throws Exception{
 		
@@ -448,12 +470,20 @@ public class MemberController {
 		
 		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
 		
-		MemberDTO dto1 = memberService.getReadDataMember(sessionUser.getId());
+		MemberDTO dto = memberService.getReadDataMember(sessionUser.getId());
 		
-		System.out.println(dto1);
+		String[] email = dto.getEmail().split("@");
+		dto.setEmail1(email[0]);
+		dto.setEmail2(email[1]);
 		
+		String[] tel = dto.getTel().split("-");
+		dto.setTel1(tel[0]);
+		dto.setTel2(tel[1]);
+		dto.setTel3(tel[2]);
 		
 		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("dto",dto);
 		mav.setViewName("login/mypage");
 		
 		return mav;
@@ -461,8 +491,88 @@ public class MemberController {
 	}
 	
 	
+	//회원 정보 수정 페이지 진입
+	@RequestMapping(value = "/login/update", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView update() throws Exception{
+		
+		System.out.println("회원 정보 수정 페이지 컨트롤러 진입");
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+		
+		MemberDTO dto = memberService.getReadDataMember(sessionUser.getId());
+		
+		String[] email = dto.getEmail().split("@");
+		dto.setEmail1(email[0]);
+		dto.setEmail2(email[1]);
+		
+		String[] tel = dto.getTel().split("-");
+		dto.setTel1(tel[0]);
+		dto.setTel2(tel[1]);
+		dto.setTel3(tel[2]);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("dto",dto);
+		
+		System.out.println(dto.getAuth());
+		
+		if(dto.getAuth().equals("소셜회원")) {
+			
+			mav.setViewName("login/update_oauth");
+			
+			return mav;
+			
+		}
+		
+		mav.setViewName("login/update");
+		
+		return mav;
+		
+	}
 	
 	
+	//일반 회원정보 수정 처리
+	@PostMapping("/login/update_ok")
+	public ModelAndView update_ok(MemberDTO dto) throws Exception{
+		
+		System.out.println("일반 회원정보 수정 처리 컨트롤러 진입");
+		
+		ModelAndView mav = new ModelAndView();
+		
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+		
+		dto.setUserid(sessionUser.getId());
+		
+		memberService.memberUpdate(dto);
+		
+		System.out.println("일반 회원정보 수정 성공!!");
+		
+		mav.setViewName("redirect:/login/mypage");
+		
+		return mav;
+		
+	}
+	
+	//회원정보 수정 처리
+	@PostMapping("/login/update_ok_oauth")
+	public ModelAndView update_ok_oauth(MemberDTO dto) throws Exception{
+		
+		System.out.println("소셜 회원정보 수정 처리 컨트롤러 진입");
+		ModelAndView mav = new ModelAndView();
+		
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+		
+		dto.setUserid(sessionUser.getId());
+		
+		memberService.memberUpdateOauth(dto);
+		
+		System.out.println("소셜 회원정보 수정 성공!!");
+		
+		mav.setViewName("redirect:/login/mypage");
+		
+		return mav;
+		
+	}
+		
 	
 	
 	//===============================================================================================

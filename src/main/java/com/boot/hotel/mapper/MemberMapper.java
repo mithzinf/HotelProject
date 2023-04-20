@@ -19,6 +19,8 @@ public interface MemberMapper {
 	
 	public String checkMemberTel(String tel) throws Exception;
 	
+	public String checkMemberTelUpdate(Map<String, Object> params) throws Exception;
+	
 	public MemberDTO getReadDataMember(String userid) throws Exception;
 	
 	public String searchMemberId(Map<String, Object> params) throws Exception;
@@ -28,6 +30,10 @@ public interface MemberMapper {
 	public MemberDTO memberLogin(Map<String, Object> params) throws Exception;
 	
 	public MemberDTO readDataMember(String userid) throws Exception;
+	
+	public void memberUpdate(MemberDTO dto) throws Exception;
+	
+	public void memberUpdateOauth(MemberDTO dto) throws Exception;
 	
 	public void memberDelete(String userid) throws Exception;
 	

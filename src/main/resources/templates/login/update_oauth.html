@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html layout:decorate="~{/layout/layout}">
+
+<meta charset="UTF-8">
+
+<div layout:fragment="content" class="content-padding">
+
+<link rel="stylesheet" type="text/css" href="css/register.css"/>
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Gowun+Batang&display=swap');
+.swal-footer {
+	text-align: center;
+}
+
+.login-container {
+	max-width: 500px;
+	min-height: 550px;	
+}
+
+.login-p {
+	margin-top: 22px;
+}
+
+.login-input[type="text"]{
+	font-weight: 1000;
+}
+</style>
+
+<div class="login-body">
+	<div class="login-container" id="login-container">
+		<div class="login-form-container login-sign-in-container">
+			<form action="" name="myForm" method="post" class="login-form">
+			<br/>
+				<h1 class="login-h1">회원 정보 수정</h1>
+				<br/>
+					<p class="login-p">이름</p>
+					<input class="login-input" type="text" name="username"  th:value="${dto.username}">
+				
+					<p class="login-p" >이메일</p>
+				<div>
+					<input class="login-input" type="text" name="email1" style="width:32%;"  th:value="${dto.email1}"/>
+					<span class="login-span">@</span>
+					<input class="login-input" type="text" name="email2" style="width:32%;"  th:value="${dto.email2}"/>
+				</div>
+				
+					<p class="login-p">전화번호</p>
+				<div>
+					<input class="login-input" type="text" name="tel1" style="width:17%;"  th:value="${dto.tel1}"/>
+					<span class="login-span">&nbsp;-&nbsp;</span>
+					<input class="login-input" type="text" name="tel2" style="width:20%;"  th:value="${dto.tel2}"/>
+					<span class="login-span">&nbsp;-&nbsp;</span>
+					<input class="login-input" type="text" name="tel3" style="width:20%;"  th:value="${dto.tel3}"/>
+				</div>
+				
+				<br/><br/>
+				<div>
+					<button class="login-button-btn2" onclick="sendIt();" style="padding:12px 25px;"> 수정하기 </button>
+					&nbsp;
+					<button class="login-button-btn1" onclick="getout();" style="padding:12px 30px;"> 취소하기 </button>
+				</div>
+					
+			</form>
+		</div>
+	</div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script type="text/javascript">
+
+	
+	function sendIt() {
+		
+		var f = document.myForm;
+
+		//영어+숫자 혼합 강제 정규화 표현식
+		var alphanumeric = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/;
+		//한글 강제 정규화 표현식
+		var koreanOnly = /^[가-힣]+$/;
+		
+		var event = window.event || arguments.callee.caller.arguments[0];
+		
+		
+		//이름 입력 오류메시지
+		str_name = f.username.value;
+		str_name = str_name.trim();
+		
+		if(str_name==""){
+			swal({
+				  title: "이름 입력오류",
+				  text: "이름을 입력하세요.",
+				  icon: "error",
+				  button: "확인",
+				});
+			event.preventDefault();
+			return;
+		}
+		
+		if(!koreanOnly.test(str_name)){
+			swal({
+				  title: "이름 입력오류",
+				  text: "이름은 한글만 입력 가능합니다.",
+				  icon: "error",
+				  button: "확인",
+				});
+			event.preventDefault();
+			return;
+		}
+		
+		//이메일 입력 오류메시지
+		str_email1 = f.email1.value;
+		str_email1 = str_email1.trim();
+		str_email2 = f.email2.value;
+		str_email2 = str_email2.trim();
+		
+		if(str_email1=="" || str_email2==""){
+			
+			swal({
+				  title: "이메일 입력오류",
+				  text: "이메일을 입력하세요.",
+				  icon: "error",
+				  button: "확인",
+				});
+			event.preventDefault();
+			return;
+		}
+		
+		
+		//전화번호 입력 오류메시지
+		str_tel1 = f.tel1.value;
+		str_tel1 = str_tel1.trim();
+		str_tel2 = f.tel2.value;
+		str_tel2 = str_tel2.trim();
+		str_tel3 = f.tel3.value;
+		str_tel3 = str_tel3.trim();
+		
+		if(str_tel1=="" || str_tel2=="" || str_tel3==""){
+			
+			swal({
+				  title: "전화번호 입력오류",
+				  text: "전화번호를 입력하세요.",
+				  icon: "error",
+				  button: "확인",
+				});
+			event.preventDefault();
+			return;
+		}
+		
+		swal({
+			  title: "회원정보수정",
+			  text: "입력하신 값으로 회원정보를 수정하시겠습니까?",
+			  icon: "warning",
+			  buttons: ["취소", "확인"],
+			  className: "text-center",
+		}).then((willregister) => {
+		    if (willregister) {
+		    	
+		    	//이미 가입된 전화번호가 있을시 오류창을 띄우는 ajax
+			    $.ajax({
+			        url: './login/telCheck',
+			        type: 'post',
+			        data: {tel1:str_tel1,tel2:str_tel2,tel3:str_tel3},
+			        success: function(result) {
+			            if(result!="unavailable") {
+			            	swal({
+			            		title: "회원정보 수정 완료",
+			            		text: "회원정보 수정이 완료되었습니다!",
+			            		icon: "success",
+			            		button: "내정보로",
+			            		}).then(function() {
+					                f.action="login/update_ok_oauth";
+					                f.submit();
+			            		});
+			            }
+			            else {
+			                swal({
+			  				  title: "전화번호 등록 오류",
+			  				  text: "이미 가입된 전화번호입니다. 다른 번호를 입력해주세요.",
+			  				  icon: "error",
+			  				  button: "확인",
+			  				});
+			            }
+			        },
+			    });
+			    event.preventDefault();
+		    	
+		    } else {
+		    	event.preventDefault();
+		    }
+
+		});
+		event.preventDefault();
+		
+	}
+	
+	
+	
+	
+	
+	
+	function getout() {
+
+		var f = document.myForm;
+		f.action="login/mypage";
+		f.submit();
+		
+	}
+
+
+	
+</script>
+
+</html>

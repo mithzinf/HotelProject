@@ -37,8 +37,8 @@ public class WebSecurityConfig {
 				.antMatchers("/**","/hotel/**").permitAll()
 				.anyRequest().authenticated()
 			.and()
-			.logout().logoutUrl("/login/logout").logoutSuccessUrl("/")
-			.deleteCookies("JESSIONID").invalidateHttpSession(true).logoutSuccessHandler(new RefererLogoutSuccessHandler())
+			.logout().logoutUrl("/logout").logoutSuccessUrl("/login/logout")
+			.deleteCookies("JESSIONID").invalidateHttpSession(false)
 			.and()
 			.oauth2Login()
 				.defaultSuccessUrl("/login/oauth_select")
@@ -53,21 +53,6 @@ public class WebSecurityConfig {
 	
 	
 	
-	//oauth2 로그아웃시 기존 url을 유지하기 위한 클래스
-	public class RefererLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
-
-	    public RefererLogoutSuccessHandler() {
-	        super();
-	    }
-
-	    @Override
-	    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
-	            throws IOException, ServletException {
-	        String refererUrl = request.getHeader("Referer");
-	        super.setDefaultTargetUrl(refererUrl);
-	        super.onLogoutSuccess(request, response, authentication);
-	    }
-	}
 	
 	
 }

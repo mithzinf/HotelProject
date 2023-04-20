@@ -43,6 +43,11 @@ public class MemberServiceImpl implements MemberService{
 	public String checkMemberTel(String tel) throws Exception {
 		return memberMapper.checkMemberTel(tel);
 	}
+	
+	@Override
+	public String checkMemberTelUpdate(Map<String, Object> params) throws Exception {
+		return memberMapper.checkMemberTelUpdate(params);
+	}
 
 	@Override
 	public MemberDTO getReadDataMember(String userid) throws Exception {
@@ -70,10 +75,26 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	@Override
+	public void memberUpdate(MemberDTO dto) throws Exception {
+		memberMapper.memberUpdate(dto);
+	}
+	
+	@Override
+	public void memberUpdateOauth(MemberDTO dto) throws Exception {
+		memberMapper.memberUpdateOauth(dto);
+		
+	}
+	
+	@Override
 	public void memberDelete(String userid) throws Exception {
 		memberMapper.memberDelete(userid);
 	}
 
+	
+
+	
+
+	
 	
 
 	

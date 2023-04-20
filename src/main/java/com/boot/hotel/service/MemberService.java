@@ -21,6 +21,9 @@ public interface MemberService {
 	//전화번호 중복체크 처리
 	public String checkMemberTel(String tel) throws Exception;
 	
+	//전화전호 중복체크 처리 (회원 정보 수정)
+	public String checkMemberTelUpdate(Map<String, Object> params) throws Exception;
+	
 	//소셜 로그인 버튼 클릭시 로그인인지 회원가입인지 판별하기 위한 데이터 출력
 	public MemberDTO getReadDataMember(String userid) throws Exception;
 	
@@ -35,6 +38,12 @@ public interface MemberService {
 	
 	//마이페이지 회원정보 띄우기
 	public MemberDTO readDataMember(String userid) throws Exception;
+	
+	//회원 정보 수정
+	public void memberUpdate(MemberDTO dto) throws Exception;
+	
+	//회원 정보 수정 (oauth)
+	public void memberUpdateOauth(MemberDTO dto) throws Exception;
 	
 	//회원 탈퇴
 	public void memberDelete(String userid) throws Exception;
