@@ -20,7 +20,7 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 	select hotel_id,picture_num,type,url from hotel_picture where hotel_id=#{hotel_id}
 </select>
 
-<select id="getHotelFacilityInById" parameterType="int" resultType="com.boot.hotel.dto.HotelFacilityDTO">
+<select id="getHotelFacilityInById" parameterType="int" resultType="com.boot.hotel.dto.HotelFacilityInDTO">
 	select * from hotel_facility_in where hotel_id=#{hotel_id}
 </select>
  

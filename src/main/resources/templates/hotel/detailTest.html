@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8"/>
+
 <title>객실 상세 페이지 사진 테스트</title>
 
 <style>
@@ -14,18 +15,6 @@ img{
 
 <h1>이미지 업로드 테스트</h1>
 
-<b>ver0.img = src로 지정한 이미지 띄우기..</b>
-<img src="/hotel/1_title.jpg"/>
-
-
-<br/><br/>
---------------------------------------------------------------------
-
-
-<b>ver1. String pic에 대입한 사진을 컨트롤러에 받아와서 띄우기</b>
-<b>주소랑 변수랑 같이 쓸 때는..! 양옆으로 구분자 | 써용</b><br/>
-
-<img th:src="@{|/hotel/${pic}|}"/>
 
 <br/><br/>
 --------------------------------------------------------------------
@@ -33,23 +22,31 @@ img{
 
 
 
-<b>ver2. hotel_id 100의 호텔의 모든 스위트룸의 사진을 받아와서 띄우기</b>
+<b>ver2. hotel_id 1의 호텔의 모든 스위트룸의 사진을 받아와서 띄우기</b>
 <b>타임리프 조건문 th:if와 조건문 th:each를 사용함</b><br/>
+
+
+
+
+                   	<div th:if="${#lists.size(searchHotelDetail)}!=null" th:each="dto:${searchHotelDetail}">
+						<img th:src="@{|/hotel/${dto.URL}|}"/>
 
 <!-- 타임리프 조건문(th:if)과 반복문(th:each)을 사용, 여기서 detailSweet의 반환값은
 [{URL=4_sweet1.jpg}, {URL=4_sweet2.jpg}, {URL=4_sweet3.jpg}]
 이므로 주소에 결과를 하나씩 넣기위해 dto.URL로 지정해주면 됨, 질문..그런데 왜 URL이어야 할까?
 여기서 dto는 임의로 지정하는 값, for문의 i와 비슷 -->
-
+<!-- 
 <div th:if="${#lists.size(searchHotelDetail)}!=null" th:each="dto:${searchHotelDetail}">
 	<img th:src="@{|/hotel/${dto.URL}|}"/>
 </div>
-
+ -->
 
 
 
 </head>
 <body>
+
+
 
 </body>
 </html>
