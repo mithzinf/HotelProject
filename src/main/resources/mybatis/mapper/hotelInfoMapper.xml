@@ -6,30 +6,61 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.boot.hotel.mapper.HotelInfoMapper">
 
-<!-- 리스트 불러오기  -->
+<!-- 리스트 불러오기 -->
+
 <select id="getHotelList1" resultType="com.boot.hotel.dto.HotelDTO" parameterType="map">
-    SELECT * FROM hotel
+ 		SELECT * from (
+  	    select rownum rnum,data.* from (
+  	    select * from hotel where ${searchKey} like '%' || #{searchValue} || '%'
+  	    order by hotel_id asc) data)
+    <![CDATA[
+        where rnum>=#{start} and rnum<=#{end}
+    ]]> 
 </select>
- 
+
 <select id="getHotelList2" resultType="com.boot.hotel.dto.HotelInfoDTO" parameterType="map">
-    SELECT hotel_id,standard,hotel_information 
-    FROM hotel_info
+    SELECT hotel_id, standard, sweet, hotel_information FROM hotel_Info where 
+    <if test="hotel_id != null">
+        hotel_id = #{hotel_id}
+    </if>
+    <if test="hotel_id == null">
+        1=1
+    </if>
 </select>
 
-<select id="getHotelList3" resultType="com.boot.hotel.dto.HotelPictureDTO" parameterType="map">
-    SELECT hotel_id, picture_num FROM hotel_picture
+
+<select id="getHotelList3" parameterType="map" resultType="com.boot.hotel.dto.HotelPictureDTO">
+  select hotel_id, url from hotel_picture where 
+  <if test="hotel_id != null">
+    hotel_id = #{hotel_id} and 
+  </if>
+  type='title'
+  <if test="hotel_id == null">
+    and hotel_id is null
+  </if>
 </select>
 
-<select id="getHotelCount" resultType="int">
-    SELECT COUNT(*) FROM hotel 
+
+
+<!-- 검색값 출력하는 쿼리문 -->
+<select id="searchMainHotelTest" parameterType="map" resultType="map">
+	select h.hotel_name, hi.hotel_information, hp.url
+	from hotel h
+	inner join hotel_info hi on h.hotel_id = hi.hotel_id
+	inner join hotel_picture hp on h.hotel_id = hp.hotel_id
+	where (hotel_name like '%' || #{searchValue} || '%'
+	or addr1 like '%' || #{searchValue} || '%') and hp.type = 'title'
 </select>
 
-<!-- <select id="getHotelList4" resultType="com.boot.hotel.dto.ReviewDTO" > -->
-<!--     SELECT hotel_id, review_num FROM review -->
-<!-- </select> -->
 
-<!-- <select id="getHotelList5" resultType="com.boot.hotel.dto.ReviewScoreDTO" > -->
-<!--     SELECT hotel_id,ave FROM review_score -->
-<!-- </select> -->
+
+
+
+<select id="getHotelCount" parameterType="map" resultType="int">
+  	select nvl(count(*),0) FROM hotel 
+    where ${searchKey} like '%' || #{searchValue} || '%'
+</select>
+
+
 
 </mapper>
