@@ -8,8 +8,9 @@ import lombok.ToString;
 public class HotelPictureDTO {
 	
 	private int picture_num;
-	private String hotel_id;
+	private int hotel_id;
 	private String type;
 	private String url;
+
 	
 }

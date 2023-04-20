@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th="htpp://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +14,16 @@
     <link rel="stylesheet" href="/assets/css/owl.carousel.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <script src="https://kit.fontawesome.com/fe3b2ac5d6.js" crossorigin="anonymous"></script>
+    
+<style>
+    .selectField {
+        height: 20px; /* 높이 설정 */
+        font-size: 15px; /* 글자 크기 설정 */
+        width: 100px; /* 너비 설정 */
+    }
+</style>
+
+
 
 <title>호텔</title>
 
@@ -21,8 +31,8 @@
 
 <script type="text/javascript">
   function sendIt() {
-    var f = document.searchForm;
-    f.action = "/hotel/hotelSearchList";
+    var f = document.getElementById("searchForm");
+    f.action = "/hotel/hotelList";
     f.submit();
   }
 </script>
@@ -46,7 +56,7 @@
 									<div class="element"></div>
 									<!--end element-->
 									<div class="element">
-										<a onclick="location.href='/login';" data-toggle="modal"
+										<a onclick="location.href='/login/login';" data-toggle="modal"
 											data-tab="true" data-target="#sign-in-register-modal">로그인</a>
 									</div>
 									<!--end element-->
@@ -58,10 +68,9 @@
 									<!--end element-->
 									<div class="element">
 										<select>
-											<option>마이페이지</option>
-											<option>예약확인</option>
-											<option>정보조회</option>
-											<option>탈퇴하기</option>
+											<option>고객페이지</option>
+											<option>문의게시판</option>
+											<option>공지조회</option>
 										</select>
 									</div>
 									<!--end element-->
@@ -88,12 +97,11 @@
 								<ul>
 									<li><a href="index.html">메인으로</a></li>
 									<li><a href="#">프로모션</a></li>
-									<li><a href="#" class="has-child">고객페이지</a>
+									<li><a href="#" class="has-child">마이페이지</a>
 										<ul class="child-nav">
-											<li><a href="faq.html">문의게시판</a></li>
-											<li><a href="grid.html">더보기</a></li>
-											<li><a href="sticky-footer.html">더보기</a></li>
-											<li><a href="terms-and-conditions.html">더보기</a></li>
+											<li><a href="faq.html">예약확인</a></li>
+											<li><a href="grid.html">정보조회</a></li>
+											<li><a href="sticky-footer.html">탈퇴하기</a></li>
 										</ul></li>
 									<li><a href="contact-us.html">Contact Us</a></li>
 									<li class="submit"><a href="submit.html"><span>Submit</span><i
@@ -128,13 +136,24 @@
 								<h2>호텔 검색하기</h2>
 
 					
-<form id="searchForm" action="/hotel/hotelSearchList" method="get">
+<form id="searchForm" action="/hotel/hotellist" method="get">
   <div class="form-group">
-    <input type="text" class="form-control input-lg" id="searchValue" name="hotel_id" style="width: 100%;" placeholder="검색하세요">
-  </div>
-  <button type="submit" class="btn btn-primary btn-rounded form-control">검색</button>
-</form>
+   
+ 
+  
 
+			<select name="searchKey" class="selectField">
+			<option value="hotel_name">호텔이름</option>
+			<option value="addr1">동네찾기</option>
+			<option value="addr2">주소</option>
+			</select>
+ </div>
+<input type="text" class="form-control input-lg" id="searchValue" name="searchValue" style="width: 100%;" placeholder="검색하세요">
+<button type="submit" class="btn btn-primary btn-rounded form-control">검색</button>
+
+
+
+</form>
 
 
 								<!--end form-filter-->
@@ -144,82 +163,143 @@
 						<!--end sidebar-->
 					</div>
 					<!--end col-md-3-->
-					<div class="col-md-9">
-						<div class="main-content">
-							<div class="title">
-								<h1>호텔 둘러보기</h1>
-
-							</div>
-							<!--end title-->
-					<div class="item list" th:each="hotel : ${hotelList1}">
-    <div class="image-wrapper">
-        <div class="mark-circle description" data-toggle="tooltip" data-placement="right" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin quis erat vel quam aliquet hendrerit semper eget elit. Aenean tincidunt ultrices bibendum. Proin nisi erat, iaculis non pulvinar a, scelerisque ut est. "><i class="fa fa-question"></i></div>
-        <div class="mark-circle map" data-toggle="tooltip" data-placement="right" title="Show on map"><i class="fa fa-map-marker"></i></div>
-        <div class="image">
-            <a href="detail.html" class="wrapper">
-                <div class="gallery">
-                    <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA5MjVfMTQ0%2FMDAxNjMyNTUyODQ5ODc4.xuSspqY6Z7NFKkPxfSAq6Ia_wKnf54EwQhC7aRD4lqIg.EjoXB-JM4wAM1oWpFNkGdJCScYQx3c_oG7IM6pVrHDEg.PNG.daehan4work%2F%25C0%25B0%25C8%25B8.png&type=a340" alt="">
-                </div>
-            </a>
-            <!--end map-item-->
-        </div>
-    </div>
-    <!--end image-->
-    <div class="description">
-        <div class="meta">
-            <span><i class="fa fa-star"></i>리뷰평점</span>
-            <span><i class="fa fa-bed"></i>리뷰 수</span>
-        </div>
-        <!--end meta-->
-        <div class="info">
-            <h3><a th:href="@{'/detail/' + ${hotel.hotel_id}}">
-            <span th:text="${hotel.hotel_name}"></span></a></h3><br/>
-            <span th:text="${hotel.addr1}"></span>|
-            <span th:text="${hotel.tel}"></span>
-            <p><span th:text="${hotelList2[__${hotelStat.index}__].hotel_information}"></span></p>
-            <div class="price-info">From<span class="price"></span>
-            <span th:text="${hotelList2[__${hotelStat.index}__].standard}"></span>
-            <span class="appendix">/박</span></div>
-            <a th:href="@{'/detail/' + ${hotel.hotel_id}}" class="btn btn-rounded btn-default btn-framed btn-small">View detail</a>
-            <br/><br/><br/><br/>
-        </div>
-
-
-                                </div>
-                                <!--end info-->
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+				<div class="col-md-9">
+                    <div class="main-content">
+                        <div class="title">
+                            <h1>Listing</h1>
+                            <div class="display-selector">
+                                <span>Display:</span>
+                                <a href="listing.html" class="active" data-toggle="tooltip" data-placement="left" title="Display list"><i class="fa fa-th-list"></i></a>
+                                <a href="listing-matrix.html" data-toggle="tooltip" data-placement="left" title="Display matrix"><i class="fa fa-th"></i></a>
                             </div>
-                            <!--end description-->
                         </div>
+                        <!--end title-->
+                        
+                        
+                        
+                        
+                        
+                  
 
-                        <div class="center">
-                            <ul class="pagination">
-                                <li class="prev">
-                          
-                                    <a href="#"><i class="arrow_left"></i></a>
-                                </li>
-                                <li class="active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li class="next">
-                                    <a href="#"><i class="arrow_right"></i></a>
-                                </li>
-                            </ul>
-                            <!-- end pagination-->
-                        </div>
+                       
+                        <!--end item-->
+<div class="item list" th:if="${hotelList1 != null}" th:each="hotel, i : ${hotelList1}">
+  
+    <div class="image-wrapper">
+      <div class="image">
+      
+        <a th:href="@{/detail(hotel_id=${hotel.hotel_id})}"  class="wrapper" >
+     <img src="/image/checked.png">
+        </a>
 
 
-							<!-- end center-->
-						
-					</div>
-					<!--end col-md-9-->
-				</div>
-				<!--end row-->
-			</div>
-			<!--end container-->
-		</div>
-		<!--end page-content-->
+
+
+
+
+
+
+
+        <div class="owl-navigation"></div>
+        
+      </div>
+    </div>
+    <div class="description">
+      <div class="info">
+        <a th:href="@{/detail(hotel_id=${hotel.hotel_id})}">
+          <h3 th:text="${hotel.hotel_name}"></h3><br/>
+        </a>
+        <figure th:text="${hotel.addr1}"></figure>
+        <figure class="label label-info" th:if="${hotel.category} != null" th:text="${hotel.category}"></figure>
+        <figure class="label label-danger" th:if="${hotel.tel} != null" th:text="${hotel.tel}"></figure>
+        
+        <!-- hotelList2의 정보 출력 -->
+        <div th:if="${hotelList2 != null}">
+        
+          <div th:each="hotel2 : ${hotelList2}" th:if="${hotel2.hotel_id == hotel.hotel_id}">
+          
+<p th:if="${hotel2.hotel_information} != null" th:text="${hotel2.hotel_information}"></p>
+<div class="price-info">가격<span class="price">
+<a th:if="${hotel2.standard} != null" th:text="${hotel2.standard}"></a> ~
+<a th:if="${hotel2.sweet} != null" th:text="${hotel2.sweet}"></a>
+</span><span class="appendix">/1박</span></div>
+<a href="detail.html" class="btn btn-rounded btn-default btn-framed btn-small">View detail</a>
+                                
+
+          </div>
+        </div>
+
+      </div>
+      <div class="meta">
+        <span><i class="fa fa-star"></i>별점</span>
+        <span><i class="fa fa-bed"></i>리뷰 수</span> 
+      </div>
+    </div>
+</div>
+
+    
+    
+    
+    
+    
+    </div>
+  </div>
+</div>
+
+           
+           
+           
+          <div class="center">
+    <ul class="pagination">
+
+      <li th:utext="${pageIndexList}"></li>
+
+    </ul>
+</div>
+
+
+
+                        
+                        
+  
+  
+
+                    </div>
+                    <!--end main-content-->
+                </div>
+                <!--end col-md-9-->
+            </div>
+            <!--end row-->
+        </div>
+        <!--end container-->
+    </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+                
+                
+                
+                
+                
 
 		<footer id="page-footer">
 			<div class="row-one">
@@ -285,3 +365,4 @@
 <script src="assets/js/ie.js"></script>
 <![endif]-->
 </body>
+
