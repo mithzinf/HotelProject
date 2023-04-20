@@ -5,6 +5,6 @@ import java.util.Map;
 
 public interface HotelImageService {
 
-	public List<String> searchDetailSweet(Map<String, Object> params) throws Exception;
+	public List<Map<String, Object>> searchDetailSweet(Map<String, Object> params) throws Exception;
 	
 }

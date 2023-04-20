@@ -8,6 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface HotelImageMapper {
 	
-	public List<String> searchDetailSweet(Map<String, Object> params) throws Exception;
+	public List<Map<String, Object>> searchDetailSweet(Map<String, Object> params) throws Exception;
 	
 }

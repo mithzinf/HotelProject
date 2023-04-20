@@ -28,7 +28,7 @@ public class HotelDetailController {
    
    @Resource
    private HotelDetailService hotelDetailService;
-
+/*
    @RequestMapping(value = "/detail" , method= {RequestMethod.GET, RequestMethod.POST})
    public ModelAndView detail(@RequestParam(value = "hotel_id", required = true) int hotel_id, 
 				@RequestParam(value = "type", required = true) String type) throws Exception {
@@ -66,12 +66,60 @@ public class HotelDetailController {
       
    }
    
- 
+  */ 
    
    
+   @RequestMapping(value = "/detail", method = {RequestMethod.GET, RequestMethod.POST})
+   public ModelAndView detail(@RequestParam(value = "hotel_id", required = true) int hotel_id, 
+			@RequestParam(value = "type", required = true) String type) throws Exception {
+      
+     
+      
+      Map<String, Object> paramMap = new HashMap<>();
+      paramMap.put("hotel_id", hotel_id);
+      paramMap.put("type", type);
+  
+     
+      
+      List<HotelDTO> dto1 = hotelDetailService.getHotelById(hotel_id);
+      List<HotelInfoDTO> dto2 = hotelDetailService.getHotelInfoById(hotel_id);
+      List<HotelPictureDTO> dto3 = hotelDetailService.getHotelPicById(hotel_id);
+      List<HotelFacilityInDTO> dto4 = hotelDetailService.getHotelFacilityInById(hotel_id);
+      List<Map<String,Object>> searchHotelDetail = hotelDetailService.searchHotelDetail(paramMap);
+      
+      String[] urlname = new String[searchHotelDetail.size()];
+      int i = 0;
+      
+      
+      
+      for (Map<String,Object> url: searchHotelDetail) {
+          urlname[i] = String.valueOf(url.get("URL")); 
+          System.out.println(urlname[i]); 
+          i++;
+      } 
+      
+      ModelAndView mav = new ModelAndView();
+      
+      mav.addObject("dto1", dto1);
+      mav.addObject("dto2", dto2);
+      mav.addObject("dto3", dto3);
+      mav.addObject("dto4", dto4);
+      mav.addObject("searchHotelDetail", searchHotelDetail);
+      mav.addObject("urlname", urlname);
+      mav.setViewName("hotel/detail");
+      
+      return mav;
+   }
    
-   
-   
+   //객실 성질에 따른 사진 보여줄 roomInfo.html 띄울 매핑 & ModelAndView 만든다..아휴 손 많이 가..
+   @GetMapping("/roomInfo")
+   public ModelAndView roomInfo(HttpServletRequest request) throws Exception {
+	   
+	   ModelAndView mav = new ModelAndView();
+	   mav.setViewName("hotel/roomInfo");
+	   
+	   return mav;
+   }
 }
 
 

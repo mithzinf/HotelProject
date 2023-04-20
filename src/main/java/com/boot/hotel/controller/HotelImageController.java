@@ -1,11 +1,15 @@
 package com.boot.hotel.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -44,18 +48,55 @@ public class HotelImageController {
 		paramMap.put("hotel_id", hotel_id);
 		paramMap.put("type", type);
 		
-		List<String> detailSweet = hotelImageService.searchDetailSweet(paramMap);
+		//여기서 반환값을 List<String> -> List<Map<String, Object>>으로 변경
+		//당연히 서비스, impl, mapper.java도 바꿔줘야 함 xml은 변경 ㄴㄴ
+		List<Map<String, Object>> detailSweet = hotelImageService.searchDetailSweet(paramMap);
 		
 		System.out.println(detailSweet.size());
 		System.out.println(detailSweet); //데이터 콘솔에 출력해보기
+		
+		//결과값의 칼럼 하나를 받아줄 배열 생성
+		String[] urlname = new String[detailSweet.size()];
+		int i = 0;
+		
+		//확장for문으로 돌리면서 배열갑 저장
+    	for (Map<String,Object> url: detailSweet ){
+            urlname[i] = String.valueOf(url.get("URL"));
+            System.out.println(urlname[i]); // 전체값이 아닌 URL이란 key값만 뽑아서 출력해보기
+            i++;
+        }
+    	
+    	
 		
 		
 		mav.addObject("test",test);
 		mav.addObject("detailSweet",detailSweet);
 		mav.setViewName("hotel/imageTest");
+		//html은 templates.hotel의 imageTest.html
 		
 		return mav;
 		
+	}
+	
+	
+	@GetMapping("/hotel/test")
+	public ModelAndView test(HttpServletRequest request) throws Exception {
+		
+		ModelAndView  mav = new ModelAndView();
+		
+		mav.setViewName("hotel/hotelMain_test");
+		
+		return mav;
+	}
+	
+	@GetMapping("/nav/index")
+	public ModelAndView navtest(HttpServletRequest request) throws Exception {
+		System.out.println("네비");
+		ModelAndView  mav = new ModelAndView();
+		
+		mav.setViewName("layout/index");
+		
+		return mav;
 	}
 	
 }

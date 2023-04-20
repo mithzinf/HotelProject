@@ -1,25 +1,16 @@
 <!DOCTYPE html>
-<html>
-<head>
-<base href="/" />
+<html layout:decorate="~{/layout/layout}">
+
 <meta charset="UTF-8">
-<title>회원가입 선택</title>
+
+<div layout:fragment="content">
+
 <link rel="stylesheet" type="text/css" href="css/searchId.css"/>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<!-- 별도의 script도 생성 -->
+
 <style>
 @import url('https://fonts.googleapis.com/css?family=Gowun+Batang&display=swap');
 
-.swal-text {
-    text-align: center;
-}
-
-.swal-footer {
-	text-align: center;
-}
-
-.social {
+.login-social {
 	
 	border: 1px solid #DDDDDD;
 	border-radius: 50%;
@@ -32,17 +23,49 @@
 
 }
 
-img {
+.login-img {
 	width: 40px;
 	height: 40px;
 }
 
-p {
+.login-p {
 	font-size: 16px;
 	text-align: center;
 }
 
 </style>
+
+
+
+<div class="login-body">
+	<div class="login-container" id="login-container">
+		<div class="login-form-container login-sign-in-container">
+			<form action="#" name="myForm" method="post" class="login-form">
+				<h1 class="login-h1">회원가입 방식을 <br/>선택해주세요.</h1>
+				<br/>
+					<p class="login-p">연동 회원가입</p>
+					<div>
+						<a href="/oauth2/authorization/google" class="login-social"><img class="login-img" src="/image/google.png" alt="Google 로고"></a>
+						<a href="/oauth2/authorization/kakao" class="login-social"><img class="login-img" src="/image/kakao.png" alt="카카오 로고"></a>
+						<a href="/oauth2/authorization/naver" class="login-social"><img class="login-img" src="/image/naver.png" alt="네이버 로고"></a>
+					</div>
+					<br>
+					<p class="login-p">일반 회원가입</p>
+					<div>
+						
+						<button class="login-button-btn2" onclick="normal();" style="padding:12px 40px;"> 일반 회원가입 </button>
+					</div>
+					<br>
+	
+					
+			</form>
+		</div>
+	</div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
 <script type="text/javascript">
 
@@ -56,45 +79,6 @@ p {
 
 
 </script>
-
-
-
-
-</head>
-<body>
-
-
-<div class="container" id="container">
-	<div class="form-container sign-in-container">
-		<form action="#" name="myForm" method="post">
-			<h1>회원가입 방식을 <br/>선택해주세요.</h1>
-			<br/><br/>
-				<p>연동 회원가입</p>
-				<div>
-					<a href="/oauth2/authorization/google" class="social"><img src="/image/google.png" alt="Google 로고"></a>
-					<a href="/oauth2/authorization/kakao" class="social"><img src="/image/kakao.png" alt="카카오 로고"></a>
-					<a href="/oauth2/authorization/naver" class="social"><img src="/image/naver.png" alt="네이버 로고"></a>
-				</div>
-				<br>
-				<p>일반 회원가입</p>
-				<div>
-					
-					<button class="btn2" onclick="normal();" style="padding:12px 40px;"> 일반 회원가입 </button>
-				</div>
-				<br>
-
-				
-		</form>
-	</div>
-</div>
-
-
-
-<footer>
-	<p>
-		footer자리..
-	</p>
-</footer>
 
 </body>
 </html>

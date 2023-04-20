@@ -104,11 +104,12 @@ Headers:		'Lato', sans-serif;
 #page-header .primary-nav {
   display: table;
   width: 100%;
-  padding: 25px 0;
+  padding: 0 0;
 }
+
 #page-header .primary-nav #brand {
   display: block;
-  padding: 10px 10px 10px 0;
+  padding: 0 0 0 0;
 }
 #page-header .primary-nav .left {
   position: relative;
@@ -2942,6 +2943,11 @@ ul.half li {
   color: #ed2a21;
 }
 
+.footer {
+  display: table;
+  width: 100%;
+}
+
 #page-footer {
   color: #fff;
 }
@@ -2949,13 +2955,25 @@ ul.half li {
   color: #fff;
 }
 #page-footer .row-one {
-  background-color: #fff;
+  background-color: #E6E6E6;
   border-bottom: 5px solid #488f3e;
   border-top: 1px solid rgba(31, 31, 31, 0.1);
-  padding-top: 40px;
-  padding-bottom: 40px;
-  margin-top: 60px;
+  padding-top: 30px;
+  padding-bottom: 15px;
+  margin-top: 30px;
+  text-align: left;
 }
+
+#page-footer .row-one a {
+	color: #2E2E2E;
+	font-size: 12px;
+}
+
+#page-footer .row-one p {
+	color: #2E2E2E;
+	font-size: 12px;
+}
+
 #page-footer .row-two {
   position: relative;
   padding-top: 15px;
@@ -4521,6 +4539,7 @@ button:hover, button:active, button:focus {
   width: 20px;
   top: -1px;
 }
+
 .icheckbox:after {
   -moz-transition: 0.3s;
   -webkit-transition: 0.3s;
