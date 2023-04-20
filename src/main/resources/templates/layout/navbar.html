@@ -11,7 +11,7 @@
             <div class="container" style="height:70px;">
                 <div class="primary-nav" style="height:70px;">
                     <div class="left">
-                         <a th:href="@{/nav/index}" id="brand"><img src="assets/img/logo1.png" alt="" style="width: 170px; height: 40px;"></a>
+                         <a href="hotel/main" id="brand"><img src="assets/img/logo1.png" alt="" style="width: 170px; height: 40px;"></a>
                         <a class="nav-trigger" data-toggle="collapse" href="#primary-nav" aria-expanded="false" aria-controls="primary-nav"><i class="fa fa-navicon"></i></a>
                     </div>
                     <!--end left-->
@@ -21,12 +21,12 @@
 	                            <ul>
 	                                <li><a href="login/login">로그인</a></li>
 	                                <li><a href="login/register_select">회원가입</a></li>
-	                                <li><a href="nav/index" class="has-child">더보기</a>
+	                                <li><a href="hotel/main" class="has-child">더보기</a>
 	                                    <ul class="child-nav">
-											<li><a href="nav/index">공지사항</a></li>
-	                                        <li><a href="nav/index">문의게시판</a></li>
-	                                        <li><a href="nav/index">메뉴1</a></li>
-	                                        <li><a href="nav/index">메뉴2</a></li>
+											<li><a href="hotel/main">공지사항</a></li>
+	                                        <li><a href="hotel/main">문의게시판</a></li>
+	                                        <li><a href="hotel/main">메뉴1</a></li>
+	                                        <li><a href="hotel/main">메뉴2</a></li>
 	                                    </ul>
 	                                </li>                                    
 	                            </ul>
@@ -36,21 +36,22 @@
 	                    <div class="right" th:if="${session.sessionUser != null}">
 	                        <nav id="primary-nav">
 	                            <ul>
+	                            	<li><strong>[ [[${session.sessionUser.name}]] ]</strong> 님 환영합니다! &nbsp;&nbsp;</li>
 	                                <li><a href="login/logout">로그아웃</a></li>
-	                                <li><a href="nav/index" class="has-child">마이페이지</a>
+	                                <li><a href="hotel/main" class="has-child">마이페이지</a>
 	                                    <ul class="child-nav">
-											<li><a href="nav/index">내정보</a></li>
-	                                        <li><a href="nav/index">호텔 찜 목록</a></li>
-	                                        <li><a href="nav/index">예약내역</a></li>
-	                                        <li><a href="nav/index">회원탈퇴</a></li>
+											<li><a href="hotel/main">내정보</a></li>
+	                                        <li><a href="hotel/main">호텔 찜 목록</a></li>
+	                                        <li><a href="hotel/main">예약내역</a></li>
+	                                        <li><a href="hotel/main">회원탈퇴</a></li>
 	                                    </ul>
 	                                </li> 
 	                                <li><a href="/nav/index" class="has-child">더보기</a>
 	                                    <ul class="child-nav">
-											<li><a href="nav/index">공지사항</a></li>
-	                                        <li><a href="nav/index">문의게시판</a></li>
-	                                        <li><a href="nav/index">메뉴1</a></li>
-	                                        <li><a href="nav/index">메뉴2</a></li>
+											<li><a href="hotel/main">공지사항</a></li>
+	                                        <li><a href="hotel/main">문의게시판</a></li>
+	                                        <li><a href="hotel/main">메뉴1</a></li>
+	                                        <li><a href="hotel/main">메뉴2</a></li>
 	                                    </ul>
 	                                </li>                                    
 	                            </ul>

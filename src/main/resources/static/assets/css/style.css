@@ -26,6 +26,7 @@ Body copy:		'Lato', sans-serif; 14px;
 Headers:		'Lato', sans-serif;
 
 -------------------------------------------------------------------*/
+@import url('https://fonts.googleapis.com/css?family=Gowun+Batang&display=swap');
 
 .content-padding {
 	padding-top: 70px;
@@ -602,6 +603,7 @@ ul.half li {
   overflow: hidden;
   z-index: -1;
   width: 100%;
+  filter: blur(1.5px);
 }
 .bg-transfer img {
   display: none;
@@ -684,6 +686,8 @@ ul.half li {
 .row.no-gutters {
   margin-right: 0;
   margin-left: 0;
+  display: flex;
+  justify-content: center;
 }
 
 .row.no-gutters > [class^="col-"], .row.no-gutters > [class*=" col-"] {
@@ -1740,9 +1744,46 @@ ul.half li {
 }
 
 .hero-section {
-  margin-bottom: 60px;
   position: relative;
 }
+
+#main-icon {
+text-align:center;
+line-height: 0;
+}
+
+#main-icon > li {
+  display: inline-block;
+  position: relative;
+}
+#main-icon  > li > a {
+  display:block;
+  position:relative;
+  padding-bottom:19px;
+  margin: 40px;
+}
+#main-icon  > li > a > img {
+  width:60px;
+  height:60px;
+  min-width:20px;
+  min-height:20px;
+  margin-bottom: 10px;
+}
+#main-icon  > li > a > span {
+  font-family:'Gowun Batang', sans-serif;
+  font-size:20px;
+  position:absolute;
+  bottom:0;
+  left:50%;
+  color:#000;
+  white-space:nowrap;
+  transform:translate(-50%, 50%);
+  margin-top: 10px;
+}
+
+
+
+
 .hero-section[data-height='100'] .hero-wrapper {
   height: 100px;
 }
@@ -1811,6 +1852,12 @@ ul.half li {
   font-weight: bold;
   font-size: 48px;
 }
+.hero-section .hero-wrapper h2 {
+  color: #fff;
+  font-weight: bold;
+  font-size: 26px;
+  opacity: 1;
+}
 .hero-section h2 {
   font-size: 16px;
   font-weight: bold;
@@ -1841,6 +1888,7 @@ ul.half li {
   height: 1px;
   position: relative;
   color: #fff;
+  width:50%;
 }
 .hero-section .options .wrapper {
   padding: 30px 0;
@@ -2116,10 +2164,13 @@ ul.half li {
   height: 100%;
   display: block;
 }
+
 .item .image .wrapper img, .item .image-wrapper .wrapper img {
   height: 100%;
-  width: auto;
+  width: 100%;
+  position: absolute;
 }
+
 .item .image.show-nav .owl-navigation, .item .image-wrapper.show-nav .owl-navigation {
   filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
   opacity: 1;
@@ -3866,7 +3917,9 @@ ul.half li {
   display: table;
   width: 100%;
   position: relative;
+  text-align: center;
 }
+
 .title h2 {
   margin: 0;
 }
@@ -5197,7 +5250,8 @@ body::before {
   }
   .item .image .wrapper img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    
   }
   .item.list {
     display: block;

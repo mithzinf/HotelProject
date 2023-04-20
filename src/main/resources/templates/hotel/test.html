@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+
+</head>
+<body>
+<!-- 컨트롤러에서 전송받은 검색 결과를 출력하는 타임리프 문법 -->
+<div th:if="${#lists.size(result)}!=null" th:each="dto:${result}">
+	<!-- 이미지 출력 -->
+	<img th:src="@{|/hotel/${dto.URL}|}" style="width:100px; height:100px;"/>
+	<!-- input박스 안에 th:문으로 받는 문법 -->
+	호텔 이름 : <input type="text" th:value="${dto.HOTEL_NAME}" /><br/>
+	<!-- th:문법을 안쓰고 쌩으로 값을 출력하는 문법 -->
+	호텔 정보 : [[${dto.HOTEL_INFORMATION}]]<br/><br/>
+</div>
+
+
+</body>
+</html>

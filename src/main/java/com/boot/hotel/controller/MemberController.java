@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,7 +103,7 @@ public class MemberController {
 		SessionUser sessionUser = new SessionUser(dto2.getUserid(),dto2.getUsername());
 		httpSession.setAttribute("sessionUser", sessionUser);
 
-		mav.setViewName("redirect:/nav/index");
+		mav.setViewName("redirect:/hotel/main");
 		    
 		return mav;
 		
@@ -164,7 +165,7 @@ public class MemberController {
 		
 		ModelAndView mav = new ModelAndView();
 		
-		mav.setViewName("redirect:/nav/index");
+		mav.setViewName("redirect:/hotel/main");
 		
 		return mav;
 		
@@ -404,15 +405,17 @@ public class MemberController {
 	
 	//로그아웃 처리
 	@RequestMapping(value = "/login/logout", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView logout() throws Exception{
+	public ModelAndView logout(HttpServletRequest request) throws Exception{
 		
 		System.out.println("로그아웃 컨트롤러 진입");
 		
 		//로그인할때 올린 세션을 삭제
 		httpSession.invalidate();
 		
+		String referer = request.getHeader("Referer");
+		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/nav/index");
+		mav.setViewName("redirect:" + referer);
 		
 		return mav;
 		
