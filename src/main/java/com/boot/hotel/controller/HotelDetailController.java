@@ -70,12 +70,12 @@ public class HotelDetailController {
    
    
    @RequestMapping(value = "/detail", method = {RequestMethod.GET, RequestMethod.POST})
-   public ModelAndView detail(@RequestParam(value = "hotel_id", required = true) int hotel_id, 
-			@RequestParam(value = "type", required = true) String type) throws Exception {
+   public ModelAndView detail(@RequestParam(value = "hotel_id", required = true) int hotel_id) throws Exception {
       
-     
+	   
       
       Map<String, Object> paramMap = new HashMap<>();
+      String type = "title";
       paramMap.put("hotel_id", hotel_id);
       paramMap.put("type", type);
   
@@ -116,7 +116,7 @@ public class HotelDetailController {
    public ModelAndView roomInfo(HttpServletRequest request) throws Exception {
 	   
 	   ModelAndView mav = new ModelAndView();
-	   mav.setViewName("hotel/roomInfo");
+	   mav.setViewName("hotel/layoutTest");
 	   
 	   return mav;
    }
