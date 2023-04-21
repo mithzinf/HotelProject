@@ -1,119 +1,38 @@
 <!DOCTYPE html>
-<html lang="en-US">
-<head>
+<html layout:decorate="~{/layout/layout}">
+
 <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="ThemeStarz">
-    
-    <link href="assets/fonts/font-awesome.css" rel="stylesheet" type="text/css">
-    <link href="assets/fonts/elegant-fonts.css" rel="stylesheet" type="text/css">
+
+<div layout:fragment="content" class="content-padding">
+
     <link href="assets/fonts/weather-icons.css" rel="stylesheet" type="text/css">
-    <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700,900,400italic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" type="text/css">
-    <link rel="stylesheet" href="assets/css/zabuto_calendar.min.css" type="text/css">
-    <link rel="stylesheet" href="assets/css/owl.carousel.css" type="text/css">
     <link rel="stylesheet" href="assets/css/jquery.datepick.css" type="text/css">
-    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
-    <script src="https://kit.fontawesome.com/fe3b2ac5d6.js" crossorigin="anonymous"></script>
-    
-    
-<title>호텔 객실 상세 페이지</title>
+    <link rel="stylesheet" href="css/slide.css" type="text/css">
+	        <style>
+            #my_modal { 
+            	font-family: 'Gowun Batang', sans-serif;
+                display: none;
+                width: 700px;
+                height : 500px;
+                padding: 20px 60px;
+                background-color: #fefefe;
+                border: 1px solid #888;
+                border-radius: 3px;
+            }
 
-<script type="text/javascript">
-    $(function(){
-        $("#check").click(function() {
-            window.open("/hotel/roomInfo", "객실 더보기", "width=450,height=270,left=600");
-           
-        });
-    });
-</script>
-    
-</head>
-
-<body>
+            #my_modal .modal_close_btn {
+                position: absolute;
+			    top: 10px;
+			    right: 10px;
+			    color: 488f3e; /* X 버튼 색상 변경 */
+			    cursor: pointer; /* 마우스 커서 모양 변경 */
+            }
+        </style>
+        
+        <!-- =======================================컨텐츠 시작================================================= -->
 
 
 <div class="page-wrapper">
-    <div id="page-header">
-        <header>
-            <div class="container">
-                <div class="secondary-nav">
-                    <div class="nav-trigger"><a data-toggle="collapse" href="#secondary-nav" aria-expanded="false" aria-controls="secondary-nav"><i class="fa fa-user"></i></a></div>
-                    <div id="secondary-nav">
-                        <nav>
-                            <div class="left opacity-60">
-                                <a href=""><i class="fa fa-phone"></i>+1 781-903-1047</a>
-                                <a href="mailto:hello@example.com"><i class="fa fa-envelope"></i>itwill0406@gmail.com</a>
-                            </div>
-                            <!--end left-->
-                            <div class="right">
-                                <div class="element">
-                                    <a onclick="location.href='/login/login';" data-toggle="modal" 
-                                    data-tab="true" data-target="#sign-in-register-modal">로그인</a>
-                                </div>
-                                <!--end element-->
-                                <div class="element">
-                                    <a onclick="location.href='/login/register_select';" data-toggle="modal" 
-                                    data-tab="true" data-target="#sign-in-register-modal">회원가입</a>
-                                </div>
-                                <!--end element-->
-                                <div class="element">
-                                    <select style="font-size: 10px;">
-                                    	<option>마이페이지</option>
-                                    	<option>예약확인</option>
-                                    	<option>정보조회</option>
-                                    	<option>탈퇴하기</option>
-                                    </select>
-                                </div>
-                                <!--end element-->
-                            </div>
-                            <!--end right-->
-                        </nav>
-                    </div>
-                </div>
-                <!--end secondary-nav-->
-            </div>
-            <!--end container-->
-            <hr>
-            <div class="container">
-                <div class="primary-nav">
-                    <div class="left">
-                        <a href="index.html" id="brand">
-                        <img src="assets/img/logo1.png" alt="" style="width: 170px; height: 40px;"></a>
-                        <a class="nav-trigger" data-toggle="collapse" href="#primary-nav" aria-expanded="false" aria-controls="primary-nav"><i class="fa fa-navicon"></i></a>
-                    </div>
-                    <!--end left-->
-                    <div class="right" >
-                        <nav id="primary-nav">
-                            <ul>
-                                <li><a href="index.html">메인으로</a></li>
-                                <li><a href="#">프로모션</a></li>
-                                <li><a href="#" class="has-child">고객페이지</a>
-                                    <ul class="child-nav">
-										<li><a href="faq.html">문의게시판</a></li>
-                                        <li><a href="grid.html">더보기</a></li>
-                                        <li><a href="sticky-footer.html">더보기</a></li>
-                                        <li><a href="terms-and-conditions.html">더보기</a></li>
-                                    </ul>
-                               </li>
-                                <li><a href="contact-us.html">Contact Us</a></li>
-                                <li class="submit"><a href="submit.html"><span>Submit</span>
-                                <i data-toggle="tooltip" data-placement="top" title="Submit">
-                                <img src="assets/img/plus.png" alt=""></i></a></li>
-                            </ul>
-                        </nav>
-                        <!--end nav-->
-                    </div>
-                    <!--end right-->
-                </div>
-                <!--end primary-nav-->
-            </div>
-            <!--end container-->
-        </header>
-        <!--end header-->
-    </div>
-    <!--end page-header-->
-
     <div id="page-content">
         <div class="container">
             <ol class="breadcrumb">
@@ -268,8 +187,8 @@
                                             <th>객실타입</th>
                                             <th>인원</th>
                                             <th>가격</th>
-                                            <th></th>
-                                            <th></th>
+                                            <th>   예약하기   </th>
+                                          
                                         </tr>
                                         </thead>
                                     </table>
@@ -279,29 +198,52 @@
                                         <tbody>
                                             <tr class="room">
                                                 <td class="room-type">
-                                                   <a href = ""><h3>스탠다드룸</h3></a>
+                                                  <h3 style="color: #488f3e; cursor: pointer;" id="popup_open_btn">스탠다드</h3>                                       
                                                 <ul class="info">
-                                                    <li>여기에 뭐 적나</li>
-                                                    <li>여기에 뭐 적나</li>
+                                                   <li>객실 이름을 클릭하세요</li>
+                                                   <li>여기에 뭐 적나</li>
                                                 </ul>
-                                                </td>
+                        <!--  ============================== 모달 부분 구분선================================== -->
+											    <div id="my_modal">
+											            <a class="modal_close_btn"><b>X</b></a>
+											            <h3 class="modal-title" id="myModalLabel"><strong>객실 상세 보기</strong></h3>
+											            <!-- 자동 캐러셀 시작 -->
+											            <br/><br/>
+											          <div class="content"> <!--전체를 감쌀 뼈대-->
+															<div class="slides">  <!--슬라이드 아이템을 감쌀 뼈대-->
+															  <div class="slide_item"></div>  <!--슬라이드될 아이템들 -->
+															  <div class="slide_item"></div>
+															  <div class="slide_item"></div>
+															  <div class="slide_item"></div>
+															  <div class="slide_item"></div>
+															  <div class="slide_item"></div>
+															</div>
+															<span class="nextButton">▶</span>  <!--다음 버튼 -->
+															<span class="prevButton">◀</span>   <!--이전 버튼 -->
+															  	<div class="Thumbnail">  <!--썸네일을 감쌀 뼈대 -->
+															  		<div class="thumbnail_item"></div>   <!--썸네일 아이템들 -->
+															  		<div class="thumbnail_item"></div>
+																	<div class="thumbnail_item"></div>
+																	<div class="thumbnail_item"></div>
+																	<div class="thumbnail_item"></div>
+																	<div class="thumbnail_item"></div>
+																</div>   
+											           </div>
+											            <!-- 자동 캐러샐 끝 -->	   
+											            
+											     </div>
+       						<!--  ============================== 모달 end 구분선================================== -->
+                                                </td>                                                
                                                 <td class="persons">2<i class="fa fa-user"></i></td>
                                                 <td class="price">[[${dto2[0].standard}]]</td>
-                                                <td class="rooms">
-                                                    <select class="framed" name="room_1_nights">
-                                                        <option value="1">0</option>
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                    </select>
-                                                </td>
+                                                <td class="rooms"></td>
                                                 <td>
                                                     <div class="form-group">
                                                         <button type="submit" class="btn btn-primary btn-rounded">객실 예약</button>
                                                     </div>
                                                     <!--end form-group-->
                                                 </td>
+
                                             </tr>
                                             <!--end tr.room-->
                                         </tbody>
@@ -350,7 +292,7 @@
                                         <tbody>
                                         <tr class="room">
                                             <td class="room-type">
-                                                <a href=""><h3>디럭스룸</h3></a>
+                                                <a href="" ><h3>디럭스룸</h3></a>
                                                 <ul class="info">
                                                     <li>여기에 뭐 적나</li>
                                                     <li>여기에 뭐 적나</li>
@@ -569,70 +511,76 @@
             <!--end row-->
         </div>
         <!--end container-->
-    </div>
-    <!--end page-content-->
+   	 </div>
+   	 <!--end page-content-->
+	</div>
+	<!-- page-wrapper end -->
 
-    <footer id="page-footer">
-        <div class="row-one">
-            <div class="container">
-                <div class="logos">
-                    <div class="logo">
-                        <a href="#"><img src="assets/img/logo-1.png" alt=""></a>
-                    </div>
-                    <!--/ .logo-->
-                    <div class="logo">
-                        <a href="#"><img src="assets/img/logo-2.png" alt=""></a>
-                    </div>
-                    <!--/ .logo-->
-                    <div class="logo">
-                        <a href="#"><img src="assets/img/logo-3.png" alt=""></a>
-                    </div>
-                    <!--/ .logo-->
-                    <div class="logo">
-                        <a href="#"><img src="assets/img/logo-4.png" alt=""></a>
-                    </div>
-                    <!--/ .logo-->
-                    <div class="logo">
-                        <a href="#"><img src="assets/img/logo-5.png" alt=""></a>
-                    </div>
-                    <!--/ .logo-->
-                </div>
-                <!--/ .logos-->
-            </div>
-        </div>
-        <!--end row-one-->
-        <div class="row-two clearfix">
-            <div class="container">
-                <div class="copyright pull-left">(C) 2016 Your Company, All Rights Reserved</div>
-                <div class="footer-nav pull-right">
-                    <a href="index.html">Home</a>
-                    <a href="about-us.html">About Us</a>
-                    <a href="listing.html">Listing</a>
-                    <a href="contact-us.html">Contact Us</a>
-                </div>
-            </div>
-            <div class="bg-transfer"><img src="assets/img/footer-bg.jpg" alt=""></div>
-        </div>
-        <!--end row-two-->
-    </footer>
-    <!--end page-footer-->
-</div>
-<!--end page-wrapper-->
 
-<script type="text/javascript" src="assets/js/jquery-2.2.1.min.js"></script>
-<script type="text/javascript" src="assets/js/jquery-migrate-1.2.1.min.js"></script>
-<script type="text/javascript" src="http://maps.google.com/maps/api/js"></script>
-<script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="assets/js/jquery.validate.min.js"></script>
-<script type="text/javascript" src="assets/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="assets/js/icheck.min.js"></script>
-<script type="text/javascript" src="assets/js/markerwithlabel_packed.js"></script>
-<script type="text/javascript" src="assets/js/owl.carousel.js"></script>
-<script type="text/javascript" src="assets/js/masonry.pkgd.min.js"></script>
-<script type="text/javascript" src="assets/js/jquery.simpleWeather.min.js"></script>
+<!-- ==========================================개별 스크립트 부분..============================================= -->
 
-<script type="text/javascript" src="assets/js/maps.js"></script>
-<script type="text/javascript" src="assets/js/custom.js"></script>
+
+
+	<script>
+            function modal(id) {
+                var zIndex = 9999;
+                var modal = document.getElementById(id);
+
+                // 모달 div 뒤에 희끄무레한 레이어
+                var bg = document.createElement('div');
+                bg.setStyle({
+                    position: 'fixed',
+                    zIndex: zIndex,
+                    left: '0px',
+                    top: '0px',
+                    width: '100%',
+                    height: '100%',
+                    overflow: 'auto',
+                    // 레이어 색갈은 여기서 바꾸면 됨
+                    backgroundColor: 'rgba(0,0,0,0.4)'
+                });
+                document.body.append(bg);
+
+                // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+                modal.querySelector('.modal_close_btn').addEventListener('click', function() {
+                    bg.remove();
+                    modal.style.display = 'none';
+                });
+
+                modal.setStyle({
+                    position: 'fixed',
+                    display: 'block',
+                    boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+
+                    // 시꺼먼 레이어 보다 한칸 위에 보이기
+                    zIndex: zIndex + 1,
+
+                    // div center 정렬
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    msTransform: 'translate(-50%, -50%)',
+                    webkitTransform: 'translate(-50%, -50%)'
+                });
+            }
+
+            // Element 에 style 한번에 오브젝트로 설정하는 함수 추가
+            Element.prototype.setStyle = function(styles) {
+                for (var k in styles) this.style[k] = styles[k];
+                return this;
+            };
+
+            document.getElementById('popup_open_btn').addEventListener('click', function() {
+                // 모달창 띄우기
+              event.preventDefault(); // 클릭 이벤트의 기본 동작을 방지합니다.(챗지피티 피셜 추가된 코딩)
+                modal('my_modal');
+            });
+        </script>
+
+<script type="text/javascript" src="/assets/js/slide.js"></script>
+
+
+
 
 
 <!--[if lte IE 9]>
@@ -647,5 +595,5 @@
 </script>
 
 
-</body>
+
 </html>

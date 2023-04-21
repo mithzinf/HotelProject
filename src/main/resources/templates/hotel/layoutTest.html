@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<!-- 경로가 templates/layout/layout.html을 상속받아야 하므로 -->
+<html layout:decorate="~{/layout/layout}">
+
+<meta charset="UTF-8">
+
+<div layout:fragment="content" class="content-padding">
+<!-- 대충 이자리에 개별 CSS가 있다면 선언 -->
+<link rel="stylesheet" type="text/css" href="css/modal.css"/>
+        <style>
+            #my_modal { 
+            	font-family: 'Gowun Batang', sans-serif;
+                display: none;
+                width: 700px;
+                height : 500px;
+                padding: 20px 60px;
+                background-color: #fefefe;
+                border: 1px solid #888;
+                border-radius: 3px;
+            }
+
+            #my_modal .modal_close_btn {
+                position: absolute;
+			    top: 10px;
+			    right: 10px;
+			    color: green; /* X 버튼 색상 변경 */
+			    cursor: pointer; /* 마우스 커서 모양 변경 */
+            }
+        </style>
+
+   <!--  ============================== 모달 부분 구분선================================== -->
+
+   
+        <div id="my_modal">
+            <a class="modal_close_btn"><b>X</b></a>
+            <h3 class="modal-title" id="myModalLabel"><strong>객실 상세 보기</strong></h3>
+            <!-- 자동 캐러셀 시작 -->
+            
+          <div class="content"> <!--전체를 감쌀 뼈대-->
+				<div class="slides">  <!--슬라이드 아이템을 감쌀 뼈대-->
+				  <div class="slide_item"></div>  <!--슬라이드될 아이템들 -->
+				  <div class="slide_item"></div>
+				  <div class="slide_item"></div>
+				  <div class="slide_item"></div>
+				  <div class="slide_item"></div>
+				  <div class="slide_item"></div>
+				</div>
+				<span class="nextButton">▶</span>  <!--다음 버튼 -->
+				<span class="prevButton">◀</span>   <!--이전 버튼 -->
+				  	<div class="Thumbnail">  <!--썸네일을 감쌀 뼈대 -->
+				  		<div class="thumbnail_item"></div>   <!--썸네일 아이템들 -->
+				  		<div class="thumbnail_item"></div>
+						<div class="thumbnail_item"></div>
+						<div class="thumbnail_item"></div>
+						<div class="thumbnail_item"></div>
+						<div class="thumbnail_item"></div>
+					</div>   
+           </div>
+            <!-- 자동 캐러샐 끝 -->	   
+            
+        </div>
+        
+        <button id="popup_open_btn">모달 클릭</button>
+
+
+
+<!-- ================================= script 부분 ================================== -->
+  <script>
+            function modal(id) {
+                var zIndex = 9999;
+                var modal = document.getElementById(id);
+
+                // 모달 div 뒤에 희끄무레한 레이어
+                var bg = document.createElement('div');
+                bg.setStyle({
+                    position: 'fixed',
+                    zIndex: zIndex,
+                    left: '0px',
+                    top: '0px',
+                    width: '100%',
+                    height: '100%',
+                    overflow: 'auto',
+                    // 레이어 색갈은 여기서 바꾸면 됨
+                    backgroundColor: 'rgba(0,0,0,0.4)'
+                });
+                document.body.append(bg);
+
+                // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+                modal.querySelector('.modal_close_btn').addEventListener('click', function() {
+                    bg.remove();
+                    modal.style.display = 'none';
+                });
+
+                modal.setStyle({
+                    position: 'fixed',
+                    display: 'block',
+                    boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+
+                    // 시꺼먼 레이어 보다 한칸 위에 보이기
+                    zIndex: zIndex + 1,
+
+                    // div center 정렬
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    msTransform: 'translate(-50%, -50%)',
+                    webkitTransform: 'translate(-50%, -50%)'
+                });
+            }
+
+            // Element 에 style 한번에 오브젝트로 설정하는 함수 추가
+            Element.prototype.setStyle = function(styles) {
+                for (var k in styles) this.style[k] = styles[k];
+                return this;
+            };
+
+            document.getElementById('popup_open_btn').addEventListener('click', function() {
+                // 모달창 띄우기
+                 //event.preventDefault(); // 클릭 이벤트의 기본 동작을 방지합니다.(추가된 코딩)
+                modal('my_modal');
+            });
+        </script>
+	<script type="text/javascript" src="/assets/js/slide.js"></script>
+     
+</html>
