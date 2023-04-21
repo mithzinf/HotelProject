@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boot.hotel.mapper.MyPageMapper">
+
+<select id="readDataMember" parameterType="String" resultType="com.boot.hotel.dto.MemberDTO">
+	select * from member where userid=#{userid}
+</select>
+
+<update id="memberUpdate" parameterType="com.boot.hotel.dto.MemberDTO">
+	update member set pwd=#{pwd},username=#{username},email=#{email1}||'@'||#{email2},
+	tel=#{tel1}||'-'||#{tel2}||'-'||#{tel3} where userid = #{userid}
+</update>
+
+<update id="memberUpdateOauth" parameterType="com.boot.hotel.dto.MemberDTO">
+	update member set username=#{username},email=#{email1}||'@'||#{email2},
+	tel=#{tel1}||'-'||#{tel2}||'-'||#{tel3} where userid = #{userid}
+</update>
+
+<delete id="memberDelete" parameterType="String">
+	delete from member where userid=#{userid}
+</delete>
+
+<select id="searchBasket" parameterType="String" resultType="map">
+	select hotel_id from basket where userid=#{userid}
+</select>
+
+<select id="searchBasketHotel" parameterType="int" resultType="map">
+	select b.basket_num, h.hotel_name, h.addr1, h.category, h.tel, hi.standard, hp.url
+	from hotel h
+	inner join hotel_info hi on h.hotel_id = hi.hotel_id
+	inner join hotel_picture hp on h.hotel_id = hp.hotel_id
+	inner join basket b on h.hotel_id = b.hotel_id
+	where h.hotel_id = #{hotel_id} and hp.type = 'title'
+</select>
+
+<select id="searchBasketHotelPaged" parameterType="map" resultType="map">
+	select * from (
+	select rownum rnum,data.* from (
+	select * from #{basket}
+	order by basket_num) data)
+	<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+	]]>
+</select>
+
+
+
+
+</mapper>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html layout:decorate="~{/layout/layout}">
+
+<meta charset="UTF-8">
+
+<div layout:fragment="content" class="content-padding">
+
+<link rel="stylesheet" type="text/css" href="css/register.css"/>
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Gowun+Batang&display=swap');
+.swal-footer {
+	text-align: center;
+}
+
+#page-content {
+	margin: 50px 0 50px;
+	margin-left: 3%;
+}
+
+.title {
+	text-align: left;
+	font-family: 'Gowun Batang', sans-serif;
+}
+
+.bg-transfer{
+	filter: none;
+
+}
+
+.my-items table {
+    border-spacing: 0 30px;
+}
+    
+
+.title {
+	margin-bottom: 10px;
+	opacity: 1;
+	font-size: 30px;
+}
+
+.sub {
+	text-align: center;
+	font-family: 'Gowun Batang', sans-serif;
+	font-size: 18px;
+}
+
+.sub-title {
+	font-size: 20px;
+	font-weight: bold;
+	font-family: 'Gowun Batang', sans-serif;
+}
+
+.head-font{
+	width: 10%;
+	text-align: center;
+	font-family: 'Gowun Batang', sans-serif;
+}
+
+.my-items table thead tr th {
+  border: none;
+  padding: 0;
+  width: 16%;
+}
+.my-items table thead tr th:first-child {
+  width: 49%;
+}
+
+.my-items table thead tr th:last-child {
+  text-align: center;
+  width: 17%;
+}
+.my-items table tbody tr td {
+  border: none;
+  padding: 0;
+  width: 17%;
+  vertical-align: middle;
+  font-size: 12px;
+}
+.my-items table tbody tr td:first-child {
+  width: 70%;
+}
+.my-items table tbody tr td:last-child {
+  text-align: center;
+  width: 17%;
+  padding-right: 0px;
+}
+
+.my-items .my-item .image-wrapper .image {
+  width: 165px;
+  height: 135px;
+  position: relative;
+  display: block;
+}
+
+.my-items .my-item .info .location {
+  font-size: 13px;
+  font-family: 'Gowun Batang', sans-serif;
+}
+.my-items .my-item .info .meta {
+  font-size: 13px;
+  font-weight: bold;
+  margin: 2px 0;
+  font-family: 'Gowun Batang', sans-serif;
+  opacity: 1;
+}
+
+.my-items table tbody tr td:last-child {
+  text-align: right;
+  width: 15%;
+}
+
+.basket-paging {
+  text-align: center;
+}
+
+</style>
+<div class="myPage">
+    <div class="sidebar" style="margin: 50px 0 50px; width: 17%; min-width: 250px;">
+        <div class="box filter">
+            <h2>마이페이지</h2>
+            <ul class="links">
+                <li><a href="mypage/mypage">내정보</a></li>
+                <li class="active"><a href="mypage/basket">호텔 찜 목록</a></li>
+                <li><a href="mypage/mypage">예약내역</a></li>
+                <li><a href="mypage/delete">회원탈퇴</a></li>
+            </ul>
+           	<hr/>
+            <h2>더보기</h2>
+            <ul class="links">
+                <li><a href="mypage/mypage">공지사항</a></li>
+                <li><a href="mypage/mypage">문의게시판</a></li>
+                <li><a href="mypage/mypage">메뉴1</a></li>
+                <li><a href="mypage/delete">메뉴2</a></li>
+            </ul>
+        </div>
+        <!--end filter-->
+    </div>
+    <!--end sidebar-->
+
+	
+    <div class="my-items table-responsive" style="margin: 50px 0 50px; width: 60%; margin-left: 4%;">
+    	<p class="title">회원님이 찜하신 호텔</p>
+			<table class="table">
+				<thead>
+  					<tr>
+	                    <th class="sub" style="text-align: left; padding-left: 10px;">호텔 정보</th>
+	                    <th style="width: 12%;" class="sub">가격</th>
+	                    <th style="width: 7%;" class="sub">평점</th>
+	                    <th style="width: 10%;" class="sub">찜 취소</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    
+                <tr class="my-item" style="margin-bottom: 0px;"
+                th:if="${#lists.size(pagedBasket)}!=null" th:each="dto:${pagedBasket}">
+                    <td>
+                        <div class="image-wrapper">
+                            <a href="mypage/basket" class="image">
+                            	<img th:src="@{|/hotel/${dto.URL}|}" style="width:100%; height:100%; position: absolute;">
+                            </a>
+                        </div>
+                        <div class="info">
+                            <a href="mypage/basket"><span class="sub-title">[[${dto.HOTEL_NAME}]]</span></a>
+                            <figure class="location"><strong>[[${dto.ADDR1}]]</strong></figure>
+                            <figure class="label label-info">[[${dto.CATEGORY}]]</figure>
+                            <div class="meta">
+                                <span><i class="fa fa-phone" aria-hidden="true"></i>[[${dto.TEL}]]</span>
+                            </div>
+                            <!--end meta-->
+                        </div>
+                        <!--end info-->
+                    </td>
+                    <td style="width: 10%; text-align: center; font-size: 18px;">[[${dto.STANDARD}]]~</td>
+                    <td style="width: 10%; text-align: center; font-size: 18px;">9.3</td>
+                    <td style="width: 10%; text-align: center; font-size: 18px;">
+                    <a href="mypage/basket"><img style="width: 35px; height: 35px;" src="assets/img/delete.png"></a></td>
+
+                </tr>
+				
+                
+			</tbody>
+		</table>
+		<div class="basket-paging" th:if="${#lists.size(dataCount)>0}">
+			<ul>
+				<li th:utext="${pageIndexList}" style="font-size: 24px;
+				font-family: 'Gowun Batang', sans-serif; font-weight: bold;"></li>
+			</ul>
+		</div>
+                
+		<div class="basket-paging" th:if="${#lists.size(dataCount)}<1">
+			<td colspan="5">
+				<span style="font-size: 24px;
+				font-family: 'Gowun Batang', sans-serif; font-weight: bold;">찜하신 호텔이 없습니다. </span>
+			</td>
+		</div>
+		
+	</div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script type="text/javascript">
+
+	
+	function sendIt() {
+		
+		var f = document.myForm;
+		f.action="mypage/update";
+		f.submit();
+		
+	}
+	
+	function getout() {
+
+		var f = document.myForm;
+		f.action="mypage/delete";
+		f.submit();
+		
+	}
+
+
+	
+</script>
+
+</html>
