@@ -13,7 +13,7 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 <!-- 새로운 예약 생성 -->
 <insert id="createReservation" parameterType="com.boot.hotel.dto.HotelReservationDTO">
 	insert into reservation (res_num, userid, username, hotel_id, category, hotel_name, room, people, status, request, inq_date)
-	values (#{res_num}, #{userid}, #{username}, #{hotel_id}, #{category}, #{hotel_name}, #{room}, #{people}, #{status}, #{request}, #{inq_date, jdbcType=DATE})
+	values (#{res_num}, #{userid}, #{username}, #{hotel_id}, #{category}, #{hotel_name}, #{room}, #{people}, #{status}, #{request1}, #{inq_date})
 </insert>
 
 <!-- 최근 결제 번호 -->
@@ -25,6 +25,27 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
     insert into pay (pay_num, res_num, hotel_id, userid, username, method, price, date_num, people)
     values (#{pay_num}, #{res_num}, #{hotel_id1}, #{userid1}, #{username1}, #{method}, #{price}, #{date_num}, #{people1})
 </insert>
+
+<!-- 사진 전경 -->
+<select id="searchHotelTitle" parameterType="map" resultType="map">
+	select url from hotel_picture where hotel_id=#{hotel_id} and type=#{type}
+</select>
+
+
+<!-- 호텔 정보 가져오기 -->
+<select id="getHotelInfo" parameterType="map" resultType="map">
+	SELECT hotel.hotel_name, hotel.hotel_id, hotel.category, hotel_info.standard, hotel_info.sweet, hotel_info.deluxe,
+	hotel_info.check_in, hotel_info.check_out
+	FROM hotel
+	INNER JOIN hotel_info
+	ON hotel.hotel_id = hotel_info.hotel_id
+	WHERE hotel_info.hotel_id = #{hotel_id}
+</select>
+
+<!-- 사용자 정보 가져오기 -->
+<select id="getUserInfo" parameterType="map" resultType="map">
+	select userid, username, email, tel from member where userid=#{userid}
+</select>
 
 
 
