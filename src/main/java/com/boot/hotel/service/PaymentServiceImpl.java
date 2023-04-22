@@ -1,8 +1,12 @@
 package com.boot.hotel.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.boot.hotel.dto.HotelDTO;
 import com.boot.hotel.dto.HotelPictureDTO;
 import com.boot.hotel.dto.HotelReservationDTO;
 import com.boot.hotel.dto.PaymentDTO;
@@ -34,35 +38,22 @@ public class PaymentServiceImpl implements PaymentService{
 		paymentMapper.createReservation(resDto);
 	}
 	
-
 	
 	
-	
-
-	
-
-	
-	
-	
-/*
 	@Override
-	public void findUser(PaymentDTO dto) throws Exception {
-		paymentMapper.findUser(dto);
+	public List<String> searchHotelTitle(Map<String, Object> params) throws Exception {
+		return paymentMapper.searchHotelTitle(params);
 	}
-
 	@Override
-	public void findHotelInfo(PaymentDTO dto) throws Exception {
-		paymentMapper.findHotelInfo(dto);
+	public List<Map<String, Object>> getHotelInfo(int hotel_id) throws Exception {
+		return paymentMapper.getHotelInfo(hotel_id);
 	}
-
+	
+	// 사용자 정보
 	@Override
-	public void findHotelPrice(PaymentDTO dto) throws Exception {
-		paymentMapper.findHotelPrice(dto);
+	public List<Map<String, Object>> getUserInfo(String userid) throws Exception {
+		return paymentMapper.getUserInfo(userid);
 	}
-*/
-
-
-
 	
 	
 	

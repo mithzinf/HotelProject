@@ -17,7 +17,7 @@
             
             <div class="row">
                 
-                <div class="col-md-9">
+                <div class="col-md-9 ">
                     <div class="main-content">
                     
                     <h1 style="width: 80%; margin-left: 250px; ">결제내역</h1>
@@ -28,25 +28,31 @@
                             
                             <div class="table-responsive pricing-table">
                                 <table class="table">
+                                    
+                                    	 
                                         <tr>
                                         	<td><dt style="font-size: 21px">예약번호</dt></td>
-                                            <td><dd><td th:text="${resDto.res_num}" style="font-size: 21px"></td></dd></td>
-                                        </tr>
-                                        <tr>
-                                        	<td><dt style="font-size: 21px">호텔이름 / 방 종류</dt></td>
-                                            <td><dd><td th:text="${resDto.hotel_name + ' /' + resDto.room}" style="font-size: 21px"></td></dd></td>
-                                        </tr>
-                                        <tr>
-                                        	<td><dt style="font-size: 21px">예약날짜</dt>
-                                            <td><dd><td th:utext="${#dates.format(resDto.inq_date, 'yyyy/MM/dd')}" style="font-size: 21px"></td></dd></td>
+                                            <td><dd><td th:text="${res_num}" style="font-size: 21px"></td></dd></td>
                                         </tr>
                                         <tr>
                                         	<td><dt style="font-size: 21px">예약인원</dt>
-                                            <td><dd><td th:text="${resDto.people}" style="font-size: 21px"></td></dd></td>
+                                            <td><dd><td th:text="${people}" style="font-size: 21px"></td></dd></td>
+                                        </tr>
+                                        <tr>
+                                        	<td><dt style="font-size: 21px">호텔이름 / 방 종류</dt></td>
+                                            <td><dd><td th:text="${hotel_name + ' /' + room}" style="font-size: 21px"></td></dd></td>
+                                        </tr>
+                                        <tr>
+                                        	<td><dt style="font-size: 21px">예약날짜</dt>
+                                            <td><dd><td th:utext="${inq_date}" style="font-size: 21px"></td></dd></td>
+                                        </tr>
+                                        <tr>
+                                        	<td><dt style="font-size: 21px">예약인원</dt>
+                                            <td><dd><td th:text="${people}" style="font-size: 21px"></td></dd></td>
                                         </tr>
                                         <tr>
                                         	<td><dt style="font-size: 21px">숙박일수</dt>
-                                            <td><dd><td th:text="${payDto.date_num}" style="font-size: 21px"></td></dd></td>
+                                            <td><dd><td th:text="${date_num}" style="font-size: 21px"></td></dd></td>
                                         </tr>
                                 </table>
                             </div>
@@ -69,19 +75,19 @@
                                     
                                     <tbody>
                                     	 <tr>
-                                    	 	<td><dt style="font-size: 40px; margin-left: 100px; color: gray;">결제가 완료되었습니다</dt>
+                                    	 	<td><dt style="font-size: 40px;margin-left: 100px; color: gray;">결제가 완료되었습니다</dt>
                                     	 </tr>
                                     	 <tr>
                                         	<td><dt style="font-size: 21px">결제번호</dt></td>
-                                            <td><dd><td th:text="${payDto.pay_num}" style="font-size: 21px"></td></dd></td>
+                                            <td><dd><td th:text="${pay_num}" style="font-size: 21px"></td></dd></td>
                                         </tr>
                                         <tr>
                                         	<td><dt style="font-size: 21px">가격</dt></td>
-                                            <td><dd><td th:text="${payDto.price}"  style="font-size: 21px"></td></dd></td>
+                                            <td><dd><td th:text="${price}"  style="font-size: 21px"></td></dd></td>
                                         </tr>
                                         <tr>
                                         	<td><dt style="font-size: 21px">결제상태</dt></td>
-                                            <td><dd><td th:text="${resDto.status}" style="font-size: 21px"></td></dd></td>
+                                            <td><dd><td th:text="${status}" style="font-size: 21px"></td></dd></td>
                                         </tr>
                                         
                                         
@@ -92,6 +98,7 @@
                             
                         </section>
                         </div>
+                        
                         
                         <!-- a href="/paymentPage" class="button" style=" font-size: 18px;">메인으로</a> -->
                         

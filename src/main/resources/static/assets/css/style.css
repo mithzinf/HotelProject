@@ -2693,6 +2693,8 @@ line-height: 0;
   color: #488f3e;
 }
 
+
+
 .member {
   -moz-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.07);
   -webkit-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.07);
@@ -2741,6 +2743,8 @@ line-height: 0;
 .member .description dl dd {
   text-align: right;
 }
+
+
 
 .message-popup {
   -moz-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.07);
@@ -3243,6 +3247,8 @@ line-height: 0;
   z-index: 99;
 }
 
+
+
 .post-author {
   border: 2px solid rgba(0, 0, 0, 0.1);
   display: table;
@@ -3265,6 +3271,11 @@ line-height: 0;
   vertical-align: middle;
   padding-left: 20px;
 }
+
+
+
+
+
 
 .pricing-table thead tr th {
   font-size: 16px;
@@ -5380,4 +5391,8 @@ body::before {
     position: relative;
     text-align: center;
   }
+  
+
+
+  
 }
