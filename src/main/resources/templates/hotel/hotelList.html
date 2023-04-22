@@ -35,6 +35,42 @@
     f.action = "/hotel/hotelList";
     f.submit();
   }
+
+  $(function(){
+	  
+
+  
+  $("#basketAdd").click(function() {
+	  alert("ㄷㄹ어오니?");
+// 	    var requestData = {
+// 	        hotel_id: $("hotel_id").val()
+// 	    };
+	    
+	   // addBasket(requestData); // addBasket 함수 호출
+	});
+  });
+/*
+function addBasket(requestData) {
+	    $.ajax({
+	        type: "POST",
+	        url: "/hotel/hotelList",
+	        data: requestData,
+	        success: function(data) {
+	            alert("찜하기 성공")
+	            // 장바구니 추가 성공 시 처리할 내용
+	        },
+	        error: function(jqXHR, textStatus, errorThrown) {
+	            alert("찜하기 실패")
+	            // 장바구니 추가 실패 시 처리할 내용
+	        }
+	    });
+	}
+   */
+  
+  
+  
+  
+  
 </script>
 
 
@@ -84,35 +120,16 @@
 				<!--end container-->
 				<hr>
 				<div class="container">
-					<div class="primary-nav">
-						<div class="left">
-							<a href="index.html" id="brand"><img
-								src="assets/img/logo.png" alt=""></a> <a class="nav-trigger"
-								data-toggle="collapse" href="#primary-nav" aria-expanded="false"
-								aria-controls="primary-nav"><i class="fa fa-navicon"></i></a>
-						</div>
+				
+							
+						
 						<!--end left-->
-						<div class="right">
-							<nav id="primary-nav">
-								<ul>
-									<li><a href="index.html">메인으로</a></li>
-									<li><a href="#">프로모션</a></li>
-									<li><a href="#" class="has-child">마이페이지</a>
-										<ul class="child-nav">
-											<li><a href="faq.html">예약확인</a></li>
-											<li><a href="grid.html">정보조회</a></li>
-											<li><a href="sticky-footer.html">탈퇴하기</a></li>
-										</ul></li>
-									<li><a href="contact-us.html">Contact Us</a></li>
-									<li class="submit"><a href="submit.html"><span>Submit</span><i
-											data-toggle="tooltip" data-placement="top" title="Submit"><img
-												src="assets/img/plus.png" alt=""></i></a></li>
-								</ul>
-							</nav>
+					
+							
 							<!--end nav-->
-						</div>
+						
 						<!--end right-->
-					</div>
+				
 					<!--end primary-nav-->
 				</div>
 				<!--end container-->
@@ -132,6 +149,7 @@
 				<div class="row">
 					<div class="col-md-3">
 						<div class="sidebar">
+					<br/>
 							<div class="box filter">
 								<h2>호텔 검색하기</h2>
 
@@ -198,9 +216,14 @@
   
     <div class="image-wrapper">
       <div class="image">
-      
+
         <a th:href="@{/detail(hotel_id=${hotel.hotel_id})}"  class="wrapper" >
-     <img src="/image/checked.png">
+                  <div th:if="${hotelList3 != null}"> 
+  <div th:each="hotel3 : ${hotelList3}" th:if="${hotel3.hotel_id == hotel.hotel_id}">
+ <img th:src="${hotel3.url}" />
+
+  </div>
+</div>
         </a>
 
 
@@ -222,7 +245,7 @@
         </a>
         <figure th:text="${hotel.addr1}"></figure>
         <figure class="label label-info" th:if="${hotel.category} != null" th:text="${hotel.category}"></figure>
-        <figure class="label label-danger" th:if="${hotel.tel} != null" th:text="${hotel.tel}"></figure>
+        <figure class="label label-info" th:if="${hotel.tel} != null" th:text="${hotel.tel}"></figure>
         
         <!-- hotelList2의 정보 출력 -->
         <div th:if="${hotelList2 != null}">
@@ -234,16 +257,18 @@
 <a th:if="${hotel2.standard} != null" th:text="${hotel2.standard}"></a> ~
 <a th:if="${hotel2.sweet} != null" th:text="${hotel2.sweet}"></a>
 </span><span class="appendix">/1박</span></div>
-<a href="detail.html" class="btn btn-rounded btn-default btn-framed btn-small">View detail</a>
-                                
 
+                                
+<div class = "meta">
+<a class="btn btn-rounded btn-default btn-framed btn-small" id="basketAdd" >♡찜하기♡</a>
+<a href="detail.html" class="btn btn-rounded btn-default btn-framed btn-small" id="basketRe" >♥찜해제♥</a>
+        <span><i class="fa fa-star"></i>별점</span>
+        <span><i class="fa fa-bed"></i>리뷰 수</span> 
           </div>
         </div>
 
       </div>
-      <div class="meta">
-        <span><i class="fa fa-star"></i>별점</span>
-        <span><i class="fa fa-bed"></i>리뷰 수</span> 
+
       </div>
     </div>
 </div>
@@ -281,11 +306,7 @@
                 <!--end col-md-9-->
             </div>
             <!--end row-->
-        </div>
-        <!--end container-->
-    </div>
-  
-  
+
   
   
   
@@ -365,4 +386,3 @@
 <script src="assets/js/ie.js"></script>
 <![endif]-->
 </body>
-
