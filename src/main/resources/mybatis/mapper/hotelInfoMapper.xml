@@ -11,7 +11,8 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 <select id="getHotelList1" resultType="com.boot.hotel.dto.HotelDTO" parameterType="map">
  		SELECT * from (
   	    select rownum rnum,data.* from (
-  	    select * from hotel where ${searchKey} like '%' || #{searchValue} || '%'
+  	    select * from hotel where hotel_name like '%' || #{searchValue} || '%'
+  	    or addr1 like '%' || #{searchValue} || '%'  
   	    order by hotel_id asc) data)
     <![CDATA[
         where rnum>=#{start} and rnum<=#{end}
@@ -40,6 +41,13 @@ WHERE type = 'title'
 ORDER BY hotel_id ASC
 </select>
 
+<select id="getHotelCount" parameterType="map" resultType="int">
+  	select nvl(count(*),0) FROM hotel 
+    where ${searchKey} like '%' || #{searchValue} || '%'
+</select>
+
+
+
 
 
 <!-- 검색값 출력하는 쿼리문 -->
@@ -51,16 +59,6 @@ ORDER BY hotel_id ASC
 	where (hotel_name like '%' || #{searchValue} || '%'
 	or addr1 like '%' || #{searchValue} || '%') and hp.type = 'title'
 </select>
-
-
-
-
-
-<select id="getHotelCount" parameterType="map" resultType="int">
-  	select nvl(count(*),0) FROM hotel 
-    where ${searchKey} like '%' || #{searchValue} || '%'
-</select>
-
 
 
 </mapper>
