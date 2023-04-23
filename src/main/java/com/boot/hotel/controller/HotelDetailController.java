@@ -21,6 +21,7 @@ import com.boot.hotel.dto.HotelDTO;
 import com.boot.hotel.dto.HotelFacilityInDTO;
 import com.boot.hotel.dto.HotelInfoDTO;
 import com.boot.hotel.dto.HotelPictureDTO;
+import com.boot.hotel.dto.HotelReservationDTO;
 import com.boot.hotel.service.HotelDetailService;
 @ResponseBody
 @RestController
@@ -70,39 +71,34 @@ public class HotelDetailController {
    
    
    @RequestMapping(value = "/detail", method = {RequestMethod.GET, RequestMethod.POST})
-   public ModelAndView detail(@RequestParam(value = "hotel_id", required = true) int hotel_id) throws Exception {
+   public ModelAndView detail(@RequestParam("hotel_id") int hotel_id) throws Exception {
       
-	   
-      
+	  
       Map<String, Object> paramMap = new HashMap<>();
-      String type = "title";
       paramMap.put("hotel_id", hotel_id);
-      paramMap.put("type", type);
-  
-     
       
       List<HotelDTO> dto1 = hotelDetailService.getHotelById(hotel_id);
       List<HotelInfoDTO> dto2 = hotelDetailService.getHotelInfoById(hotel_id);
-      List<HotelPictureDTO> dto3 = hotelDetailService.getHotelPicById(hotel_id);
       List<HotelFacilityInDTO> dto4 = hotelDetailService.getHotelFacilityInById(hotel_id);
-      List<Map<String,Object>> searchHotelDetail = hotelDetailService.searchHotelDetail(paramMap);
+      List<HotelPictureDTO> searchHotelDetail = hotelDetailService.searchHotelDetail(paramMap);
       
       String[] urlname = new String[searchHotelDetail.size()];
       int i = 0;
       
       
       
-      for (Map<String,Object> url: searchHotelDetail) {
-          urlname[i] = String.valueOf(url.get("URL")); 
-          System.out.println(urlname[i]); 
+      for (HotelPictureDTO url: searchHotelDetail) {
+          urlname[i] = String.valueOf(url); 
+          System.out.println("urlname[i] = " +urlname[i]); 
           i++;
       } 
       
-      ModelAndView mav = new ModelAndView();
+		System.out.println(searchHotelDetail);
       
+      ModelAndView mav = new ModelAndView();
+      mav.addObject("hotel_id", hotel_id);
       mav.addObject("dto1", dto1);
       mav.addObject("dto2", dto2);
-      mav.addObject("dto3", dto3);
       mav.addObject("dto4", dto4);
       mav.addObject("searchHotelDetail", searchHotelDetail);
       mav.addObject("urlname", urlname);
@@ -110,8 +106,36 @@ public class HotelDetailController {
       
       return mav;
    }
+
+   //상세페이지에서 예약하기를 눌렀을 때의 메소드!...hotel_id, 체크인날짜, 체크아웃날짜, 예약한 객실(standard,suite,deluxe)의 타입 데이터 넘길 메소드
+   //딱히 매핑주소가 필요하진 않아보임?
+ //hotel_id는 hotelDTO에 있고...
+   //check_in 날짜와 check_out 날짜는 장바구니 테이블 basketdto의 req_date, reservation 테이블의 inq_date 컬럼 갖다 써야하는지?
+   //내가 예약한 객실..room 컬럼 room == standard 뭐 이렇게 넘겨야 하는것임? 
+   //테이블 안써도 되고..detail.html부분에서 체크인, 체크아웃 날짜 선택하는 부분에서 그 날짜를 value name으로 받아서 넘기면 될듯?
    
-   //객실 성질에 따른 사진 보여줄 roomInfo.html 띄울 매핑 & ModelAndView 만든다..아휴 손 많이 가..
+   @RequestMapping(value = "/bookRoom", method = RequestMethod.POST)
+   public ModelAndView bookRoom(HttpServletRequest request, @RequestParam("hotel_id") int hotel_id) throws Exception {
+	   		ModelAndView mav = new ModelAndView();
+	   		
+		    String checkin = request.getParameter("checkin");
+		    String checkout = request.getParameter("checkout");
+		    
+		    mav.addObject("hotel_id", hotel_id);
+		    mav.addObject("checkin", checkin);
+		    mav.addObject("checkout", checkout);
+			System.out.println(checkin);
+			System.out.println(checkout);
+			System.out.println(hotel_id);
+		  
+			mav.setViewName("hotel/bookingTest");   
+
+	   return mav;
+   }
+   
+   
+   
+   //이거 걍 테스트용
    @GetMapping("/roomInfo")
    public ModelAndView roomInfo(HttpServletRequest request) throws Exception {
 	   
@@ -120,6 +144,9 @@ public class HotelDetailController {
 	   
 	   return mav;
    }
+   
+   
+   
 }
 
 
