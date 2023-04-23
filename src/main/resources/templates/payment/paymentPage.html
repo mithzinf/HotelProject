@@ -38,7 +38,7 @@
                                                </div>
 											<dl class="visitor-rating">
 												<dt style="font-size: 21px">사용자 ID</dt>
-												<dd style="font-size: 21px"><td th:text="${userId}"></td></dd>
+												<dd style="font-size: 21px"><td th:text="${userid}"></td></dd>
 												<dt style="font-size: 21px">사용자 전화번호</dt>
 												<dd style="font-size: 21px"><td th:text="${tel}"></dd>
 												<dt style="font-size: 21px">사용자 이메일</dt>
@@ -96,9 +96,9 @@
                                             <dd style="font-size: 21px"><td th:text="${room}"></td></dd>
                                             
                                             <dt style="font-size: 21px"><b>체크인 날짜</b></dt>
-											<dd style="font-size: 21px"><td th:text="${#dates.format(inqDate1, 'yyyy/MM/dd')}"></td></dd>
+											<dd style="font-size: 21px"><td th:text="${#dates.format(check_in, 'yyyy/MM/dd')}"></td></dd>
 											<dt style="font-size: 21px"><b>체크아웃 날짜</b></dt>
-											<dd style="font-size: 21px"><td th:text="${#dates.format(checkOutDate, 'yyyy/MM/dd')}"></td></dd>
+											<dd style="font-size: 21px"><td th:text="${#dates.format(check_out, 'yyyy/MM/dd')}"></td></dd>
                                             
                                             <dt style="font-size: 21px"><b>숙박 인원</b></dt>
                                             <dd style="font-size: 21px"><td th:text="${people}"></td></dd>
@@ -125,16 +125,19 @@
 											<input type="hidden" id="category" name="category" th:value="${category}"/>
 											<input type="hidden" id="method" name="method" th:value="${method}"/>
 											
-											<input type="hidden" id="inq_date" name="inq_date" th:value="${#dates.format(inqDate1, 'yyyy/MM/dd')}"/>
+											<input type="hidden" id="check_in" name="check_in" th:value="${#dates.format(check_in, 'yyyy/MM/dd')}"/>
+											<input type="hidden" id="check_out" name="check_out" th:value="${#dates.format(check_out, 'yyyy/MM/dd')}"/>
 											
 											<input type="hidden" id="maxPayNum" name="maxPayNum" th:value="${maxPayNum}"/>
 											<input type="hidden" id="maxResNum" name="maxResNum" th:value="${maxResNum}"/>
 											<input type="hidden" id="tel" name="tel" th:value="${tel}"/>
 											
 											<input type="hidden" id="username" name="username" th:value="${username}"/>
-											<input type="hidden" name="userid" id="userid" th:value="${userId}"/>
+											<input type="hidden" name="userid" id="userid" th:value="${userid}"/>
 											
 											<input type="hidden" name="hotel_id" id="hotel_id" th:value="${hotel_id}"/>
+											
+											
 									        </form>
                                         </dl>
                                         
@@ -179,14 +182,14 @@
 							<br/>
 							
 							<dt style="font-size: 21px">체크인 날짜</dt>
-							<dd style="font-size: 18px"><td th:text="${#dates.format(inqDate1, 'yyyy/MM/dd')}"></td></dd>
+							<dd style="font-size: 18px"><td th:text="${#dates.format(check_in, 'yyyy/MM/dd')}"></td></dd>
 							<br/>
 							<dt style="font-size: 21px">체크아웃 날짜</dt>
-							<dd style="font-size: 18px"><td th:text="${#dates.format(checkOutDate, 'yyyy/MM/dd')}"></td></dd>
+							<dd style="font-size: 18px"><td th:text="${#dates.format(check_out, 'yyyy/MM/dd')}"></td></dd>
 							<br/>
 							
 							<dt style="font-size: 21px">체크인    /    체크아웃</dt>
-							<dd style="font-size: 18px" th:text="${check_in + ' / ' + check_out}"></dd>
+							<dd style="font-size: 18px" th:text="${check_inTime + ' / ' + check_outTime}"></dd>
 							<br/>
 							
 							<dt style="font-size: 21px">방 종류</dt>
@@ -238,13 +241,14 @@ let maxPayNum = document.getElementById("maxPayNum").value;
         IMP.request_pay({
         	pg : 'html5_inicis.INIpayTest',
             pay_method : 'card',
-            merchant_uid: 57008833-33199, // 초기화 할 수 없다면 maxResNum 사용해보자 아니면 maxPayNum + 10000000 해주기
+            merchant_uid: 57008833-33218 // 초기화 할 수 없다면 maxResNum 사용해보자 아니면 maxPayNum + 1000 해주기
          	// 사용한 값 33001,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
             // 21,22,23,24,25,26,27.28,29 31,32,33,34,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50
             // 51,52,53,54 ~ 114 115 116 117 118 120 121 122 123 124 125 126 127 128 129 130 131 132
             // 134 135 136 137 139 140 141 142 143 144 145 146 147 148 149 150 151 ~ 154 155 156 157
             // 158 159 160 ~ 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179 ~ 183 184
-            // 185 186 187 188 189 190 191 192 193 194 195 196 197 198
+            // 185 186 187 188 189 190 191 192 193 194 195 196 197 198 199 200 201 202 203 204 205 206
+            // 207 208 209 210 211 212 213 214 215 216 217
             name : hotel_name,
             amount : 100,
             buyer_email : null,

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -96,37 +97,44 @@ public class PaymentController {
 	}
 	
 	@GetMapping("/paymentPage")
-	public ModelAndView paymentPage() throws Exception{
-		// 받아와야 하는 거 - userid, hotel_id, inq_date, people, room, date_num
+	public ModelAndView paymentPage(
+//			 @RequestParam String room,
+//			 @RequestParam int hotel_id,
+//			 @RequestParam @DateTimeFormat(pattern = "yyyy/MM/dd") Date checkIn,
+//			 @RequestParam @DateTimeFormat(pattern = "yyyy/MM/dd") Date checkOut
+			) throws Exception{
+		// 받아와야 하는 거 - userid, hotel_id, room, inq_date, date_num
+		// 체크인 체크아웃 날짜 받아서 date_num 받기
 		
 		ModelAndView mav = new ModelAndView(); 
 		
 		Map<String, Object> paramMap = new HashMap<>();
 		
+		// 방종류 - 넘겨 받기
+		String room = "디럭스"/*방 종류*/;
+		int hotel_id = 131/*hotel_id*/;
 		
-		int hotelId = 35/*hotel_id*/;
+		String userid = "suzi";
+		
+		
 		String type = "title";
-		paramMap.put("hotel_id", hotelId);
+		paramMap.put("hotel_id", hotel_id);
 		paramMap.put("type", type);
 		
 		List<String> hotelTitle = paymentService.searchHotelTitle(paramMap);
-		mav.addObject("hotelTitle",hotelTitle);
 		
-		List<Map<String,Object>> hotelInfo = paymentService.getHotelInfo(35);/*hotel_id*/
+		
+		List<Map<String,Object>> hotelInfo = paymentService.getHotelInfo(hotel_id);
 		
 		Object category = hotelInfo.get(0).get("CATEGORY");
 		Object hotel_name = hotelInfo.get(0).get("HOTEL_NAME");
-		Object hotel_id = hotelInfo.get(0).get("HOTEL_ID"); // hotel_id 받아오면 필요 없다
-		Object check_in = hotelInfo.get(0).get("CHECK_IN");
-		Object check_out = hotelInfo.get(0).get("CHECK_OUT");
+		Object check_inTime = hotelInfo.get(0).get("CHECK_IN");
+		Object check_outTime = hotelInfo.get(0).get("CHECK_OUT");
 		
-		
-		mav.addObject("check_in",check_in);
-		mav.addObject("check_out",check_out);
 		
 		
 		int price = 0;
-		String roomType = "디럭스"/*방종류받기*/;
+		String roomType = room;
 		if (roomType.equals("스탠다드")) {
 		    price = ((BigDecimal) hotelInfo.get(0).get("STANDARD")).intValue();
 		} else if (roomType.equals("스위트")) {
@@ -136,60 +144,76 @@ public class PaymentController {
 		}
 		
 		
-		List<Map<String, Object>> userInfo = paymentService.getUserInfo("suzi"/*userd*/);
+		List<Map<String, Object>> userInfo = paymentService.getUserInfo(userid);
+		Object user_id = userInfo.get(0).get("USERID");
 		Object username = userInfo.get(0).get("USERNAME");
-		Object userId = userInfo.get(0).get("USERID");
 		Object tel = userInfo.get(0).get("TEL");
 		Object email = userInfo.get(0).get("EMAIL");
 		
-		mav.addObject("username",username);
-		mav.addObject("userId",userId);
-		mav.addObject("tel",tel);
-		mav.addObject("email",email);
-		
-		mav.addObject("hotelInfo",hotelInfo);
-		mav.addObject("userInfo",userInfo);
-		
-		// 숙박일수 - 넘겨 받기
-		int date_num = 1/*date_num*/;
-		
 		// 숙박날짜 - 넘겨 받기 
+		// 체크인 체크아웃 날짜 받기
+		
 		DateFormat dateFormat1 = new SimpleDateFormat("yyyy/MM/dd");
-		Date inqDate1 = dateFormat1.parse("2024/02/15"/*inq_date*/);
+		Date checkInDate = dateFormat1.parse("2023/04/25");
+		Date checkOutDate = dateFormat1.parse("2023/05/25");
+		
+		
+		// TODO - 날짜 받기
+//		Date checkInDate = checkIn;
+//		Date checkOutDate = checkOut;
+		
 
+		Calendar startCal = Calendar.getInstance();
+		startCal.setTime(checkInDate);
+
+		Calendar endCal = Calendar.getInstance();
+		endCal.setTime(checkOutDate);
+
+		long diffMillis = endCal.getTimeInMillis() - startCal.getTimeInMillis();
+		long date_num = diffMillis / (24 * 60 * 60 * 1000);
+		
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(inqDate1); // Calendar 객체에 변환한 날짜를 적용
+		calendar.setTime(checkInDate); // Calendar 객체에 변환한 날짜를 적용
 
-		calendar.add(Calendar.DATE, date_num); // 5일을 더함
+		calendar.add(Calendar.DATE, (int) date_num); // date_num일을 더함
 
-		Date resultDate = calendar.getTime(); // 더한 날짜를 Date 형식으로 가져옴
-
-		String checkOutDate = dateFormat1.format(resultDate); // Date 형식을 다시 문자열로 변환
-		
-		// 방종류 - 넘겨 받기
-		String room = "디럭스"/*방 종류*/;
-		mav.addObject("room",room);
-		
-		mav.addObject("price",price);
-		
 		// 숙박인원
-		int people = 2;
-		
+		int people = 0;
+		/*스탠다드 스위트면 2명 디럭스는 4명나오게 */
+		if (room.equals("스탠다드") || room.equals("스위트")) {
+		    people = 2;
+		} else if (room.equals("디럭스")) {
+		    people = 4;
+		}
+		// 결제번호 / 예약번호
 		int maxResNum = paymentService.maxResNum();
 		int maxPayNum = paymentService.maxPayNum();
 		
 		mav.addObject("maxResNum",maxResNum+1);
 		mav.addObject("maxPayNum",maxPayNum+1);
 		
-		mav.addObject("hotel_id",hotel_id);
-		mav.addObject("people",people);
-		mav.addObject("inqDate1",inqDate1);
-		mav.addObject("category",category);
 		mav.addObject("hotel_name",hotel_name);
-		mav.addObject("inqDate1",inqDate1);
-		mav.addObject("checkOutDate",checkOutDate);
+		mav.addObject("hotel_id",hotel_id);
+		mav.addObject("room",room);
+		mav.addObject("category",category);
+		mav.addObject("price",price);
+		mav.addObject("hotelInfo",hotelInfo);
+		mav.addObject("people",people);
+		mav.addObject("hotelTitle",hotelTitle);
+		
+		mav.addObject("check_inTime",check_inTime);
+		mav.addObject("check_outTime",check_outTime);
+		
+		mav.addObject("check_in",checkInDate);
+		mav.addObject("check_out",checkOutDate);
 		mav.addObject("date_num",date_num);
-		mav.setViewName("payment/payment");
+		
+		mav.addObject("userInfo",userInfo);
+		mav.addObject("tel",tel);
+		mav.addObject("email",email);	
+		
+		mav.addObject("userid",user_id);
+		mav.addObject("username",username);
 		
 		mav.setViewName("payment/paymentPage");
 		return mav;
@@ -205,7 +229,7 @@ public class PaymentController {
 		
 		Map<String, Object> paramMap = new HashMap<>();
 		
-		int hotelId = resDto.getHotel_id() /*35 hotel_id*/;
+		int hotelId = resDto.getHotel_id();
 		String type = "title";
 		paramMap.put("hotel_id", hotelId);
 		paramMap.put("type", type);
@@ -213,8 +237,8 @@ public class PaymentController {
 		List<String> hotelTitle = paymentService.searchHotelTitle(paramMap);
 		mav.addObject("hotelTitle",hotelTitle);
 		
+		List<Map<String, Object>> userInfo = paymentService.getUserInfo(resDto.getUserid());
 		
-		List<Map<String, Object>> userInfo = paymentService.getUserInfo(resDto.getUserid()/*"suzi" userid*/);
 		Object username = userInfo.get(0).get("USERNAME");
 		Object userId = userInfo.get(0).get("USERID");
 		
