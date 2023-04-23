@@ -40,6 +40,11 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 </select>
 
 
+<select id="checkHotelBasket" parameterType="com.boot.hotel.dto.HotelBasketDTO" resultType="int">
+    SELECT COUNT(*) FROM basket WHERE userid = #{userid} AND hotel_id = #{hotel_id}
+</select>
+
+
 <!-- 페이지마다 10개(내가 띄운 것) 장바구니에 이 호텔이 찜한 것인지 (hotel_id,userid로 찾아서 맞으면 꺼내온다) -->
 <!-- 예스여요 노여요 이렇게 확인해서 if로 yes면 찜해제~ 어쩌구 뜨고 no면 찜하기~ 어쩌구 뜰 수 있게 만든다 -->
 

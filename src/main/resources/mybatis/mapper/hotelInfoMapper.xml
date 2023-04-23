@@ -43,7 +43,8 @@ ORDER BY hotel_id ASC
 
 <select id="getHotelCount" parameterType="map" resultType="int">
   	select nvl(count(*),0) FROM hotel 
-    where ${searchKey} like '%' || #{searchValue} || '%'
+  	where hotel_name like '%' || #{searchValue} || '%'
+	or addr1 like '%' || #{searchValue} || '%'  
 </select>
 
 
