@@ -46,22 +46,15 @@
   justify-content:center;
 }
 .slide_item:nth-of-type(1),.thumbnail_item:nth-of-type(1) { /*예제를 위해 썸네일 아이템들의 색깔을 구분*/
-  background:yellow;
+  
 }
 .slide_item:nth-of-type(2),.thumbnail_item:nth-of-type(2) {
-  background:blue;
+  
 }
 .slide_item:nth-of-type(3),.thumbnail_item:nth-of-type(3) {
-  background:red;
+  
 }
-.slide_item:nth-of-type(4),.thumbnail_item:nth-of-type(4) {
-  background:orange;
-}
-.slide_item:nth-of-type(5),.thumbnail_item:nth-of-type(5) {
-  background:black;
-}
-.slide_item:nth-of-type(6),.thumbnail_item:nth-of-type(6) {
-  background:green;
-}
+
 .thumbnail_item { /*썸네일 아이템의 길이 설정*/
   width:98px;
+}
