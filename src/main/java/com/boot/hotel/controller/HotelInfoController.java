@@ -1,31 +1,24 @@
 package com.boot.hotel.controller;
 
 import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.boot.hotel.dto.HotelBasketDTO;
 import com.boot.hotel.dto.HotelDTO;
 import com.boot.hotel.dto.HotelInfoDTO;
 import com.boot.hotel.dto.HotelPictureDTO;
-import com.boot.hotel.dto.MemberDTO;
 import com.boot.hotel.service.HotelBasketService;
 import com.boot.hotel.service.HotelInfoService;
 import com.boot.hotel.util.MyUtil;
@@ -59,12 +52,10 @@ public class HotelInfoController {
             currentPage = Integer.parseInt(pageNum);
         }
 
-        String searchKey = request.getParameter("searchKey");
         String searchValue = request.getParameter("searchValue");
 
 
-        if (searchKey == null || searchValue == null || searchValue.equals("")) {
-            searchKey = "hotel_name";
+        if (searchValue == null || searchValue.equals("")) {
             searchValue = "";
         }
 
@@ -72,21 +63,7 @@ public class HotelInfoController {
             searchValue = URLDecoder.decode(searchValue, "UTF-8");
         }
 
-        
-/*
-        if (searchKey == null || searchValue.equals("")) {
-            searchKey = "hotel_name";
-            searchValue = "";
-        }
-
-        if (searchValue != null) {
-            if(request.getMethod().equalsIgnoreCase("GET")){
-                searchValue = URLDecoder.decode(searchValue, "UTF-8");
-            }
-        }
-*/
         Map<String, Object> params1 = new HashMap<>();
-        params1.put("searchKey", searchKey);
         params1.put("searchValue", searchValue);
 
         int dataCount = hotelInfoService.getHotelCount(params1);
@@ -105,33 +82,15 @@ public class HotelInfoController {
         Map<String, Object> params = new HashMap<>();
         params.put("start", start);
         params.put("end", end);
-        params.put("searchKey", searchKey);
         params.put("searchValue", searchValue);
         
         
         if(!searchValue.equals("") && searchValue != null) {
-            params.put("searchKey", searchKey);
             params.put("searchValue", searchValue);
         } else {
-            params.put("searchKey", "hotel_name, addr1");
             params.put("searchValue", "");
         }
 
- /*
-        if(!searchValue.equals("") && searchValue != null) {
-            params.put("searchKey", searchKey);
-            params.put("searchValue", searchValue);
-        } else {
-            params.put("searchKey", "hotel_name");
-            params.put("searchKey", "addr1");
-            params.put("searchValue", "");
-        }
-*/
-        
-
-            
-        //또 검색값이 없으면 호텔을 찾을 수 없습니다 라고 말 하기
-        
        
         List<HotelDTO> hotelList1 = hotelInfoService.getHotelList1(params);
         List<HotelInfoDTO> hotelList2 = hotelInfoService.getHotelList2(params);
@@ -145,15 +104,13 @@ public class HotelInfoController {
 
         String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
 
-       // String detailUrl = "/detail?pageNum=" + currentPage;
 
         
-        
-        String detailUrl = "/detail?searchKey=" + searchKey + "&searchValue=" + 
+        String detailUrl = "/detail?searchValue=" + 
                 searchValue + "&pageNum=" + currentPage;
 
-        if (searchKey != null && searchValue != null && !searchValue.equals("")) {
-            detailUrl += "&" + "searchKey=" + searchKey + "&" + "searchValue=" + searchValue;
+        if (searchValue != null && !searchValue.equals("")) {
+            detailUrl += "&searchValue=" + searchValue;
         }
 
         if (pageNum != null) {
@@ -175,8 +132,7 @@ public class HotelInfoController {
         mav.setViewName("hotel/hotelList");
 
         return mav;
-        
-        
+    
         
     }
   //리스트에서 추가하면 코드 짐하기 코드..어쩌고.... 저저고..
