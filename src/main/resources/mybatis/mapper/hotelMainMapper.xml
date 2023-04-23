@@ -25,4 +25,7 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 	or addr1 like '%' || #{searchValue} || '%') and hp.type = 'title'
 </select>
 
+
+
+
 </mapper>

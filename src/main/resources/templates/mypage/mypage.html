@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html layout:decorate="~{/layout/layout}">
+
+<meta charset="UTF-8">
+
+<div layout:fragment="content" class="content-padding">
+
+<link rel="stylesheet" type="text/css" href="css/register.css"/>
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Gowun+Batang&display=swap');
+.swal-footer {
+	text-align: center;
+}
+
+.login-container {
+	max-width: 500px;
+	min-height: 750px;	
+}
+
+.login-p {
+	margin-top: 22px;
+}
+
+.login-input[type="text"]{
+	font-weight: 1000;
+}
+
+
+
+</style>
+<div class="myPage">
+    <div class="sidebar" style="margin: 50px 0 50px; width: 17%; min-width: 250px;">
+        <div class="box filter">
+            <h2>마이페이지</h2>
+            <ul class="links">
+                <li class="active"><a href="mypage/mypage">내정보</a></li>
+                <li><a href="mypage/basket">호텔 찜 목록</a></li>
+                <li><a href="mypage/mypage">예약내역</a></li>
+                <li><a href="mypage/delete">회원탈퇴</a></li>
+            </ul>
+           	<hr/>
+            <h2>더보기</h2>
+            <ul class="links">
+                <li><a href="mypage/mypage">공지사항</a></li>
+                <li><a href="mypage/mypage">문의게시판</a></li>
+                <li><a href="mypage/mypage">메뉴1</a></li>
+                <li><a href="mypage/delete">메뉴2</a></li>
+            </ul>
+        </div>
+        <!--end filter-->
+    </div>
+    <!--end sidebar-->
+
+
+
+	<div class="login-body" style="width: 40%; min-width: 450px; margin-left: 7%;">
+		<div class="login-container" id="login-container">
+			<div class="login-form-container login-sign-in-container">
+				<form action="" name="myForm" method="post" class="login-form">
+				<br/>
+					<h1 class="login-h1">[[${dto.username}]]님의 회원 정보</h1>
+					<br/>
+						<p class="login-p">아이디 ([[${dto.auth}]])</p> 
+						<input class="login-input" type="text" name="userid" disabled="disabled" th:value="${dto.userid}"/>	
+		
+						<p class="login-p">이름</p>
+						<input class="login-input" type="text" name="username" disabled="disabled" th:value="${dto.username}">
+					
+						<p class="login-p">생년월일</p>
+					<input class="login-input" type="text" name="birth" disabled="disabled" th:value="${dto.birth}">
+					
+						<p class="login-p" disabled="disabled">이메일</p>
+					<div>
+						<input class="login-input" type="text" name="email1" style="width:32%;" disabled="disabled" th:value="${dto.email1}"/>
+						<span class="login-span">@</span>
+						<input class="login-input" type="text" name="email2" style="width:32%;" disabled="disabled" th:value="${dto.email2}"/>
+					</div>
+					
+						<p class="login-p">전화번호</p>
+					<div>
+						<input class="login-input" type="text" name="tel1" style="width:17%;" disabled="disabled" th:value="${dto.tel1}"/>
+						<span class="login-span">&nbsp;-&nbsp;</span>
+						<input class="login-input" type="text" name="tel2" style="width:20%;" disabled="disabled" th:value="${dto.tel2}"/>
+						<span class="login-span">&nbsp;-&nbsp;</span>
+						<input class="login-input" type="text" name="tel3" style="width:20%;" disabled="disabled" th:value="${dto.tel3}"/>
+					</div>
+					
+					<p class="login-p">가입날짜</p>
+						<input class="login-input" type="text" name="userid" disabled="disabled" th:value="${dto.regdate}"/>	
+					<br/><br/>
+					<div>
+						<button class="login-button-btn2" onclick="sendIt();" style="padding:12px 25px;"> 정보수정 </button>
+						&nbsp;
+						<button class="login-button-btn3" onclick="getout();" style="padding:12px 30px;"> 회원탈퇴 </button>
+					</div>
+						
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script type="text/javascript">
+
+	
+	function sendIt() {
+		
+		var f = document.myForm;
+		f.action="mypage/update";
+		f.submit();
+		
+	}
+	
+	function getout() {
+
+		var f = document.myForm;
+		f.action="mypage/delete";
+		f.submit();
+		
+	}
+
+
+	
+</script>
+
+</html>

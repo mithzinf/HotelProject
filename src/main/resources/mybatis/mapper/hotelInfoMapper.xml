@@ -11,7 +11,8 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 <select id="getHotelList1" resultType="com.boot.hotel.dto.HotelDTO" parameterType="map">
  		SELECT * from (
   	    select rownum rnum,data.* from (
-  	    select * from hotel where ${searchKey} like '%' || #{searchValue} || '%'
+  	    select * from hotel where hotel_name like '%' || #{searchValue} || '%'
+  	    or addr1 like '%' || #{searchValue} || '%'  
   	    order by hotel_id asc) data)
     <![CDATA[
         where rnum>=#{start} and rnum<=#{end}
@@ -28,17 +29,24 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
     </if>
 </select>
 
-
 <select id="getHotelList3" parameterType="map" resultType="com.boot.hotel.dto.HotelPictureDTO">
-  select hotel_id, url from hotel_picture where 
-  <if test="hotel_id != null">
-    hotel_id = #{hotel_id} and 
-  </if>
-  type='title'
-  <if test="hotel_id == null">
-    and hotel_id is null
-  </if>
+SELECT hotel_id, url FROM hotel_picture
+WHERE type = 'title'
+<if test="hotel_id != null">
+    AND hotel_id = #{hotel_id}
+</if>
+<if test="hotel_id == null">
+    AND hotel_id IS NOT NULL
+</if>
+ORDER BY hotel_id ASC
 </select>
+
+<select id="getHotelCount" parameterType="map" resultType="int">
+  	select nvl(count(*),0) FROM hotel 
+    where ${searchKey} like '%' || #{searchValue} || '%'
+</select>
+
+
 
 
 
@@ -51,16 +59,6 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 	where (hotel_name like '%' || #{searchValue} || '%'
 	or addr1 like '%' || #{searchValue} || '%') and hp.type = 'title'
 </select>
-
-
-
-
-
-<select id="getHotelCount" parameterType="map" resultType="int">
-  	select nvl(count(*),0) FROM hotel 
-    where ${searchKey} like '%' || #{searchValue} || '%'
-</select>
-
 
 
 </mapper>

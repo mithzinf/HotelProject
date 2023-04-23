@@ -23,19 +23,9 @@
     }
 </style>
 
-
-
 <title>호텔</title>
 
 </head>
-
-<script type="text/javascript">
-  function sendIt() {
-    var f = document.getElementById("searchForm");
-    f.action = "/hotel/hotelList";
-    f.submit();
-  }
-</script>
 
 
 <body>
@@ -84,35 +74,16 @@
 				<!--end container-->
 				<hr>
 				<div class="container">
-					<div class="primary-nav">
-						<div class="left">
-							<a href="index.html" id="brand"><img
-								src="assets/img/logo.png" alt=""></a> <a class="nav-trigger"
-								data-toggle="collapse" href="#primary-nav" aria-expanded="false"
-								aria-controls="primary-nav"><i class="fa fa-navicon"></i></a>
-						</div>
+				
+							
+						
 						<!--end left-->
-						<div class="right">
-							<nav id="primary-nav">
-								<ul>
-									<li><a href="index.html">메인으로</a></li>
-									<li><a href="#">프로모션</a></li>
-									<li><a href="#" class="has-child">마이페이지</a>
-										<ul class="child-nav">
-											<li><a href="faq.html">예약확인</a></li>
-											<li><a href="grid.html">정보조회</a></li>
-											<li><a href="sticky-footer.html">탈퇴하기</a></li>
-										</ul></li>
-									<li><a href="contact-us.html">Contact Us</a></li>
-									<li class="submit"><a href="submit.html"><span>Submit</span><i
-											data-toggle="tooltip" data-placement="top" title="Submit"><img
-												src="assets/img/plus.png" alt=""></i></a></li>
-								</ul>
-							</nav>
+					
+							
 							<!--end nav-->
-						</div>
+						
 						<!--end right-->
-					</div>
+				
 					<!--end primary-nav-->
 				</div>
 				<!--end container-->
@@ -132,15 +103,13 @@
 				<div class="row">
 					<div class="col-md-3">
 						<div class="sidebar">
+					<br/>
 							<div class="box filter">
 								<h2>호텔 검색하기</h2>
 
 					
 <form id="searchForm" action="/hotel/hotellist" method="get">
   <div class="form-group">
-   
- 
-  
 
 			<select name="searchKey" class="selectField">
 			<option value="hotel_name">호텔이름</option>
@@ -150,9 +119,6 @@
  </div>
 <input type="text" class="form-control input-lg" id="searchValue" name="searchValue" style="width: 100%;" placeholder="검색하세요">
 <button type="submit" class="btn btn-primary btn-rounded form-control">검색</button>
-
-
-
 </form>
 
 
@@ -163,17 +129,7 @@
 						<!--end sidebar-->
 					</div>
 					<!--end col-md-3-->
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
+
 				<div class="col-md-9">
                     <div class="main-content">
                         <div class="title">
@@ -185,31 +141,21 @@
                             </div>
                         </div>
                         <!--end title-->
-                        
-                        
-                        
-                        
-                        
-                  
 
-                       
                         <!--end item-->
 <div class="item list" th:if="${hotelList1 != null}" th:each="hotel, i : ${hotelList1}">
   
     <div class="image-wrapper">
       <div class="image">
-      
+
         <a th:href="@{/detail(hotel_id=${hotel.hotel_id})}"  class="wrapper" >
-     <img src="/image/checked.png">
+                  <div th:if="${hotelList3 != null}"> 
+  <div th:each="hotel3 : ${hotelList3}" th:if="${hotel3.hotel_id == hotel.hotel_id}">
+ <img th:src="${hotel3.url}" />
+
+  </div>
+</div>
         </a>
-
-
-
-
-
-
-
-
 
         <div class="owl-navigation"></div>
         
@@ -217,48 +163,54 @@
     </div>
     <div class="description">
       <div class="info">
-        <a th:href="@{/detail(hotel_id=${hotel.hotel_id})}">
-          <h3 th:text="${hotel.hotel_name}"></h3><br/>
-        </a>
+      
+      
+      
+      <a th:href="@{|/detail?pageNum=${currentPage}&searchKey=${searchKey}&searchValue=${hotel.hotel_name}|}">
+    <h3 th:text="${hotel.hotel_name}"></h3><br/>
+</a>
+      
+      
+   
         <figure th:text="${hotel.addr1}"></figure>
         <figure class="label label-info" th:if="${hotel.category} != null" th:text="${hotel.category}"></figure>
-        <figure class="label label-danger" th:if="${hotel.tel} != null" th:text="${hotel.tel}"></figure>
+        <figure class="label label-info" th:if="${hotel.tel} != null" th:text="${hotel.tel}"></figure>
         
         <!-- hotelList2의 정보 출력 -->
         <div th:if="${hotelList2 != null}">
-        
           <div th:each="hotel2 : ${hotelList2}" th:if="${hotel2.hotel_id == hotel.hotel_id}">
           
 <p th:if="${hotel2.hotel_information} != null" th:text="${hotel2.hotel_information}"></p>
 <div class="price-info">가격<span class="price">
-<a th:if="${hotel2.standard} != null" th:text="${hotel2.standard}"></a> ~
+<a th:if="${hotel2.standard} != null" th:text="${hotel2.standard}"></a>  
 <a th:if="${hotel2.sweet} != null" th:text="${hotel2.sweet}"></a>
 </span><span class="appendix">/1박</span></div>
-<a href="detail.html" class="btn btn-rounded btn-default btn-framed btn-small">View detail</a>
-                                
+        
+<div class = "meta">
 
+<a class="btn btn-rounded btn-default btn-framed btn-small basket-btn" id="basketAdd_${hotel.hotel_id}" data-item-id="${hotel.hotel_id}">
+  <input class="addBasket" type="hidden" th:id="'hotel_id_' + ${hotel.hotel_id}" th:value="${hotel.hotel_id}" />
+  <div class="basketMsg"></div>
+  ♡찜하기♡
+</a>
+
+        <span><i class="fa fa-star"></i>별점</span>
+        <span><i class="fa fa-bed"></i>리뷰 수</span> 
           </div>
         </div>
 
       </div>
-      <div class="meta">
-        <span><i class="fa fa-star"></i>별점</span>
-        <span><i class="fa fa-bed"></i>리뷰 수</span> 
+
       </div>
     </div>
 </div>
 
-    
-    
     
     
     
     </div>
   </div>
 </div>
-
-           
-           
            
           <div class="center">
     <ul class="pagination">
@@ -268,38 +220,14 @@
     </ul>
 </div>
 
-
-
-                        
-                        
-  
-  
-
                     </div>
                     <!--end main-content-->
                 </div>
                 <!--end col-md-9-->
             </div>
             <!--end row-->
-        </div>
-        <!--end container-->
-    </div>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
 
-                
-                
-                
-                
-                
+  
 
 		<footer id="page-footer">
 			<div class="row-one">
@@ -366,3 +294,42 @@
 <![endif]-->
 </body>
 
+<script type="text/javascript">
+  function sendIt() {
+    var f = document.getElementById("searchForm");
+    f.action = "/hotel/hotelList";
+    f.submit();
+  };
+  
+  
+  //var basket_num = $(this).closest('.my-item').find('.basket_num').val();
+
+ $(function() {
+  $(".basket-btn").on("click", function() {
+    var addBasket = $(this).find('.addBasket').val();
+    alert(addBasket);
+   
+    $.ajax({
+        url: "addBasket",
+        type: "POST",
+        data: { addBasket: addBasket },
+        success: function(data) {    	
+        }
+    
+ 	 });
+    
+  });
+});
+  
+  
+  
+  //basketAdd 버튼을 클릭하면 해당 버튼은 숨겨지고, basketRe 버튼은 보이게 됩니다. 그리고 basketRe 버튼을 클릭하면 해당 버튼은 숨겨지고, basketAdd 버튼은 다시 보이게 됩니다.
+
+
+
+
+
+
+
+
+</script>

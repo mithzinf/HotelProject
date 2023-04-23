@@ -15,7 +15,7 @@
 
 .login-container {
 	max-width: 500px;
-	min-height: 750px;	
+	min-height: 550px;	
 }
 
 .login-p {
@@ -27,45 +27,64 @@
 }
 </style>
 
-<div class="login-body">
-	<div class="login-container" id="login-container">
-		<div class="login-form-container login-sign-in-container">
-			<form action="" name="myForm" method="post" class="login-form">
-			<br/>
-				<h1 class="login-h1">회원 정보 수정</h1>
+<div class="myPage">
+    <div class="sidebar" style="margin: 50px 0 50px; width: 17%; min-width: 250px;">
+        <div class="box filter">
+            <h2>마이페이지</h2>
+            <ul class="links">
+                <li class="active"><a href="mypage/mypage">내정보</a></li>
+                <li><a href="mypage/basket">호텔 찜 목록</a></li>
+                <li><a href="mypage/mypage">예약내역</a></li>
+                <li><a href="mypage/delete">회원탈퇴</a></li>
+            </ul>
+           	<hr/>
+            <h2>더보기</h2>
+            <ul class="links">
+                <li><a href="mypage/mypage">공지사항</a></li>
+                <li><a href="mypage/mypage">문의게시판</a></li>
+                <li><a href="mypage/mypage">메뉴1</a></li>
+                <li><a href="mypage/delete">메뉴2</a></li>
+            </ul>
+        </div>
+        <!--end filter-->
+    </div>
+    <!--end sidebar-->
+
+	<div class="login-body" style="width: 40%; min-width: 450px; margin-left: 7%;">
+		<div class="login-container" id="login-container">
+			<div class="login-form-container login-sign-in-container">
+				<form action="" name="myForm" method="post" class="login-form">
 				<br/>
-					<p class="login-p">비밀번호</p>
-					<input class="login-input" type="password" name="pwd" placeholder="비밀번호를 입력하세요." />
-					<p class="login-p">비밀번호 확인</p>
-					<input class="login-input" type="password" name="pwd2" placeholder="비밀번호를 입력하세요." />
-	
-					<p class="login-p">이름</p>
-					<input class="login-input" type="text" name="username"  th:value="${dto.username}">
-				
-					<p class="login-p" >이메일</p>
-				<div>
-					<input class="login-input" type="text" name="email1" style="width:32%;"  th:value="${dto.email1}"/>
-					<span class="login-span">@</span>
-					<input class="login-input" type="text" name="email2" style="width:32%;"  th:value="${dto.email2}"/>
-				</div>
-				
-					<p class="login-p">전화번호</p>
-				<div>
-					<input class="login-input" type="text" name="tel1" style="width:17%;"  th:value="${dto.tel1}"/>
-					<span class="login-span">&nbsp;-&nbsp;</span>
-					<input class="login-input" type="text" name="tel2" style="width:20%;"  th:value="${dto.tel2}"/>
-					<span class="login-span">&nbsp;-&nbsp;</span>
-					<input class="login-input" type="text" name="tel3" style="width:20%;"  th:value="${dto.tel3}"/>
-				</div>
-				
-				<br/><br/>
-				<div>
-					<button class="login-button-btn2" onclick="sendIt();" style="padding:12px 25px;"> 수정하기 </button>
-					&nbsp;
-					<button class="login-button-btn1" onclick="getout();" style="padding:12px 30px;"> 취소하기 </button>
-				</div>
+					<h1 class="login-h1">회원 정보 수정</h1>
+					<br/>
+						<p class="login-p">이름</p>
+						<input class="login-input" type="text" name="username"  th:value="${dto.username}">
 					
-			</form>
+						<p class="login-p" >이메일</p>
+					<div>
+						<input class="login-input" type="text" name="email1" style="width:32%;"  th:value="${dto.email1}"/>
+						<span class="login-span">@</span>
+						<input class="login-input" type="text" name="email2" style="width:32%;"  th:value="${dto.email2}"/>
+					</div>
+					
+						<p class="login-p">전화번호</p>
+					<div>
+						<input class="login-input" type="text" name="tel1" style="width:17%;"  th:value="${dto.tel1}"/>
+						<span class="login-span">&nbsp;-&nbsp;</span>
+						<input class="login-input" type="text" name="tel2" style="width:20%;"  th:value="${dto.tel2}"/>
+						<span class="login-span">&nbsp;-&nbsp;</span>
+						<input class="login-input" type="text" name="tel3" style="width:20%;"  th:value="${dto.tel3}"/>
+					</div>
+					
+					<br/><br/>
+					<div>
+						<button class="login-button-btn2" onclick="sendIt();" style="padding:12px 25px;"> 수정하기 </button>
+						&nbsp;
+						<button class="login-button-btn1" onclick="getout();" style="padding:12px 30px;"> 취소하기 </button>
+					</div>
+						
+				</form>
+			</div>
 		</div>
 	</div>
 </div>
@@ -87,73 +106,6 @@
 		
 		var event = window.event || arguments.callee.caller.arguments[0];
 		
-		
-		str_pwd1 = f.pwd.value;
-		str_pwd1 = str_pwd1.trim();
-		
-		//비밀번호 입력 오류메시지
-		if(str_pwd1.length<6 || str_pwd1.length>20){
-			swal({
-				  title: "비밀번호 입력오류",
-				  text: "비밀번호는 최소 6자, 최대 20자를 입력해야 합니다.",
-				  icon: "error",
-				  button: "확인",
-				});
-			event.preventDefault();
-			return;
-		}
-		
-		if(!alphanumeric.test(str_pwd1)){
-			swal({
-				  title: "비밀번호 입력오류",
-				  text: "비밀번호는 영어+숫자 혼합으로만 입력이 가능합니다.",
-				  icon: "error",
-				  button: "확인",
-				});
-			event.preventDefault();
-			return;
-		}
-		
-		//비밀번호 확인 입력 오류메시지
-		str_pwd2 = f.pwd2.value;
-		str_pwd2 = str_pwd2.trim();
-		
-		if(str_pwd2.length<6 || str_pwd2.length>20){
-			swal({
-				  title: "비밀번호확인 입력오류",
-				  text: "비밀번호확인은 최소 6자, 최대 20자를 입력해야 합니다.",
-				  icon: "error",
-				  button: "확인",
-				});
-			event.preventDefault();
-			return;
-		}
-		
-		if(!alphanumeric.test(str_pwd2)){
-			swal({
-				  title: "비밀번호확인 입력오류",
-				  text: "비밀번호확인은 영어+숫자 혼합으로만 입력이 가능합니다.",
-				  icon: "error",
-				  button: "확인",
-				});
-			event.preventDefault();
-			return;
-		}
-		
-		
-		//비밀번호, 비밀번호 확인을 같게 입력했는지 확인
-		if(str_pwd1!=str_pwd2){
-			
-			swal({
-				  title: "비밀번호 입력오류",
-				  text: "비밀번호와 비밀번호확인이 같지 않습니다.",
-				  icon: "error",
-				  button: "확인",
-				});
-			event.preventDefault();
-			return;
-			
-		}
 		
 		//이름 입력 오류메시지
 		str_name = f.username.value;
@@ -242,7 +194,7 @@
 			            		icon: "success",
 			            		button: "내정보로",
 			            		}).then(function() {
-					                f.action="login/update_ok";
+					                f.action="mypage/update_ok_oauth";
 					                f.submit();
 			            		});
 			            }
@@ -275,7 +227,7 @@
 	function getout() {
 
 		var f = document.myForm;
-		f.action="login/mypage";
+		f.action="mypage/mypage";
 		f.submit();
 		
 	}

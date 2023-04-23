@@ -36,16 +36,4 @@ public interface MemberService {
 	//일반 로그인 처리를 위해
 	public MemberDTO memberLogin(Map<String, Object> params) throws Exception;
 	
-	//마이페이지 회원정보 띄우기
-	public MemberDTO readDataMember(String userid) throws Exception;
-	
-	//회원 정보 수정
-	public void memberUpdate(MemberDTO dto) throws Exception;
-	
-	//회원 정보 수정 (oauth)
-	public void memberUpdateOauth(MemberDTO dto) throws Exception;
-	
-	//회원 탈퇴
-	public void memberDelete(String userid) throws Exception;
-	
 }

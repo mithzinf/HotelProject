@@ -2,16 +2,14 @@ package com.boot.hotel.dto;
 
 import java.util.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import lombok.Data;
 import lombok.ToString;
 
 @Data
 @ToString
 public class HotelReservationDTO {
-	
-    private int res_num;
+    
+    private Integer  res_num;
     private String userid;
     private String username;
     private int hotel_id;
@@ -21,8 +19,7 @@ public class HotelReservationDTO {
     private int people;
     private String status;
     private Date inq_date;
-    private String request;
-	
-  
-	
+    private String request1;
+    
+
 }

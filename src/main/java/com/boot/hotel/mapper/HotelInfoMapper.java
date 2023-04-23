@@ -24,6 +24,9 @@ public interface HotelInfoMapper {
 	
 	public int getHotelCount(Map<String, Object> params) throws Exception;
 	
+	
+	
+	
 	}
 
 
