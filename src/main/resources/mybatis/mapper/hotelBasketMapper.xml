@@ -12,10 +12,17 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 	select nvl(max(basket_num),0) from basket
 </select>
 
-<!-- 찜하기 추가 -->
+<!-- 찜하기 추가 
 <insert id="addHotelBasket" parameterType="com.boot.hotel.dto.HotelBasketDTO">
 	insert into basket(basket_num,userid,hotel_id)
 	values (#{basket_num},#{userid},#{hotel_id})	
+</insert>
+-->
+<!-- 찜하기 추가  -->
+<insert id="addHotelBasket" parameterType="com.boot.hotel.dto.HotelBasketDTO">
+    insert into basket(basket_num,userid,hotel_id)
+    values (#{basket_num},#{userid}
+    <if test="hotel_id != null">#{hotel_id}</if>)
 </insert>
 
 <!-- 찜하기 삭제 -->
@@ -25,13 +32,21 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- 찜하기 목록  리스트 목록이랑 연동돼서 떠야함 -->
 <select id="selectHotelBasket" parameterType="String" resultType="com.boot.hotel.dto.HotelBasketDTO">
-SELECT a.basket_num, b.hotel_name, b.category, c.standard
-FROM basket a 
-JOIN hotel_info b ON a.hotel_id = b.hotel_id
-JOIN hotel_like c ON a.hotel_id = c.hotel_id
-WHERE a.userid = #{userid};
+	SELECT a.basket_num, b.hotel_name, b.category, c.standard
+	FROM basket a 
+	JOIN hotel_info b ON a.hotel_id = b.hotel_id
+	JOIN hotel_like c ON a.hotel_id = c.hotel_id
+	WHERE a.userid = #{userid};
 </select>
 
+
+<select id="checkHotelBasket" parameterType="com.boot.hotel.dto.HotelBasketDTO" resultType="int">
+    SELECT COUNT(*) FROM basket WHERE userid = #{userid} AND hotel_id = #{hotel_id}
+</select>
+
+
+<!-- 페이지마다 10개(내가 띄운 것) 장바구니에 이 호텔이 찜한 것인지 (hotel_id,userid로 찾아서 맞으면 꺼내온다) -->
+<!-- 예스여요 노여요 이렇게 확인해서 if로 yes면 찜해제~ 어쩌구 뜨고 no면 찜하기~ 어쩌구 뜰 수 있게 만든다 -->
 
 
 

@@ -43,10 +43,13 @@ public class HotelDetailServiceImpl implements HotelDetailService{
 	}
 
 	@Override
-	public List<Map<String, Object>> searchHotelDetail(Map<String, Object> params) throws Exception {
+	public List<HotelPictureDTO> searchHotelDetail(Map<String, Object> params) throws Exception {
 		// TODO Auto-generated method stub
 		return hotelDetailMapper.searchHotelDetail(params);
 	}
+
+
+
 
 
 	

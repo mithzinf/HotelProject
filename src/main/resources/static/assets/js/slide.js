@@ -1,3 +1,5 @@
+
+
 function sliderOn () {
  const slides = document.querySelector('.slides'); // 슬라이드뼈대 감지
  const Content = document.querySelector('.Thumbnail'); //썸네일 뼈대 감지
@@ -8,7 +10,7 @@ function sliderOn () {
  const firstThumb = thumbnail[0]; // 첫번째 썸네일 아이템
  firstEle.classList.add('ontheSlide'); //첫번째 슬라이드 아이템에 ontheSlide 클래스 추가
   firstThumb.classList.add('ontheThumbnail'); // 첫번째 썸네일 아이템에 ontheThumbnail 클래스 추가
-  const gogogo = setInterval(sliderGo, 4000);
+  const gogogo = setInterval(sliderGo, 940000000000000000000);
   function sliderGo (isThat) {//isThat을 받아오기
     
     if (isThat) {//isThat이 지정되어 있다면
@@ -20,8 +22,8 @@ function sliderOn () {
     
     const currentItem = document.querySelector('.ontheSlide');
     const currentThumb = document.querySelector('.ontheThumbnail');
-    currentItem.classList.remove('ontheSlide')
-    currentThumb.classList.remove('ontheThumbnail')
+    currentItem.classList.remove('ontheSlide');
+    currentThumb.classList.remove('ontheThumbnail');
   if (nextOr === 'next'){  // 다음버튼을 눌렀다면
   if (!currentItem.nextElementSibling) {//마지막 아이템일 경우
       item[0].classList.add('ontheSlide') //처음으로 슬라이드아이템 이동
