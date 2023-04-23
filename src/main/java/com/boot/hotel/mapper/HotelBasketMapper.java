@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.boot.hotel.dto.HotelBasketDTO;
+import com.boot.hotel.dto.MemberDTO;
 
 
 @Mapper

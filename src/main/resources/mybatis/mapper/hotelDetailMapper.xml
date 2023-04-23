@@ -25,8 +25,8 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 </select>
  
 <!-- parameterType: 매개변수의 성깔 : 매개변수 1개면 그 매개변수의 성질머리 적고 2개 이상이면 map -->
-<select id="searchHotelDetail" parameterType="map" resultType="map">
-	select url from hotel_picture where hotel_id=#{hotel_id} and type=#{type}
+<select id="searchHotelDetail" parameterType="int" resultType="com.boot.hotel.dto.HotelPictureDTO">
+	select hotel_id,url,type from hotel_picture where hotel_id=#{hotel_id}
 </select>
 
 </mapper>

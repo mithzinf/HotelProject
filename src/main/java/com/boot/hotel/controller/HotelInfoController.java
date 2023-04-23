@@ -1,7 +1,6 @@
 package com.boot.hotel.controller;
 
 import java.net.URLDecoder;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,9 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,6 +27,7 @@ import com.boot.hotel.util.MyUtil;
 @RestController
 @RequestMapping("/hotel")
 public class HotelInfoController {
+	
 
     @Autowired
     private HotelInfoService hotelInfoService;
@@ -51,22 +52,18 @@ public class HotelInfoController {
             currentPage = Integer.parseInt(pageNum);
         }
 
-        String searchKey = request.getParameter("searchKey");
         String searchValue = request.getParameter("searchValue");
 
-        if (searchKey == null || searchValue.equals("")) {
-            searchKey = "hotel_name";
+
+        if (searchValue == null || searchValue.equals("")) {
             searchValue = "";
         }
 
-        if (searchValue != null) {
-            if(request.getMethod().equalsIgnoreCase("GET")){
-                searchValue = URLDecoder.decode(searchValue, "UTF-8");
-            }
+        if (request.getMethod().equalsIgnoreCase("GET") && searchValue != null) {
+            searchValue = URLDecoder.decode(searchValue, "UTF-8");
         }
 
         Map<String, Object> params1 = new HashMap<>();
-        params1.put("searchKey", searchKey);
         params1.put("searchValue", searchValue);
 
         int dataCount = hotelInfoService.getHotelCount(params1);
@@ -85,21 +82,15 @@ public class HotelInfoController {
         Map<String, Object> params = new HashMap<>();
         params.put("start", start);
         params.put("end", end);
-        params.put("searchKey", searchKey);
         params.put("searchValue", searchValue);
-
+        
+        
         if(!searchValue.equals("") && searchValue != null) {
-            params.put("searchKey", searchKey);
             params.put("searchValue", searchValue);
         } else {
-            params.put("searchKey", "hotel_name");
-            params.put("searchKey", "addr1");
-            params.put("searchKey", "addr2");
             params.put("searchValue", "");
         }
 
-        //또 검색값이 없으면 호텔을 찾을 수 없습니다 라고 말 하기
-        
        
         List<HotelDTO> hotelList1 = hotelInfoService.getHotelList1(params);
         List<HotelInfoDTO> hotelList2 = hotelInfoService.getHotelList2(params);
@@ -113,21 +104,72 @@ public class HotelInfoController {
 
         String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
 
-        String detailUrl = "/detail?pageNum=" + currentPage;
 
+        
+        String detailUrl = "/detail?searchValue=" + 
+                searchValue + "&pageNum=" + currentPage;
+
+        if (searchValue != null && !searchValue.equals("")) {
+            detailUrl += "&searchValue=" + searchValue;
+        }
+
+        if (pageNum != null) {
+            detailUrl += "&" + "pageNum=" + pageNum;
+        }
+
+        
+        
         mav.addObject("hotelList1", hotelList1);
         mav.addObject("hotelList2", hotelList2);
-        mav.addObject("hotelList3", hotelList3); // 추가된 부분입니다.
+        mav.addObject("hotelList3", hotelList3); 
         mav.addObject("pageIndexList", pageIndexList);
         mav.addObject("dataCount", dataCount);
         mav.addObject("currentPage", currentPage);
         mav.addObject("numPerPage", numPerPage);
         mav.addObject("detailUrl", detailUrl);
+      
 
         mav.setViewName("hotel/hotelList");
 
         return mav;
+    
+        
     }
+  //리스트에서 추가하면 코드 짐하기 코드..어쩌고.... 저저고..
+    //여기에 찜하기 어쩌고 저쩌ㅏ고 
 
+    @PostMapping("/addBasket")
+    public ModelAndView addBasket(@RequestParam String addBasket) throws Exception{
+
+    	ModelAndView mav = new ModelAndView();
+    	
+    	System.out.println(addBasket);
+    	
+    	
+    	
+    	
+    	return mav;
+    }
+    
+    /*
+ 
+    
+    @ResponseBody
+    public String addBasket(@RequestParam Integer hotel_id) throws Exception {
+    	
+    	ModelAndView mav = new ModelAndView();
+    	
+        HotelBasketDTO dto = new HotelBasketDTO();
+        int maxNum = hotelBasketService.maxNum();
+        dto.setBasket_num(maxNum + 1);
+        dto.setHotel_id(hotel_id);
+        hotelBasketService.addHotelBasket(dto);
+
+    	mav.setViewName("redirect:/hotel/hotelList");
+        
+    	return mav;
+    }
+*/
+    
    
 }
