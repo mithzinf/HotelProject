@@ -21,5 +21,5 @@ public interface HotelDetailMapper {
 	
 	public List<HotelFacilityInDTO> getHotelFacilityInById(int hotel_id) throws Exception;
 	
-	public List<Map<String,Object>> searchHotelDetail(Map<String, Object> params) throws Exception;
+	public List<HotelPictureDTO> searchHotelDetail(Map<String, Object> params) throws Exception;
 }

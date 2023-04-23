@@ -5,7 +5,7 @@
 
 <div layout:fragment="content" class="content-padding">
 
-    <link href="assets/fonts/weather-icons.css" rel="stylesheet" type="text/css">
+    
     <link rel="stylesheet" href="assets/css/jquery.datepick.css" type="text/css">
     <link rel="stylesheet" href="css/slide.css" type="text/css">
 	        <style>
@@ -79,7 +79,7 @@
                     <div class="main-content">
                         <div class="title">
                             <div class="left">
-                                <h1>[[${dto1[0].hotel_name}]]<span class="rating"><i class="fa fa-star"></i>9.9</span></h1>
+                                <h1><b>[[${dto1[0].hotel_name}]]</b><span class="rating"><i class="fa fa-star"></i>9.9</span></h1>
                                 <h3><a href="#">[[${dto1[0].addr1}]]</a></h3>
                             </div>
                             <div class="right">
@@ -88,12 +88,12 @@
                             </div>
                         </div>
                         <!--end title-->
+                         <!--호텔 사진 부분-->
                         <section id="gallery">
-                                <!--  호텔 아이디별 전경사진 뜨게 하는..코딩이다 어쩔래--> 
-										<div th:if="${#lists.size(searchHotelDetail)}!=null" th:each="dto:${searchHotelDetail}">
-											<img th:src="@{|/hotel/${dto.URL}|}" style="max-width:100%; height:auto;"/>
-										</div>
-                        </section>
+						      <div th:each="dto: ${searchHotelDetail}">
+								    <img th:if="${dto.type == 'title'}" th:src="@{|/hotel/${dto.url}|}" style="max-width:100%; height:auto;"/>
+							 </div>
+						</section>
                         <h2>객실 설명</h2>
                         <div class="row">
                             <div class="col-md-8">
@@ -118,11 +118,7 @@
 									        <li th:if="${dto4[0].pc eq 1}">pc시설</li>
 									    </ul>
 									</section>
-                                <section id="map">
-                                    <h2>Map</h2>
-                                    <div id="map-item" class="map height-300 box"></div>
-                                    <!--end map-->
-                                </section>
+
                             </div>
                             <!--end col-md-8-->
                             <div class="col-md-4">
@@ -151,26 +147,27 @@
                         <!--end row-->
 
                         <section id="availability">
-                            <h2>Availability</h2>
-                            <form class="labels-uppercase" id="form-availability">
+                            <h2>예약</h2>
+                            <form class="labels-uppercase" id="form-availability" method="post" th:action="@{/bookRoom}">
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="form-availability-check-in">Check In</label>
-                                            <input type="text" class="form-control date" id="form-availability-check-in" name="check-in" placeholder="Check In">
+                                            <input type="text" class="form-control date" id="form-availability-check-in" name="checkin" placeholder="Check In">
                                         </div>
                                     </div>
                                     <!--end col-md-3-->
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="form-availability-check-out">Check In</label>
-                                            <input type="text" class="form-control date" id="form-availability-check-out" name="check-out" placeholder="Check In">
+                                            <label for="form-availability-check-out">Check out</label>
+                                            <input type="text" class="form-control date" id="form-availability-check-out" name="checkout" placeholder="Check Out">
                                         </div>
                                     </div>
                                     <!--end col-md-3-->
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label class="invisible">Hidden label</label>
+                                            <input type="hidden" name="hotel_id" value="${hotel_id}"> <!-- hotel_id hidden 필드 추가 -->
                                             <button type="submit" class="btn btn-primary btn-rounded btn-framed form-control">Search</button>
                                         </div>
                                     </div>
@@ -201,7 +198,7 @@
                                                   <h3 style="color: #488f3e; cursor: pointer;" id="popup_open_btn">스탠다드</h3>                                       
                                                 <ul class="info">
                                                    <li>객실 이름을 클릭하세요</li>
-                                                   <li>여기에 뭐 적나</li>
+                                                   
                                                 </ul>
                         <!--  ============================== 모달 부분 구분선================================== -->
 											    <div id="my_modal">
@@ -209,24 +206,19 @@
 											            <h3 class="modal-title" id="myModalLabel"><strong>객실 상세 보기</strong></h3>
 											            <!-- 자동 캐러셀 시작 -->
 											            <br/><br/>
-											          <div class="content"> <!--전체를 감쌀 뼈대-->
+											          <div class="Content"> <!--전체를 감쌀 뼈대-->
 															<div class="slides">  <!--슬라이드 아이템을 감쌀 뼈대-->
-															  <div class="slide_item"></div>  <!--슬라이드될 아이템들 -->
-															  <div class="slide_item"></div>
-															  <div class="slide_item"></div>
-															  <div class="slide_item"></div>
-															  <div class="slide_item"></div>
-															  <div class="slide_item"></div>
+															  <div class="slide_item" th:each = "dto:${searchHotelDetail}">
+														            <!-- 스탠다드 객실 사진만 불러옴 -->
+														            <img th:if= "${dto.type == 'standard'}"  th:src = "@{|/hotel/${dto.url}|}" 
+														            style="max-width:100%; height:auto;"/>
+														        </div>
 															</div>
 															<span class="nextButton">▶</span>  <!--다음 버튼 -->
 															<span class="prevButton">◀</span>   <!--이전 버튼 -->
 															  	<div class="Thumbnail">  <!--썸네일을 감쌀 뼈대 -->
 															  		<div class="thumbnail_item"></div>   <!--썸네일 아이템들 -->
-															  		<div class="thumbnail_item"></div>
-																	<div class="thumbnail_item"></div>
-																	<div class="thumbnail_item"></div>
-																	<div class="thumbnail_item"></div>
-																	<div class="thumbnail_item"></div>
+															  		
 																</div>   
 											           </div>
 											            <!-- 자동 캐러샐 끝 -->	   
@@ -335,6 +327,11 @@
                             </dl>
                             <!--end info-->
                         </section>
+                                 <section id="map">
+                                    <h2>위치</h2>
+                                    <div id="map-item" class="map height-300 box"></div>
+                                    <!--end map-->
+                                </section>
                         <section id="reviews">
                             <div class="title">
                                 <h2 class="pull-left">Reviews</h2>
@@ -520,7 +517,7 @@
 <!-- ==========================================개별 스크립트 부분..============================================= -->
 
 
-
+<!-- 모달창 만드는 스크립트 -->
 	<script>
             function modal(id) {
                 var zIndex = 9999;
@@ -576,9 +573,7 @@
                 modal('my_modal');
             });
         </script>
-
-<script type="text/javascript" src="/assets/js/slide.js"></script>
-
+<!-- end of 모달창 만드는 스크립트 -->
 
 
 
@@ -594,6 +589,6 @@
     simpleMap(_latitude,_longitude, element);
 </script>
 
-
+<script type="text/javascript" src="assets/js/slide.js"></script>
 
 </html>
