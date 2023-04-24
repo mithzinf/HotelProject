@@ -1,0 +1,71 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Gowun%20Batang');
+
+body{
+  font-family: Gowun Batang
+}
+.gallery {
+  position: relative;
+  text-align: center;
+  border: 1px solid gray;
+  margin: 0;
+  padding: 0;
+  border-radius: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 0vh;
+  /* justify-content: space-around;*/
+}
+.gallery-unit {
+  width: 100px;
+  padding: 10px 0;
+}
+.gallery-unit-image {
+  width: 100%;
+  height: 100%;
+}
+
+.gallery-unit input {
+	display: none;
+}
+
+.gallery-unit input:checked + div {
+  border: 3px white solid;
+  outline: 3px gray;
+  height: 500px;
+  order: -1;
+  flex: 1 0 100%;
+}
+
+
+.gallery-unit input:checked + div img {
+  height: 100%;
+  width: auto;
+}
+
+
+input {
+  outline: 1px white;
+  z-index: 10;
+  width: 100px;
+  margin-right: -100px;
+  appearance: none;
+  cursor: zoom-in;
+}
+input:checked + div {
+  border: 3px white solid;
+  outline: 3px gray;
+  height: 500px;
+  order: -1;
+  flex: 1 0 100%;
+}
+.gallery-unit-image {
+  width: 100%;
+}
+
+.gallery-unit-image img {
+  height: 100%;
+  width: auto;
+}
+

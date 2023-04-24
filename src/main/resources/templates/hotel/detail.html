@@ -148,7 +148,7 @@
 
                         <section id="availability">
                             <h2>예약</h2>
-                            <form class="labels-uppercase" id="form-availability" method="post" th:action="@{/bookRoom}">
+                            <form class="labels-uppercase" id="form-availability">
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-group">
@@ -192,7 +192,7 @@
                                     </table>
                                 </div>
                                 <!-- 1.스탠다드룸에 대한 form id = "room_1" 태그 start -->
-                                <form id="room_1" th:action="@{/bookRoom}" method="post">
+                                <form id="room_1" th:action="@{/paymentPage}" method="post">
                                 <!-- 0424 input 태그 추가 4줄 부분 -->
                                   <input type="hidden" name="hotel_id" th:value="${dto2[0].hotel_id}"/>
 								  <input type="hidden" name="room_type" value="standard"/>
@@ -253,7 +253,7 @@
                                
                                
                                <!-- 2. 스위트룸에 대한 form id = "room_2" 태그 start -->
-                                <form id="room_2" th:action="@{/bookRoom}" method="post">
+                                <form id="room_2" th:action="@{/paymentPage}" method="post">
                                 <!-- 0424 input 태그 추가 4줄 부분 -->
                                   <input type="hidden" name="hotel_id" th:value="${dto2[0].hotel_id}"/>
 								  <input type="hidden" name="room_type" value="sweet"/>
@@ -296,7 +296,7 @@
         					<!-- 스위트룸에 대한 form id = "room_2" 태그 end -->                     
 		
 							<!-- 3. 디럭스룸에 대한 form id = "room_3" 태그 start -->
-                                <form id="room_3" th:action="@{/bookRoom}" method="post">
+                                <form id="room_3" th:action="@{/paymentPage}" method="post">
                                 <!-- 0424 input 태그 추가 4줄 부분 -->
                                   <input type="hidden" name="hotel_id" th:value="${dto2[0].hotel_id}"/>
 								  <input type="hidden" name="room_type" value="deluxe"/>
