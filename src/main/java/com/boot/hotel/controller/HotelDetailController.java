@@ -53,7 +53,6 @@ public class HotelDetailController {
       
       
       ModelAndView mav = new ModelAndView();
-
       // Model에 데이터 추가, 좌항 : view에서 부를 별칭, 우항 : 진짜 담아진 객체의 이름
       mav.addObject("dto1", dto1);
       mav.addObject("dto2", dto2);
@@ -140,7 +139,6 @@ public class HotelDetailController {
    
    
 }
-
 
 
 
