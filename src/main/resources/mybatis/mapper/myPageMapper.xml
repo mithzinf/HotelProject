@@ -47,7 +47,43 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 	]]>
 </select>
 
+<delete id="basketDelete" parameterType="int">
+	delete from basket where basket_num=#{basket_num}
+</delete>
 
+<select id="reservationMaxNum" parameterType="String" resultType="int">
+	select nvl(max(res_num),0) from reservation where userid=#{userid}
+</select>
 
+<select id="getMyReservationLists" parameterType="map" resultType="map">
+	select * from (
+	select rownum rnum,data.* from (
+	select res_num, userid, username, hotel_id, category, hotel_name, room, people,
+	TO_CHAR(inq_date, 'YYYY-MM-DD') as inq_date,
+	TO_CHAR(check_in, 'YYYY-MM-DD') as check_in,
+	TO_CHAR(check_out, 'YYYY-MM-DD') as check_out
+	from reservation where userid=#{userid}
+	order by res_num desc) data)
+	<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+	]]>
+</select>
+
+<select id="getMyReservationListsAdd" parameterType="map" resultType="map">
+	select h.addr1, h.tel, hi.check_in as check_in_time, hi.check_out as check_out_time, hp.url, p.price 
+	from hotel h
+	inner join hotel_info hi on h.hotel_id = hi.hotel_id
+	inner join hotel_picture hp on h.hotel_id = hp.hotel_id
+	inner join pay p on h.hotel_id = p.hotel_id
+	where h.hotel_id = #{hotel_id} and hp.type = 'title' and p.userid = #{userid}
+</select>
+
+<delete id="deletePay" parameterType="map">
+	delete from pay where hotel_id = #{hotel_id} and userid=#{userid}
+</delete>
+
+<delete id="deleteReservation" parameterType="map">
+	delete from reservation where hotel_id = #{hotel_id} and userid=#{userid}
+</delete>
 
 </mapper>

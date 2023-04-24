@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.boot.hotel.dto.HotelReservationDTO;
 import com.boot.hotel.dto.MemberDTO;
 import com.boot.hotel.mapper.MyPageMapper;
 
@@ -45,6 +46,37 @@ public class MyPageServiceImpl implements MyPageService{
 	public List<Map<String, Object>> searchBasketHotel(int hotel_id) throws Exception {
 		return myPageMapper.searchBasketHotel(hotel_id);
 	}
+
+	@Override
+	public void basketDelete(int basket_num) throws Exception {
+		myPageMapper.basketDelete(basket_num);
+	}
+
+	@Override
+	public int reservationMaxNum(String userid) throws Exception {
+		return myPageMapper.reservationMaxNum(userid);
+	}
+
+	@Override
+	public List<Map<String, Object>> getMyReservationLists(Map<String, Object> params) throws Exception {
+		return myPageMapper.getMyReservationLists(params);
+	}
+
+	@Override
+	public List<Map<String, Object>> getMyReservationListsAdd(Map<String, Object> params) throws Exception {
+		return myPageMapper.getMyReservationListsAdd(params);
+	}
+
+	@Override
+	public void deletePay(Map<String, Object> params) throws Exception {
+		myPageMapper.deletePay(params);
+	}
+
+	@Override
+	public void deleteReservation(Map<String, Object> params) throws Exception {
+		myPageMapper.deleteReservation(params);
+	}
+
 
 	
 	

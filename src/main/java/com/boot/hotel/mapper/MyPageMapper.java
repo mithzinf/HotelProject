@@ -28,6 +28,22 @@ public interface MyPageMapper {
 	//찜한 호텔의 정보를 찾기
 	public List<Map<String, Object>> searchBasketHotel(int hotel_id) throws Exception;
 	
+	//찜한 호텔 삭제
+	public void basketDelete(int basket_num) throws Exception;
+	
+	//내 예약 개수 구하기
+	public int reservationMaxNum(String userid) throws Exception;
+	
+	//내 예약 정보 불러오기
+	public List<Map<String, Object>> getMyReservationLists(Map<String, Object> params) throws Exception; 
 
+	//내 예약 정보 불러오기 추가
+	public List<Map<String, Object>> getMyReservationListsAdd(Map<String, Object> params) throws Exception;
+	
+	//결제 테이블 삭제
+	public void deletePay(Map<String, Object> params) throws Exception;
+	
+	//예약 테이블 삭제
+	public void deleteReservation(Map<String, Object> params) throws Exception;
 	
 }

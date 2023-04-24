@@ -34,7 +34,7 @@
             <ul class="links">
                 <li class="active"><a href="mypage/mypage">내정보</a></li>
                 <li><a href="mypage/basket">호텔 찜 목록</a></li>
-                <li><a href="mypage/mypage">예약내역</a></li>
+                <li><a href="mypage/my_reservation">예약내역</a></li>
                 <li><a href="mypage/delete">회원탈퇴</a></li>
             </ul>
            	<hr/>
@@ -83,7 +83,7 @@
 					
 					<br/><br/>
 					<div>
-						<button class="login-button-btn2" onclick="sendIt();" style="padding:12px 25px;"> 수정하기 </button>
+						<button class="login-button-btn2" onclick="updateData();" style="padding:12px 25px;"> 수정하기 </button>
 						&nbsp;
 						<button class="login-button-btn1" onclick="getout();" style="padding:12px 30px;"> 취소하기 </button>
 					</div>
@@ -100,7 +100,7 @@
 <script type="text/javascript">
 
 	
-	function sendIt() {
+	function updateData() {
 		
 		var f = document.myForm;
 

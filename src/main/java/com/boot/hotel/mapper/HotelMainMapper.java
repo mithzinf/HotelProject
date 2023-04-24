@@ -12,4 +12,6 @@ public interface HotelMainMapper {
 	
 	public List<Map<String, Object>> searchMainHotelTest(Map<String, Object> params) throws Exception;
 	
+	//호텔 날짜 검색
+	public int searchDay(Map<String, Object> params) throws Exception;
 }

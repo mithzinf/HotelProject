@@ -36,7 +36,7 @@
             <ul class="links">
                 <li class="active"><a href="mypage/mypage">내정보</a></li>
                 <li><a href="mypage/basket">호텔 찜 목록</a></li>
-                <li><a href="mypage/mypage">예약내역</a></li>
+                <li><a href="mypage/my_reservation">예약내역</a></li>
                 <li><a href="mypage/delete">회원탈퇴</a></li>
             </ul>
            	<hr/>
@@ -90,7 +90,7 @@
 						<input class="login-input" type="text" name="userid" disabled="disabled" th:value="${dto.regdate}"/>	
 					<br/><br/>
 					<div>
-						<button class="login-button-btn2" onclick="sendIt();" style="padding:12px 25px;"> 정보수정 </button>
+						<button class="login-button-btn2" onclick="updateGo();" style="padding:12px 25px;"> 정보수정 </button>
 						&nbsp;
 						<button class="login-button-btn3" onclick="getout();" style="padding:12px 30px;"> 회원탈퇴 </button>
 					</div>
@@ -106,7 +106,7 @@
 <script type="text/javascript">
 
 	
-	function sendIt() {
+	function updateGo() {
 		
 		var f = document.myForm;
 		f.action="mypage/update";

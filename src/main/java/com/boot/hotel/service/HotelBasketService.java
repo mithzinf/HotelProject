@@ -16,8 +16,5 @@ public interface HotelBasketService {
 
 	public void deleteHotelBasket(HotelBasketDTO dto) throws Exception;
 
-
-
-
 }
 

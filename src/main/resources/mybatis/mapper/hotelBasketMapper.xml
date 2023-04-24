@@ -21,8 +21,7 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 <!-- 찜하기 추가  -->
 <insert id="addHotelBasket" parameterType="com.boot.hotel.dto.HotelBasketDTO">
     insert into basket(basket_num,userid,hotel_id)
-    values (#{basket_num},#{userid}
-    <if test="hotel_id != null">#{hotel_id}</if>)
+    values (#{basket_num},#{userid},#{hotel_id})
 </insert>
 
 <!-- 찜하기 삭제 -->

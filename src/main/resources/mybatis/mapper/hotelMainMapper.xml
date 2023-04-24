@@ -17,7 +17,7 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- 검색값 출력하는 쿼리문 -->
 <select id="searchMainHotelTest" parameterType="map" resultType="map">
-	select h.hotel_name, hi.hotel_information, hp.url
+	select h.hotel_name, hi.hotel_information, hp.url, h.hotel_id
 	from hotel h
 	inner join hotel_info hi on h.hotel_id = hi.hotel_id
 	inner join hotel_picture hp on h.hotel_id = hp.hotel_id
@@ -25,7 +25,12 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 	or addr1 like '%' || #{searchValue} || '%') and hp.type = 'title'
 </select>
 
-
+<select id="searchDay" parameterType="map" resultType="int">
+	select count(*) from reservation
+	<![CDATA[
+		where check_in < #{check_out} and check_out > #{check_in} and hotel_id = #{hotel_id}
+	]]>
+</select>
 
 
 </mapper>
