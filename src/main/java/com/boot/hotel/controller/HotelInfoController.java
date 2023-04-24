@@ -6,9 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.boot.hotel.dto.HotelBasketDTO;
 import com.boot.hotel.dto.HotelDTO;
 import com.boot.hotel.dto.HotelInfoDTO;
 import com.boot.hotel.dto.HotelPictureDTO;
+import com.boot.hotel.oauth2.dto.SessionUser;
 import com.boot.hotel.service.HotelBasketService;
 import com.boot.hotel.service.HotelInfoService;
 import com.boot.hotel.util.MyUtil;
@@ -138,18 +141,26 @@ public class HotelInfoController {
   //리스트에서 추가하면 코드 짐하기 코드..어쩌고.... 저저고..
     //여기에 찜하기 어쩌고 저쩌ㅏ고 
 
-    @PostMapping("/addBasket")
-    public ModelAndView addBasket(@RequestParam String addBasket) throws Exception{
+    @PostMapping("/addBasket/{userid}")
+    public ModelAndView addBasket(
+            @RequestParam int hotel_id,
+            @PathVariable String userid,
+            HttpSession httpSession) throws Exception {
 
-    	ModelAndView mav = new ModelAndView();
-    	
-    	System.out.println(addBasket);
-    	
-    	
-    	
-    	
-    	return mav;
+        ModelAndView mav = new ModelAndView();
+        HotelBasketDTO dto = new HotelBasketDTO();
+        
+        int maxNum = hotelBasketService.maxNum();
+        dto.setBasket_num(maxNum+1);
+        dto.setUserid(userid);
+        dto.setHotel_id(hotel_id);
+        
+        hotelBasketService.addHotelBasket(dto);
+        
+        mav.setViewName("redirect:/hotel/hotelList");
+        return mav;
     }
+
     
     /*
  
