@@ -24,6 +24,11 @@ public class HotelMainServiceImpl implements HotelMainService{
 	public List<Map<String, Object>> searchMainHotelTest(Map<String, Object> params) throws Exception {
 		return hotelMainMapper.searchMainHotelTest(params);
 	}
+
+	@Override
+	public int searchDay(Map<String, Object> params) throws Exception {
+		return hotelMainMapper.searchDay(params);
+	}
 	
 	
 	

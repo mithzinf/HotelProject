@@ -1,7 +1,9 @@
 package com.boot.hotel.controller;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,11 +21,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.boot.hotel.dto.HotelReservationDTO;
 import com.boot.hotel.dto.MemberDTO;
 import com.boot.hotel.oauth2.dto.SessionUser;
 import com.boot.hotel.service.MemberService;
 import com.boot.hotel.service.MyPageService;
 import com.boot.hotel.util.MyUtil;
+import com.boot.hotel.util.MyUtil2;
 
 @RestController
 @ResponseBody
@@ -39,7 +43,7 @@ public class MyPageController {
 	private MemberService memberService;
 	
 	@Autowired
-    private MyUtil myUtil;
+    private MyUtil2 myUtil;
 	
 	//마이페이지 진입
 	@RequestMapping(value = "/mypage/mypage", method = { RequestMethod.GET, RequestMethod.POST })
@@ -238,14 +242,18 @@ public class MyPageController {
 		int numPerPage = 4;
 		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
 		
+		System.out.println("currentPage" + currentPage);
+		System.out.println("totalPage" + totalPage);
+		
 		if(currentPage>totalPage) {
 			currentPage = totalPage;
 		}
 		
+		System.out.println("currentPage" + currentPage);
+		System.out.println("totalPage" + totalPage);
+		
 		int start = (currentPage-1)*numPerPage+1; 
 		int end = currentPage*numPerPage;
-		
-		System.out.println(start + ":" + end);
 		
 		List<Map<String, Object>> basket = new ArrayList<>();
 		
@@ -264,13 +272,12 @@ public class MyPageController {
 		}
 		
 		List<Map<String, Object>> pagedBasket = new ArrayList<>();
-		for (int i = start; i < end; i++) {
-			pagedBasket.add(basket.get(i));
+		if(basket.size() > 0) {
+			for (int i = start; i < end; i++) {
+				pagedBasket.add(basket.get(i));
+			}
 		}
 		
-		
-		System.out.println(pagedBasket);
-
 		String listUrl = "mypage/basket";
 		
 		String pageIndexList = 
@@ -290,17 +297,137 @@ public class MyPageController {
 	}
 	
 	
-	@RequestMapping(value = "/mypage/text11", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView text11() throws Exception{
+	@RequestMapping(value = "/mypage/basket_delete", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView basket_delete(@RequestParam int basket_num) throws Exception
+	{
+		System.out.println("호텔 찜 삭제 컨트롤러 진입");
 		
 		ModelAndView mav = new ModelAndView();
 		
-		mav.setViewName("mypage/text11");
+		myPageService.basketDelete(basket_num);
+		
+		
+		mav.setViewName("redirect:/mypage/basket");
 		
 		return mav;
-	
+		
 	}
+	
+	//예약내역 페이지 띄우기
+	@RequestMapping(value = "/mypage/my_reservation", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView my_reservation(HttpServletRequest request) throws Exception{
+		
+		System.out.println("예약내역 컨트롤러 진입");
+		
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+		
+		
+		String pageNum = request.getParameter("pageNum");
+		
+		int currentPage = 1;
+		
+		if(pageNum!=null){ //넘어오는 페이지 번호가 있다면
+			currentPage = Integer.parseInt(pageNum);
+		}
+		
+		int dataCount = myPageService.reservationMaxNum(sessionUser.getId());
+		
+		int numPerPage = 4;
+		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
+		
+		if(currentPage>totalPage) {
+			currentPage = totalPage;
+		}
+		
+		int start = (currentPage-1)*numPerPage+1; 
+		int end = currentPage*numPerPage;
+		
+		
+		Map<String, Object> params = new HashMap<>();
+        params.put("start", start);
+        params.put("end", end);
+        params.put("userid", sessionUser.getId());
+        
+        List<Map<String, Object>> lists = myPageService.getMyReservationLists(params);
+        
+        System.out.println("1차 출력 정보" + lists);
+        
+        for (Map<String, Object> map : lists) {
+        	
+        	Map<String, Object> params2 = new HashMap<>();
+            params2.put("userid", sessionUser.getId());
+            params2.put("hotel_id", map.get("HOTEL_ID"));
+            
+            List<Map<String, Object>> lists2 = myPageService.getMyReservationListsAdd(params2);
+            
+            System.out.println("추가하려는 리스트 : " + lists2);
 
+            map.put("ADDR1", lists2.get(0).get("ADDR1"));
+            map.put("PRICE", lists2.get(0).get("PRICE").toString());
+            map.put("CHECK_IN_TIME", lists2.get(0).get("CHECK_IN_TIME"));
+            map.put("CHECK_OUT_TIME", lists2.get(0).get("CHECK_OUT_TIME"));
+            map.put("TEL", lists2.get(0).get("TEL"));
+            map.put("URL", lists2.get(0).get("URL"));
+            
+            System.out.println("최종 가져온 리스트 : " + map);
+            
+        }
+        
+        
+		String listUrl = "mypage/my_reservation";
+		
+		String pageIndexList = 
+				myUtil.pageIndexList(currentPage, totalPage, listUrl);
+		
+		
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("pageIndexList", pageIndexList);
+		mav.addObject("pageNum",currentPage);
+		mav.addObject("dataCount",dataCount);
+		mav.addObject("pagedMyReservation", lists);
+		mav.setViewName("mypage/my_reservation");
+		
+		return mav;
+		
+		
+	}
+	
+	
+	@RequestMapping(value = "/mypage/my_reservation_delete", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView my_reservation_delete(@RequestParam int hotel_id) throws Exception
+	{
+		System.out.println("예약 내역 삭제 컨트롤러 진입");
+		
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+		
+		ModelAndView mav = new ModelAndView();
+		
+		Map<String, Object> params = new HashMap<>();
+        params.put("userid", sessionUser.getId());
+        params.put("hotel_id", hotel_id);
+		
+		myPageService.deletePay(params);
+		myPageService.deleteReservation(params);
+		
+		mav.setViewName("redirect:/mypage/my_reservation");
+		
+		return mav;
+		
+	}
+	
+	@RequestMapping(value = "/mypage/test1111", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView test1111() throws Exception
+	{
+		System.out.println("없어.");
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("mypage/test1111");
+		
+		return mav;
+		
+	}
+	
 	
 	
 }

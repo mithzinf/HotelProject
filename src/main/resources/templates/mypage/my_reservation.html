@@ -13,6 +13,10 @@
 	text-align: center;
 }
 
+.swal-text {
+	text-align: center;
+}
+
 #page-content {
 	margin: 50px 0 50px;
 	margin-left: 3%;
@@ -87,8 +91,8 @@
 }
 
 .my-items .my-item .image-wrapper .image {
-  width: 165px;
-  height: 135px;
+  width: 183px;
+  height: 183px;
   position: relative;
   display: block;
 }
@@ -114,6 +118,14 @@
   text-align: center;
 }
 
+hr {
+margin-left:0px;
+margin-top: 5px;
+margin-bottom: 5px;
+width: 50%;
+text-align: left;
+}
+
 </style>
 <div class="myPage">
     <div class="sidebar" style="margin: 50px 0 50px; width: 17%; min-width: 250px;">
@@ -121,8 +133,8 @@
             <h2>마이페이지</h2>
             <ul class="links">
                 <li><a href="mypage/mypage">내정보</a></li>
-                <li class="active"><a href="mypage/basket">호텔 찜 목록</a></li>
-                <li><a href="mypage/my_reservation">예약내역</a></li>
+                <li><a href="mypage/basket">호텔 찜 목록</a></li>
+                <li class="active"><a href="mypage/my_reservation">예약내역</a></li>
                 <li><a href="mypage/delete">회원탈퇴</a></li>
             </ul>
            	<hr/>
@@ -140,61 +152,65 @@
 
 	
     <div class="my-items table-responsive" style="margin: 50px 0 50px; width: 60%; margin-left: 4%;">
-    	<p class="title">회원님이 찜하신 호텔</p>
+    	<p class="title">회원님이 예약하신 호텔</p>
 			<table class="table">
 				<thead>
   					<tr>
-	                    <th class="sub" style="text-align: left; padding-left: 10px;">회원님이 찜하신 숙박 시설의 목록입니다.</th>
-	                    <th style="width: 12%;" class="sub">가격</th>
-	                    <th style="width: 7%;" class="sub">평점</th>
-	                    <th style="width: 10%;" class="sub">찜 취소</th>
+	                    <th class="sub" style="text-align: left; padding-left: 10px;">회원님이 예약하신 숙박시설의 목록입니다.</th>
+	                    <th style="width: 12%;" class="sub">결제가격</th>
+	                    <th style="width: 7%;" class="sub">예약상태</th>
+	                    <th style="width: 10%;" class="sub">예약취소</th>
                     </tr>
                 </thead>
                 <tbody>
                     
                     
-                <tr class="my-item" style="margin-bottom: 0px;"
-                th:if="${#lists.size(pagedBasket)}!=null" th:each="dto:${pagedBasket}">
+                <tr class="my-item" style="margin-bottom: 0px; height:170px; vertical-align: center;"
+                th:if="${#lists.size(pagedMyReservation)}!=null" th:each="dto:${pagedMyReservation}">
                     <td>
-                    	<input type="hidden" name="basket_num" class="basket_num" th:value="${dto.BASKET_NUM}">
-                        <div class="image-wrapper">
-                            <a href="mypage/basket" class="image">
+                    <input type="hidden" name="hotel_id" class="hotel_id" th:value="${dto.HOTEL_ID}">
+                        <div class="image-wrapper" style="height:100%;">
+                            <a href="mypage/my_reservation" class="image" >
                             	<img th:src="@{|/hotel/${dto.URL}|}" style="width:100%; height:100%; position: absolute;">
                             </a>
                         </div>
-                        <div class="info">
-                            <a href="mypage/basket"><span class="sub-title">[[${dto.HOTEL_NAME}]]</span></a>
-                            <figure class="location"><strong>[[${dto.ADDR1}]]</strong></figure>
+                        <div class="info" style="padding: 20px 20px;">
+                            <a href="mypage/my_reservation"><span class="sub-title">[[${dto.HOTEL_NAME}]]</span></a>
                             <figure class="label label-info">[[${dto.CATEGORY}]]</figure>
+                            <figure class="location" style="width:80%;"><strong>[[${dto.ADDR1}]]</strong></figure>
                             <div class="meta">
                                 <span><i class="fa fa-phone" aria-hidden="true"></i>[[${dto.TEL}]]</span>
                             </div>
+                            <hr/>
+                            <figure class="location"><strong>예약자 성명 : [[${dto.USERNAME}]]</strong></figure>
+                            <figure class="location"><strong>숙박일 : [[${dto.CHECK_IN}]] ~ [[${dto.CHECK_OUT}]]</strong></figure>
+                            <figure class="location"><strong>방종류 : [[${dto.ROOM.toUpperCase()}]] 룸</strong></figure>
+                            <figure class="location"><strong>체크인/체크아웃 시간 : [[${dto.CHECK_IN_TIME}]] / [[${dto.CHECK_OUT_TIME}]]</strong></figure>
                             <!--end meta-->
                         </div>
                         <!--end info-->
                     </td>
-                    <td style="width: 10%; text-align: center; font-size: 18px;">[[${dto.STANDARD}]]~</td>
-                    <td style="width: 10%; text-align: center; font-size: 18px;">9.3</td>
+                    <td style="width: 10%; text-align: center; font-size: 18px;">[[${dto.PRICE}]]</td>
+                    <td style="width: 10%; text-align: center; font-size: 18px;">결제완료</td>
                     <td style="width: 10%; text-align: center; font-size: 18px;">
-                    <a href="mypage/basket" class="delete-btn">
-                    <img style="width: 35px; height: 35px;" src="assets/img/delete.png"></a></td>
-					
+                    <a href="mypage/my_reservation" class="delete-btn">취소</a></td>
+
                 </tr>
 				
                 
 			</tbody>
 		</table>
-		<div class="basket-paging" th:if="${dataCount>0}">
+		<div class="basket-paging" th:if="${dataCount}>0">
 			<ul>
 				<li th:utext="${pageIndexList}" style="font-size: 24px;
 				font-family: 'Gowun Batang', sans-serif; font-weight: bold;"></li>
 			</ul>
 		</div>
                 
-		<div class="basket-paging" th:if="${dataCount==0}">
+		<div class="basket-paging" th:if="${dataCount}==0">
 			<td colspan="5">
-				<span style="font-size: 36px;
-				font-family: 'Gowun Batang', sans-serif; font-weight: bold;">찜하신 호텔이 없습니다. </span>
+				<span style="font-size: 24px;
+				font-family: 'Gowun Batang', sans-serif; font-weight: bold;">예약하신 호텔이 없습니다. </span>
 			</td>
 		</div>
 		
@@ -207,14 +223,29 @@
 <script type="text/javascript">
 
 	
+	function sendIt() {
+		
+		var f = document.myForm;
+		f.action="mypage/update";
+		f.submit();
+		
+	}
+	
+	function getout() {
+
+		var f = document.myForm;
+		f.action="mypage/delete";
+		f.submit();
+		
+	}
+
 	$('.delete-btn').click(function(event) {
 		event.preventDefault();
 		
-		var basket_num = $(this).closest('.my-item').find('.basket_num').val();
-		
+		var hotel_id = $(this).closest('.my-item').find('.hotel_id').val();
 		swal({
-			title: "호텔 찜 삭제",
-		    text: "이 호텔을 찜 목록에서 삭제하시겠습니까?",
+			title: "예약 취소",
+		    text: "이 호텔의 예약을 취소하시겠습니까? \n신청하신 이후에는 취소를 다시 번복할 수 없습니다.",
 		    icon: "warning",
 		    buttons: ["취소", "확인"],
 		    className: "text-center"
@@ -223,12 +254,23 @@
 		    if (willregister) {
 		    	
 		    	$.ajax({
-			        url: './mypage/basket_delete',
+			        url: './mypage/my_reservation_delete',
 			        type: 'get',
-			        data: {basket_num:basket_num},
+			        data: {hotel_id:hotel_id},
 			        success: function(result) {
 			        	
-			        	location.reload(true);
+			        	swal({
+		            		title: "예약 취소 완료",
+		            		text: "요청하신 숙박예약 취소가 정상적으로 처리되었습니다. \n결제는 금일 내로 자동으로 환불처리됩니다.",
+		            		icon: "success",
+		            		button: "확인",
+		            		}).then(function() {
+		            			
+		            			location.reload(true);
+		            			
+		            		});
+			        	
+			        	
 			        	
 			        },
 			    });
@@ -243,8 +285,6 @@
 		});
 		
 	});
-	
-
 	
 </script>
 

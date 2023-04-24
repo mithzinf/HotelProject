@@ -4,10 +4,17 @@
 <meta charset="UTF-8">
 
 <div layout:fragment="content" class="content-padding">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Gowun+Batang&display=swap');
 h1,h2{
+	font-family: 'Gowun Batang', sans-serif;
+}
+
+input {
 	font-family: 'Gowun Batang', sans-serif;
 }
 
@@ -36,15 +43,15 @@ h1,h2{
                                         </div>
                                         <div class="col-md-2 col-sm-2">
                                             <div class="form-group">
-                                                <label class="label-on-input" for="form-check-in" style="font-size: 12px; opacity: 1;">체크인 날짜</label>
-                                                <input type="text" class="form-control date" id="form-check-in"  placeholder="YYYY-MM-DD">
+                                                <label class="label-on-input" for="datepicker1" style="font-size: 12px; opacity: 1;">체크인 날짜</label>
+                                                <input type="text" id="datepicker1" style="color: #fff;" placeholder="연도-월-일">
                                               
                                             </div>
                                         </div>
                                         <div class="col-md-2 col-sm-2">
                                             <div class="form-group">
-                                                <label class="label-on-input" for="form-nights" style="font-size: 12px; opacity: 1;">숙박일수</label>
-                                                <input type="number" class="form-control" id="form-nights"  placeholder="0">
+                                                <label class="label-on-input" for="datepicker2" style="font-size: 12px; opacity: 1;">체크아웃 날짜</label>
+                                                <input type="text" id="datepicker2" style="color: #fff;" placeholder="연도-월-일">
                                             </div>
                                         </div>
                                         <div class="col-md-2 col-sm-2">
@@ -313,6 +320,53 @@ h1,h2{
     <!--end page-content-->
 
 
+<script>
+    $.datepicker.setDefaults({
+        dateFormat: 'yy-mm-dd',
+        prevText: '이전 달',
+        nextText: '다음 달',
+        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+        showMonthAfterYear: true,
+        yearSuffix: '년'
+    });
+	
+    $(function() {
+    	  var today = new Date();
+    	  var selectedDate;
+    	  var dp1 = jQuery.noConflict();
+    	  var dp2 = jQuery.noConflict();
+    	  
+    	  $("#datepicker1").datepicker({
+    	    minDate: today,
+    	    onSelect: function(date) {
+    	    	selectedDate = new Date(date); // 문자열로 된 날짜를 Date 객체로 변환
+    	        selectedDate.setDate(selectedDate.getDate() + 1); // 다음날로 설정
+    	        $("#datepicker2").datepicker("option", "minDate", selectedDate); // datepicker2의 minDate 업데이트
+    	    }
+    	  });
+    	  
+    	  $("#datepicker2").datepicker({
+    		minDate: selectedDate,
+    		beforeShow: function(input, inst) {
+    	      
+    	      if (selectedDate == null) {
+    	    	 
+    	        alert("체크인 날짜를 먼저 선택해주세요!");
+    	        $(this).blur();
+    	        return false;
+    	      }
+    	      
+    	    }
+    	    
+    	  });
+    	});
+
+</script>
+
 <script type="text/javascript">
 	//컨트롤러로 searchValue값 담아서 전송
 	function search() {
@@ -324,8 +378,6 @@ h1,h2{
 		
 		
 	}
-		
-		
 		
 </script>
 

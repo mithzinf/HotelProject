@@ -47,8 +47,8 @@ img {
             <h2>마이페이지</h2>
             <ul class="links">
                 <li><a href="mypage/mypage">내정보</a></li>
-                <li><a href="mypage/mypage">호텔 찜 목록</a></li>
-                <li><a href="mypage/mypage">예약내역</a></li>
+                <li><a href="mypage/basket">호텔 찜 목록</a></li>
+                <li><a href="mypage/my_reservation">예약내역</a></li>
                 <li class="active"><a href="mypage/delete">회원탈퇴</a></li>
             </ul>
             <hr/>
@@ -90,7 +90,7 @@ img {
 					</div>
 					<br/>
 					<div>
-						<button class="login-button-btn3" onclick="sendIt();" style="padding:12px 25px;" id="delete" disabled="disabled"> 회원탈퇴 </button>
+						<button class="login-button-btn3" onclick="deleteMember();" style="padding:12px 25px;" id="delete" disabled="disabled"> 회원탈퇴 </button>
 						&nbsp;
 						<button class="login-button-btn1" onclick="back();" style="padding:12px 30px;"> 탈퇴취소 </button>
 					</div>
@@ -144,7 +144,7 @@ img {
 		f.submit();
 	}
 	
-	function sendIt() {
+	function deleteMember() {
 		
 		var f = document.myForm;
 		
