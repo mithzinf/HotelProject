@@ -39,10 +39,10 @@ public interface MyPageService {
 	public List<Map<String, Object>> getMyReservationListsAdd(Map<String, Object> params) throws Exception;
 	
 	//결제 테이블 삭제
-	public void deletePay(Map<String, Object> params) throws Exception;
+	public void deletePay(int res_num) throws Exception;
 	
 	//예약 테이블 삭제
-	public void deleteReservation(Map<String, Object> params) throws Exception;
+	public void deleteReservation(int res_num) throws Exception;
 		
 	
 }

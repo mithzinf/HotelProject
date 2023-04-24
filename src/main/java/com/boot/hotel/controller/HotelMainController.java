@@ -2,6 +2,7 @@ package com.boot.hotel.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -58,9 +59,8 @@ public class HotelMainController {
 	
 	//메인페이지(hotelMain.html)에서 검색시 여기로 진입
 	@GetMapping("/hotel/test11")
-	public ModelAndView test1(@RequestParam String searchValue, @RequestParam String checkin, 
-			@RequestParam int days) throws Exception {
-		
+	public ModelAndView test1(@RequestParam String searchValue, @RequestParam String check_in, 
+			@RequestParam String check_out) throws Exception {
 		
 		
 		System.out.println("검색 테스트 컨트롤러 진입");
@@ -68,13 +68,19 @@ public class HotelMainController {
 		paramMap.put("searchValue", searchValue);
 		//그걸 paramMap에 담음
 		
-		LocalDate check_in_temp = LocalDate.parse(checkin, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-		System.out.println("checkin : " + checkin);
-		System.out.println("check_in_temp : " + check_in_temp);
+		LocalDate check_in_day = LocalDate.parse(check_in, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		LocalDate check_out_day = LocalDate.parse(check_out, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		System.out.println("check_in_day : " + check_in_day);
+		System.out.println("check_out_day : " + check_out_day);
 		
-		LocalDate check_out_temp = check_in_temp.plusDays(1);
+		int days = (int) ChronoUnit.DAYS.between(check_in_day, check_out_day);
+		
+		System.out.println("days : " + days);
+		
+		LocalDate check_in_temp = check_in_day;
+		LocalDate check_out_temp = check_in_day.plusDays(1);
 		int str = 0;
-		boolean judge = true;
+		String judge = "";
 		
 		
 		//검색값 결과를 찾는 sql문 호출하고 반환값을 result란 리스트에 저장
@@ -97,19 +103,32 @@ public class HotelMainController {
 				paramMap2.put("check_out", check_out_temp.plusDays(j));
 				paramMap2.put("hotel_id", hotel_id);
 				str = hotelMainService.searchDay(paramMap2);
-				if(str>4) {
-					judge = false;
+				if(str>14) {
+					judge = "만실";
+				}else if(str == 13 || str == 14) {
+					judge = "만실 임박";
+				}else {
+					judge = "여유";
 				}
 				
 			}
 			
-			if(judge==false) {
+			if(judge.equals("만실")) {
 				System.out.println(i.get("HOTEL_NAME").toString() + "는(은) 이미 만실입니다.");
-				i.put("soldout", "yes");
-				judge = true;
+				i.put("soldout", "full");
+				i.put("num", 15-str);
+				judge = "";
 			}
-			else {
-				i.put("soldout", "no");
+			else if(judge.equals("만실 임박")){
+				System.out.println(i.get("HOTEL_NAME").toString() + "는(은) 만실이 임박했습니다.");
+				i.put("soldout", "almost");
+				i.put("num", 15-str);
+				judge = "";
+			}else {
+				System.out.println(i.get("HOTEL_NAME").toString() + "는(은) 아직 여유가 있습니다.");
+				i.put("soldout", "empty");
+				i.put("num", 15-str);
+				judge = "";
 			}
 			num++;
 			

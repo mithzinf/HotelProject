@@ -168,7 +168,7 @@ text-align: left;
                 <tr class="my-item" style="margin-bottom: 0px; height:170px; vertical-align: center;"
                 th:if="${#lists.size(pagedMyReservation)}!=null" th:each="dto:${pagedMyReservation}">
                     <td>
-                    <input type="hidden" name="hotel_id" class="hotel_id" th:value="${dto.HOTEL_ID}">
+                    <input type="hidden" name="res_num" class="res_num" id="res_num" th:value="${dto.RES_NUM}">
                         <div class="image-wrapper" style="height:100%;">
                             <a href="mypage/my_reservation" class="image" >
                             	<img th:src="@{|/hotel/${dto.URL}|}" style="width:100%; height:100%; position: absolute;">
@@ -223,26 +223,13 @@ text-align: left;
 <script type="text/javascript">
 
 	
-	function sendIt() {
-		
-		var f = document.myForm;
-		f.action="mypage/update";
-		f.submit();
-		
-	}
 	
-	function getout() {
-
-		var f = document.myForm;
-		f.action="mypage/delete";
-		f.submit();
-		
-	}
 
 	$('.delete-btn').click(function(event) {
 		event.preventDefault();
 		
-		var hotel_id = $(this).closest('.my-item').find('.hotel_id').val();
+		var res_num = $(this).closest('.my-item').find('.res_num').val();
+		
 		swal({
 			title: "예약 취소",
 		    text: "이 호텔의 예약을 취소하시겠습니까? \n신청하신 이후에는 취소를 다시 번복할 수 없습니다.",
@@ -256,7 +243,7 @@ text-align: left;
 		    	$.ajax({
 			        url: './mypage/my_reservation_delete',
 			        type: 'get',
-			        data: {hotel_id:hotel_id},
+			        data: {res_num:res_num},
 			        success: function(result) {
 			        	
 			        	swal({
