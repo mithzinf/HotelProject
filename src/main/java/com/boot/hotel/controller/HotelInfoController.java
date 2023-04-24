@@ -87,10 +87,7 @@ public class HotelInfoController {
         
         if(!searchValue.equals("") && searchValue != null) {
             params.put("searchValue", searchValue);
-        } else {
-            params.put("searchValue", "");
         }
-
        
         List<HotelDTO> hotelList1 = hotelInfoService.getHotelList1(params);
         List<HotelInfoDTO> hotelList2 = hotelInfoService.getHotelList2(params);
@@ -99,10 +96,12 @@ public class HotelInfoController {
         
         System.out.println("hotelList3 :" + hotelList3);
         
-        
-        String listUrl = "";
+        String currentUrl = request.getRequestURL().toString() + "?" + request.getQueryString();
+        String listUrl = currentUrl.replaceAll("&?pageNum=\\d+", "");
 
-        String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
+       
+
+        String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl, searchValue);
 
 
         
@@ -127,6 +126,7 @@ public class HotelInfoController {
         mav.addObject("currentPage", currentPage);
         mav.addObject("numPerPage", numPerPage);
         mav.addObject("detailUrl", detailUrl);
+        mav.addObject("searchValue", searchValue);
       
 
         mav.setViewName("hotel/hotelList");
@@ -170,6 +170,16 @@ public class HotelInfoController {
     	return mav;
     }
 */
+
     
+    
+//    @RequestMapping(value = "/hotellist1", method = { RequestMethod.GET, RequestMethod.POST })
+//    public ModelAndView list111111(HttpServletRequest request)throws Exception {
+//
+//        ModelAndView mav = new ModelAndView();
+//        mav.setViewName("hotel/listing");
+//
+//        return mav;
    
+//}
 }
