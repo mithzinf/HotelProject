@@ -20,7 +20,7 @@ public class MyUtil {
 	}
 	
 	
-	public String pageIndexList(int currentPage, int totalPage, String listUrl) {
+	public String pageIndexList(int currentPage, int totalPage, String listUrl, String searchValue) {
 	    int numPerBlock = 5; // 한 블록당 페이지 수
 	    int currentPageSetup;
 	    int page;
@@ -34,6 +34,11 @@ public class MyUtil {
 	        listUrl = listUrl + "&";
 	    } else {
 	        listUrl = listUrl + "?";
+	    }
+
+	    // 검색어(searchValue)를 링크에 포함시킴
+	    if (searchValue != null && !searchValue.equals("")) {
+	        listUrl = listUrl + "searchValue=" + searchValue + "&";
 	    }
 
 	    currentPageSetup = (currentPage / numPerBlock) * numPerBlock;
@@ -50,9 +55,8 @@ public class MyUtil {
 
 	    while (page <= totalPage && page <= (currentPageSetup + numPerBlock)) {
 	        if (page == currentPage) {
-	        	sb.append("<a href=\"" + listUrl + "pageNum=" + currentPage + "\">" + currentPage + "</a> ");
+	            sb.append("<a href=\"" + listUrl + "pageNum=" + currentPage + "\">" + currentPage + "</a> ");
 	        } else {
-	        	
 	            sb.append("<a href=\"" + listUrl + "pageNum=" + page + "\">" + page + "</a> ");
 	        }
 	        page++;
