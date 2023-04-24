@@ -35,10 +35,12 @@
                                         <tr>
                                         	<td><dt style="font-size: 21px">호텔이름 / 방 종류</dt></td>
                                             <td><dd><td th:text="${resDto.hotel_name + ' /' + resDto.room}" style="font-size: 21px"></td></dd></td>
+                                            
                                         </tr>
                                         <tr>
-                                        	<td><dt style="font-size: 21px">예약날짜</dt>
-                                            <td><dd><td th:utext="${#dates.format(resDto.inq_date, 'yyyy/MM/dd')}" style="font-size: 21px"></td></dd></td>
+                                        	<td><dt style="font-size: 21px">체크인 / 체크아웃 날짜</dt>
+                                            <!-- <td><dd><td th:utext="${#dates.format(resDto.check_in, 'yyyy/MM/dd')}" style="font-size: 21px"></td></dd></td> -->
+                                            <td><dd><td th:text="${#dates.format(resDto.check_in, 'yyyy/MM/dd') + ' ~ ' + #dates.format(resDto.check_out, 'yyyy/MM/dd')}" style="font-size: 21px"></td></dd></td>
                                         </tr>
                                         <tr>
                                         	<td><dt style="font-size: 21px">예약인원</dt>

@@ -20,6 +20,7 @@ public class HotelReservationDTO {
     private String status;
     private Date inq_date;
     private String request1;
-    
+    private Date check_in;
+    private Date check_out;
 
 }
