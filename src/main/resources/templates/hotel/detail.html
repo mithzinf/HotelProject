@@ -167,7 +167,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label class="invisible">Hidden label</label>
-                                            <input type="hidden" name="hotel_id" value="${hotel_id}"> <!-- hotel_id hidden 필드 추가 -->
+                                            <input type="hidden" name="hotel_id" th:value="${hotel_id}"> <!-- hotel_id hidden 필드 추가 -->
                                             <button type="submit" class="btn btn-primary btn-rounded btn-framed form-control">Search</button>
                                         </div>
                                     </div>
@@ -175,6 +175,7 @@
                                 </div>
                                 <!--end row-->
                             </form>
+                            <!-- end of form class = "labels-uppercase" -->
 
                             <div class="form-reservations">
                                 <div class="table-responsive">
@@ -190,7 +191,13 @@
                                         </thead>
                                     </table>
                                 </div>
-                                <form id="room_1">
+                                <!-- 1.스탠다드룸에 대한 form id = "room_1" 태그 start -->
+                                <form id="room_1" th:action="@{/bookRoom}" method="post">
+                                <!-- 0424 input 태그 추가 4줄 부분 -->
+                                  <input type="hidden" name="hotel_id" th:value="${dto2[0].hotel_id}"/>
+								  <input type="hidden" name="room_type" value="standard"/>
+								  <input type="hidden" name="checkin" th:value="${checkin}"/>
+								  <input type="hidden" name="checkout" th:value="${checkout}"/>
                                     <table class="table">
                                         <tbody>
                                             <tr class="room">
@@ -242,8 +249,16 @@
                                     </table>
                                     <!--end table-->
                                 </form>
-                                <!--edn form#room_1-->
-                                <form id="room_2">
+                               <!-- 스탠다드룸에 대한 form id = "room_1" 태그 end -->
+                               
+                               
+                               <!-- 2. 스위트룸에 대한 form id = "room_2" 태그 start -->
+                                <form id="room_2" th:action="@{/bookRoom}" method="post">
+                                <!-- 0424 input 태그 추가 4줄 부분 -->
+                                  <input type="hidden" name="hotel_id" th:value="${dto2[0].hotel_id}"/>
+								  <input type="hidden" name="room_type" value="sweet"/>
+								  <input type="hidden" name="checkin" th:value="${checkin}"/>
+								  <input type="hidden" name="checkout" th:value="${checkout}"/>
                                     <table class="table">
                                         <tbody>
                                         <tr class="room">
@@ -278,8 +293,15 @@
                                     </table>
                                     <!--end table-->
                                 </form>
-                                <!--edn form#room_2-->
-                                <form id="room_3">
+        					<!-- 스위트룸에 대한 form id = "room_2" 태그 end -->                     
+		
+							<!-- 3. 디럭스룸에 대한 form id = "room_3" 태그 start -->
+                                <form id="room_3" th:action="@{/bookRoom}" method="post">
+                                <!-- 0424 input 태그 추가 4줄 부분 -->
+                                  <input type="hidden" name="hotel_id" th:value="${dto2[0].hotel_id}"/>
+								  <input type="hidden" name="room_type" value="deluxe"/>
+								  <input type="hidden" name="checkin" th:value="${checkin}"/>
+								  <input type="hidden" name="checkout" th:value="${checkout}"/>
                                     <table class="table">
                                         <tbody>
                                         <tr class="room">
@@ -313,7 +335,8 @@
                                     </table>
                                     <!--end table-->
                                 </form>
-                                <!--edn form#room_3-->
+                               <!-- 스위트룸에 대한 form id = "room_3" 태그 end -->
+                          
                             </div>
                             <!--end form-reservations-->
                         </section>
