@@ -111,11 +111,6 @@
 <form id="searchForm" action="/hotel/hotellist" method="get">
   <div class="form-group">
 
-			<select name="searchKey" class="selectField">
-			<option value="hotel_name">호텔이름</option>
-			<option value="addr1">동네찾기</option>
-			<option value="addr2">주소</option>
-			</select>
  </div>
 <input type="text" class="form-control input-lg" id="searchValue" name="searchValue" style="width: 100%;" placeholder="검색하세요">
 <button type="submit" class="btn btn-primary btn-rounded form-control">검색</button>
@@ -148,7 +143,7 @@
     <div class="image-wrapper">
       <div class="image">
 
-        <a th:href="@{/detail(hotel_id=${hotel.hotel_id})}"  class="wrapper" >
+   <a th:href="@{|/detail?hotel_id=${hotel.hotel_id}&pageNum=${currentPage}&searchValue=${hotel.hotel_name}|}" class="wrapper" >
                   <div th:if="${hotelList3 != null}"> 
   <div th:each="hotel3 : ${hotelList3}" th:if="${hotel3.hotel_id == hotel.hotel_id}">
  <img th:src="${hotel3.url}" />
@@ -166,7 +161,7 @@
       
       
       
-      <a th:href="@{|/detail?pageNum=${currentPage}&searchKey=${searchKey}&searchValue=${hotel.hotel_name}|}">
+      <a th:href="@{|/detail?hotel_id=${hotel.hotel_id}&pageNum=${currentPage}&searchValue=${hotel.hotel_name}|}">
     <h3 th:text="${hotel.hotel_name}"></h3><br/>
 </a>
       
