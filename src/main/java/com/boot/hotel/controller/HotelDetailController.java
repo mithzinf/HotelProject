@@ -53,7 +53,6 @@ public class HotelDetailController {
       
       
       ModelAndView mav = new ModelAndView();
-
       // Model에 데이터 추가, 좌항 : view에서 부를 별칭, 우항 : 진짜 담아진 객체의 이름
       mav.addObject("dto1", dto1);
       mav.addObject("dto2", dto2);
@@ -113,21 +112,25 @@ public class HotelDetailController {
    //check_in 날짜와 check_out 날짜는 장바구니 테이블 basketdto의 req_date, reservation 테이블의 inq_date 컬럼 갖다 써야하는지?
    //내가 예약한 객실..room 컬럼 room == standard 뭐 이렇게 넘겨야 하는것임? 
    //테이블 안써도 되고..detail.html부분에서 체크인, 체크아웃 날짜 선택하는 부분에서 그 날짜를 value name으로 받아서 넘기면 될듯?
-   
+   //결제페이지에서는 서치밸류 넘기지 말자고 하숏다, roomtype 일일이 치면 된다... 리퀘스트파람을 room1 room2 name 은 type(예약어여서 type1)으로 / value = standard 
    @RequestMapping(value = "/bookRoom", method = RequestMethod.POST)
-   public ModelAndView bookRoom(HttpServletRequest request, @RequestParam("hotel_id") int hotel_id) throws Exception {
+   public ModelAndView bookRoom(@RequestParam("hotel_id") int hotel_id,@RequestParam("room_type") String room_type,HttpServletRequest request) throws Exception {
 	   		ModelAndView mav = new ModelAndView();
 	   		
-		    String checkin = request.getParameter("checkin");
-		    String checkout = request.getParameter("checkout");
+	 
+	   
+	   	 String checkin = "20230426"; // 하드코딩된 checkin 날짜
+	     String checkout = "20230428"; // 하드코딩된 checkout 날짜
 		    
-		    mav.addObject("hotel_id", hotel_id);
+	     List<HotelInfoDTO> dto2 = hotelDetailService.getHotelInfoById(hotel_id); //hotel_id 델꼬 올라고 일단 이거 가지고 와밧슴 리스트로..
+	     
+	     	mav.addObject("dto2", dto2);
 		    mav.addObject("checkin", checkin);
 		    mav.addObject("checkout", checkout);
 			System.out.println(checkin);
 			System.out.println(checkout);
-			System.out.println(hotel_id);
-		  
+			System.out.println("호텔아이디 : "+ hotel_id);
+			System.out.println(room_type);
 			mav.setViewName("hotel/bookingTest");   
 
 	   return mav;
@@ -135,20 +138,10 @@ public class HotelDetailController {
    
    
    
-   //이거 걍 테스트용
-   @GetMapping("/roomInfo")
-   public ModelAndView roomInfo(HttpServletRequest request) throws Exception {
-	   
-	   ModelAndView mav = new ModelAndView();
-	   mav.setViewName("hotel/layoutTest");
-	   
-	   return mav;
-   }
-   
+
    
    
 }
-
 
 
 
