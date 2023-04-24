@@ -127,16 +127,28 @@ public class HotelDetailController {
 	     	mav.addObject("dto2", dto2);
 		    mav.addObject("checkin", checkin);
 		    mav.addObject("checkout", checkout);
+		    mav.addObject("room_type", room_type);
 			System.out.println(checkin);
 			System.out.println(checkout);
 			System.out.println("호텔아이디 : "+ hotel_id);
 			System.out.println(room_type);
-			mav.setViewName("hotel/bookingTest");   
+			mav.setViewName("payment/paymentPage");   
 
 	   return mav;
    }
-   
-   
+//   사진 테스트용~
+//   @GetMapping("/gallery")
+//   public ModelAndView galleryview() throws Exception {
+//	   
+//	   ModelAndView mav = new ModelAndView();
+//	   
+//	   mav.setViewName("hotel/layoutTest");
+//	   
+//	   return mav;
+//	   
+//   }
+//   
+//   
    
 
    

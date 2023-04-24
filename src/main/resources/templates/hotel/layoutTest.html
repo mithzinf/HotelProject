@@ -6,7 +6,8 @@
 
 <div layout:fragment="content" class="content-padding">
 <!-- 대충 이자리에 개별 CSS가 있다면 선언 -->
-<link rel="stylesheet" type="text/css" href="css/modal.css"/>
+
+<link rel="stylesheet" type="text/css" href="css/gallery.css"/>
         <style>
             #my_modal { 
             	font-family: 'Gowun Batang', sans-serif;
@@ -36,30 +37,54 @@
             <h3 class="modal-title" id="myModalLabel"><strong>객실 상세 보기</strong></h3>
             <!-- 자동 캐러셀 시작 -->
             
-          <div class="content"> <!--전체를 감쌀 뼈대-->
-				<div class="slides">  <!--슬라이드 아이템을 감쌀 뼈대-->
-				  <div class="slide_item"></div>  <!--슬라이드될 아이템들 -->
-				  <div class="slide_item"></div>
-				  <div class="slide_item"></div>
-				  <div class="slide_item"></div>
-				  <div class="slide_item"></div>
-				  <div class="slide_item"></div>
-				</div>
-				<span class="nextButton">▶</span>  <!--다음 버튼 -->
-				<span class="prevButton">◀</span>   <!--이전 버튼 -->
-				  	<div class="Thumbnail">  <!--썸네일을 감쌀 뼈대 -->
-				  		<div class="thumbnail_item"></div>   <!--썸네일 아이템들 -->
-				  		<div class="thumbnail_item"></div>
-						<div class="thumbnail_item"></div>
-						<div class="thumbnail_item"></div>
-						<div class="thumbnail_item"></div>
-						<div class="thumbnail_item"></div>
-					</div>   
-           </div>
-            <!-- 자동 캐러샐 끝 -->	   
+         <!-- 여기에 이제...사진을 넣는거죠.. -->  
+          <div class="vr ">
+				  <h3 class="clear">스탠다드</h3>
+				  <div class="gallery">
+				    <input type="radio" name="slides" checked />
+				     <div class="gallery-unit">
+				      <img class="gallery-unit-image"
+				     src="https://picsum.photos/id/237/640/480"
+				      />
+				    </div>
+				
+				   <input type="radio" name="slides"/>
+				    <div class="gallery-unit">
+				      <img class="gallery-unit-image"
+				        src="https://picsum.photos/id/227/640/480"
+				      />
+				    </div>
+				
+				   <input type="radio" name="slides"/>
+				    <div class="gallery-unit">
+				      <img class="gallery-unit-image"
+				        src="https://picsum.photos/id/217/640/480"
+				      />
+				    </div>
+				    
+				
+				   <input type="radio" name="slides"/>
+				    <div class="gallery-unit">
+				      <img class="gallery-unit-image"
+				        src="https://picsum.photos/id/177/640/480"
+				      />
+				    </div>
+				
+				   
+				  
+				
+				   </div>
+				
+			</div>
+			<!-- end of div class = "gallery" -->
             
         </div>
-        
+        <!-- end of class = vr -->
+       
+    </div> 
+     <!-- end of my_modal -->
+     
+     
         <button id="popup_open_btn">모달 클릭</button>
 
 
@@ -120,6 +145,6 @@
                 modal('my_modal');
             });
         </script>
-	<script type="text/javascript" src="/assets/js/slide.js"></script>
+	
      
 </html>
