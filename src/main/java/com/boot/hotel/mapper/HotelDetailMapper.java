@@ -21,5 +21,14 @@ public interface HotelDetailMapper {
 	
 	public List<HotelFacilityInDTO> getHotelFacilityInById(int hotel_id) throws Exception;
 	
-	public List<HotelPictureDTO> searchHotelDetail(Map<String, Object> params) throws Exception;
+	//public List<HotelPictureDTO> searchHotelDetail(Map<String, Object> params) throws Exception;
+	
+	public List<HotelPictureDTO> getTitlePicture(int hotel_id) throws Exception;
+	
+	public List<HotelPictureDTO> getStandardPicture(int hotel_id) throws Exception;
+	
+	public List<HotelPictureDTO> getDeluxePicture(int hotel_id) throws Exception;
+	
+	public List<HotelPictureDTO> getSweetPicture(int hotel_id) throws Exception;
+	
 }

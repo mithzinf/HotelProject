@@ -43,11 +43,38 @@ public class HotelDetailServiceImpl implements HotelDetailService{
 	}
 
 	@Override
+	public List<HotelPictureDTO> getTitlePicture(int hotel_id) throws Exception {
+		// TODO Auto-generated method stub
+		return hotelDetailMapper.getTitlePicture(hotel_id);
+	}
+
+	@Override
+	public List<HotelPictureDTO> getStandardPicture(int hotel_id) throws Exception {
+		
+		return hotelDetailMapper.getStandardPicture(hotel_id);
+	}
+
+	@Override
+	public List<HotelPictureDTO> getDeluxePicture(int hotel_id) throws Exception {
+		// TODO Auto-generated method stub
+		return hotelDetailMapper.getDeluxePicture(hotel_id);
+	}
+
+	@Override
+	public List<HotelPictureDTO> getSweetPicture(int hotel_id) throws Exception {
+		// TODO Auto-generated method stub
+		return hotelDetailMapper.getSweetPicture(hotel_id);
+	}
+
+	/*
+	@Override
 	public List<HotelPictureDTO> searchHotelDetail(Map<String, Object> params) throws Exception {
 		// TODO Auto-generated method stub
 		return hotelDetailMapper.searchHotelDetail(params);
 	}
-
+	 */
+	
+	
 
 
 

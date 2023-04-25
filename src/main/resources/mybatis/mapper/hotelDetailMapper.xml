@@ -25,8 +25,21 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 </select>
  
 <!-- parameterType: 매개변수의 성깔 : 매개변수 1개면 그 매개변수의 성질머리 적고 2개 이상이면 map -->
-<select id="searchHotelDetail" parameterType="int" resultType="com.boot.hotel.dto.HotelPictureDTO">
-	select hotel_id,url,type from hotel_picture where hotel_id=#{hotel_id}
+<select id="getTitlePicture" parameterType="int" resultType="com.boot.hotel.dto.HotelPictureDTO">
+	select hotel_id,url,type from hotel_picture where hotel_id=#{hotel_id} and type = 'title'
 </select>
+
+<select id="getStandardPicture" parameterType="int" resultType="com.boot.hotel.dto.HotelPictureDTO">
+	select hotel_id,url,type from hotel_picture where hotel_id=#{hotel_id} and type = 'standard'
+</select>
+
+<select id="getDeluxePicture" parameterType="int" resultType="com.boot.hotel.dto.HotelPictureDTO">
+	select hotel_id,url,type from hotel_picture where hotel_id=#{hotel_id} and type = 'deluxe'
+</select>
+
+<select id="getSweetPicture" parameterType="int" resultType="com.boot.hotel.dto.HotelPictureDTO">
+	select hotel_id,url,type from hotel_picture where hotel_id=#{hotel_id} and type = 'sweet'
+</select>
+
 
 </mapper>
