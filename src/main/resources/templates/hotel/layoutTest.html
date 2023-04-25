@@ -1,150 +1,148 @@
 <!DOCTYPE html>
 <!-- 경로가 templates/layout/layout.html을 상속받아야 하므로 -->
-<html layout:decorate="~{/layout/layout}">
+
 
 <meta charset="UTF-8">
+<head>
+  <title>서울 어때</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
 
-<div layout:fragment="content" class="content-padding">
-<!-- 대충 이자리에 개별 CSS가 있다면 선언 -->
+<div class="container">
+  <h2>캐러셀 1</h2>
+  <div id="myCarousel1" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
 
-<link rel="stylesheet" type="text/css" href="css/gallery.css"/>
-        <style>
-            #my_modal { 
-            	font-family: 'Gowun Batang', sans-serif;
-                display: none;
-                width: 700px;
-                height : 500px;
-                padding: 20px 60px;
-                background-color: #fefefe;
-                border: 1px solid #888;
-                border-radius: 3px;
-            }
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
 
-            #my_modal .modal_close_btn {
-                position: absolute;
-			    top: 10px;
-			    right: 10px;
-			    color: green; /* X 버튼 색상 변경 */
-			    cursor: pointer; /* 마우스 커서 모양 변경 */
-            }
-        </style>
+      <div class="item active">
+        <img th:src="3_title.jpg" alt="타이틀" style="width:100%;">
+      </div>
 
-   <!--  ============================== 모달 부분 구분선================================== -->
-
-   
-        <div id="my_modal">
-            <a class="modal_close_btn"><b>X</b></a>
-            <h3 class="modal-title" id="myModalLabel"><strong>객실 상세 보기</strong></h3>
-            <!-- 자동 캐러셀 시작 -->
-            
-         <!-- 여기에 이제...사진을 넣는거죠.. -->  
-          <div class="vr ">
-				  <h3 class="clear">스탠다드</h3>
-				  <div class="gallery">
-				    <input type="radio" name="slides" checked />
-				     <div class="gallery-unit">
-				      <img class="gallery-unit-image"
-				     src="https://picsum.photos/id/237/640/480"
-				      />
-				    </div>
-				
-				   <input type="radio" name="slides"/>
-				    <div class="gallery-unit">
-				      <img class="gallery-unit-image"
-				        src="https://picsum.photos/id/227/640/480"
-				      />
-				    </div>
-				
-				   <input type="radio" name="slides"/>
-				    <div class="gallery-unit">
-				      <img class="gallery-unit-image"
-				        src="https://picsum.photos/id/217/640/480"
-				      />
-				    </div>
-				    
-				
-				   <input type="radio" name="slides"/>
-				    <div class="gallery-unit">
-				      <img class="gallery-unit-image"
-				        src="https://picsum.photos/id/177/640/480"
-				      />
-				    </div>
-				
-				   
-				  
-				
-				   </div>
-				
-			</div>
-			<!-- end of div class = "gallery" -->
-            
+      <div class="item">
+        <img  th:src="3_standard1.jpg" style="width:100%; height: auto;">
+        <div class="carousel-caption">
+          <h3>Chicago</h3>
+          <p>Thank you, Chicago!</p>
         </div>
-        <!-- end of class = vr -->
-       
-    </div> 
-     <!-- end of my_modal -->
-     
-     
-        <button id="popup_open_btn">모달 클릭</button>
+      </div>
+    
+      <div class="item">
+        <img src="3_standard2.jpg" alt="New York" style="width:100%;">
+        <div class="carousel-caption">
+          <h3>New York</h3>
+          <p>We love the Big Apple!</p>
+        </div>
+      </div>
+      
+      <div class="item">
+        <img src="3_standard3.jpg" alt="New York" style="width:100%;">
+        <div class="carousel-caption">
+          <h3>tyyy</h3>
+          <p>yyyy</p>
+        </div>
+      </div>
+  
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel1" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel1" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
 
 
 
-<!-- ================================= script 부분 ================================== -->
-  <script>
-            function modal(id) {
-                var zIndex = 9999;
-                var modal = document.getElementById(id);
+<div class="container">
+<h2>캐러셀 2</h2>
+ <div id="myCarousel2" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
 
-                // 모달 div 뒤에 희끄무레한 레이어
-                var bg = document.createElement('div');
-                bg.setStyle({
-                    position: 'fixed',
-                    zIndex: zIndex,
-                    left: '0px',
-                    top: '0px',
-                    width: '100%',
-                    height: '100%',
-                    overflow: 'auto',
-                    // 레이어 색갈은 여기서 바꾸면 됨
-                    backgroundColor: 'rgba(0,0,0,0.4)'
-                });
-                document.body.append(bg);
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
 
-                // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
-                modal.querySelector('.modal_close_btn').addEventListener('click', function() {
-                    bg.remove();
-                    modal.style.display = 'none';
-                });
+      <div class="item active">
+        <img th:src="7_title.jpg" alt="타이틀" style="width:100%;">
+      </div>
 
-                modal.setStyle({
-                    position: 'fixed',
-                    display: 'block',
-                    boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+      <div class="item">
+        <img  th:src="7_standard1.jpg" style="width:100%; height: auto;">
+        <div class="carousel-caption">
+          <h3>Chicago</h3>
+          <p>Thank you, Chicago!</p>
+        </div>
+      </div>
+    
+      <div class="item">
+        <img src="7_standard2.jpg" alt="New York" style="width:100%;">
+        <div class="carousel-caption">
+          <h3>New York</h3>
+          <p>We love the Big Apple!</p>
+        </div>
+      </div>
+      
+      <div class="item">
+        <img src="7_standard3.jpg" alt="New York" style="width:100%;">
+        <div class="carousel-caption">
+          <h3>tyyy</h3>
+          <p>yyyy</p>
+        </div>
+      </div>
+  
+    </div>
 
-                    // 시꺼먼 레이어 보다 한칸 위에 보이기
-                    zIndex: zIndex + 1,
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel2" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel2" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
 
-                    // div center 정렬
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    msTransform: 'translate(-50%, -50%)',
-                    webkitTransform: 'translate(-50%, -50%)'
-                });
-            }
 
-            // Element 에 style 한번에 오브젝트로 설정하는 함수 추가
-            Element.prototype.setStyle = function(styles) {
-                for (var k in styles) this.style[k] = styles[k];
-                return this;
-            };
 
-            document.getElementById('popup_open_btn').addEventListener('click', function() {
-                // 모달창 띄우기
-                 //event.preventDefault(); // 클릭 이벤트의 기본 동작을 방지합니다.(추가된 코딩)
-                modal('my_modal');
-            });
-        </script>
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+				
      
 </html>

@@ -1,5 +1,9 @@
 package com.boot.hotel.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,34 +77,29 @@ public class HotelDetailController {
    public ModelAndView detail(@RequestParam("hotel_id") int hotel_id) throws Exception {
       
 	  
-      Map<String, Object> paramMap = new HashMap<>();
-      paramMap.put("hotel_id", hotel_id);
+   
       
       List<HotelDTO> dto1 = hotelDetailService.getHotelById(hotel_id);
       List<HotelInfoDTO> dto2 = hotelDetailService.getHotelInfoById(hotel_id);
       List<HotelFacilityInDTO> dto4 = hotelDetailService.getHotelFacilityInById(hotel_id);
-      List<HotelPictureDTO> searchHotelDetail = hotelDetailService.searchHotelDetail(paramMap);
+      //List<HotelPictureDTO> searchHotelDetail = hotelDetailService.searchHotelDetail(paramMap);
+      List<HotelPictureDTO> getTitle = hotelDetailService.getTitlePicture(hotel_id); //타이틀 사진 갖구와...
+      List<HotelPictureDTO> getStandard = hotelDetailService.getStandardPicture(hotel_id); //스탠다드 사진 가지구 와..
+      List<HotelPictureDTO> getDeluxe = hotelDetailService.getDeluxePicture(hotel_id); //디럭스 사진 갖고오렴..
+      List<HotelPictureDTO> getSweet = hotelDetailService.getSweetPicture(hotel_id); //스위트룸 사진 가지구 와..
       
-      String[] urlname = new String[searchHotelDetail.size()];
-      int i = 0;
-      
-      
-      
-      for (HotelPictureDTO url: searchHotelDetail) {
-          urlname[i] = String.valueOf(url); 
-          System.out.println("urlname[i] = " +urlname[i]); 
-          i++;
-      } 
-      
-		System.out.println(searchHotelDetail);
       
       ModelAndView mav = new ModelAndView();
       mav.addObject("hotel_id", hotel_id);
       mav.addObject("dto1", dto1);
       mav.addObject("dto2", dto2);
       mav.addObject("dto4", dto4);
-      mav.addObject("searchHotelDetail", searchHotelDetail);
-      mav.addObject("urlname", urlname);
+      mav.addObject("getTitle", getTitle);
+      mav.addObject("getStandard", getStandard);
+      mav.addObject("getDeluxe", getDeluxe);
+      mav.addObject("getSweet", getSweet);
+      System.out.println("김어진" + hotel_id);
+     
       mav.setViewName("hotel/detail");
       
       return mav;
@@ -115,42 +114,62 @@ public class HotelDetailController {
    //결제페이지에서는 서치밸류 넘기지 말자고 하숏다, roomtype 일일이 치면 된다... 리퀘스트파람을 room1 room2 name 은 type(예약어여서 type1)으로 / value = standard 
    @RequestMapping(value = "/bookRoom", method = RequestMethod.POST)
    public ModelAndView bookRoom(@RequestParam("hotel_id") int hotel_id,@RequestParam("room_type") String room_type,HttpServletRequest request) throws Exception {
+	   		
+	   
 	   		ModelAndView mav = new ModelAndView();
 	   		
 	 
-	   
-	   	 String checkin = "20230426"; // 하드코딩된 checkin 날짜
-	     String checkout = "20230428"; // 하드코딩된 checkout 날짜
+	   		//일단 체크인,체크아웃 날짜는 내가 정해놓은 것임
+	   		/*
+	   		Calendar startCal = Calendar.getInstance();
+			startCal.setTime(checkInDate);
+
+			Calendar endCal = Calendar.getInstance();
+			endCal.setTime(checkOutDate);
+	   		 */
+	   		 
+	   	
+	     
+	     //날짜 계산
+	     SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
+	     Date checkInDate = dateformat.parse("2023/04/26");
+	     Date checkOutDate =dateformat.parse("2023/04/28");
+	     
+	     	Calendar startCal = Calendar.getInstance();
+			startCal.setTime(checkInDate);
+
+			Calendar endCal = Calendar.getInstance();
+			endCal.setTime(checkOutDate);
+	     
+			
+			
+			long diffMillis = endCal.getTimeInMillis() - startCal.getTimeInMillis();
+			long date_num = diffMillis / (24 * 60 * 60 * 1000);
+			
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(checkInDate); // Calendar 객체에 변환한 날짜를 적용
+
+			calendar.add(Calendar.DATE, (int) date_num); // date_num일을 더함
+	     
+	     
 		    
 	     List<HotelInfoDTO> dto2 = hotelDetailService.getHotelInfoById(hotel_id); //hotel_id 델꼬 올라고 일단 이거 가지고 와밧슴 리스트로..
 	     
 	     	mav.addObject("dto2", dto2);
-		    mav.addObject("checkin", checkin);
-		    mav.addObject("checkout", checkout);
+		    mav.addObject("checkInDate", checkInDate);
+		    mav.addObject("checkOutDate", checkOutDate);
+		    mav.addObject("date_num", date_num);
 		    mav.addObject("room_type", room_type);
-			System.out.println(checkin);
-			System.out.println(checkout);
+			System.out.println("객실 예약 버튼 클릭");
+
 			System.out.println("호텔아이디 : "+ hotel_id);
-			System.out.println(room_type);
 			mav.setViewName("payment/paymentPage");   
 
 	   return mav;
    }
-//   사진 테스트용~
-//   @GetMapping("/gallery")
-//   public ModelAndView galleryview() throws Exception {
-//	   
-//	   ModelAndView mav = new ModelAndView();
-//	   
-//	   mav.setViewName("hotel/layoutTest");
-//	   
-//	   return mav;
-//	   
-//   }
-//   
-//   
+ 
    
-
+ 
    
    
 }
