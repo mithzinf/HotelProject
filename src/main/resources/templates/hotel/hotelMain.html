@@ -44,14 +44,16 @@ input {
                                         <div class="col-md-2 col-sm-2">
                                             <div class="form-group">
                                                 <label class="label-on-input" for="datepicker1" style="font-size: 12px; opacity: 1;">체크인 날짜</label>
-                                                <input type="text" id="datepicker1" style="color: #fff;" name="check_in" placeholder="연도-월-일">
+                                                <input type="text" id="datepicker1" style="color: #fff;"
+                                                name="check_in" placeholder="연도-월-일" onkeydown="return false;" readonly>
                                               
                                             </div>
                                         </div>
                                         <div class="col-md-2 col-sm-2">
                                             <div class="form-group">
                                                 <label class="label-on-input" for="datepicker2" style="font-size: 12px; opacity: 1;">체크아웃 날짜</label>
-                                                <input type="text" id="datepicker2" style="color: #fff;" name="check_out" placeholder="연도-월-일">
+                                                <input type="text" id="datepicker2" style="color: #fff;"
+                                                name="check_out" placeholder="연도-월-일" onkeydown="return false;" readonly>
                                             </div>
                                         </div>
                                         <div class="col-md-2 col-sm-2">
@@ -368,14 +370,35 @@ input {
 </script>
 
 <script type="text/javascript">
-	//컨트롤러로 searchValue값 담아서 전송
+	
 	function search() {
 		
 		var f = document.myForm;
 		
-		f.action = "/hotel/test11";
-		f.submit();
-		
+		var checkInInput = document.getElementById("datepicker1");
+	    var checkOutInput = document.getElementById("datepicker2");
+
+	    if (!checkInInput.value) {
+	        var today = new Date();
+	        var year = today.getFullYear();
+	        var month = ("0" + (today.getMonth() + 1)).slice(-2);
+	        var day = ("0" + today.getDate()).slice(-2);
+	        checkInInput.value = year + "-" + month + "-" + day;
+	    }
+
+	    // 만약 check_out 값이 입력되지 않은 경우, check_in 날짜 다음 날짜를 기본값으로 설정
+	    if (!checkOutInput.value) {
+	        var tomorrow = new Date();
+	        tomorrow.setDate(tomorrow.getDate() + 1);
+	        var year = tomorrow.getFullYear();
+	        var month = ("0" + (tomorrow.getMonth() + 1)).slice(-2);
+	        var day = ("0" + tomorrow.getDate()).slice(-2);
+	        checkOutInput.value = year + "-" + month + "-" + day;
+	    }
+
+
+	    f.action = "/hotel/hotelList_test";
+	    f.submit();
 		
 	}
 		
