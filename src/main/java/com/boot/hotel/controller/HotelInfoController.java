@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.boot.hotel.dto.HotelBasketDTO;
 import com.boot.hotel.dto.HotelDTO;
@@ -31,6 +33,8 @@ import com.boot.hotel.util.MyUtil;
 @RequestMapping("/hotel")
 public class HotelInfoController {
 	
+	@Autowired
+	private HttpSession httpSession;
 
     @Autowired
     private HotelInfoService hotelInfoService;
@@ -140,57 +144,78 @@ public class HotelInfoController {
     }
   //리스트에서 추가하면 코드 짐하기 코드..어쩌고.... 저저고..
     //여기에 찜하기 어쩌고 저쩌ㅏ고 
+    @PostMapping("/addBasket")
+    public ModelAndView addBasket(@RequestParam int hotel_id) throws Exception {
+    	
+    	System.out.println("===찜하기추가===");
+    	
+    	SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+    	String userid = sessionUser.getId();
 
-    @PostMapping("/addBasket/{userid}")
-    public ModelAndView addBasket(
-            @RequestParam int hotel_id,
-            @PathVariable String userid,
-            HttpSession httpSession) throws Exception {
-
+        
+        System.out.println("==userid=== " + userid);
+        
+        System.out.println("==hotel_id=== " + hotel_id);
+        
         ModelAndView mav = new ModelAndView();
         HotelBasketDTO dto = new HotelBasketDTO();
-        
+
         int maxNum = hotelBasketService.maxNum();
-        dto.setBasket_num(maxNum+1);
+        dto.setBasket_num(maxNum + 1);
         dto.setUserid(userid);
         dto.setHotel_id(hotel_id);
+
+        System.out.println("==userid=== " + userid);
+        System.out.println("==hotel_id=== " + hotel_id);
+        
         
         hotelBasketService.addHotelBasket(dto);
-        
-        mav.setViewName("redirect:/hotel/hotelList");
+
+        mav.setView(new RedirectView("/hotel/hotelList"));
         return mav;
     }
 
-    
-    /*
- 
-    
-    @ResponseBody
-    public String addBasket(@RequestParam Integer hotel_id) throws Exception {
+    @PostMapping("/removeBasket")
+    public ModelAndView removeBasket(@RequestParam int hotel_id) throws Exception {
+    	
+    	System.out.println("===찜해제===");
+    	
+    	SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+    	String userid = sessionUser.getId();
     	
     	ModelAndView mav = new ModelAndView();
-    	
-        HotelBasketDTO dto = new HotelBasketDTO();
-        int maxNum = hotelBasketService.maxNum();
-        dto.setBasket_num(maxNum + 1);
-        dto.setHotel_id(hotel_id);
-        hotelBasketService.addHotelBasket(dto);
-
-    	mav.setViewName("redirect:/hotel/hotelList");
-        
-    	return mav;
+    
+     	HotelBasketDTO dto = new HotelBasketDTO();
+     	dto.setUserid(userid);
+     	dto.setHotel_id(hotel_id);
+     	
+     	hotelBasketService.deleteHotelBasket(dto);
+     	
+         mav.setView(new RedirectView("/hotel/hotelList"));
+         return mav;
+         
+         
     }
-*/
-
     
-    
-//    @RequestMapping(value = "/hotellist1", method = { RequestMethod.GET, RequestMethod.POST })
-//    public ModelAndView list111111(HttpServletRequest request)throws Exception {
-//
-//        ModelAndView mav = new ModelAndView();
-//        mav.setViewName("hotel/listing");
-//
-//        return mav;
-   
-//}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
