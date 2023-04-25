@@ -62,4 +62,24 @@ ORDER BY hotel_id ASC
 </select>
 
 
+<select id="searchListBasket" parameterType="map" resultType="String">
+	select userid from basket where hotel_id=#{hotel_id} and userid=#{userid}
+</select>
+
+<select id="getHotelCountCategory" parameterType="map" resultType="int">
+  	select nvl(count(*),0) FROM hotel where category = #{searchValue}
+</select>
+
+<select id="getHotelList1Category" resultType="com.boot.hotel.dto.HotelDTO" parameterType="map">
+ 		SELECT * from (
+  	    select rownum rnum,data.* from (
+  	    select * from hotel where category = #{searchValue}
+  	    order by hotel_id asc) data)
+    <![CDATA[
+        where rnum>=#{start} and rnum<=#{end}
+    ]]> 
+</select>
+
+
+
 </mapper>

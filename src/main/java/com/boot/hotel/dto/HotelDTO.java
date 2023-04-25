@@ -18,4 +18,11 @@ public class HotelDTO {
 	private String longitude;
 	private int like_num;
 	
+	//잔여객실 체크를 위한 변수
+	private String soldout;
+	private int num;
+	
+	//찜 유무 표시를 위한 변수
+	private Boolean basket_;
+	
 }

@@ -48,6 +48,21 @@ public class HotelInfoServiceImpl implements HotelInfoService {
 		return hotelInfoMapper.getHotelList3(params);
 	}
 
+	@Override
+	public String searchListBasket(Map<String, Object> params) throws Exception {
+		return hotelInfoMapper.searchListBasket(params);
+	}
+
+	@Override
+	public int getHotelCountCategory(Map<String, Object> params) throws Exception {
+		return hotelInfoMapper.getHotelCountCategory(params);
+	}
+
+	@Override
+	public List<HotelDTO> getHotelList1Category(Map<String, Object> params) throws Exception {
+		return hotelInfoMapper.getHotelList1Category(params);
+	}
+
 
 
 
