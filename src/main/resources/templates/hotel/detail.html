@@ -8,7 +8,11 @@
     
     <link rel="stylesheet" href="assets/css/jquery.datepick.css" type="text/css">
 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
+			<style>
+			  .btn-primary {
+			    border-color: #488f3e;
+			  }
+			</style>
 	
         
         <!-- =======================================컨텐츠 시작================================================= -->
@@ -47,10 +51,10 @@
                         <div class="title">
                             <div class="left">
                                 <h1 style="color: #488f3e;"><b>[[${dto1[0].hotel_name}]]</b><span class="rating"><i class="fa fa-star"></i>9.9</span></h1>
-                                <h3 style="color: #488f3e;"><a href="#">[[${dto1[0].addr1}]]</a></h3>
+                                <h3 style="color: #488f3e;"><a href="#" style="color: #488f3e;">[[${dto1[0].addr1}]]</a></h3>
                             </div>
                             <div class="right">
-                                <a href="#map" class="icon scroll"><i class="fa fa-map-marker"></i>위치</a>
+                                <a href="#map" class="icon scroll" style="color: #488f3e;"><i class="fa fa-map-marker"></i>위치</a>
                                 <a href="#availability" class="btn btn-primary btn-rounded scroll">객실 보기</a>
                             </div>
                         </div>
@@ -183,46 +187,56 @@
                                                 <ul class="info">
                                                   
                                                 </ul>
-                        <!--  ============================== 캐러셀 시작점 ================================== -->
-											   											   
-						<div class="container" style=" width: 300px; height: 70px;">															
-								  <div id="myCarousel1" class="carousel slide" data-ride="carousel" style=" width: 300px; height: 70px;">
-								    <!-- Indicators -->
-								    <ol class="carousel-indicators">
-								      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-								      <li data-target="#myCarousel" data-slide-to="1"></li>
-								     
-								    </ol>
-								
-								    <!-- Wrapper for slides -->
-								    <div class="carousel-inner">
-								
-								      <div class="item active">
-								        <img th:src="'/hotel/' + ${hotel_id} + '_standard1.jpg'" style="width:100%; height: 100%;">
-								      </div>
-								
-								
-								      <div class="item" th:each="standard:${getStandard}">
-								        <img  th:src="'/hotel/' + @{${standard.url}}" style="width:100%; height: 100%;">
-								        
-								      </div>
-								    </div>
-								
-								    <!-- Left and right controls -->
-								    <a class="left carousel-control" href="#myCarousel1" data-slide="prev">
-								      <span class="glyphicon glyphicon-chevron-left"></span>
-								      <span class="sr-only">Previous</span>
-								    </a>
-								    <a class="right carousel-control" href="#myCarousel1" data-slide="next">
-								      <span class="glyphicon glyphicon-chevron-right"></span>
-								      <span class="sr-only">Next</span>
-								    </a>
+                        <!--  ============================== standard 캐러셀 시작점 ================================== -->
+							<div class="container" style="width: 300px; height: 70px;">
+							<!-- lists.size(getStandard)의 사이즈가 1인 경우 -->
+								  <div th:if="${#lists.size(getStandard)} == 1">
+								    <!-- If getStandard has only one element, display a single image -->
+								    <img th:src="'/hotel/' + ${hotel_id} + '_standard.jpg'" style="width:100%; height: 100%;">
 								  </div>
-						</div>											   
-		
+								<!-- lists.size(getStandard)의 사이즈가 1가 아닌 경우 -->
+								  <div th:unless="${#lists.size(getStandard)} == 1">
+								    <!-- If getStandard has more than one element, display a carousel -->
+								    <div id="myCarousel1" class="carousel slide" data-ride="carousel" style="width: 300px; height: 70px;">
+								      <!-- Indicators -->
+								      <ol class="carousel-indicators">
+								        <li data-target="#myCarousel1" data-slide-to="0" class="active"></li>
+								        <!-- Add more indicators for additional images -->
+								        <th:block th:each="i, index : ${#numbers.sequence(1, getStandard.size())}">
+								          <li data-target="#myCarousel1" data-slide-to="${index}"></li>
+								        </th:block>
+								      </ol>
+								
+								      <!-- Wrapper for slides -->
+								      <div class="carousel-inner">
+								        <div class="item active">
+								          <img th:src="'/hotel/' + ${hotel_id} + '_standard1.jpg'" style="width:100%; height: 100%;">
+								        </div>
+								        <!-- Add more items for additional images -->
+								        <th:block th:each="standard : ${getStandard}">
+								          <div class="item">
+								            <img th:src="'/hotel/' + @{${standard.url}}" style="width:100%; height: 100%;">
+								          </div>
+								        </th:block>
+								      </div>
+								
+								      <!-- Left and right controls -->
+								      <a class="left carousel-control" href="#myCarousel1" data-slide="prev">
+								        <span class="glyphicon glyphicon-chevron-left"></span>
+								        <span class="sr-only">Previous</span>
+								      </a>
+								      <a class="right carousel-control" href="#myCarousel1" data-slide="next">
+								        <span class="glyphicon glyphicon-chevron-right"></span>
+								        <span class="sr-only">Next</span>
+								      </a>
+								    </div>
+								    <!-- myCarousel1 div 태그 -->
+								  </div>
+								  <!-- th:if lists.size ==1 div 태그 -->
+							</div>
 											          
 											      
-       						<!--  ============================== 캐러셀 끝나는 곳================================== -->
+       						<!--  ============================== standard 캐러셀 끝나는 곳================================== -->
                                                 </td>                                                
                                                 <td class="persons">2<i class="fa fa-user"></i></td>
                                                 <td class="price">[[${dto2[0].standard}]]</td>
@@ -260,43 +274,52 @@
                                                  
                                                 </ul>
                         <!--  ============================== 모달 부분 구분선================================== -->
-											    
-											    <div class="container" style=" width: 300px; height: 70px;">															
-												  
-												  <div id="myCarousel2" class="carousel slide" data-ride="carousel" style=" width: 300px; height: 70px;">
-												    <!-- Indicators -->
-												    <ol class="carousel-indicators">
-												      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-												      <li data-target="#myCarousel" data-slide-to="1"></li>
-												     
-												    </ol>
-												
-												    <!-- Wrapper for slides -->
-												    <div class="carousel-inner">
-												
-												      <div class="item active">
-												        <img th:src="'/hotel/' + ${hotel_id} + '_sweet1.jpg'" style="width:100%; height: 100%;">
-												      </div>
-												<!-- end of item active :  일단 이렇게 이미지 태그로 적었는데 List<>에 담겨진 hotel_id에 객실사진 중 1번째를 불러와야 할 것 같습니다...-->
-												
-												      <div class="item" th:each="sweet:${getSweet}">
-												        <img  th:src="'/hotel/' + @{${sweet.url}}" style="width:100%; height: 100%;">
-												      </div>
-												      <!-- end of item -->
-												    </div>
-												    <!-- end of carousel-inner -->
-												
-												    <!-- Left and right controls -->
-												    <a class="left carousel-control" href="#myCarousel2" data-slide="prev">
-												      <span class="glyphicon glyphicon-chevron-left"></span>
-												      <span class="sr-only">Previous</span>
-												    </a>
-												    <a class="right carousel-control" href="#myCarousel2" data-slide="next">
-												      <span class="glyphicon glyphicon-chevron-right"></span>
-												      <span class="sr-only">Next</span>
-												    </a>
-												  </div>
-												</div>		
+											   <div class="container" style="width: 300px; height: 70px;">
+							<!-- lists.size(getStandard)의 사이즈가 1인 경우 -->
+								  <div th:if="${#lists.size(getSweet)} == 1">
+								    <!-- If getStandard has only one element, display a single image -->
+								    <img th:src="'/hotel/' + ${hotel_id} + '_sweet.jpg'" style="width:100%; height: 100%;">
+								  </div>
+								<!-- lists.size(getStandard)의 사이즈가 1가 아닌 경우 -->
+								  <div th:unless="${#lists.size(getSweet)} == 1">
+								    <!-- If getStandard has more than one element, display a carousel -->
+								    <div id="myCarousel2" class="carousel slide" data-ride="carousel" style="width: 300px; height: 70px;">
+								      <!-- Indicators -->
+								      <ol class="carousel-indicators">
+								        <li data-target="#myCarousel2" data-slide-to="0" class="active"></li>
+								        <!-- Add more indicators for additional images -->
+								        <th:block th:each="i, index : ${#numbers.sequence(1, getSweet.size())}">
+								          <li data-target="#myCarousel2" data-slide-to="${index}"></li>
+								        </th:block>
+								      </ol>
+								
+								      <!-- Wrapper for slides -->
+								      <div class="carousel-inner">
+								        <div class="item active">
+								          <img th:src="'/hotel/' + ${hotel_id} + '_sweet1.jpg'" style="width:100%; height: 100%;">
+								        </div>
+								        <!-- Add more items for additional images -->
+								        <th:block th:each="sweet : ${getSweet}">
+								          <div class="item">
+								            <img th:src="'/hotel/' + @{${sweet.url}}" style="width:100%; height: 100%;">
+								          </div>
+								        </th:block>
+								      </div>
+								
+								      <!-- Left and right controls -->
+								      <a class="left carousel-control" href="#myCarousel2" data-slide="prev">
+								        <span class="glyphicon glyphicon-chevron-left"></span>
+								        <span class="sr-only">Previous</span>
+								      </a>
+								      <a class="right carousel-control" href="#myCarousel2" data-slide="next">
+								        <span class="glyphicon glyphicon-chevron-right"></span>
+								        <span class="sr-only">Next</span>
+								      </a>
+								    </div>
+								    <!-- myCarousel1 div 태그 -->
+								  </div>
+								  <!-- th:if lists.size ==1 div 태그 -->
+							</div>	
        						<!--  ============================== 모달 end 구분선================================== -->
                                                 </td>
                                             <td class="persons">4<i class="fa fa-user"></i></td>
@@ -333,42 +356,52 @@
                                                 </ul>
                                         <!--  ============================== 모달 부분 구분선================================== -->
 			    
-												    <div class="container" style=" width: 300px; height: 70px;">															
-													  
-													  <div id="myCarousel3" class="carousel slide" data-ride="carousel" style=" width: 300px; height: 70px;">
-													    <!-- Indicators -->
-													    <ol class="carousel-indicators">
-													      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-													      <li data-target="#myCarousel" data-slide-to="1"></li>
-													     
-													    </ol>
-													
-													    <!-- Wrapper for slides -->
-													    <div class="carousel-inner">
-													
-													      <div class="item active">
-													        <img th:src="'/hotel/' + ${hotel_id} + '_deluxe1.jpg'" style="width:100%; height: 100%;">
-													      </div>
-													<!-- end of item active :  일단 이렇게 이미지 태그로 적었는데 List<>에 담겨진 hotel_id에 객실사진 중 1번째를 불러와야 할 것 같습니다...-->
-													
-													      <div class="item" th:each="deluxe:${getDeluxe}">
-													        <img  th:src="'/hotel/' + @{${deluxe.url}}" style="width:100%; height: 100%;">
-													      </div>
-													      <!-- end of item -->
-													    </div>
-													    <!-- end of carousel-inner -->
-													
-													    <!-- Left and right controls -->
-													    <a class="left carousel-control" href="#myCarousel3" data-slide="prev">
-													      <span class="glyphicon glyphicon-chevron-left"></span>
-													      <span class="sr-only">Previous</span>
-													    </a>
-													    <a class="right carousel-control" href="#myCarousel3" data-slide="next">
-													      <span class="glyphicon glyphicon-chevron-right"></span>
-													      <span class="sr-only">Next</span>
-													    </a>
-													  </div>
-													</div>		
+												   <div class="container" style="width: 300px; height: 70px;">
+														<!-- lists.size(getDeluxe)의 사이즈가 1인 경우 -->
+															  <div th:if="${#lists.size(getDeluxe)} == 1">
+															    <!-- If getStandard has only one element, display a single image -->
+															    <img th:src="'/hotel/' + ${hotel_id} + '_deluxe.jpg'" style="width:100%; height: 100%;">
+															  </div>
+															<!-- lists.size(getDeluxe)의 사이즈가 1가 아닌 경우 -->
+															  <div th:unless="${#lists.size(getDeluxe)} == 1">
+															    <!-- If getStandard has more than one element, display a carousel -->
+															    <div id="myCarousel3" class="carousel slide" data-ride="carousel" style="width: 300px; height: 70px;">
+															      <!-- Indicators -->
+															      <ol class="carousel-indicators">
+															        <li data-target="#myCarousel3" data-slide-to="0" class="active"></li>
+															        <!-- Add more indicators for additional images -->
+															        <th:block th:each="i, index : ${#numbers.sequence(1, getDeluxe.size())}">
+															          <li data-target="#myCarousel3" data-slide-to="${index}"></li>
+															        </th:block>
+															      </ol>
+															
+															      <!-- Wrapper for slides -->
+															      <div class="carousel-inner">
+															        <div class="item active">
+															          <img th:src="'/hotel/' + ${hotel_id} + '_deluxe1.jpg'" style="width:100%; height: 100%;">
+															        </div>
+															        <!-- Add more items for additional images -->
+															        <th:block th:each="deluxe : ${getDeluxe}">
+															          <div class="item">
+															            <img th:src="'/hotel/' + @{${deluxe.url}}" style="width:100%; height: 100%;">
+															          </div>
+															        </th:block>
+															      </div>
+															
+															      <!-- Left and right controls -->
+															      <a class="left carousel-control" href="#myCarousel3" data-slide="prev">
+															        <span class="glyphicon glyphicon-chevron-left"></span>
+															        <span class="sr-only">Previous</span>
+															      </a>
+															      <a class="right carousel-control" href="#myCarousel3" data-slide="next">
+															        <span class="glyphicon glyphicon-chevron-right"></span>
+															        <span class="sr-only">Next</span>
+															      </a>
+															    </div>
+															    <!-- myCarousel1 div 태그 -->
+															  </div>
+															  <!-- th:if lists.size ==1 div 태그 -->
+													</div>
        						<!--  ============================== 모달 end 구분선================================== -->
                                             </td>
                                             <td class="persons">4<i class="fa fa-user"></i></td>
