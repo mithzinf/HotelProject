@@ -65,7 +65,8 @@ p {
                                 <!--end form-group-inline-->
 
                                 <div class="form-group center">
-                                    <button type="submit" class="btn btn-primary btn-rounded form-control" style="font-family: 'Gowun Batang', sans-serif;">호텔 검색하기</button>
+                                    <button type="submit" class="btn btn-primary btn-rounded form-control"
+                                    style="font-family: 'Gowun Batang', sans-serif; background-color: #488f3e;">호텔 검색하기</button>
                                 </div>
                             </form>
                             <!--end form-filter-->
@@ -99,7 +100,7 @@ p {
 			    <div class="image-wrapper">
 			        <div class="image">
 			        	<th:block th:if="${hotel.soldout}!='만실'">
-			            <a th:href="@{|/detail?hotel_id=${hotel.hotel_id}&pageNum=${currentPage}&searchValue=${hotel.hotel_name}|}" class="wrapper">
+			            <a th:href="@{|/detail?hotel_id=${hotel.hotel_id}&pageNum=${currentPage}&searchValue=${hotel.hotel_name}&check_in=${check_in_day}&check_out=${check_out_day}|}" class="wrapper">
 			                <div th:if="${hotelList3 != null}"> 
 			                    <div th:each="hotel3 : ${hotelList3}" th:if="${hotel3.hotel_id == hotel.hotel_id}">
 			                        <img th:src="@{|/hotel/${hotel3.url}|}" />
@@ -123,7 +124,7 @@ p {
 			        <div class="meta"></div>
 			        <div class="info">
 			        	<th:block th:if="${hotel.soldout}!='만실'">
-			            <a th:href="@{|/detail?hotel_id=${hotel.hotel_id}&pageNum=${currentPage}&searchValue=${searchValue}|}">
+			            <a th:href="@{|/detail?hotel_id=${hotel.hotel_id}&pageNum=${currentPage}&searchValue=${searchValue}&check_in=${check_in_day}&check_out=${check_out_day}|}">
 			                <h3 th:text="${hotel.hotel_name}"></h3><br/>
 			            </a>
 			            </th:block>

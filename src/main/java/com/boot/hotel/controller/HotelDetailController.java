@@ -2,6 +2,9 @@ package com.boot.hotel.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,6 +14,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.HttpRequest;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.boot.hotel.dto.HotelDTO;
+import com.boot.hotel.dto.HotelFacilityDTO;
 import com.boot.hotel.dto.HotelFacilityInDTO;
 import com.boot.hotel.dto.HotelInfoDTO;
 import com.boot.hotel.dto.HotelPictureDTO;
@@ -73,37 +78,155 @@ public class HotelDetailController {
   */ 
    
    
-   @RequestMapping(value = "/detail", method = {RequestMethod.GET, RequestMethod.POST})
-   public ModelAndView detail(@RequestParam("hotel_id") int hotel_id) throws Exception {
+    @RequestMapping(value = "/detail", method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView detail(@RequestParam("hotel_id") int hotel_id, HttpServletRequest request) throws Exception {
       
-	  
-   
-      
-      List<HotelDTO> dto1 = hotelDetailService.getHotelById(hotel_id);
-      List<HotelInfoDTO> dto2 = hotelDetailService.getHotelInfoById(hotel_id);
-      List<HotelFacilityInDTO> dto4 = hotelDetailService.getHotelFacilityInById(hotel_id);
-      //List<HotelPictureDTO> searchHotelDetail = hotelDetailService.searchHotelDetail(paramMap);
-      List<HotelPictureDTO> getTitle = hotelDetailService.getTitlePicture(hotel_id); //타이틀 사진 갖구와...
-      List<HotelPictureDTO> getStandard = hotelDetailService.getStandardPicture(hotel_id); //스탠다드 사진 가지구 와..
-      List<HotelPictureDTO> getDeluxe = hotelDetailService.getDeluxePicture(hotel_id); //디럭스 사진 갖고오렴..
-      List<HotelPictureDTO> getSweet = hotelDetailService.getSweetPicture(hotel_id); //스위트룸 사진 가지구 와..
-      
-      
-      ModelAndView mav = new ModelAndView();
-      mav.addObject("hotel_id", hotel_id);
-      mav.addObject("dto1", dto1);
-      mav.addObject("dto2", dto2);
-      mav.addObject("dto4", dto4);
-      mav.addObject("getTitle", getTitle);
-      mav.addObject("getStandard", getStandard);
-      mav.addObject("getDeluxe", getDeluxe);
-      mav.addObject("getSweet", getSweet);
-      System.out.println("김어진" + hotel_id);
-     
-      mav.setViewName("hotel/detail");
-      
-      return mav;
-   }
+		String check_in_list = request.getParameter("check_in");
+		String check_out_list = request.getParameter("check_out");
+		 
+		//체크인, 체크아웃 시간을 받아 알맞은 형태로 바꾸고 변수에 저장
+		LocalDate check_in_day = LocalDate.parse(check_in_list, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		LocalDate check_out_day = LocalDate.parse(check_out_list, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		 
+		//숙박일수 계산
+		int days = (int) ChronoUnit.DAYS.between(check_in_day, check_out_day);
+		
+		//아래 날짜에 따른 만실 체크를 위해 미리 준비
+		LocalDate check_in_temp = check_in_day;
+		LocalDate check_out_temp = check_in_day.plusDays(1);
+		int standard = 0;
+		int sweet = 0;
+		int deluxe = 0;
+		String standardJudge = "";
+		String sweetJudge = "";
+		String deluxeJudge = "";
+		
+		Map<String, Object> resultMap1 = new HashMap<String, Object>();
+		
+		//스탠다드룸 잔여객실 체크
+		for(int i=0;i<days;i++) {
+			
+			Map<String, Object> paramMap2 = new HashMap<>();
+			paramMap2.put("check_in", check_in_temp.plusDays(i));
+			paramMap2.put("check_out", check_out_temp.plusDays(i));
+			paramMap2.put("hotel_id", hotel_id);
+			standard = hotelDetailService.searchDayStandard(paramMap2);
+			
+			
+			if(standard>4) {
+				standardJudge = "만실";
+				break;
+			}else if(standard == 4) {
+				standardJudge = "만실 임박";
+			}else {
+				if(standardJudge!="만실 임박") {
+					standardJudge = "여유";
+				}
+			}
+		}
+		
+		//스위트룸 잔여객실 체크
+		for(int i=0;i<days;i++) {
+			
+			Map<String, Object> paramMap2 = new HashMap<>();
+			paramMap2.put("check_in", check_in_temp.plusDays(i));
+			paramMap2.put("check_out", check_out_temp.plusDays(i));
+			paramMap2.put("hotel_id", hotel_id);
+			sweet = hotelDetailService.searchDaySweet(paramMap2);
+			
+			if(sweet>4) {
+				sweetJudge = "만실";
+				break;
+			}else if(sweet == 4) {
+				sweetJudge = "만실 임박";
+			}else {
+				if(!sweetJudge.equals("만실 임박")) {
+					sweetJudge = "여유";
+				}
+			}
+		}
+		
+		//디럭스룸 잔여객실 체크
+		for(int i=0;i<days;i++) {
+			
+			Map<String, Object> paramMap2 = new HashMap<>();
+			paramMap2.put("check_in", check_in_temp.plusDays(i));
+			paramMap2.put("check_out", check_out_temp.plusDays(i));
+			paramMap2.put("hotel_id", hotel_id);
+			deluxe = hotelDetailService.searchDayDeluxe(paramMap2);
+			
+			if(deluxe>4) {
+				deluxeJudge = "만실";
+				break;
+			}else if(deluxe == 4) {
+				deluxeJudge = "만실 임박";
+			}else {
+				if(deluxeJudge!="만실 임박") {
+					deluxeJudge = "여유";
+				}
+			}
+		}
+			
+			
+		
+		//잔여객실 체크후 각방의 상태를 json형태로 담아서 보낼 준비
+		if(standardJudge.equals("만실")) {
+			resultMap1.put("standard", "만실");
+		}
+		else if(standardJudge.equals("만실 임박")){
+			resultMap1.put("standard", "만실 임박");
+		}else {
+			resultMap1.put("standard", "여유");
+		}
+		
+		if(sweetJudge.equals("만실")) {
+			resultMap1.put("sweet", "만실");
+		}
+		else if(sweetJudge.equals("만실 임박")){
+			resultMap1.put("sweet", "만실 임박");
+		}else {
+			resultMap1.put("sweet", "여유");
+		}
+		
+		if(deluxeJudge.equals("만실")) {
+			resultMap1.put("deluxe", "만실");
+		}
+		else if(deluxeJudge.equals("만실 임박")){
+			resultMap1.put("deluxe", "만실 임박");
+		}else {
+			resultMap1.put("deluxe", "여유");
+		}
+		
+		 
+		List<HotelDTO> dto1 = hotelDetailService.getHotelById(hotel_id);
+		List<HotelInfoDTO> dto2 = hotelDetailService.getHotelInfoById(hotel_id);
+		List<HotelFacilityDTO> dto3 = hotelDetailService.getHotelFacilityById(hotel_id);
+		List<HotelFacilityInDTO> dto4 = hotelDetailService.getHotelFacilityInById(hotel_id);
+		//List<HotelPictureDTO> searchHotelDetail = hotelDetailService.searchHotelDetail(paramMap);
+		List<HotelPictureDTO> getTitle = hotelDetailService.getTitlePicture(hotel_id); //타이틀 사진 갖구와...
+		List<HotelPictureDTO> getStandard = hotelDetailService.getStandardPicture(hotel_id); //스탠다드 사진 가지구 와..
+		List<HotelPictureDTO> getDeluxe = hotelDetailService.getDeluxePicture(hotel_id); //디럭스 사진 갖고오렴..
+		List<HotelPictureDTO> getSweet = hotelDetailService.getSweetPicture(hotel_id); //스위트룸 사진 가지구 와..
+		  
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("resultMap1",resultMap1);
+		mav.addObject("check_in_day",check_in_day);
+		mav.addObject("check_out_day",check_out_day);
+		mav.addObject("hotel_id", hotel_id);
+		mav.addObject("dto1", dto1);
+		mav.addObject("dto2", dto2);
+		mav.addObject("dto3", dto3);
+		mav.addObject("dto4", dto4);
+		mav.addObject("getTitle", getTitle);
+		mav.addObject("getStandard", getStandard);
+		mav.addObject("getDeluxe", getDeluxe);
+		mav.addObject("getSweet", getSweet);
+		System.out.println(resultMap1);
+		mav.setViewName("hotel/detail");
+			
+		return mav;
+			 
+	}
 
    //상세페이지에서 예약하기를 눌렀을 때의 메소드!...hotel_id, 체크인날짜, 체크아웃날짜, 예약한 객실(standard,suite,deluxe)의 타입 데이터 넘길 메소드
    //딱히 매핑주소가 필요하진 않아보임?
@@ -168,6 +291,130 @@ public class HotelDetailController {
 	   return mav;
    }
  
+		   
+	@ResponseBody
+	@RequestMapping(value = "/detailDay", method = { RequestMethod.GET, RequestMethod.POST })
+	public Map<String, Object> detailDay(@RequestParam String check_in, @RequestParam String check_out,
+			@RequestParam int hotel_id) throws Exception {
+   
+	    Map<String, Object> resultMap = new HashMap<String, Object>();
+	   
+		//체크인, 체크아웃 시간을 받아 알맞은 형태로 바꾸고 변수에 저장
+		LocalDate check_in_day = LocalDate.parse(check_in, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		LocalDate check_out_day = LocalDate.parse(check_out, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		
+		//숙박일수 계산
+		int days = (int) ChronoUnit.DAYS.between(check_in_day, check_out_day);
+		
+		//아래 날짜에 따른 만실 체크를 위해 미리 준비
+		LocalDate check_in_temp = check_in_day;
+		LocalDate check_out_temp = check_in_day.plusDays(1);
+		int standard = 0;
+		int sweet = 0;
+		int deluxe = 0;
+		String standardJudge = "";
+		String sweetJudge = "";
+		String deluxeJudge = "";
+		
+		
+		//스탠다드룸 잔여객실 체크
+		for(int i=0;i<days;i++) {
+			
+			Map<String, Object> paramMap2 = new HashMap<>();
+			paramMap2.put("check_in", check_in_temp.plusDays(i));
+			paramMap2.put("check_out", check_out_temp.plusDays(i));
+			paramMap2.put("hotel_id", hotel_id);
+			standard = hotelDetailService.searchDayStandard(paramMap2);
+			
+			
+			if(standard>4) {
+				standardJudge = "만실";
+				break;
+			}else if(standard == 4) {
+				standardJudge = "만실 임박";
+			}else {
+				if(standardJudge!="만실 임박") {
+					standardJudge = "여유";
+				}
+			}
+		}
+		
+		//스위트룸 잔여객실 체크
+		for(int i=0;i<days;i++) {
+			
+			Map<String, Object> paramMap2 = new HashMap<>();
+			paramMap2.put("check_in", check_in_temp.plusDays(i));
+			paramMap2.put("check_out", check_out_temp.plusDays(i));
+			paramMap2.put("hotel_id", hotel_id);
+			sweet = hotelDetailService.searchDaySweet(paramMap2);
+			
+			if(sweet>4) {
+				sweetJudge = "만실";
+				break;
+			}else if(sweet == 4) {
+				sweetJudge = "만실 임박";
+			}else {
+				if(sweetJudge!="만실 임박") {
+					sweetJudge = "여유";
+				}
+			}
+		}
+		
+		//디럭스룸 잔여객실 체크
+		for(int i=0;i<days;i++) {
+			
+			Map<String, Object> paramMap2 = new HashMap<>();
+			paramMap2.put("check_in", check_in_temp.plusDays(i));
+			paramMap2.put("check_out", check_out_temp.plusDays(i));
+			paramMap2.put("hotel_id", hotel_id);
+			deluxe = hotelDetailService.searchDayDeluxe(paramMap2);
+			
+			if(deluxe>4) {
+				deluxeJudge = "만실";
+				break;
+			}else if(deluxe == 4) {
+				deluxeJudge = "만실 임박";
+			}else {
+				if(deluxeJudge!="만실 임박") {
+					deluxeJudge = "여유";
+				}
+			}
+		}
+			
+			
+		
+		//잔여객실 체크후 각방의 상태를 json형태로 담아서 보낼 준비
+		if(standardJudge.equals("만실")) {
+			resultMap.put("standard", "만실");
+		}
+		else if(standardJudge.equals("만실 임박")){
+			resultMap.put("standard", "만실 임박");
+		}else {
+			resultMap.put("standard", "여유");
+		}
+		
+		if(sweetJudge.equals("만실")) {
+			resultMap.put("sweet", "만실");
+		}
+		else if(sweetJudge.equals("만실 임박")){
+			resultMap.put("sweet", "만실 임박");
+		}else {
+			resultMap.put("sweet", "여유");
+		}
+		
+		if(deluxeJudge.equals("만실")) {
+			resultMap.put("deluxe", "만실");
+		}
+		else if(deluxeJudge.equals("만실 임박")){
+			resultMap.put("deluxe", "만실 임박");
+		}else {
+			resultMap.put("deluxe", "여유");
+		}
+
+		   
+		return resultMap;
+	   
+   }
    
  
    

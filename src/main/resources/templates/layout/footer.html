@@ -2,6 +2,16 @@
 <html>
 <!--footerFragment 선언-->
 <div th:fragment="footerFragment" class="page-wrapper">
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Gowun+Batang&display=swap');
+h1,h2,h3,input,p,span,ul,li,a,button,th{
+	font-family: 'Gowun Batang', sans-serif;
+	opacity: 1;
+	font-weight: 600;
+}
+</style>
+
     <footer id="page-footer">
         <div class="row-one">
             <div class="container">
@@ -18,7 +28,7 @@
                   	</div>
                   	<br/>
                   	<div style="padding-left: 10%; padding-right: 10%">
-                  		<p style="color: #000000; font-size: 14px"><b>고객센터 1234-5678</b> &nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:  12px;">09:00 - 18:00</span></p>
+                  		<p style="color: #000000; font-size: 14px"><b>고객센터 <i class="fa fa-phone" aria-hidden="true"></i>1234-5678</b> &nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:  12px;">09:00 - 18:00</span></p>
                   		<br/>
                   		<p>(주) 서울어때컴퍼니
 						주소 : 서울특별시 강남구 봉은사로 479, 479타워 11층 | 대표이사 : 홍길동 | 사업자등록번호: 123-45-67891 <br/>
