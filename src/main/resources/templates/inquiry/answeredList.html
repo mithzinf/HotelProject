@@ -5,33 +5,57 @@
 <meta charset="UTF-8">
 
 <div layout:fragment="content" class="content-padding">
-
-
-
-<h1>콘텐트 자리[[${session.sessionUser}]]</h1>
-
-
-<ul class="comments" >
-    <li th:each="anw : ${anwLists}" >
-        <ul class="comments-child" >
-            <li class="comment">
-            <div class="box filter" style="background-color: #e5e5e5; width: 520px; font-size: 18px">
-                <div class="comment-wrapper">
-                    <tr>작성자&nbsp;&nbsp;<td th:text="${anw.userid}"></td></tr>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <tr>작성일시&nbsp;<td th:text="${#dates.format(anw.created,'yyyy/MM/dd')}"></td></tr><hr/>
-                    <tr style="font-size: 20px">답변내용<br/><br/><td th:text="${anw.content}"></td></tr>
-                </div>
+		
+            <div th:fragment="anwLists">
+                    
+                
+                
+                <div class="page-wrapper">
+				    <div id="page-content">
+				        <div class="container">
+				            
+				            <div class="row">
+				                <div class="col-md-9">
+				                    <div class="main-content">
+				                        <section class="box filter" id="comments"
+				                        	style="background-color: #E7E7E7  ; width: 600px;
+				                        	margin-right: -50px">
+				                            <header><h2 class="no-border">답변</h2></header>
+				                            <hr style="border-style: solid; border-width: 3px; border-radius: 5px; margin: 10px 0; padding: 0;">
+				                            
+				                            <ul class="comments" >
+				                                <li class="comment" style="display:inline;">
+				                                    <div class="comment-wrapper" >
+				                                    
+				                                    <div th:each="anwList : ${anwLists}">
+				                                        <div style="font-size: 23px">아이디&nbsp;&nbsp;<span th:text="${anwList.userid}" ></span></div>
+				                                        <div>답변 시간&nbsp;&nbsp;<span th:text="${#dates.format(anwList.created, 'yyyy/MM/dd')}"style=" color: grey"></span></div><br/>
+				                                        <div style="font-size: 25px">답변 내용<div th:text="${anwList.content}" style="font-size: 20px; color: grey"></div></td>
+				                                        <hr style="border-style: solid; border-width: 1px;"/>
+				                                        
+				                                    </div>
+				                                     
+				                                    </div>
+				                                </li>
+				                                
+				                            </ul>
+				                        </section><!-- /#comments -->
+				                    </div>
+				                    <!--end main-content-->
+				                </div>
+				                <!--end col-md-9-->
+				                
+				            </div>
+				            <!--end row-->
+				        </div>
+				        <!--end container-->
+				    </div>
+				    <!--end page-content-->
+				</div>
             </div>
-            </li>
-        </ul>
-    </li>
-</ul>
-
-
-
+            
+            
+            
 </div>
 
 

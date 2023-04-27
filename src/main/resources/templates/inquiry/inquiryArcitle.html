@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <!-- 경로가 templates/layout/layout.html을 상속받아야 하므로 -->
 <html layout:decorate="~{/layout/layout}">
-
 <meta charset="UTF-8">
 
 <div layout:fragment="content" class="content-padding">
@@ -45,9 +44,9 @@
                         <article class="box filter" style="background-color: white; width: 620px;">
 						<table>
 							<tr th:each="dto : ${dto}">
-							   <td th:text="${dto.subject}" style="font-size: 30px"></td>
+							   <td th:text="${dto.subject}" style="font-size: 40px"></td>
 							   <td style="vertical-align: top; text-align: right; ">
-							    <div th:text="${dto.userid}" style="font-size: 16px; margin-left: 490px"></div>
+							    <div th:text="${dto.userid}" style="font-size: 19px; margin-left: 450px"></div>
 							    <div th:text="${#dates.format(dto.created, 'yyyy/MM/dd')}" style="font-size: 16px"></div>
 							   </td>
 							 </tr>
@@ -55,6 +54,7 @@
 						 
 						 
                          <hr/>
+                         <table style="font-size: 30px">
                         	<tr th:each="dto : ${dto}" >
                                 <tr><td th:text="${dto.context}"></td></tr>
                             </tr>
@@ -64,40 +64,29 @@
                          <br/><br/><br/>
                          
                          <input type="button" value=" 수정 " class="btn btn-framed btn-small btn-default btn-rounded"
-								th:onclick="'location.href=\'inquiryUpdate?num=' + @{${dto.inq_num }} + '&' + @{${params }} +'\''"/>
+								th:onclick="'location.href=\'inquiryUpdate?num=' + @{${dto.inq_num }} + '&' + @{${params }} +'\''"
+								style="font-size: 13px"/>
+								
 								
 						 <input type="button" value=" 삭제 " class="btn btn-framed btn-small btn-default btn-rounded"
-								th:onclick="'location.href=\'deleted_ok?num=' + @{${dto.inq_num }} + '&' + @{${params }} +'\''"/>
+								th:onclick="'location.href=\'deleted_ok?num=' + @{${dto.inq_num }} + '&' + @{${params }} +'\''"
+								style="font-size: 13px"/>
 						
 						 <input type="button" value=" 리스트 " class="btn btn-framed btn-small btn-default btn-rounded"
-								th:onclick="'location.href=\'inquiry/inquiryList?num=' + @{${dto.inq_num }} + '&' + @{${params }} +'\''"/>
+								th:onclick="'location.href=\'inquiry/inquiryList?num=' + @{${dto.inq_num }} + '&' + @{${params }} +'\''"
+								style="font-size: 13px"/>
                         
                         </article><!-- /.blog-post-listing -->
-                        <section id="comments">
-                            <br/><br/>
-                            
-                            <div id="listData">
-                            <ul class="comments" >
-                                <li th:each="anw : ${anwLists}" >
-                                    <ul class="comments-child" >
-                                        <li class="comment">
-                                        <div class="box filter" style="background-color: #e5e5e5; width: 520px; font-size: 18px">
-                                            <div class="comment-wrapper">
-                                                <tr>작성자&nbsp;&nbsp;<td th:text="${anw.userid}"></td></tr>
-                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <tr>작성일시&nbsp;<td th:text="${#dates.format(anw.created,'yyyy/MM/dd')}"></td></tr>
-                                                <hr style="border-top: 1px solid grey;"/>
-                                                <tr style="font-size: 20px">답변내용<br/><br/><td th:text="${anw.content}"></td></tr>
-                                            </div>
-                                        </div>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            </div>
-                        </section><!-- /#comments -->
+                        
+                        <br/>
+                        <section >
+                        <div id="anwLists">
+                            <div th:replace="~{/inquiry/answeredList :: anwLists}"></div>
+                        </div>
+                        </section>
+                        
+                        
+                        
                         
                         <section id="leave-reply">
                             <header><h2 class="no-border">Leave a Reply</h2></header>
@@ -120,7 +109,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="form-blog-reply-message">Your Message<em>*</em></label>
-                                            <textarea class="form-control" rows="5" id="content3" required></textarea>
+                                            <textarea class="form-control" rows="5" id="content" resize="none" required ></textarea>
                                         </div><!-- /.form-group -->
                                     </div><!-- /.col-md-12 -->
                                 </div><!-- /.row -->
@@ -133,7 +122,11 @@
                                 <input type="hidden" name="pageNum" id="pageNum" th:value="${pageNum}"/>                       
                                 
                                 </form>
+                                
                         </section>
+                        
+                        
+                        
                     </div>
                     <!--end main-content-->
                 </div>
@@ -166,24 +159,28 @@ $("#sendAnswer").click(function(){
 				+ "&username=" + $("#username").val()
 				+ "&inq_num=" + $("#inq_num").val()
 				+ "&pageNum=" + $("#pageNum").val()
-				+ "&content3=" + $("#content3").val();
+				+ "&content=" + $("#content").val();
 	
 	$.ajax({
 	    type: "post",
 	    url: "/inquiryAnswer",
 	    data: params,
 	    success: function(data) {
-	    	console.log(data.anwLists);
-	        $("#listData").html(data.anwLists);
+	    	console.log(data);
+	    	
+	        $("#anwLists").html(data);
+	        $("#anwLists").load(location.href + " #anwLists>*", "");
 	        
 	        $("#username").val("");
 	        $("#userid").val("");
-	        $("#content3").val("");
+	        $("#content").val("");
 	        
-	     	location.reload(true);
-	     	//refreshData();
+	        
+	     	// location.reload(true);
+	     	// refreshData();
 	        
 	    },
+	    
 	    beforeSend: showRequest,
 	    error: function(e) {
 	        alert(e.responseText);
@@ -198,7 +195,7 @@ function refreshData() {
         type: "get",
         url: "/answeredList",
         success: function(data) {
-            $("#answeredList").html(data);
+            $("#anwLists").html(data);
         },
         error: function(e) {
             alert(e.responseText);
@@ -218,7 +215,7 @@ function showRequest() {
 	
 	var username = $.trim($("#username").val());
 	var userid = $.trim($("#userid").val());
-	var content3 = $.trim($("#content3").val());
+	var content = $.trim($("#content").val());
 	
 	if(!userid){
 		alert("\아이디를 입력하시오");
@@ -232,9 +229,9 @@ function showRequest() {
 		return false;
 	}
 	
-	if(!content3){
+	if(!content){
 		alert("\n내용을 입력하시오");
-		$("#content3").focus();
+		$("#content").focus();
 		return false;
 	}
 	

@@ -48,7 +48,7 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 	from inquiry_board where inq_num=#{inq_num}
 </select> 
 
-<update id="updateListData" parameterType="com.boot.hotel.dto.AnswerBoardDTO">
+<update id="updateListData" parameterType="com.boot.hotel.dto.HotelInquiryDTO">
 	update inquiry_board set subject=#{subject},context=#{context} where inq_num=#{inq_num}
 </update>
 
@@ -91,7 +91,6 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
   	    order by inq_num desc) data)
   	    where inq_num=#{num}
 </select>
-
 
 
 

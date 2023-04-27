@@ -5,7 +5,6 @@ import com.boot.hotel.util.MyUtil3;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -250,6 +249,16 @@ public class InquiryController {
 		
 	}
 	
+	@GetMapping("/answeredList")
+	public String answeredList(HttpServletRequest request, Model model) throws Exception {
+	    System.out.println("나 보이는교");
+	    int num = Integer.parseInt(request.getParameter("num"));
+	    List<HotelInquiryDTO> anwLists = inquiryService.getAnswerList(num);
+	    model.addAttribute("anwLists", anwLists);
+	    return "inquiry/answeredList";
+	}
+	
+    
 	
 	
 	@GetMapping("/deleted_ok")
@@ -350,8 +359,8 @@ public class InquiryController {
 			@RequestParam String userid,
 			@RequestParam String tel,
 			@RequestParam String email,
-			@RequestParam String category,
-			@RequestParam int inq_num
+			@RequestParam String category
+			,@RequestParam int inq_num
 			) throws Exception{
 		
 		System.out.println("수정페이지 진입");
@@ -360,11 +369,11 @@ public class InquiryController {
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
 		
-//		String inq_num = Integer.parseInt("inq_num");
-		
 		if(searchValue!=null) {
 			searchValue = URLDecoder.decode(searchValue, "UTF-8");
 		}
+		
+		System.out.println(dto.getInq_num() + " 있는가");
 		
 		inquiryService.updateListData(dto);
 		
@@ -395,7 +404,7 @@ public class InquiryController {
 		System.out.println("답변 달기 ");
 		
 		String pageNum = request.getParameter("pageNum");
-		String content = request.getParameter("content3");
+		String content = request.getParameter("content");
 		
 		int num = Integer.parseInt(request.getParameter("inq_num"));
 		
@@ -409,22 +418,18 @@ public class InquiryController {
 		
 		inquiryService.insertAnswer(dto);
 		
-		System.out.println("답변완료 출력");
-		
 		inquiryService.updateAnsweredList(num);
 		
 		// -------------------------------------------------------
-		List<HotelInquiryDTO> anwLists = inquiryService.getAnswerList(num);
+		// List<HotelInquiryDTO> anwLists = inquiryService.getAnswerList(num);
 		
-		mav.addObject("anwLists",anwLists);
+		// mav.addObject("anwLists",anwLists);
 		
 		// -------------------------------------------------------
 		
-		
 		mav.addObject("articleUrl",articleUrl);
 		
-//		mav.setViewName("redirect:/" + articleUrl);
-		mav.setViewName("rediect:/inquiry/inquiryArcitle");
+		mav.setViewName("/inquiry/inquiryArcitle");
 		return;
 		
 	
