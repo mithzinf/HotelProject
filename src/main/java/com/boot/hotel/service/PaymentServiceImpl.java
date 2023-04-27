@@ -34,8 +34,8 @@ public class PaymentServiceImpl implements PaymentService{
 		return paymentMapper.maxResNum();
 	}
 	@Override
-	public void createReservation(HotelReservationDTO resDto) throws Exception {
-		paymentMapper.createReservation(resDto);
+	public void insertReservation(HotelReservationDTO resDto) throws Exception {
+		paymentMapper.insertReservation(resDto);
 	}
 	
 	

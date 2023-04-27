@@ -19,7 +19,7 @@ public interface PaymentMapper {
 	
 	// 예약 내역
 	public int maxResNum() throws Exception;
-	public void createReservation(HotelReservationDTO resDto) throws Exception;
+	public void insertReservation(HotelReservationDTO resDto) throws Exception;
 	
 	// 사진 가져오기
 	public List<String> searchHotelTitle(Map<String, Object> params) throws Exception;

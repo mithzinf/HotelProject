@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!-- 경로가 templates/layout/layout.html을 상속받아야 하므로 -->
+<html layout:decorate="~{/layout/layout}">
+
+<meta charset="UTF-8">
+
+<div layout:fragment="content" class="content-padding">
+	<form action="/inquirycreate_ok" name="inquryForm" method="post" autocomplete="off">
+	        
+	    <section id="main-information">
+	        <div class="title">
+	            <h2></h2>
+	        </div>
+	        
+	        
+	        
+	        <div class="page-wrapper">
+			    <div id="page-content">
+			        <div class="container">
+			            <div class="row">
+			                <div class="col-md-3">
+			                </div>
+			                <div class="col-md-9">
+			                    <div class="main-content">
+			                        
+			                        <section>
+			                                <h2>문의하기</h2>
+			                                
+			                                <div class="row">
+			                                    <div class="col-md-6">
+			                                    	<div class="form-group">
+			                                            <label for="form-contact-name">문의 제목</label>
+			                                            <input type="text" class="form-control" name="subject1" placeholder="제목" >
+			                                            
+			                                        </div>
+			                                    </div>
+			                                    <!--end col-md-6-->
+			                                    
+			                                    <div class="col-md-6">
+			                                        <div class="form-group">
+			                                            <label for="form-submit-title">문의 유형</label>
+									                  <select class="framed" style="width: 82px" name="selectbox" onchange="document.getElementById('inq_cate').value=this.value;">
+													    <option value="">유형 선택</option>
+													    <option th:value="Inquiry">문의</option>
+													    <option th:value="Question">요청</option>
+													    <option th:value="Request">건의</option>
+													  </select>
+													  <input type="hidden" name="inq_cate" id="inq_cate" value="" />
+			                                        </div>
+			                                    </div>
+			                                    <!--end col-md-6-->
+			                                    
+			                                </div>
+			                                <!--end row-->
+			                                <div class="row">
+									            <div class="col-md-7">
+									                <div class="form-group">
+									                    <label for="form-submit-description">문의사항</label>
+									                    <textarea class="form-control" style="width: 550px; resize:none;" id="context1" rows="10" name="context" 
+									                    	placeholder="Describe your accommodation"></textarea>
+									                </div>
+									                <!--end form-group-->
+									                <button style="width: 80px; height: 28px; margin: 3%" class="btn btn-primary btn-rounded scroll" 
+									                 onclick="create1();" type="button">문의하기</button>
+									            </div>
+									        </div>
+									        <!--end row-->
+			                        </section>
+			                    </div>
+			                    <!--end main-content-->
+			                    
+			                </div>
+			                <!--end col-md-9-->
+			            </div>
+			            <!--end row-->
+			        </div>
+			        <!--end container-->
+			    </div>
+			    <!--end page-content-->
+			
+			</div>
+	    
+	    </section>
+	    
+		<input type="hidden" id="username" name="username" th:value="${username}"/>
+		<input type="hidden" name="userid" id="userid" th:value="${userid}"/>
+		<input type="hidden" id="tel" name="tel" th:value="${tel}"/>
+		<input type="hidden" id="email" name="email" th:value="${email}"/>
+		<input type="hidden" id="category" name="category" th:value="${category}"/>
+	</form>
+	
+</html>
+
+<script type="text/javascript">
+
+function create1(){
+	
+	var f = document.inquryForm; 
+	
+	str = f.subject1.value;
+	str = str.trim();
+	if(!str){
+		alert("\n제목을 입력하시오")
+		f.subject1.focus();
+		return;
+	}
+	f.subject1.value = str;
+	
+	
+	str = f.inq_cate.value;
+	str = str.trim();
+	if(!str){
+		alert("\n문의 유형을 선택하시오")
+		f.inq_cate.focus();
+		return;
+	}
+	f.inq_cate.value = str;
+	
+	
+	str = f.context1.value;
+	str = str.trim();
+	if(!str){
+		alert("\n내용을 입력하시오")
+		f.context1.focus();
+		return;
+	}
+	f.context1.value = str;
+	
+	f.action = "/inquirycreate_ok";
+	f.submit();
+	
+}
+	
+	
+</script>
+
+
+
+
+
