@@ -52,7 +52,7 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 </delete>
 
 <select id="reservationMaxNum" parameterType="String" resultType="int">
-	select nvl(max(res_num),0) from reservation where userid=#{userid}
+	select nvl(count(*),0) from reservation where userid=#{userid}
 </select>
 
 <select id="getMyReservationLists" parameterType="map" resultType="map">
@@ -78,12 +78,12 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 	where h.hotel_id = #{hotel_id} and hp.type = 'title' and p.userid = #{userid}
 </select>
 
-<delete id="deletePay" parameterType="map">
-	delete from pay where hotel_id = #{hotel_id} and userid=#{userid}
+<delete id="deletePay" parameterType="int">
+	delete from pay where res_num = #{res_num}
 </delete>
 
-<delete id="deleteReservation" parameterType="map">
-	delete from reservation where hotel_id = #{hotel_id} and userid=#{userid}
+<delete id="deleteReservation" parameterType="int">
+	delete from reservation where res_num = #{res_num}
 </delete>
 
 </mapper>

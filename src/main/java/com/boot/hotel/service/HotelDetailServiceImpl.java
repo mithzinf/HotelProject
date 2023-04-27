@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.boot.hotel.dto.HotelDTO;
+import com.boot.hotel.dto.HotelFacilityDTO;
 import com.boot.hotel.dto.HotelFacilityInDTO;
 import com.boot.hotel.dto.HotelInfoDTO;
 import com.boot.hotel.dto.HotelPictureDTO;
@@ -35,6 +36,11 @@ public class HotelDetailServiceImpl implements HotelDetailService{
 		// TODO Auto-generated method stub
 		return hotelDetailMapper.getHotelPicById(hotel_id);
 	}
+	
+	@Override
+	public List<HotelFacilityDTO> getHotelFacilityById(int hotel_id) throws Exception {
+		return hotelDetailMapper.getHotelFacilityById(hotel_id);
+	}
 
 	@Override
 	public List<HotelFacilityInDTO> getHotelFacilityInById(int hotel_id) throws Exception {
@@ -43,11 +49,54 @@ public class HotelDetailServiceImpl implements HotelDetailService{
 	}
 
 	@Override
+	public List<HotelPictureDTO> getTitlePicture(int hotel_id) throws Exception {
+		// TODO Auto-generated method stub
+		return hotelDetailMapper.getTitlePicture(hotel_id);
+	}
+
+	@Override
+	public List<HotelPictureDTO> getStandardPicture(int hotel_id) throws Exception {
+		
+		return hotelDetailMapper.getStandardPicture(hotel_id);
+	}
+
+	@Override
+	public List<HotelPictureDTO> getDeluxePicture(int hotel_id) throws Exception {
+		// TODO Auto-generated method stub
+		return hotelDetailMapper.getDeluxePicture(hotel_id);
+	}
+
+	@Override
+	public List<HotelPictureDTO> getSweetPicture(int hotel_id) throws Exception {
+		// TODO Auto-generated method stub
+		return hotelDetailMapper.getSweetPicture(hotel_id);
+	}
+
+	@Override
+	public int searchDayStandard(Map<String, Object> params) throws Exception {
+		return hotelDetailMapper.searchDayStandard(params);
+	}
+
+	@Override
+	public int searchDaySweet(Map<String, Object> params) throws Exception {
+		return hotelDetailMapper.searchDaySweet(params);
+	}
+
+	@Override
+	public int searchDayDeluxe(Map<String, Object> params) throws Exception {
+		return hotelDetailMapper.searchDayDeluxe(params);
+	}
+
+
+	/*
+	@Override
 	public List<HotelPictureDTO> searchHotelDetail(Map<String, Object> params) throws Exception {
 		// TODO Auto-generated method stub
 		return hotelDetailMapper.searchHotelDetail(params);
 	}
-
+	 */
+	
+	
 
 
 

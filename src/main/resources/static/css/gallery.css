@@ -1,71 +1,63 @@
 @charset "UTF-8";
 @import url('https://fonts.googleapis.com/css?family=Gowun%20Batang');
 
-body{
-  font-family: Gowun Batang
+/* CSS used here will be applied after bootstrap.css
+.carousel {
+    margin-top: 20px;
 }
-.gallery {
-  position: relative;
-  text-align: center;
-  border: 1px solid gray;
-  margin: 0;
-  padding: 0;
-  border-radius: 10px;
+.item .thumb {
+	width: 25%;
+	cursor: pointer;
+	float: left;
+}
+.item .thumb img {
+	width: 100%;
+	margin: 2px;
+}
+.item img {
+	width: 400px%;	
+}
+
+ */
+ 
+ 
+ * {
+  box-sizing:border-box;
+}
+
+.carousel-wrapper {
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+}
+
+.carousel-wrapper > .carousel {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding-top: 0vh;
-  /* justify-content: space-around;*/
-}
-.gallery-unit {
-  width: 100px;
-  padding: 10px 0;
-}
-.gallery-unit-image {
-  width: 100%;
-  height: 100%;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.2s;
+  
 }
 
-.gallery-unit input {
-	display: none;
+.carousel-wrapper > .carousel > img {
+   max-width: 500px;
+  height: 300px;
 }
 
-.gallery-unit input:checked + div {
-  border: 3px white solid;
-  outline: 3px gray;
+/*
+.carousel-wrapper {
+  width: 600px;
   height: 500px;
-  order: -1;
-  flex: 1 0 100%;
+  overflow: hidden;
 }
 
-
-.gallery-unit input:checked + div img {
-  height: 100%;
-  width: auto;
+.carousel-wrapper > .carousel {
+  display: flex;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.2s;
 }
 
-
-input {
-  outline: 1px white;
-  z-index: 10;
-  width: 100px;
-  margin-right: -100px;
-  appearance: none;
-  cursor: zoom-in;
+.carousel-wrapper > .carousel > img {
+  max-width: 100%;
+  height: auto;
 }
-input:checked + div {
-  border: 3px white solid;
-  outline: 3px gray;
-  height: 500px;
-  order: -1;
-  flex: 1 0 100%;
-}
-.gallery-unit-image {
-  width: 100%;
-}
-
-.gallery-unit-image img {
-  height: 100%;
-  width: auto;
-}
-
+*/

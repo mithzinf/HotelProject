@@ -8,7 +8,7 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- hotel 테이블의 모든 정보를 select해오는 쿼리문 -->
 <select id="getHotelById"  parameterType="int" resultType="com.boot.hotel.dto.HotelDTO">
-	select hotel_id,hotel_name,category,addr1,addr2,like_num from hotel where hotel_id=#{hotel_id}
+	select hotel_id,hotel_name,category,addr1,addr2,like_num,latitude,longitude from hotel where hotel_id=#{hotel_id}
 </select>
 
 
@@ -20,13 +20,54 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 	select hotel_id,picture_num,type,url from hotel_picture where hotel_id=#{hotel_id}
 </select>
 
+<select id="getHotelFacilityById" parameterType="int" resultType="com.boot.hotel.dto.HotelFacilityDTO">
+	select * from hotel_facility where hotel_id=#{hotel_id}
+</select>
+
 <select id="getHotelFacilityInById" parameterType="int" resultType="com.boot.hotel.dto.HotelFacilityInDTO">
 	select * from hotel_facility_in where hotel_id=#{hotel_id}
 </select>
  
 <!-- parameterType: 매개변수의 성깔 : 매개변수 1개면 그 매개변수의 성질머리 적고 2개 이상이면 map -->
-<select id="searchHotelDetail" parameterType="int" resultType="com.boot.hotel.dto.HotelPictureDTO">
-	select hotel_id,url,type from hotel_picture where hotel_id=#{hotel_id}
+<select id="getTitlePicture" parameterType="int" resultType="com.boot.hotel.dto.HotelPictureDTO">
+	select hotel_id,url,type from hotel_picture where hotel_id=#{hotel_id} and type = 'title'
 </select>
+
+<select id="getStandardPicture" parameterType="int" resultType="com.boot.hotel.dto.HotelPictureDTO">
+	select hotel_id,url,type from hotel_picture where hotel_id=#{hotel_id} and type = 'standard'
+</select>
+
+<select id="getDeluxePicture" parameterType="int" resultType="com.boot.hotel.dto.HotelPictureDTO">
+	select hotel_id,url,type from hotel_picture where hotel_id=#{hotel_id} and type = 'deluxe'
+</select>
+
+<select id="getSweetPicture" parameterType="int" resultType="com.boot.hotel.dto.HotelPictureDTO">
+	select hotel_id,url,type from hotel_picture where hotel_id=#{hotel_id} and type = 'sweet'
+</select>
+
+<!-- 날짜 검색 쿼리문 -->
+<select id="searchDayStandard" parameterType="map" resultType="int">
+	select count(*) from reservation
+	<![CDATA[
+		where check_in < #{check_out} and check_out > #{check_in} and hotel_id = #{hotel_id} and room = 'standard'
+	]]>
+</select>
+
+<select id="searchDaySweet" parameterType="map" resultType="int">
+	select count(*) from reservation
+	<![CDATA[
+		where check_in < #{check_out} and check_out > #{check_in} and hotel_id = #{hotel_id} and room = 'sweet'
+	]]>
+</select>
+
+<select id="searchDayDeluxe" parameterType="map" resultType="int">
+	select count(*) from reservation
+	<![CDATA[
+		where check_in < #{check_out} and check_out > #{check_in} and hotel_id = #{hotel_id} and room = 'deluxe'
+	]]>
+</select>
+
+
+
 
 </mapper>

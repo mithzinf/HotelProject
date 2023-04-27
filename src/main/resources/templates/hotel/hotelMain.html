@@ -10,11 +10,7 @@
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Gowun+Batang&display=swap');
-h1,h2{
-	font-family: 'Gowun Batang', sans-serif;
-}
-
-input {
+h1,h2,input{
 	font-family: 'Gowun Batang', sans-serif;
 }
 
@@ -44,14 +40,16 @@ input {
                                         <div class="col-md-2 col-sm-2">
                                             <div class="form-group">
                                                 <label class="label-on-input" for="datepicker1" style="font-size: 12px; opacity: 1;">체크인 날짜</label>
-                                                <input type="text" id="datepicker1" style="color: #fff;" placeholder="연도-월-일">
+                                                <input type="text" id="datepicker1" style="color: #fff;"
+                                                name="check_in" placeholder="연도-월-일" onkeydown="return false;" readonly>
                                               
                                             </div>
                                         </div>
                                         <div class="col-md-2 col-sm-2">
                                             <div class="form-group">
                                                 <label class="label-on-input" for="datepicker2" style="font-size: 12px; opacity: 1;">체크아웃 날짜</label>
-                                                <input type="text" id="datepicker2" style="color: #fff;" placeholder="연도-월-일">
+                                                <input type="text" id="datepicker2" style="color: #fff;"
+                                                name="check_out" placeholder="연도-월-일" onkeydown="return false;" readonly>
                                             </div>
                                         </div>
                                         <div class="col-md-2 col-sm-2">
@@ -86,16 +84,20 @@ input {
 
 
 		<!-- 아이콘 6개 띄우는 곳 -->
-		
-		<ul id="main-icon">
-         <li><a href="hotel/main"><img src="assets/img/hotel.png"><span>호텔</span></a></li>
-         <li><a href="hotel/main"><img src="assets/img/hostel.png"><span>호스텔</span></a></li>
-         <li><a href="hotel/main"><img src="assets/img/guesthouse.png"><span>게스트하우스</span></a></li>
-         <li><a href="hotel/main"><img src="assets/img/motel.png"><span>모텔</span></a></li>
-         <li><a href="hotel/main"><img src="assets/img/pension.png"><span>펜션</span></a></li>
-         <li><a href="hotel/main"><img src="assets/img/resort.png"><span>리조트</span></a></li>
-		</ul>
-		
+		<form action="/hotel/hotellist" name="myForm1" method="get">
+			<input type="hidden" id="checkin1" value="" name="check_in">
+			<input type="hidden" id="checkout1" value="" name="check_out">
+			<input type="hidden" id="category1" value="" name="category">
+			<ul id="main-icon">
+				<li><a onclick="hotel();" style="cursor: pointer;"><img src="assets/img/hotel.png"><span>호텔</span></a></li>
+				<li><a onclick="hostel();" style="cursor: pointer;"><img src="assets/img/hostel.png"><span>호스텔</span></a></li>
+				<li><a onclick="guesthouse();" style="cursor: pointer;"><img src="assets/img/guesthouse.png"><span>게스트하우스</span></a></li>
+				<li><a onclick="motel();" style="cursor: pointer;"><img src="assets/img/motel.png"><span>모텔</span></a></li>
+				<li><a onclick="pension();" style="cursor: pointer;"><img src="assets/img/pension.png"><span>펜션</span></a></li>
+				<li><a onclick="resort()
+				;" style="cursor: pointer;"><img src="assets/img/resort.png"><span>리조트</span></a></li>
+			</ul>
+		</form>
 		
 
 
@@ -368,16 +370,136 @@ input {
 </script>
 
 <script type="text/javascript">
-	//컨트롤러로 searchValue값 담아서 전송
+	
+	//일반검색
 	function search() {
 		
 		var f = document.myForm;
-		
-		f.action = "/hotel/test11";
-		f.submit();
-		
+
+	    setDefaultCheckInDate();
+	    setDefaultCheckOutDate();
+
+	    f.action = "/hotel/hotellist";
+	    f.submit();
 		
 	}
+	
+	function hotel() {
+		
+		var f = document.myForm1;
+		var category = document.getElementById("category1");
+		category.value = "호텔";
+		
+	    setDefaultCheckInDate();
+	    setDefaultCheckOutDate();
+	    
+	    f.action = "/hotel/hotellist";
+	    f.submit();
+	    
+	}
+		
+	function hostel() {
+			
+		var f = document.myForm1;
+		var category = document.getElementById("category1");
+		category.value = "호스텔";
+		
+	    setDefaultCheckInDate();
+	    setDefaultCheckOutDate();
+	    
+	    f.action = "/hotel/hotellist";
+	    f.submit();
+	    
+	}
+		
+	function guesthouse() {
+		
+		var f = document.myForm1;
+		var category = document.getElementById("category1");
+		category.value = "게스트하우스";
+		
+	    setDefaultCheckInDate();
+	    setDefaultCheckOutDate();
+	    
+	    f.action = "/hotel/hotellist";
+	    f.submit();
+	    
+	}
+		
+	function motel() {
+			
+		var f = document.myForm1;
+		var category = document.getElementById("category1");
+		category.value = "모텔";
+		
+	    setDefaultCheckInDate();
+	    setDefaultCheckOutDate();
+	    
+	    f.action = "/hotel/hotellist";
+	    f.submit();
+	    
+	}
+		
+	function pension() {
+		
+		var f = document.myForm1;
+		var category = document.getElementById("category1");
+		category.value = "펜션";
+		
+	    setDefaultCheckInDate();
+	    setDefaultCheckOutDate();
+	    
+	    f.action = "/hotel/hotellist";
+	    f.submit();
+	    
+	}
+	
+	function resort() {
+		
+		var f = document.myForm1;
+		var category = document.getElementById("category1");
+		category.value = "리조트";
+		
+	    setDefaultCheckInDate();
+	    setDefaultCheckOutDate();
+	    
+	    f.action = "/hotel/hotellist";
+	    f.submit();
+	    
+	}
+	
+	
+	//체크인 날짜가 입력 안됐을때 오늘 날짜로 디폴트 설정
+	function setDefaultCheckInDate() {
+	  var checkInInput = document.getElementById("datepicker1");
+	  var checkIn1 = document.getElementById("checkin1");
+	  if (!checkInInput.value) {
+	    var today = new Date();
+	    var year = today.getFullYear();
+	    var month = ("0" + (today.getMonth() + 1)).slice(-2);
+	    var day = ("0" + today.getDate()).slice(-2);
+	    checkInInput.value = year + "-" + month + "-" + day;
+	    checkIn1.value = year + "-" + month + "-" + day;
+	  }
+	}
+
+	//체크아웃 날짜가 입력 안됐을때 오늘 날짜 +1일로 디폴트 설정
+	function setDefaultCheckOutDate() {
+	  var checkOutInput = document.getElementById("datepicker2");
+	  var checkOut1 = document.getElementById("checkout1");
+	  if (!checkOutInput.value) {
+	    var tomorrow = new Date();
+	    tomorrow.setDate(tomorrow.getDate() + 1);
+	    var year = tomorrow.getFullYear();
+	    var month = ("0" + (tomorrow.getMonth() + 1)).slice(-2);
+	    var day = ("0" + tomorrow.getDate()).slice(-2);
+	    checkOutInput.value = year + "-" + month + "-" + day;
+	    checkOut1.value = year + "-" + month + "-" + day;
+	  }
+	}
+	
+	
+	
 		
 </script>
 

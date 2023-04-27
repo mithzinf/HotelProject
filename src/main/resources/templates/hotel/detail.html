@@ -3,98 +3,133 @@
 
 <meta charset="UTF-8">
 
-<div layout:fragment="content" class="content-padding">
+<div layout:fragment="content" class="content-padding" style="padding-top: 60px;">
 
-    
-    <link rel="stylesheet" href="assets/css/jquery.datepick.css" type="text/css">
-    <link rel="stylesheet" href="css/slide.css" type="text/css">
-	        <style>
-            #my_modal { 
-            	font-family: 'Gowun Batang', sans-serif;
-                display: none;
-                width: 700px;
-                height : 500px;
-                padding: 20px 60px;
-                background-color: #fefefe;
-                border: 1px solid #888;
-                border-radius: 3px;
-            }
+<link rel="stylesheet" href="assets/css/jquery.datepick.css" type="text/css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-            #my_modal .modal_close_btn {
-                position: absolute;
-			    top: 10px;
-			    right: 10px;
-			    color: 488f3e; /* X 버튼 색상 변경 */
-			    cursor: pointer; /* 마우스 커서 모양 변경 */
-            }
-        </style>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script type="text/javascript" 
+	src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=v3i76g652l"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Gowun+Batang&display=swap');
+h1,h2,h3,input,span,a,button,th,dt,dd{
+	font-family: 'Gowun Batang', sans-serif;
+	opacity: 1;
+	font-weight: 600;
+}
+ .btn-primary {
+   border-color: #488f3e;
+ }
+ 
+ .carousel-control, .carousel-indicators {
+  top: 250%;
+}
+
+p{
+	font-family: 'Gowun Batang', sans-serif;
+	opacity: 1;
+	font-weight: 600;
+	margin: 0 0 7px;
+}
+
+li{
+	font-family: 'Gowun Batang', sans-serif;
+	opacity: 1;
+	font-weight: 600;
+	font-size: 15px;
+	margin-bottom: 3px;
+}
+
+
+
+</style>
+	
         
         <!-- =======================================컨텐츠 시작================================================= -->
 
 
-<div class="page-wrapper">
+<div class="page-wrapper" style="background-color: #f6f6f4;">
     <div id="page-content">
         <div class="container">
-            <ol class="breadcrumb">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Listing</a></li>
-                <li class="active">Detail</li>
-            </ol>
-            <!--end breadcrumb-->
-            <div class="row">
-                <div class="col-md-3">
+           <br/><br/>
+              <div class="row" >
+                 <div class="col-md-3">
                     <div class="sidebar">
                         <div class="box filter">
-                            <h2>호텔 검색하기</h2>
-                            <form id="searchForm" action="/hotel/hotellist1" method="get">
-                                <div class="form-group">
-                                   <input type="text" class="form-control input-lg" id="searchValue" style="width: 100%;" placeholder="검색하세요">
+                            <h2>서울어때 호텔 찾아보기</h2>
+                            <form id="searchForm" action="/hotel/hotellist" method="get">
+                               <div class="form-group">
+                                    <label for="form-filter-destination" style="font-family: 'Gowun Batang', sans-serif; margin-bottom: 8.8px;">장소</label>
+                                    <input type="text" class="form-control" id="searchValue" name="searchValue" placeholder="지역, 숙소명을 입력하세요."
+                                    style="opacity: 1;">
                                 </div>
-                               <button type="submit" class="btn btn-primary btn-rounded form-control">검색</button>
+                                <!--end form-group-->
+                                <div class="form-group-inline">
+                                    <div class="form-group">
+                                        <label class="label-on-input" for="datepicker1" style="font-size: 12px; opacity: 1; font-family: 'Gowun Batang', sans-serif; margin-bottom: 8px;">체크인 날짜</label>
+                                        <input type="text" id="datepicker1" name="check_in" placeholder="연도-월-일" th:value="${check_in_day}"
+                                        onkeydown="return false;" readonly style="padding-left: 10px;">
+                                    </div>
+                                    <!--end form-group-->
+                                    <div class="form-group">
+                                        <label class="label-on-input" for="datepicker2" style="font-size: 12px; opacity: 1; font-family: 'Gowun Batang', sans-serif; margin-bottom: 8px;">체크아웃 날짜</label>
+                                        <input type="text" id="datepicker2" name="check_out" placeholder="연도-월-일" th:value="${check_out_day}"
+                                        onkeydown="return false;" readonly style="padding-left: 10px; ">
+                                    </div>
+                                    <!--end form-group-->
+                                </div>
+                                <!--end form-group-inline-->
+
+                                <div class="form-group center">
+                                    <button type="submit" class="btn btn-primary1 btn-rounded form-control" style="font-family: 'Gowun Batang', sans-serif; font-weight: bold;">호텔 검색하기</button>
+                                </div>
                             </form>
-                             <!--end form-filter-->
+                            <!--end form-filter-->
                         </div>
+                        
                         <!--end filter-->
                         <!--end box-->
-                        <a href="#" class="advertising-banner">
-                            <span class="banner-badge">Advertising</span>
-                            <img src="assets/img/ad_banner.png" alt="">
-                        </a>
+                        
                     </div>
                     <!--end sidebar-->
+                    
                 </div>
                 <!--end col-md-3-->
                 <div class="col-md-9 col-sm-8">
-                    <div class="quick-navigation" data-fixed-after-touch="">
-                        <div class="wrapper">
-                            <ul>
-                                <li><a href="#description" class="scroll">Description</a></li>
-                                <li><a href="#map" class="scroll">Map</a></li>
-                                <li><a href="#facilities" class="scroll">Facilities</a></li>
-                                <li><a href="#additional-information" class="scroll">Additional Information</a></li>
-                                <li><a href="#reviews" class="scroll">Reviews</a>(23)</li>
-                            </ul>
-                        </div>
-                    </div>
+                    
                     <div class="main-content">
                         <div class="title">
-                            <div class="left">
-                                <h1><b>[[${dto1[0].hotel_name}]]</b><span class="rating"><i class="fa fa-star"></i>9.9</span></h1>
-                                <h3><a href="#">[[${dto1[0].addr1}]]</a></h3>
+                            <div class="left" style="text-align: left;">
+                                <h1 style="color: #488f3e;"><b>[[${dto1[0].hotel_name}]]</b><span class="rating"><i class="fa fa-star"></i>9.9</span></h1>
+                                <h3 style="color: #488f3e;">[[${dto1[0].addr1}]]</h3>
                             </div>
                             <div class="right">
-                                <a href="#map" class="icon scroll"><i class="fa fa-map-marker"></i>위치</a>
+                                <a href="#map" class="icon scroll" style="color: #488f3e;"><i class="fa fa-map-marker"></i>위치</a>
                                 <a href="#availability" class="btn btn-primary btn-rounded scroll">객실 보기</a>
                             </div>
                         </div>
                         <!--end title-->
-                         <!--호텔 사진 부분-->
+                         <!--호텔 사진 부분 th:src="${getTitle[0].url}"-->
                         <section id="gallery">
-						      <div th:each="dto: ${searchHotelDetail}">
-								    <img th:if="${dto.type == 'title'}" th:src="@{|/hotel/${dto.url}|}" style="max-width:100%; height:auto;"/>
+                        		 <!--
+                        		
+                        		<div th:each="sweet:${getSweet}">
+									<a th:href="'http://localhost:8080/hotel/'+@{${sweet.url}}" target="_blank"><img th:src="'/hotel/' + @{${sweet.url}}"  /></a>
+								</div>
+						       -->
+						      <div class = "hotel-title" >
+								    <img th:src="@{|/hotel/${getTitle[0].url}|}" style="max-width:100%; height:auto;"/>
 							 </div>
+							
 						</section>
-                        <h2>객실 설명</h2>
+                        <h2>숙박 정보</h2>
                         <div class="row">
                             <div class="col-md-8">
                                 <section id="description">
@@ -104,18 +139,18 @@
                                     </p>
                                 </section>
 									<section id="facilities">
-									    <h2>객실 소개</h2>
+									    <h2>객실 내부 시설</h2>
 									    <ul class="bullets half">
-									        <li th:if="${dto4[0].toiletries eq 1}">화장실</li>
+									        <li th:if="${dto4[0].toiletries eq 1}">개인화장실</li>
 									        <li th:if="${dto4[0].shower eq 1}">샤워시설</li>
 									        <li th:if="${dto4[0].towel eq 1}">욕실시설</li>
-									        <li th:if="${dto4[0].tv eq 1}">티브이</li>
+									        <li th:if="${dto4[0].tv eq 1}">TV</li>
 									        <li th:if="${dto4[0].coffeemaker eq 1}">커피포트</li>
 									        <li th:if="${dto4[0].air_conditional eq 1}">냉방시설</li>
 									        <li th:if="${dto4[0].slipper eq 1}">객실 슬리퍼</li>
 									        <li th:if="${dto4[0].heating eq 1}">난방시설</li>
 									        <li th:if="${dto4[0].table1 eq 1}">테이블</li>
-									        <li th:if="${dto4[0].pc eq 1}">pc시설</li>
+									        <li th:if="${dto4[0].pc eq 1}">PC</li>
 									    </ul>
 									</section>
 
@@ -123,21 +158,19 @@
                             <!--end col-md-8-->
                             <div class="col-md-4">
                                 <div class="sidebar">
-                                    <aside class="box">
-                                        <dl>
-                                            <dt>1-Bed Rooms:</dt>
-                                            <dd>23</dd>
-                                            <dt>2-Bed Rooms:</dt>
-                                            <dd>48</dd>
-                                            <dt>Apartments:</dt>
-                                            <dd>12</dd>
-                                            <dt>Parking:</dt>
-                                            <dd>Free</dd>
-                                            <dt>Swimming:</dt>
-                                            <dd>Yes</dd>
-                                            <dt>Ski Center:</dt>
-                                            <dd>2km</dd>
-                                        </dl>
+                                    <aside class="box" style="margin-bottom: 0px;">
+                                    	<span style="font-size: 20px;">숙박 내외 시설</span>
+                                    	<ul style="font-size: 20px; margin-top: 12px;">
+	                                        <li th:if="${dto3[0].info24 eq 1}">24시 안내데스크</li>
+	                                        <li th:if="${dto3[0].free_parking eq 1}">무료 주차</li>
+	                                        <li th:if="${dto3[0].free_wifi eq 1}">무료 WI-FI</li>
+	                                        <li th:if="${dto3[0].no_smoking eq 1}">금연 시설</li>
+	                                        <li th:if="${dto3[0].breakfast eq 1}">조식 제공</li>
+	                                        <li th:if="${dto3[0].fitness eq 1}">피트니스 센터</li>
+	                                        <li th:if="${dto3[0].restaurant eq 1}">식당/레스토랑</li>
+	                                        <li th:if="${dto3[0].cafe eq 1}">카페</li>
+	                                        <li th:if="${dto3[0].convenience eq 1}">편의점</li>
+                                        </ul>
                                     </aside>
                                 </div>
                                 <!--end sidebar-->
@@ -148,27 +181,30 @@
 
                         <section id="availability">
                             <h2>예약</h2>
-                            <form class="labels-uppercase" id="form-availability">
+                            <form id="searchForm1" action="" method="post">
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="form-availability-check-in">Check In</label>
-                                            <input type="text" class="form-control date" id="form-availability-check-in" name="checkin" placeholder="Check In">
+                                            <label class="label-on-input" for="datepicker3" style="font-size: 12px; opacity: 1; font-family: 'Gowun Batang', sans-serif;">체크인 날짜</label>
+	                                        <input type="text" id="datepicker3" name="check_in" placeholder="연도-월-일" th:value="${check_in_day}"
+	                                        onkeydown="return false;" readonly style="padding-left: 10px;">
                                         </div>
                                     </div>
                                     <!--end col-md-3-->
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="form-availability-check-out">Check out</label>
-                                            <input type="text" class="form-control date" id="form-availability-check-out" name="checkout" placeholder="Check Out">
+                                            <label class="label-on-input" for="datepicker4" style="font-size: 12px; opacity: 1; font-family: 'Gowun Batang', sans-serif;">체크아웃 날짜</label>
+	                                        <input type="text" id="datepicker4" name="check_out" placeholder="연도-월-일" th:value="${check_out_day}"
+	                                        onkeydown="return false;" readonly style="padding-left: 10px; ">
                                         </div>
                                     </div>
                                     <!--end col-md-3-->
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label class="invisible">Hidden label</label>
-                                            <input type="hidden" name="hotel_id" th:value="${hotel_id}"> <!-- hotel_id hidden 필드 추가 -->
-                                            <button type="submit" class="btn btn-primary btn-rounded btn-framed form-control">Search</button>
+                                            <input type="hidden" id="hotel_id" name="hotel_id" th:value="${hotel_id}"> <!-- hotel_id hidden 필드 추가 -->
+                                            <button class="btn btn-primary btn-rounded btn-framed form-control" style="font-weight: bold;"
+                                            onclick="searchDay();" >잔여 객실 검색하기</button>
                                         </div>
                                     </div>
                                     <!--end col-md-3-->
@@ -182,15 +218,16 @@
                                     <table class="table">
                                         <thead>
                                         <tr>
-                                            <th>객실타입</th>
-                                            <th>인원</th>
-                                            <th>가격</th>
-                                            <th>   예약하기   </th>
-                                          
+                                            <th style="width:45%; font-size: 20px;">
+                                            <span style="margin-left: 18px;">객실사진</span></th>
+                                            <th style="width:55%; font-size: 20px;">객실정보</th>
                                         </tr>
                                         </thead>
                                     </table>
                                 </div>
+                                <input type="hidden" name="latitude" th:value="${dto1[0].latitude}"/>
+								<input type="hidden" name="longitude" th:value="${dto1[0].longitude}"/>
+								  
                                 <!-- 1.스탠다드룸에 대한 form id = "room_1" 태그 start -->
                                 <form id="room_1" th:action="@{/paymentPage}" method="post">
                                 <!-- 0424 input 태그 추가 4줄 부분 -->
@@ -198,50 +235,102 @@
 								  <input type="hidden" name="room_type" value="standard"/>
 								  <input type="hidden" name="checkin" th:value="${checkin}"/>
 								  <input type="hidden" name="checkout" th:value="${checkout}"/>
+								  
+								  
                                     <table class="table">
                                         <tbody>
-                                            <tr class="room">
-                                                <td class="room-type">
-                                                  <h3 style="color: #488f3e; cursor: pointer;" id="popup_open_btn">스탠다드</h3>                                       
-                                                <ul class="info">
-                                                   <li>객실 이름을 클릭하세요</li>
-                                                   
-                                                </ul>
-                        <!--  ============================== 모달 부분 구분선================================== -->
-											    <div id="my_modal">
-											            <a class="modal_close_btn"><b>X</b></a>
-											            <h3 class="modal-title" id="myModalLabel"><strong>객실 상세 보기</strong></h3>
-											            <!-- 자동 캐러셀 시작 -->
-											            <br/><br/>
-											          <div class="Content"> <!--전체를 감쌀 뼈대-->
-															<div class="slides">  <!--슬라이드 아이템을 감쌀 뼈대-->
-															  <div class="slide_item" th:each = "dto:${searchHotelDetail}">
-														            <!-- 스탠다드 객실 사진만 불러옴 -->
-														            <img th:if= "${dto.type == 'standard'}"  th:src = "@{|/hotel/${dto.url}|}" 
-														            style="max-width:100%; height:auto;"/>
-														        </div>
-															</div>
-															<span class="nextButton">▶</span>  <!--다음 버튼 -->
-															<span class="prevButton">◀</span>   <!--이전 버튼 -->
-															  	<div class="Thumbnail">  <!--썸네일을 감쌀 뼈대 -->
-															  		<div class="thumbnail_item"></div>   <!--썸네일 아이템들 -->
-															  		
-																</div>   
-											           </div>
-											            <!-- 자동 캐러샐 끝 -->	   
-											            
-											     </div>
-       						<!--  ============================== 모달 end 구분선================================== -->
+                                            <tr class="room" style="height: 260px;">
+
+                                                <td style="display: inline-block; text-align: left; width:45%; vertical-align: middle;">
+                                  
+                                  
+                                  
+                                                
+                        <!--  ============================== standard 캐러셀 시작점 ================================== -->
+							<div class="container" style="width: 300px; height: 70px;">
+							<!-- lists.size(getStandard)의 사이즈가 1인 경우 -->
+								  <div th:if="${#lists.size(getStandard)} == 1">
+								    <!-- If getStandard has only one element, display a single image -->
+								    <img th:src="'/hotel/' + ${hotel_id} + '_standard.jpg'" style="width:300px; height: 220px;">
+								  </div>
+								<!-- lists.size(getStandard)의 사이즈가 1가 아닌 경우 -->
+								  <div th:unless="${#lists.size(getStandard)} == 1">
+								    <!-- If getStandard has more than one element, display a carousel -->
+								    <div id="myCarousel1" class="carousel slide" style="width: 300px; height: 70px;" data-interval="false">
+								      <!-- Indicators -->
+								      <ol class="carousel-indicators">
+								        <li data-target="#myCarousel1" data-slide-to="0" class="active"></li>
+								        <!-- Add more indicators for additional images -->
+								        <th:block th:each="i, index : ${#numbers.sequence(1, getStandard.size())}">
+								          <li data-target="#myCarousel1" data-slide-to="${index}"></li>
+								        </th:block>
+								      </ol>
+								
+								      <!-- Wrapper for slides -->
+								      <div class="carousel-inner">
+								        <div class="item active">
+								          <img th:src="'/hotel/' + ${hotel_id} + '_standard1.jpg'" style="width:300px; height: 220px;">
+								        </div>
+								        <!-- Add more items for additional images -->
+								        <th:block th:each="standard : ${getStandard}">
+								          <div class="item">
+								            <img th:src="'/hotel/' + @{${standard.url}}" style="width:300px; height: 220px;">
+								          </div>
+								        </th:block>
+								      </div>
+								
+								      <!-- Left and right controls -->
+								      <a class="left carousel-control" href="#myCarousel1" data-slide="prev">
+								        <span class="glyphicon glyphicon-chevron-left"></span>
+								        <span class="sr-only">Previous</span>
+								      </a>
+								      <a class="right carousel-control" href="#myCarousel1" data-slide="next">
+								        <span class="glyphicon glyphicon-chevron-right"></span>
+								        <span class="sr-only">Next</span>
+								      </a>
+								    </div>
+								    <!-- myCarousel1 div 태그 -->
+								  </div>
+								  <!-- th:if lists.size ==1 div 태그 -->
+							</div>
+											          
+											      
+       						<!--  ============================== standard 캐러셀 끝나는 곳================================== -->
+                                                
+                                                
+                                                
+                                                
                                                 </td>                                                
-                                                <td class="persons">2<i class="fa fa-user"></i></td>
-                                                <td class="price">[[${dto2[0].standard}]]</td>
-                                                <td class="rooms"></td>
-                                                <td>
-                                                    <div class="form-group">
-                                                        <button type="submit" class="btn btn-primary btn-rounded">객실 예약</button>
-                                                    </div>
-                                                    <!--end form-group-->
+                                                <td class="room-info" style="width:55%; text-align: left; vertical-align: middle;">
+                                                	<ul style="text-align: left;">
+                                                		<li style="margin-bottom: 10px; font-size: 28px; font-weight: bold;">스탠다드 룸(Standard Room)</li>
+                                                		<li style="margin-bottom: 7px;"><i class="fa fa-user" style="padding-right: 5px;"></i>2명</li>
+                                                		<li style="margin-bottom: 10px;"><i class="fa fa-bed"></i>싱글베드 2개 or 더블베드 1개</li>
+                                                		<li style="margin-bottom: 30px;"><span style="font-size: 24px; font-weight: bold;">
+                                                		₩[[${dto2[0].standard}]]</span> / 1박기준</li>
+                                                		
+                                                	</ul>
+                                                	<th:block th:if="${resultMap1.standard}=='만실'">
+                                                		<span id="standard2" style="font-size: 18px; color: red; font-weight: bold; margin-top: 10px;">이 객실은 만실입니다.</span>
+	                                                	<button type="submit" id="standardButton" class="btn btn-disabled1" disabled="disabled" 
+	                                                	style="font-size: 20px; font-weight: bold; width: 180px; height: 50px; float: right; text-align: center;">
+	                                                	&nbsp;예약불가&nbsp; </button>
+                                                	</th:block>
+                                                	<th:block th:if="${resultMap1.standard}=='만실 임박'">
+														<span id="standard2" style="font-size: 18px; color: red; font-weight: bold; margin-top: 10px;">잔여 객실이 1개 남았습니다.</span>
+	                                                	<button type="submit" id="standardButton" class="btn btn-primary1"
+	                                                	style="font-size: 20px; font-weight: bold; width: 180px; height: 50px; float: right; text-align: center;">
+	                                                	&nbsp;예약하기&nbsp; </button>
+                                                	</th:block>
+                                                	<th:block th:if="${resultMap1.standard}=='여유'">
+                                                		<span id="standard2" style="font-size: 18px; color: red; font-weight: bold; margin-top: 10px;"></span>
+	                                                	<button type="submit" id="standardButton" class="btn btn-primary1"
+	                                                	style="font-size: 20px; font-weight: bold; width: 180px; height: 50px; float: right; text-align: center;">
+	                                                	&nbsp;예약하기&nbsp; </button>
+                                                	</th:block>
+                                                	 
                                                 </td>
+                                                
 
                                             </tr>
                                             <!--end tr.room-->
@@ -261,32 +350,86 @@
 								  <input type="hidden" name="checkout" th:value="${checkout}"/>
                                     <table class="table">
                                         <tbody>
-                                        <tr class="room">
-                                            <td class="room-type">
-                                                <a href=""><h3>스위트룸</h3></a>
-                                                                                               
-                                                <ul class="info">
-                                                    <li>여기에 뭐 적나</li>
-                                                    <li>여기에 뭐 적나</li>
-                                                </ul>
-                                            </td>
-                                            <td class="persons">4<i class="fa fa-user"></i></td>
-                                            <td class="price">[[${dto2[0].sweet}]]</td>
-                                            <td class="rooms">
-                                                <select class="framed" name="room_2_nights">
-                                                    <option value="1">0</option>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <button type="submit" class="btn btn-primary btn-rounded">객실 예약</button>
-                                                </div>
-                                                <!--end form-group-->
-                                            </td>
+                                        <tr class="room" style="height: 260px;">
+                                            <td style="display: inline-block; text-align: left; width:45%; vertical-align: middle;">
+                                             
+                        <!--  ============================== 스위트 ================================== -->
+											   <div class="container" style="width: 300px; height: 70px;">
+							<!-- lists.size(getStandard)의 사이즈가 1인 경우 -->
+								  <div th:if="${#lists.size(getSweet)} == 1">
+								    <!-- If getStandard has only one element, display a single image -->
+								    <img th:src="'/hotel/' + ${hotel_id} + '_sweet.jpg'" style="width:300px; height: 220px;">
+								  </div>
+								<!-- lists.size(getStandard)의 사이즈가 1가 아닌 경우 -->
+								  <div th:unless="${#lists.size(getSweet)} == 1">
+								    <!-- If getStandard has more than one element, display a carousel -->
+								    <div id="myCarousel2" class="carousel slide" style="width: 300px; height: 70px;" data-interval="false">
+								      <!-- Indicators -->
+								      <ol class="carousel-indicators">
+								        <li data-target="#myCarousel2" data-slide-to="0" class="active"></li>
+								        <!-- Add more indicators for additional images -->
+								        <th:block th:each="i, index : ${#numbers.sequence(1, getSweet.size())}">
+								          <li data-target="#myCarousel2" data-slide-to="${index}"></li>
+								        </th:block>
+								      </ol>
+								
+								      <!-- Wrapper for slides -->
+								      <div class="carousel-inner">
+								        <div class="item active">
+								          <img th:src="'/hotel/' + ${hotel_id} + '_sweet1.jpg'" style="width:300px; height: 220px;">
+								        </div>
+								        <!-- Add more items for additional images -->
+								        <th:block th:each="sweet : ${getSweet}">
+								          <div class="item">
+								            <img th:src="'/hotel/' + @{${sweet.url}}" style="width:300px; height: 220px;">
+								          </div>
+								        </th:block>
+								      </div>
+								
+								      <!-- Left and right controls -->
+								      <a class="left carousel-control" href="#myCarousel2" data-slide="prev">
+								        <span class="glyphicon glyphicon-chevron-left"></span>
+								        <span class="sr-only">Previous</span>
+								      </a>
+								      <a class="right carousel-control" href="#myCarousel2" data-slide="next">
+								        <span class="glyphicon glyphicon-chevron-right"></span>
+								        <span class="sr-only">Next</span>
+								      </a>
+								    </div>
+								    <!-- myCarousel1 div 태그 -->
+								  </div>
+								  <!-- th:if lists.size ==1 div 태그 -->
+							</div>	
+       						<!--  ============================== 모달 end 구분선================================== -->
+                                                </td>
+                                            <td class="room-info" style="width:55%; text-align: left; vertical-align: middle;">
+                                               	<ul style="text-align: left;">
+                                               		<li style="margin-bottom: 10px; font-size: 28px; font-weight: bold;">스위트 룸(Sweet Room)</li>
+                                               		<li style="margin-bottom: 7px;"><i class="fa fa-user" style="padding-right: 5px;"></i>2명</li>
+                                               		<li style="margin-bottom: 10px;"><i class="fa fa-bed"></i>더블베드 1개</li>
+                                               		<li style="margin-bottom: 30px;"><span style="font-size: 24px; font-weight: bold;">
+                                               		₩[[${dto2[0].sweet}]]</span> / 1박기준</li>
+                                               		
+                                               	</ul>
+                                               	<th:block th:if="${resultMap1.sweet}=='만실'">
+                                               		<span id="standard2" style="font-size: 18px; color: red; font-weight: bold; margin-top: 10px;">이 객실은 만실입니다.</span>
+                                                	<button type="submit" id="sweetButton" class="btn btn-disabled2" disabled="true" 
+                                                	style="font-size: 20px; font-weight: bold; width: 180px; height: 50px; float: right; text-align: center;">
+                                                	&nbsp;예약불가&nbsp; </button>
+                                               	</th:block>
+                                               	<th:block th:if="${resultMap1.sweet}=='만실 임박'">
+                                               		<span id="sweet2" style="font-size: 18px; color: red; font-weight: bold; margin-top: 10px;">잔여 객실이 1개 남았습니다.</span>
+                                                	<button type="submit" id="sweetButton" class="btn btn-primary2"
+                                                	style="font-size: 20px; font-weight: bold; width: 180px; height: 50px; float: right; text-align: center;">
+                                                	&nbsp;예약하기&nbsp; </button>
+                                               	</th:block>
+                                               	<th:block th:if="${resultMap1.sweet}=='여유'">
+                                               		<span id="standard2" style="font-size: 18px; color: red; font-weight: bold; margin-top: 10px;"></span>
+                                                	<button type="submit" id="sweetButton" class="btn btn-primary2"  
+                                                	style="font-size: 20px; font-weight: bold; width: 180px; height: 50px; float: right; text-align: center;">
+                                                	&nbsp;예약하기&nbsp; </button>
+                                               	</th:block>
+                                           </td>
                                         </tr>
                                         <!--end tr.room-->
                                         </tbody>
@@ -304,31 +447,87 @@
 								  <input type="hidden" name="checkout" th:value="${checkout}"/>
                                     <table class="table">
                                         <tbody>
-                                        <tr class="room">
-                                            <td class="room-type">
-                                                <a href="" ><h3>디럭스룸</h3></a>
-                                                <ul class="info">
-                                                    <li>여기에 뭐 적나</li>
-                                                    <li>여기에 뭐 적나</li>
-                                                </ul>
+                                        <tr class="room" style="height: 260px;">
+                                            <td style="display: inline-block; text-align: left; width:45%; vertical-align: middle;">
+                                               
+                                        <!--  ============================== 디럭스================================= -->
+			    
+							   <div class="container" style="width: 300px; height: 70px;">
+									<!-- lists.size(getDeluxe)의 사이즈가 1인 경우 -->
+										  <div th:if="${#lists.size(getDeluxe)} == 1">
+										    <!-- If getStandard has only one element, display a single image -->
+										    <img th:src="'/hotel/' + ${hotel_id} + '_deluxe.jpg'" style="width:300px; height: 220px;">
+										  </div>
+										<!-- lists.size(getDeluxe)의 사이즈가 1가 아닌 경우 -->
+										  <div th:unless="${#lists.size(getDeluxe)} == 1">
+										    <!-- If getStandard has more than one element, display a carousel -->
+										    <div id="myCarousel3" class="carousel slide" style="width: 300px; height: 70px;" data-interval="false">
+										      <!-- Indicators -->
+										      <ol class="carousel-indicators">
+										        <li data-target="#myCarousel3" data-slide-to="0" class="active"></li>
+										        <!-- Add more indicators for additional images -->
+										        <th:block th:each="i, index : ${#numbers.sequence(1, getDeluxe.size())}">
+										          <li data-target="#myCarousel3" data-slide-to="${index}"></li>
+										        </th:block>
+										      </ol>
+										
+										      <!-- Wrapper for slides -->
+										      <div class="carousel-inner">
+										        <div class="item active">
+										          <img th:src="'/hotel/' + ${hotel_id} + '_deluxe1.jpg'" style="width:300px; height: 220px;">
+										        </div>
+										        <!-- Add more items for additional images -->
+										        <th:block th:each="deluxe : ${getDeluxe}">
+										          <div class="item">
+										            <img th:src="'/hotel/' + @{${deluxe.url}}" style="width:300px; height: 220px;">
+										          </div>
+										        </th:block>
+										      </div>
+										
+										      <!-- Left and right controls -->
+										      <a class="left carousel-control" href="#myCarousel3" data-slide="prev">
+										        <span class="glyphicon glyphicon-chevron-left"></span>
+										        <span class="sr-only">Previous</span>
+										      </a>
+										      <a class="right carousel-control" href="#myCarousel3" data-slide="next">
+										        <span class="glyphicon glyphicon-chevron-right"></span>
+										        <span class="sr-only">Next</span>
+										      </a>
+										    </div>
+										    <!-- myCarousel1 div 태그 -->
+										  </div>
+										  <!-- th:if lists.size ==1 div 태그 -->
+								</div>
+       						<!--  ============================== 모달 end 구분선================================== -->
                                             </td>
-                                            <td class="persons">4<i class="fa fa-user"></i></td>
-                                            <td class="price">[[${dto2[0].deluxe}]]</td>
-                                            <td class="rooms">
-                                                <select class="framed" name="room_3_nights">
-                                                    <option value="1">0</option>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <button type="submit" class="btn btn-primary btn-rounded">객실 예약</button>
-                                                </div>
-                                                <!--end form-group-->
-                                            </td>
+                                            <td class="room-info" style="width:55%; text-align: left; vertical-align: middle;">
+                                               	<ul style="text-align: left;">
+                                               		<li style="margin-bottom: 10px; font-size: 28px; font-weight: bold;">디럭스 룸(Deluxe Room)</li>
+                                               		<li style="margin-bottom: 7px;"><i class="fa fa-user" style="padding-right: 5px;"></i>4명</li>
+                                               		<li style="margin-bottom: 10px;"><i class="fa fa-bed"></i>더블베드 2개</li>
+                                               		<li style="margin-bottom: 30px;"><span style="font-size: 24px; font-weight: bold;">
+                                               		₩[[${dto2[0].deluxe}]]</span> / 1박기준</li>
+                                               		
+                                               	</ul>
+                                               	<th:block th:if="${resultMap1.deluxe}=='만실'">
+                                               		<span id="standard2" style="font-size: 18px; color: red; font-weight: bold; margin-top: 10px;">이 객실은 만실입니다.</span>
+                                                	<button type="submit" id="deluxeButton" class="btn btn-disabled3" disabled="true" 
+                                                	style="font-size: 20px; font-weight: bold; width: 180px; height: 50px; float: right; text-align: center;">
+                                                	&nbsp;예약불가&nbsp; </button>
+                                               	</th:block>
+                                               	<th:block th:if="${resultMap1.deluxe}=='만실 임박'">
+                                               		<span id="deluxe2" style="font-size: 18px; color: red; font-weight: bold; margin-top: 10px;">잔여 객실이 1개 남았습니다.</span>
+                                                	<button type="submit" id="deluxeButton" class="btn btn-primary3" 
+                                                	style="font-size: 20px; font-weight: bold; width: 180px; height: 50px; float: right; text-align: center;">
+                                                	&nbsp;예약하기&nbsp; </button>
+                                               	</th:block>
+                                               	<th:block th:if="${resultMap1.deluxe}=='여유'">
+                                               		<span id="standard2" style="font-size: 18px; color: red; font-weight: bold; margin-top: 10px;"></span>
+                                                	<button type="submit" id="deluxeButton" class="btn btn-primary3"  
+                                                	style="font-size: 20px; font-weight: bold; width: 180px; height: 50px; float: right; text-align: center;">
+                                                	&nbsp;예약하기&nbsp; </button>
+                                               	</th:block>
+                                           </td>
                                         </tr>
                                         <!--end tr.room-->
                                         </tbody>
@@ -341,18 +540,14 @@
                             <!--end form-reservations-->
                         </section>
                         <section id="additional-information">
-                            <h2>세부 정보</h2>
-                            <dl class="info">
-                                <dt>Check-in:</dt>
-							<dd th:text="${dto2[0].check_in}"></dd>
-								<dt>Check-out:</dt>
-							<dd><strong><span th:text="${dto2[0].check_out}"></span></strong></dd>
-                            </dl>
+                            <h2 style="font-size: 20px;">체크인, 체크아웃 시간</h2><h2>PM [[${dto2[0].check_in}]] / AM [[${dto2[0].check_out}]]</h2>
+                            <span>(체크인, 체크아웃 시간에 대한 문의사항은 숙소로 별도 문의 부탁드립니다.)</span>
                             <!--end info-->
                         </section>
+                        <h2>숙소 위치</h2>
                                  <section id="map">
-                                    <h2>위치</h2>
-                                    <div id="map-item" class="map height-300 box"></div>
+                                    
+                                    <div id="map" style="width: 600px; height: 400px;"></div>
                                     <!--end map-->
                                 </section>
                         <section id="reviews">
@@ -461,7 +656,7 @@
                         </section>
                         <section id="write-a-review">
                             <h2>Write a Review</h2>
-                            <form  class="labels-uppercase clearfix" id="form_reply_1">
+                            <form id="searchForm2" action="" method="post">
                                 <div class="alert alert-dark fade in center" role="alert">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close" data-switch="#review-write">
                                         <span aria-hidden="true">&times;</span>
@@ -488,7 +683,7 @@
                                                 </div>
                                                 <!--end form-group-->
                                                 <div class="form-group pull-right">
-                                                    <button type="submit" class="btn btn-primary btn-rounded">Send Review</button>
+                                                    <button type="submit" class="btn btn-primary btn-rounded" onclick="review();">Send Review</button>
                                                 </div>
                                                 <!--end form-group-->
                                             </div>
@@ -540,78 +735,206 @@
 <!-- ==========================================개별 스크립트 부분..============================================= -->
 
 
-<!-- 모달창 만드는 스크립트 -->
-	<script>
-            function modal(id) {
-                var zIndex = 9999;
-                var modal = document.getElementById(id);
+<!-- 3.6.4 제이쿼리 라이브러리는 임시로 detailTest에 옮김 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-                // 모달 div 뒤에 희끄무레한 레이어
-                var bg = document.createElement('div');
-                bg.setStyle({
-                    position: 'fixed',
-                    zIndex: zIndex,
-                    left: '0px',
-                    top: '0px',
-                    width: '100%',
-                    height: '100%',
-                    overflow: 'auto',
-                    // 레이어 색갈은 여기서 바꾸면 됨
-                    backgroundColor: 'rgba(0,0,0,0.4)'
-                });
-                document.body.append(bg);
-
-                // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
-                modal.querySelector('.modal_close_btn').addEventListener('click', function() {
-                    bg.remove();
-                    modal.style.display = 'none';
-                });
-
-                modal.setStyle({
-                    position: 'fixed',
-                    display: 'block',
-                    boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-
-                    // 시꺼먼 레이어 보다 한칸 위에 보이기
-                    zIndex: zIndex + 1,
-
-                    // div center 정렬
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    msTransform: 'translate(-50%, -50%)',
-                    webkitTransform: 'translate(-50%, -50%)'
-                });
-            }
-
-            // Element 에 style 한번에 오브젝트로 설정하는 함수 추가
-            Element.prototype.setStyle = function(styles) {
-                for (var k in styles) this.style[k] = styles[k];
-                return this;
-            };
-
-            document.getElementById('popup_open_btn').addEventListener('click', function() {
-                // 모달창 띄우기
-              event.preventDefault(); // 클릭 이벤트의 기본 동작을 방지합니다.(챗지피티 피셜 추가된 코딩)
-                modal('my_modal');
-            });
-        </script>
-<!-- end of 모달창 만드는 스크립트 -->
-
-
-
-
-<!--[if lte IE 9]>
-<script src="assets/js/ie.js"></script>
-<![endif]-->
 
 <script>
-    var _latitude = 48.47292127;
-    var _longitude = 4.28672791;
-    var element = "map-item";
-    simpleMap(_latitude,_longitude, element);
+
+	function review() {
+		
+		var inputElement = document.querySelector('#score_cleanliness');
+        alert(inputElement.value);
+		
+	}
+
+    $.datepicker.setDefaults({
+        dateFormat: 'yy-mm-dd',
+        prevText: '이전 달',
+        nextText: '다음 달',
+        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+        showMonthAfterYear: true,
+        yearSuffix: '년'
+    });
+	
+    $(function() {
+    	  var today = new Date();
+    	  var selectedDate;
+    	  var dp1 = jQuery.noConflict();
+    	  var dp2 = jQuery.noConflict();
+    	  var checkinDate = $("#datepicker1").val();
+    	  var oneDay = 24 * 60 * 60 * 1000; // 1일을 밀리초로 계산하기
+    	  var checkoutDate = new Date(new Date(checkinDate).getTime() + oneDay);
+    	  
+    	  $("#datepicker1").datepicker({
+    	    minDate: today,
+    	    onSelect: function(date) {
+    	    	selectedDate = new Date(date); // 문자열로 된 날짜를 Date 객체로 변환
+    	        selectedDate.setDate(selectedDate.getDate() + 1); // 다음날로 설정
+    	        $("#datepicker2").datepicker("option", "minDate", selectedDate); // datepicker2의 minDate 업데이트
+    	    }
+    	  });
+    	  
+    	  $("#datepicker2").datepicker({
+    		minDate: checkoutDate
+    	  });
+    	  
+    	  var selectedDateRoom;
+    	  var dp3 = jQuery.noConflict();
+    	  var dp4 = jQuery.noConflict();
+    	  var checkinDateRoom = $("#datepicker3").val();
+    	  var checkoutDateRoom = new Date(new Date(checkinDateRoom).getTime() + oneDay);
+    	  
+    	  $("#datepicker3").datepicker({
+    	    minDate: today,
+    	    onSelect: function(date) {
+    	    	selectedDateRoom = new Date(date); // 문자열로 된 날짜를 Date 객체로 변환
+    	    	selectedDateRoom.setDate(selectedDateRoom.getDate() + 1); // 다음날로 설정
+    	        $("#datepicker4").datepicker("option", "minDate", selectedDateRoom); // datepicker2의 minDate 업데이트
+    	    }
+    	  });
+    	  
+    	  $("#datepicker4").datepicker({
+    		minDate: checkoutDateRoom
+    	  });
+    	  
+    	  
+    	  
+    	});
+    
+        $(document).ready(function() {
+    	  $('#myCarousel1').carousel({
+    	    interval: false
+    	  });
+    	});
+        
+        var latitude = document.getElementsByName("latitude")[0].value;
+        var longitude = document.getElementsByName("longitude")[0].value;
+
+        var map = new naver.maps.Map('map', {
+            center: new naver.maps.LatLng(latitude, longitude),
+            zoom: 15
+        });
+
+        var marker = new naver.maps.Marker({
+            position: new naver.maps.LatLng(latitude, longitude),
+            map: map
+        });
+        
+        
+        
+        
+        
+        function searchDay() {
+			
+        	
+        	
+        	var hotel_id = $("#hotel_id").val();
+        	var check_in = $("#datepicker3").val();
+        	var check_out = $("#datepicker4").val();
+        	const button1 = document.getElementById('standardButton');
+        	const button2 = document.getElementById('sweetButton');
+        	const button3 = document.getElementById('deluxeButton');
+        	const text1 = document.getElementById('standard2');
+        	const text2 = document.getElementById('sweet2');
+        	const text3 = document.getElementById('deluxe2');
+        	
+        	$.ajax({
+				url: "./detailDay",
+				type: "post",
+				data: { check_in:check_in, check_out:check_out, hotel_id: hotel_id },
+				success: function(resultMap) {       
+					
+					if(resultMap.standard === "만실"){
+						button1.classList.remove('btn-primary1'); 
+						button1.classList.add('btn-disabled1'); 
+						button1.disabled = true;
+						button1.textContent = '예약불가';
+						text1.textContent = '이 객실은 만실입니다.';
+					}else if(resultMap.standard === "만실 임박"){
+						button1.classList.remove('btn-disabled1'); 
+						button1.classList.add('btn-primary1'); 
+						button1.disabled = false;
+						button1.textContent = '예약하기';
+						text1.textContent = '잔여 객실이 1개 남았습니다.';
+					}else{
+						button1.classList.remove('btn-disabled1'); 
+						button1.classList.add('btn-primary1'); 
+						button1.disabled = false;
+						button1.textContent = '예약하기';
+						text1.textContent = '';
+					}
+					
+					if(resultMap.sweet === "만실"){
+						button2.classList.remove('btn-primary2'); 
+						button2.classList.add('btn-disabled2'); 
+						button2.disabled = true;
+						button2.textContent = '예약불가';
+						text2.textContent = '이 객실은 만실입니다.';
+					}else if(resultMap.sweet === "만실 임박"){
+						button2.classList.remove('btn-disabled2'); 
+						button2.classList.add('btn-primary2'); 
+						button2.disabled = false;
+						button2.textContent = '예약하기';
+						text2.textContent = '잔여 객실이 1개 남았습니다.';
+					}else{
+						button2.classList.remove('btn-disabled2'); 
+						button2.classList.add('btn-primary2'); 
+						button2.disabled = false;
+						button2.textContent = '예약하기';
+						text2.textContent = '';
+					}
+					
+					if(resultMap.deluxe === "만실"){
+						button3.classList.remove('btn-primary3'); 
+						button3.classList.add('btn-disabled3'); 
+						button3.disabled = true;
+						button3.textContent = '예약불가';
+						text3.textContent = '이 객실은 만실입니다.';
+					}else if(resultMap.deluxe === "만실 임박"){
+						button3.classList.remove('btn-disabled3'); 
+						button3.classList.add('btn-primary3'); 
+						button3.disabled = false;
+						button3.textContent = '예약하기';
+						text3.textContent = '잔여 객실이 1개 남았습니다.';
+					}else{
+						button3.classList.remove('btn-disabled3'); 
+						button3.classList.add('btn-primary3'); 
+						button3.disabled = false;
+						button3.textContent = '예약하기';
+						text3.textContent = '';
+					}
+					
+					
+        		}
+        	});
+        	event.preventDefault();
+        };
+		  
+       
+        
+    
+
 </script>
 
-<script type="text/javascript" src="assets/js/slide.js"></script>
+<!-- 얘 왜 잇더라
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+		
+<script type="text/javascript">
+function hotelClick(hotel_id) {
+  var url = "./hotel/layoutTest?hotel_id=${hotel_id};
+  window.open(url, "객실 상세 페이지", "width=800,height=600,left=400");
+}
+
+</script>
+ -->
+ <!--[if lte IE 9]>
+<script src="assets/js/ie.js"></script>
+<![endif]-->
 
 </html>
