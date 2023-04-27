@@ -13,7 +13,9 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +33,7 @@ import com.boot.hotel.dto.HotelFacilityInDTO;
 import com.boot.hotel.dto.HotelInfoDTO;
 import com.boot.hotel.dto.HotelPictureDTO;
 import com.boot.hotel.dto.HotelReservationDTO;
+import com.boot.hotel.oauth2.dto.SessionUser;
 import com.boot.hotel.service.HotelDetailService;
 @ResponseBody
 @RestController
@@ -38,6 +41,9 @@ public class HotelDetailController {
    
    @Resource
    private HotelDetailService hotelDetailService;
+   
+   @Autowired
+   private HttpSession httpSession;
 /*
    @RequestMapping(value = "/detail" , method= {RequestMethod.GET, RequestMethod.POST})
    public ModelAndView detail(@RequestParam(value = "hotel_id", required = true) int hotel_id, 
@@ -208,7 +214,16 @@ public class HotelDetailController {
 		List<HotelPictureDTO> getDeluxe = hotelDetailService.getDeluxePicture(hotel_id); //디럭스 사진 갖고오렴..
 		List<HotelPictureDTO> getSweet = hotelDetailService.getSweetPicture(hotel_id); //스위트룸 사진 가지구 와..
 		  
+		
+		
+
+		
+    	
 		ModelAndView mav = new ModelAndView();
+		if(httpSession.getAttribute("sessionUser")!=null) {
+        	SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+        	mav.addObject("user_id",sessionUser.getId());
+        }
 		mav.addObject("resultMap1",resultMap1);
 		mav.addObject("check_in_day",check_in_day);
 		mav.addObject("check_out_day",check_out_day);

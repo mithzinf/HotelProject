@@ -158,12 +158,12 @@
                     <td>
                     	<input type="hidden" name="basket_num" class="basket_num" th:value="${dto.BASKET_NUM}">
                         <div class="image-wrapper">
-                            <a href="mypage/basket" class="image">
+                            <a th:href="@{|/detail?hotel_id=${dto.HOTEL_ID}&check_in=${check_in_day}&check_out=${check_out_day}|}" class="image">
                             	<img th:src="@{|/hotel/${dto.URL}|}" style="width:100%; height:100%; position: absolute;">
                             </a>
                         </div>
                         <div class="info">
-                            <a href="mypage/basket"><span class="sub-title">[[${dto.HOTEL_NAME}]]</span></a>
+                            <a th:href="@{|/detail?hotel_id=${dto.HOTEL_ID}&check_in=${check_in_day}&check_out=${check_out_day}|}"><span class="sub-title">[[${dto.HOTEL_NAME}]]</span></a>
                             <figure class="location"><strong>[[${dto.ADDR1}]]</strong></figure>
                             <figure class="label label-info">[[${dto.CATEGORY}]]</figure>
                             <div class="meta">
@@ -173,7 +173,9 @@
                         </div>
                         <!--end info-->
                     </td>
-                    <td style="width: 10%; text-align: center; font-size: 18px;">[[${dto.STANDARD}]]~</td>
+                    <td style="width: 10%; text-align: center; font-size: 18px;">
+                    <span style="font-size: 19px; font-weight: bold;"
+                    th:text="${#numbers.formatInteger(dto.STANDARD, 0, 'COMMA') + '원~'}"></span></td>
                     <td style="width: 10%; text-align: center; font-size: 18px;">9.3</td>
                     <td style="width: 10%; text-align: center; font-size: 18px;">
                     <a href="mypage/basket" class="delete-btn">

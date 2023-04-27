@@ -1,10 +1,12 @@
 package com.boot.hotel.controller;
 
 import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -63,8 +65,19 @@ public class HotelMainController {
 		    mainHotel.addAll(hotelData);
 		}
 		
+		//오늘,내일 날짜를 html에 보내기 위해
+		String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+	    
+	    Calendar calendar = Calendar.getInstance();
+	    calendar.setTime(new Date());
+
+	    // 내일 날짜로 설정
+	    calendar.add(Calendar.DATE, 1);
+
+	    String tomorrowDate = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
 		
-		
+	    mav.addObject("check_in_day", currentDate);
+	    mav.addObject("check_out_day", tomorrowDate);
 		mav.addObject("mainHotel",mainHotel);
 		mav.setViewName("hotel/hotelMain");
 		
@@ -104,7 +117,7 @@ public class HotelMainController {
 		//우리는 searchValue값만 입력하고, searchKey는 SQL문 안에서 임의로 지정함
 		//=> 따라서 컨트롤러에 searchKey가 없다! 우린 searchKey값이 고정되어 있기 때문에..
 		//검색값에 해당하는 hotel테이블의 hotel_name과 addr1을 동시에 뒤지게 됨
-		List<Map<String, Object>> result = hotelMainService.searchMainHotelTest(paramMap);
+		List<Map<String, Object>> result = hotelMainService.searchMainHotel(paramMap);
 		
 		System.out.println(result);
 		

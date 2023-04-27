@@ -139,7 +139,8 @@ p {
 			                    <p th:if="${hotel2.hotel_information} != null" th:text="${hotel2.hotel_information}"></p>
 			                    <div class="price-info">From
 			                        <span class="price">
-			                            <a th:if="${hotel2.standard} != null" th:text="${hotel2.standard}"></a>  
+			                            <span style="font-size: 24px; font-weight: bold;"
+			                            th:text="${#numbers.formatInteger(hotel2.standard, 0, 'COMMA')} + '원'"></span>
 			                        </span>
 			                        <span class="appendix">/1박 부터</span>
 			                    </div>
@@ -169,13 +170,23 @@ p {
 			        </div>
 			    </div>
 			</div>
+ 
+
  					
- 						<div class="center">
- 					        <ul class="pagination">
-                               <li th:utext="${pageIndexList}"></li>
-                            </ul>
-                            <!-- end pagination-->
- 						</div>
+	 						<div class="basket-paging" th:if="${dataCount>0}">
+								<ul>
+									<li th:utext="${pageIndexList}" style="font-size: 24px; text-align:center; list-style-type: none;
+									font-family: 'Gowun Batang', sans-serif; font-weight: bold;"></li>
+								</ul>
+							</div>
+					                
+							<div class="basket-paging" th:if="${dataCount==0}">
+								<td colspan="5">
+									<span style="font-size: 36px; text-align:center;
+									font-family: 'Gowun Batang', sans-serif; font-weight: bold;">찜하신 호텔이 없습니다. </span>
+								</td>
+							</div>
+	 						
 							<input type="hidden" id="user_id" th:value="${user_id}" />
 						</div>
                     <!--end main-content-->
@@ -230,7 +241,7 @@ p {
     	  $("#datepicker2").datepicker({
     		minDate: checkoutDate
     	  });
-    	});
+    });
 
 </script>
 

@@ -7,6 +7,13 @@
 <div layout:fragment="content" class="content-padding">
 <!-- 대충 이자리에 개별 CSS가 있다면 선언 -->
 
+<style>
+@import url('https://fonts.googleapis.com/css?family=Gowun+Batang&display=swap');
+
+dd,dt,td {
+	font-family: 'Gowun Batang', sans-serif;
+}
+</style>
 
 
 <!-- 이자리에 html 가운데 코드 작성 -->
@@ -34,7 +41,7 @@
                                         </tr>
                                         <tr>
                                         	<td><dt style="font-size: 21px">호텔이름 / 방 종류</dt></td>
-                                            <td><dd><td th:text="${resDto.hotel_name + ' /' + resDto.room}" style="font-size: 21px"></td></dd></td>
+                                            <td><dd><td th:text="${resDto.hotel_name + ' / ' + resDto.room + '룸'}" style="font-size: 21px"></td></dd></td>
                                             
                                         </tr>
                                         <tr>
@@ -48,11 +55,11 @@
                                         </tr>
                                         <tr>
                                         	<td><dt style="font-size: 21px">예약인원</dt>
-                                            <td><dd><td th:text="${resDto.people}" style="font-size: 21px"></td></dd></td>
+                                            <td><dd><td th:text="${resDto.people}+'명'" style="font-size: 21px"></td></dd></td>
                                         </tr>
                                         <tr>
                                         	<td><dt style="font-size: 21px">숙박일수</dt>
-                                            <td><dd><td th:text="${payDto.date_num}" style="font-size: 21px"></td></dd></td>
+                                            <td><dd><td th:text="${payDto.date_num}+'일'" style="font-size: 21px"></td></dd></td>
                                         </tr>
                                 </table>
                             </div>
@@ -75,7 +82,7 @@
                                     
                                     <tbody>
                                     	 <tr>
-                                    	 	<td><dt style="font-size: 40px; margin-left: 100px; color: gray;">결제가 완료되었습니다</dt>
+                                    	 	<td><dt style="font-size: 40px; margin-left: 140px; color: gray;">결제가 완료되었습니다!</dt>
                                     	 </tr>
                                     	 <tr>
                                         	<td><dt style="font-size: 21px">결제번호</dt></td>
@@ -83,7 +90,7 @@
                                         </tr>
                                         <tr>
                                         	<td><dt style="font-size: 21px">가격</dt></td>
-                                            <td><dd><td th:text="${payDto.price}"  style="font-size: 21px"></td></dd></td>
+                                            <td><dd><td th:text="${#numbers.formatInteger(payDto.price, 0, 'COMMA')+'원'}"  style="font-size: 21px"></td></dd></td>
                                         </tr>
                                         <tr>
                                         	<td><dt style="font-size: 21px">결제상태</dt></td>

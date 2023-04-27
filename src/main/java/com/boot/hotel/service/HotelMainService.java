@@ -9,7 +9,7 @@ public interface HotelMainService {
 	public List<Map<String, Object>> getHotelMain(int hotel_id) throws Exception;
 	
 	//호텔 기본 검색
-	public List<Map<String, Object>> searchMainHotelTest(Map<String, Object> params) throws Exception;
+	public List<Map<String, Object>> searchMainHotel(Map<String, Object> params) throws Exception;
 	
 	//호텔 날짜 검색
 	public int searchDay(Map<String, Object> params) throws Exception;

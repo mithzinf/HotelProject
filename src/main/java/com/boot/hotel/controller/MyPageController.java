@@ -3,6 +3,7 @@ package com.boot.hotel.controller;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -283,9 +284,21 @@ public class MyPageController {
 		String pageIndexList = 
 				myUtil.pageIndexList(currentPage, totalPage, listUrl);
 		
+		//오늘,내일 날짜를 html에 보내기 위해
+		String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+	    
+	    Calendar calendar = Calendar.getInstance();
+	    calendar.setTime(new Date());
+
+	    // 내일 날짜로 설정
+	    calendar.add(Calendar.DATE, 1);
+
+	    String tomorrowDate = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
 		
 		ModelAndView mav = new ModelAndView();
-		
+
+	    mav.addObject("check_in_day", currentDate);
+	    mav.addObject("check_out_day", tomorrowDate);
 		mav.addObject("pageIndexList", pageIndexList);
 		mav.addObject("pageNum",currentPage);
 		mav.addObject("dataCount",dataCount);
@@ -312,6 +325,8 @@ public class MyPageController {
 		return mav;
 		
 	}
+	
+	
 	
 	//예약내역 페이지 띄우기
 	@RequestMapping(value = "/mypage/my_reservation", method = { RequestMethod.GET, RequestMethod.POST })
@@ -383,8 +398,21 @@ public class MyPageController {
 				myUtil.pageIndexList(currentPage, totalPage, listUrl);
 		
 		
-		ModelAndView mav = new ModelAndView();
+		//오늘,내일 날짜를 html에 보내기 위해
+		String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+	    
+	    Calendar calendar = Calendar.getInstance();
+	    calendar.setTime(new Date());
+
+	    // 내일 날짜로 설정
+	    calendar.add(Calendar.DATE, 1);
+
+	    String tomorrowDate = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
 		
+		ModelAndView mav = new ModelAndView();
+
+	    mav.addObject("check_in_day", currentDate);
+	    mav.addObject("check_out_day", tomorrowDate);
 		mav.addObject("pageIndexList", pageIndexList);
 		mav.addObject("pageNum",currentPage);
 		mav.addObject("dataCount",dataCount);
