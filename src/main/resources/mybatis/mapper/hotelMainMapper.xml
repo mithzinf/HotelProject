@@ -25,6 +25,7 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 	or addr1 like '%' || #{searchValue} || '%') and hp.type = 'title'
 </select>
 
+<!-- 날짜 검색 쿼리문 -->
 <select id="searchDay" parameterType="map" resultType="int">
 	select count(*) from reservation
 	<![CDATA[

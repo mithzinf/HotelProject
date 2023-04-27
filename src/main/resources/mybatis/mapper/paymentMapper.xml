@@ -11,7 +11,7 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 	select nvl(max(res_num), 0) from reservation
 </select>
 <!-- 새로운 예약 생성 -->
-<insert id="createReservation" parameterType="com.boot.hotel.dto.HotelReservationDTO">
+<insert id="insertReservation" parameterType="com.boot.hotel.dto.HotelReservationDTO">
 	insert into reservation (res_num, userid, username, hotel_id, category, hotel_name, room, people, status, 
 			request, inq_date, check_in, check_out)
 	values (#{res_num}, #{userid}, #{username}, #{hotel_id}, #{category}, #{hotel_name}, #{room}, #{people}, #{status},

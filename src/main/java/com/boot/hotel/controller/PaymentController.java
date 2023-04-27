@@ -1,6 +1,8 @@
 package com.boot.hotel.controller;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +26,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.boot.hotel.dto.HotelInfoDTO;
 import com.boot.hotel.dto.HotelReservationDTO;
 import com.boot.hotel.dto.PaymentDTO;
+import com.boot.hotel.service.HotelDetailService;
 import com.boot.hotel.service.PaymentService;
 
 @RestController
@@ -32,6 +37,14 @@ public class PaymentController {
 	
 	@Resource
 	private PaymentService paymentService;
+	
+	@Resource
+	private HotelDetailService hotelDetailService;
+	
+    @Autowired
+    private HttpServletRequest request;
+	
+	
 	
 	@GetMapping("/dummyTest")
 	public ModelAndView aboutUs() throws Exception{
@@ -96,33 +109,38 @@ public class PaymentController {
 		return mav;
 	}
 	
-	@GetMapping("/paymentPage")
+//	@GetMapping("/paymentPage")
+	@RequestMapping(value = "/paymentPage", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView paymentPage(
-//			 @RequestParam String room,
-//			 @RequestParam int hotel_id,
-//			 @RequestParam @DateTimeFormat(pattern = "yyyy/MM/dd") Date checkIn,
-//			 @RequestParam @DateTimeFormat(pattern = "yyyy/MM/dd") Date checkOut
+			@RequestParam("room_type") String room
+			,@RequestParam("hotel_id") int hotel_id
+//			,@RequestParam("checkin") String checkin
+//			,@RequestParam("checkout") String checkout
 			) throws Exception{
 		// 받아와야 하는 거 - userid, hotel_id, room, inq_date, date_num
 		// 체크인 체크아웃 날짜 받아서 date_num 받기
 		
+		
+		System.out.println("결제하기 페이지 이동");
+		
 		ModelAndView mav = new ModelAndView(); 
+		
+		List<HotelInfoDTO> hotInfoDto = hotelDetailService.getHotelInfoById(hotel_id);
+		
+		mav.addObject("hotInfoDto", hotInfoDto);
 		
 		Map<String, Object> paramMap = new HashMap<>();
 		
 		// 방종류 - 넘겨 받기
-		String room = "디럭스"/*방 종류*/;
-		int hotel_id = 131/*hotel_id*/;
+		String rmType = room/*방 종류*/;
 		
 		String userid = "suzi";
-		
 		
 		String type = "title";
 		paramMap.put("hotel_id", hotel_id);
 		paramMap.put("type", type);
 		
 		List<String> hotelTitle = paymentService.searchHotelTitle(paramMap);
-		
 		
 		List<Map<String,Object>> hotelInfo = paymentService.getHotelInfo(hotel_id);
 		
@@ -131,18 +149,15 @@ public class PaymentController {
 		Object check_inTime = hotelInfo.get(0).get("CHECK_IN");
 		Object check_outTime = hotelInfo.get(0).get("CHECK_OUT");
 		
-		
-		
 		int price = 0;
-		String roomType = room;
-		if (roomType.equals("스탠다드")) {
+		String roomType = rmType;
+		if (roomType.equals("standard")) {
 		    price = ((BigDecimal) hotelInfo.get(0).get("STANDARD")).intValue();
-		} else if (roomType.equals("스위트")) {
+		} else if (roomType.equals("sweet")) {
 		    price = ((BigDecimal) hotelInfo.get(0).get("SWEET")).intValue();
-		} else if (roomType.equals("디럭스")) {
+		} else if (roomType.equals("deluxe")) {
 		    price = ((BigDecimal) hotelInfo.get(0).get("DELUXE")).intValue();
 		}
-		
 		
 		List<Map<String, Object>> userInfo = paymentService.getUserInfo(userid);
 		Object user_id = userInfo.get(0).get("USERID");
@@ -153,11 +168,10 @@ public class PaymentController {
 		// 숙박날짜 - 넘겨 받기 
 		// 체크인 체크아웃 날짜 받기
 		
+		
 		DateFormat dateFormat1 = new SimpleDateFormat("yyyy/MM/dd");
 		Date checkInDate = dateFormat1.parse("2023/04/25");
-		Date checkOutDate = dateFormat1.parse("2023/05/25");
-		
-		
+		Date checkOutDate = dateFormat1.parse("2023/04/26");
 		// TODO - 날짜 받기
 //		Date checkInDate = checkIn;
 //		Date checkOutDate = checkOut;
@@ -180,9 +194,9 @@ public class PaymentController {
 		// 숙박인원
 		int people = 0;
 		/*스탠다드 스위트면 2명 디럭스는 4명나오게 */
-		if (room.equals("스탠다드") || room.equals("스위트")) {
+		if (rmType.equals("standard") || rmType.equals("sweet")) {
 		    people = 2;
-		} else if (room.equals("디럭스")) {
+		} else if (rmType.equals("deluxe")) {
 		    people = 4;
 		}
 		// 결제번호 / 예약번호
@@ -194,7 +208,7 @@ public class PaymentController {
 		
 		mav.addObject("hotel_name",hotel_name);
 		mav.addObject("hotel_id",hotel_id);
-		mav.addObject("room",room);
+		mav.addObject("room",rmType);
 		mav.addObject("category",category);
 		mav.addObject("price",price);
 		mav.addObject("hotelInfo",hotelInfo);
@@ -226,8 +240,17 @@ public class PaymentController {
 		
 		ModelAndView mav = new ModelAndView();
 		
-		
 		Map<String, Object> paramMap = new HashMap<>();
+		
+		
+		List<Map<String,Object>> hotelInfo = paymentService.getHotelInfo(resDto.getHotel_id());
+		
+		Object check_inTime = hotelInfo.get(0).get("CHECK_IN");
+		Object check_outTime = hotelInfo.get(0).get("CHECK_OUT");
+		
+		mav.addObject("check_inTime", check_inTime);
+		mav.addObject("check_outTime", check_outTime);
+		
 		
 		int hotelId = resDto.getHotel_id();
 		String type = "title";
@@ -265,7 +288,7 @@ public class PaymentController {
 		payDto.setHotel_id1(resDto.getHotel_id());
 		payDto.setPeople1(resDto.getPeople());
 		
-		paymentService.createReservation(resDto);
+		paymentService.insertReservation(resDto);
 		paymentService.insertPayment(payDto);
 		
 		mav.addObject("payDto",payDto);

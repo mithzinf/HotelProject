@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.boot.hotel.dto.HotelDTO;
+import com.boot.hotel.dto.HotelFacilityDTO;
 import com.boot.hotel.dto.HotelFacilityInDTO;
 //dao 생성
 import com.boot.hotel.dto.HotelInfoDTO;
@@ -18,6 +19,8 @@ public interface HotelDetailMapper {
 	public List<HotelInfoDTO> getHotelInfoById(int hotel_id) throws Exception;
 	
 	public List<HotelPictureDTO> getHotelPicById(int hotel_id) throws Exception;
+	
+	public List<HotelFacilityDTO> getHotelFacilityById(int hotel_id) throws Exception;
 	
 	public List<HotelFacilityInDTO> getHotelFacilityInById(int hotel_id) throws Exception;
 	
@@ -33,5 +36,15 @@ public interface HotelDetailMapper {
 	
 	//0426 추가 쿼리 : 메인에서 더미 리뷰 데이터 불러오는 쿼리, 나중에 복붙하면 됨
 	public List<Map<String, Object>> getReviewData(int hotel_id) throws Exception;
+	
+	//호텔 날짜 검색 스탠다드
+	public int searchDayStandard(Map<String, Object> params) throws Exception;
+	
+	//호텔 날짜 검색 스위트
+	public int searchDaySweet(Map<String, Object> params) throws Exception;
+	
+	//호텔 날짜 검색 디럭스
+	public int searchDayDeluxe(Map<String, Object> params) throws Exception;
+		
 	
 }

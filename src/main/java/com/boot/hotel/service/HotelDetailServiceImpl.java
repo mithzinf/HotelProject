@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.boot.hotel.dto.HotelDTO;
+import com.boot.hotel.dto.HotelFacilityDTO;
 import com.boot.hotel.dto.HotelFacilityInDTO;
 import com.boot.hotel.dto.HotelInfoDTO;
 import com.boot.hotel.dto.HotelPictureDTO;
@@ -34,6 +35,11 @@ public class HotelDetailServiceImpl implements HotelDetailService{
 	public List<HotelPictureDTO> getHotelPicById(int hotel_id) throws Exception {
 		// TODO Auto-generated method stub
 		return hotelDetailMapper.getHotelPicById(hotel_id);
+	}
+	
+	@Override
+	public List<HotelFacilityDTO> getHotelFacilityById(int hotel_id) throws Exception {
+		return hotelDetailMapper.getHotelFacilityById(hotel_id);
 	}
 
 	@Override
@@ -66,12 +72,30 @@ public class HotelDetailServiceImpl implements HotelDetailService{
 		return hotelDetailMapper.getSweetPicture(hotel_id);
 	}
 
+
 	//0426 추가 쿼리 : 메인에서 더미 리뷰 데이터 불러오는 쿼리, 나중에 복붙하면 됨
 	@Override
 	public List<Map<String, Object>> getReviewData(int hotel_id) throws Exception {
 		
 		return hotelDetailMapper.getReviewData(hotel_id);
 	}
+
+
+	@Override
+	public int searchDayStandard(Map<String, Object> params) throws Exception {
+		return hotelDetailMapper.searchDayStandard(params);
+	}
+
+	@Override
+	public int searchDaySweet(Map<String, Object> params) throws Exception {
+		return hotelDetailMapper.searchDaySweet(params);
+	}
+
+	@Override
+	public int searchDayDeluxe(Map<String, Object> params) throws Exception {
+		return hotelDetailMapper.searchDayDeluxe(params);
+	}
+
 
 	/*
 	@Override

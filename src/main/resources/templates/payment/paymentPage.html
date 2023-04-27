@@ -23,7 +23,7 @@
                         <!--end title-->
                         <article class="blog-post">
                             
-                            <h2 style="font-size: 32px">사용자 정보</h2>
+                            <h2 style="font-size: 25px">사용자 정보</h2>
                             
                                 <div class="review">
                                    <div class="row">
@@ -37,12 +37,12 @@
 												</h4>
                                                </div>
 											<dl class="visitor-rating">
-												<dt style="font-size: 21px">사용자 ID</dt>
-												<dd style="font-size: 21px"><td th:text="${userid}"></td></dd>
-												<dt style="font-size: 21px">사용자 전화번호</dt>
-												<dd style="font-size: 21px"><td th:text="${tel}"></dd>
-												<dt style="font-size: 21px">사용자 이메일</dt>
-												<dd style="font-size: 21px"><td th:text="${email}"></dd>
+												<dt style="font-size: 18px">사용자 ID</dt>
+												<dd style="font-size: 18px"><td th:text="${userid}"></td></dd>
+												<dt style="font-size: 18px">사용자 전화번호</dt>
+												<dd style="font-size: 18px"><td th:text="${tel}"></dd>
+												<dt style="font-size: 18px">사용자 이메일</dt>
+												<dd style="font-size: 18px"><td th:text="${email}"></dd>
 											</dl>
                                            </div>
                                    		</div>
@@ -51,9 +51,9 @@
                                </div>
 
                             <br/><br/><br/>
-							<h2 style="font-size: 32px">예약 정보</h2>
+							<h2 style="font-size: 28px">예약 정보</h2>
 							
-                        <div th:each="testItem : ${hotelInfo}">
+                        <div th:each="testItem : ${hotelInfo}" >
                          <div class="review">
                             <div class="row">
                                 <!--end col-md-3-->
@@ -92,27 +92,27 @@
                         				
                                         <dl class="visitor-rating">
                                             
-                                            <dt style="font-size: 21px"><b>방 종류</b></dt>
-                                            <dd style="font-size: 21px"><td th:text="${room}"></td></dd>
+                                            <dt style="font-size: 18px"><b>방 종류</b></dt>
+                                            <dd style="font-size: 18px"><td th:text="${room}"></td></dd>
                                             
-                                            <dt style="font-size: 21px"><b>체크인 날짜</b></dt>
-											<dd style="font-size: 21px"><td th:text="${#dates.format(check_in, 'yyyy/MM/dd')}"></td></dd>
-											<dt style="font-size: 21px"><b>체크아웃 날짜</b></dt>
-											<dd style="font-size: 21px"><td th:text="${#dates.format(check_out, 'yyyy/MM/dd')}"></td></dd>
+                                            <dt style="font-size: 18px"><b>체크인 날짜</b></dt>
+											<dd style="font-size: 18px"><td th:text="${#dates.format(check_in, 'yyyy/MM/dd')}"></td></dd>
+											<dt style="font-size: 18px"><b>체크아웃 날짜</b></dt>
+											<dd style="font-size: 18px"><td th:text="${#dates.format(check_out, 'yyyy/MM/dd')}"></td></dd>
                                             
-                                            <dt style="font-size: 21px"><b>숙박 인원</b></dt>
-                                            <dd style="font-size: 21px"><td th:text="${people}"></td></dd>
+                                            <dt style="font-size: 18px"><b>숙박 인원</b></dt>
+                                            <dd style="font-size: 18px"><td th:text="${people}"></td></dd>
                                             
-                                            <dt style="font-size: 21px"><b>숙박 일수</b></dt>
-                                            <dd style="font-size: 21px"><td th:text="${date_num}"></td></dd>
+                                            <dt style="font-size: 18px"><b>숙박 일수</b></dt>
+                                            <dd style="font-size: 18px"><td th:text="${date_num}"></td></dd>
                                             
-                                            <dt style="font-size: 21px"><b>금액</b></dt>
-                                            <dd style="font-size: 21px"><td th:text="${price}"></td></dd>
+                                            <dt style="font-size: 18px"><b>금액</b></dt>
+                                            <dd style="font-size: 18px"><td th:text="${price}"></td></dd>
                                             
                                             <br/><br/>
                                             <form action="" name="success" method="post" autocomplete="off">
             								
-                                        	<dt style="padding-left: 21px; font-size: 21px" ><b>요청사항</b></dt>
+                                        	<dt style="padding-left: 18px; font-size: 21px" ><b>요청사항</b></dt>
                                         	<dd><textarea id="request1" name="request1" cols="76" rows="4" style="resize: none;"></textarea></dd>
             
 											<input type="hidden" id="hotel_name" name="hotel_name" th:value="${hotel_name}" />
@@ -170,39 +170,39 @@
                     <div class="sidebar">
                     <div class="box filter">
                     
-                        <h2 style="font-size: 23px">예약 상세 정보</h2>
+                        <h2 style="font-size: 21px">예약 상세 정보</h2>
                         <ul class="pay-links">
                         	
-                            <dt style="font-size: 21px">호텔 이름</dt>
-							<dd style="font-size: 18px"><td th:text="${hotel_name}"></td></dd>
+                            <dt style="font-size: 18px">호텔 이름</dt>
+							<dd style="font-size: 14px"><td th:text="${hotel_name}"></td></dd>
 							<br/>
 							
-                            <dt style="font-size: 21px">카테고리</dt>
-							<dd style="font-size: 18px"><td th:text="${category}"></td></dd>
+                            <dt style="font-size: 18px">카테고리</dt>
+							<dd style="font-size: 14px"><td th:text="${category}"></td></dd>
 							<br/>
 							
-							<dt style="font-size: 21px">체크인 날짜</dt>
-							<dd style="font-size: 18px"><td th:text="${#dates.format(check_in, 'yyyy/MM/dd')}"></td></dd>
+							<dt style="font-size: 18px">체크인 날짜</dt>
+							<dd style="font-size: 14px"><td th:text="${#dates.format(check_in, 'yyyy/MM/dd')}"></td></dd>
 							<br/>
-							<dt style="font-size: 21px">체크아웃 날짜</dt>
-							<dd style="font-size: 18px"><td th:text="${#dates.format(check_out, 'yyyy/MM/dd')}"></td></dd>
-							<br/>
-							
-							<dt style="font-size: 21px">체크인    /    체크아웃</dt>
-							<dd style="font-size: 18px" th:text="${check_inTime + ' / ' + check_outTime}"></dd>
+							<dt style="font-size: 18px">체크아웃 날짜</dt>
+							<dd style="font-size: 14px"><td th:text="${#dates.format(check_out, 'yyyy/MM/dd')}"></td></dd>
 							<br/>
 							
-							<dt style="font-size: 21px">방 종류</dt>
-							<dd style="font-size: 18px"><td th:text="${room}"></td></dd>
+							<dt style="font-size: 18px">체크인    /    체크아웃</dt>
+							<dd style="font-size: 14px" th:text="${check_inTime + ' / ' + check_outTime}"></dd>
 							<br/>
 							
-							<dt style="font-size: 21px">가격</dt>
-							<dd style="font-size: 18px"> 총  <td th:text="${price * date_num}"></td>원</dd>
+							<dt style="font-size: 18px">방 종류</dt>
+							<dd style="font-size: 14px"><td th:text="${room}"></td></dd>
 							<br/>
-							<dt style="font-size: 21px">숙박일수</dt>
-							<dd style="font-size: 18px"> 총  <td th:text="${date_num}"></td>일</dd>
+							
+							<dt style="font-size: 18px">가격</dt>
+							<dd style="font-size: 14px"> 총  <td th:text="${price * date_num}"></td>원</dd>
 							<br/>
-							<dt style="font-size: 21px">예약인원</dt>
+							<dt style="font-size: 18px">숙박일수</dt>
+							<dd style="font-size: 14px"> 총  <td th:text="${date_num}"></td>일</dd>
+							<br/>
+							<dt style="font-size: 18px">예약인원</dt>
 							<dd style="font-size: 18px"> 총  <td th:text="${people}" ></td>명</dd>
                         </ul>
                        	
@@ -241,14 +241,15 @@ let maxPayNum = document.getElementById("maxPayNum").value;
         IMP.request_pay({
         	pg : 'html5_inicis.INIpayTest',
             pay_method : 'card',
-            merchant_uid: 57008833-33218 // 초기화 할 수 없다면 maxResNum 사용해보자 아니면 maxPayNum + 1000 해주기
+            merchant_uid: 57008833-33232,
          	// 사용한 값 33001,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
             // 21,22,23,24,25,26,27.28,29 31,32,33,34,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50
             // 51,52,53,54 ~ 114 115 116 117 118 120 121 122 123 124 125 126 127 128 129 130 131 132
             // 134 135 136 137 139 140 141 142 143 144 145 146 147 148 149 150 151 ~ 154 155 156 157
             // 158 159 160 ~ 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179 ~ 183 184
             // 185 186 187 188 189 190 191 192 193 194 195 196 197 198 199 200 201 202 203 204 205 206
-            // 207 208 209 210 211 212 213 214 215 216 217
+            // 207 208 209 210 211 212 213 214 215 216 217 218 219 220 221 222 223 224 225 226 227 228
+            // 229 230 231
             name : hotel_name,
             amount : 100,
             buyer_email : null,
