@@ -21,8 +21,8 @@ public class HotelMainServiceImpl implements HotelMainService{
 	}
 
 	@Override
-	public List<Map<String, Object>> searchMainHotelTest(Map<String, Object> params) throws Exception {
-		return hotelMainMapper.searchMainHotelTest(params);
+	public List<Map<String, Object>> searchMainHotel(Map<String, Object> params) throws Exception {
+		return hotelMainMapper.searchMainHotel(params);
 	}
 
 	@Override

@@ -3,6 +3,13 @@
 <meta charset="UTF-8">
 <div layout:fragment="content" class="content-padding">
 
+<style>
+@import url('https://fonts.googleapis.com/css?family=Gowun+Batang&display=swap');
+
+dd,dt,td {
+	font-family: 'Gowun Batang', sans-serif;
+}
+</style>
 
 	    <div id="page-content">
         <div class="container">
@@ -21,9 +28,9 @@
                     
                      <h2 style="font-size: 40px;">결제페이지</h2>
                         <!--end title-->
-                        <article class="blog-post">
+                        <article class="blog-post" style="margin-top: 50px;">
                             
-                            <h2 style="font-size: 25px">사용자 정보</h2>
+                            <h2 style="font-size: 25px">예약자 정보</h2>
                             
                                 <div class="review">
                                    <div class="row">
@@ -32,16 +39,16 @@
                                        
                                            <div class="comment">
                                                <div class="comment-title">
-                                                   <h4 style="font-size: 30px">
-													<td th:text="${username}"></td>
+                                                   <h4 style="font-size: 30px; font-family: 'Gowun Batang', sans-serif; font-weight: bold;">
+													<td>예약자 성명 : [[${username}]]</td>
 												</h4>
                                                </div>
 											<dl class="visitor-rating">
-												<dt style="font-size: 18px">사용자 ID</dt>
+												<dt style="font-size: 18px; font-weight: bold;">사용자 ID</dt>
 												<dd style="font-size: 18px"><td th:text="${userid}"></td></dd>
-												<dt style="font-size: 18px">사용자 전화번호</dt>
+												<dt style="font-size: 18px; font-weight: bold;">사용자 전화번호</dt>
 												<dd style="font-size: 18px"><td th:text="${tel}"></dd>
-												<dt style="font-size: 18px">사용자 이메일</dt>
+												<dt style="font-size: 18px; font-weight: bold;">사용자 이메일</dt>
 												<dd style="font-size: 18px"><td th:text="${email}"></dd>
 											</dl>
                                            </div>
@@ -51,7 +58,7 @@
                                </div>
 
                             <br/><br/><br/>
-							<h2 style="font-size: 28px">예약 정보</h2>
+							<h2 style="font-size: 28px">숙박 시설 정보</h2>
 							
                         <div th:each="testItem : ${hotelInfo}" >
                          <div class="review">
@@ -59,8 +66,8 @@
                                 <!--end col-md-3-->
                                 <div style="width:80% ">
                                     <div class="comment">
-                            	    <h4>
-                                        <dd th:text="${testItem.HOTEL_NAME}"></dd>
+                            	    <h4 style="font-size: 30px; font-family: 'Gowun Batang', sans-serif; font-weight: bold;">
+                                        <dd>숙박 시설명 : [[${testItem.HOTEL_NAME}]]</dd>
                                     </h4>
                                     	
                                     	
@@ -107,13 +114,13 @@
                                             <dd style="font-size: 18px"><td th:text="${date_num}"></td></dd>
                                             
                                             <dt style="font-size: 18px"><b>금액</b></dt>
-                                            <dd style="font-size: 18px"><td th:text="${price}"></td></dd>
+                                            <dd style="font-size: 18px"><td th:text="${#numbers.formatInteger(price, 0, 'COMMA')} + '원'"></td></dd>
                                             
                                             <br/><br/>
                                             <form action="" name="success" method="post" autocomplete="off">
             								
-                                        	<dt style="padding-left: 18px; font-size: 21px" ><b>요청사항</b></dt>
-                                        	<dd><textarea id="request1" name="request1" cols="76" rows="4" style="resize: none;"></textarea></dd>
+                                        	<dt style="padding-left: 19px; font-size: 21px; margin-bottom: 10px; margin-top: 20px;" ><b>요청사항</b></dt>
+                                        	<dd><textarea id="request1" name="request1" cols="86" rows="4" style="resize: none;"></textarea></dd>
             
 											<input type="hidden" id="hotel_name" name="hotel_name" th:value="${hotel_name}" />
 											<input type="hidden" id="room"  name="room" th:value="${room}" />
@@ -164,10 +171,10 @@
                 <!--end col-md-9-->
                          
                 <!-- <div class="col-md-3" style="margin-top:-35px;"> -->
-                <div class="col-md-3" style="margin-left:-83px; margin-top: 70px">
+                <div class="col-md-3" style="margin-left:-83px; margin-top: 100px">
                 		
                     <br/><br/>
-                    <div class="sidebar">
+                    <div class="sidebar" >
                     <div class="box filter">
                     
                         <h2 style="font-size: 21px">예약 상세 정보</h2>
@@ -197,17 +204,17 @@
 							<br/>
 							
 							<dt style="font-size: 18px">가격</dt>
-							<dd style="font-size: 14px"> 총  <td th:text="${price * date_num}"></td>원</dd>
+							<dd style="font-size: 14px"> 총  <td th:text="${#numbers.formatInteger(price * date_num, 0, 'COMMA')}"></td>원</dd>
 							<br/>
 							<dt style="font-size: 18px">숙박일수</dt>
 							<dd style="font-size: 14px"> 총  <td th:text="${date_num}"></td>일</dd>
 							<br/>
 							<dt style="font-size: 18px">예약인원</dt>
-							<dd style="font-size: 18px"> 총  <td th:text="${people}" ></td>명</dd>
+							<dd style="font-size: 14px"> 총  <td th:text="${people}" ></td>명</dd>
                         </ul>
                        	
                        	<br/><br/>
-                        <button style="width: 200px; height: 50px; margin: 3%" class="btn btn-primary btn-rounded scroll" onclick="requestPay();" type="button">결제하기</button>
+                        <button style="width: 200px; height: 50px; margin: 3%; font-size: 20px;" class="btn btn-primary btn-rounded scroll" onclick="requestPay();" type="button">결제하기</button>
                         </div>
                     </div>
                     <!--end sidebar-->
@@ -241,15 +248,9 @@ let maxPayNum = document.getElementById("maxPayNum").value;
         IMP.request_pay({
         	pg : 'html5_inicis.INIpayTest',
             pay_method : 'card',
-            merchant_uid: 57008833-33232,
-         	// 사용한 값 33001,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
-            // 21,22,23,24,25,26,27.28,29 31,32,33,34,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50
-            // 51,52,53,54 ~ 114 115 116 117 118 120 121 122 123 124 125 126 127 128 129 130 131 132
-            // 134 135 136 137 139 140 141 142 143 144 145 146 147 148 149 150 151 ~ 154 155 156 157
-            // 158 159 160 ~ 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179 ~ 183 184
-            // 185 186 187 188 189 190 191 192 193 194 195 196 197 198 199 200 201 202 203 204 205 206
-            // 207 208 209 210 211 212 213 214 215 216 217 218 219 220 221 222 223 224 225 226 227 228
-            // 229 230 231
+            merchant_uid: 57008833-33241,
+         	// 사용한 값 33001~240
+         	// 일일이 수정해주면서 값을 늘려주는 수밖에...
             name : hotel_name,
             amount : 100,
             buyer_email : null,
@@ -259,21 +260,16 @@ let maxPayNum = document.getElementById("maxPayNum").value;
             
         }, function (rsp) {
             if (rsp.success) {  
-                var msg = '결제가 완료되었습니다.';
-                msg += '고유ID : ' + rsp.imp_uid;
-                msg += '상점 거래ID : ' + rsp.merchant_uid;
-                msg += '결제 금액 : ' + rsp.paid_amount;
-                msg += '카드 승인번호 : ' + rsp.apply_num;
+
                 
                 success.action = "/payment/payment_ok";
                 
                 success.submit();
                 
             } else {
-                var msg = '결제에 실패하였습니다.';
-                msg += '실패 사유 : ' + rsp.error_msg;
+            	
             }
-            alert(msg);
+            
         });
 
     }

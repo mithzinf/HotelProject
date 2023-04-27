@@ -7,7 +7,7 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.boot.hotel.mapper.HotelMainMapper">
 
 <select id="getHotelMain" parameterType="int" resultType="map">
-	 SELECT h.hotel_name, h.category, hp.url,
+	 SELECT h.hotel_id, h.hotel_name, h.category, hp.url,
 	 SUBSTR(addr1, 7, INSTR(addr1, '구') -6) as addr
 	 FROM hotel h
      INNER JOIN hotel_picture hp ON h.hotel_id = hp.hotel_id
@@ -16,7 +16,7 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 
 
 <!-- 검색값 출력하는 쿼리문 -->
-<select id="searchMainHotelTest" parameterType="map" resultType="map">
+<select id="searchMainHotel" parameterType="map" resultType="map">
 	select h.hotel_name, hi.hotel_information, hp.url, h.hotel_id
 	from hotel h
 	inner join hotel_info hi on h.hotel_id = hi.hotel_id

@@ -153,6 +153,7 @@ Headers:		'Lato', sans-serif;
   -webkit-transform: translateY(0);
   transform: translateY(0);
   pointer-events: auto;
+  
 }
 #page-header .primary-nav nav > ul li:last-child a {
   padding-right: 0;

@@ -115,7 +115,7 @@ h1,h2,input{
 	                        <div class="item big equal-height">
 	                            <div class="item-wrapper">
 	                                <div class="image">
-	                                    <a href="hotel/main" class="wrapper">
+	                                    <a th:href="@{|/detail?hotel_id=${dto.HOTEL_ID}&check_in=${check_in_day}&check_out=${check_out_day}|}" class="wrapper">
 	                                        <div>
 	                                            <img th:src="@{|/hotel/${dto.URL}|}" alt="호텔전경사진">
 	                                        </div>
@@ -131,7 +131,7 @@ h1,h2,input{
 	                                    </div>
 	                                    <div class="info">
 	                                        <figure class="label label-info">[[${dto.CATEGORY}]]</figure>
-	                                        <a href="hotel/test1"><h3>[[${dto.HOTEL_NAME}]]</h3></a>
+	                                        <a th:href="@{|/detail?hotel_id=${dto.HOTEL_ID}&check_in=${check_in_day}&check_out=${check_out_day}|}"><h3>[[${dto.HOTEL_NAME}]]</h3></a>
 	                                        <figure class="location">[[${dto.ADDR}]]</figure>
 	                                    </div>
 	                                </div>
