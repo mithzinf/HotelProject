@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boot.hotel.mapper.InquiryMapper">
+
+<!-- 사용자 정보 가져오기 -->
+<select id="getUserInfo" parameterType="map" resultType="map">
+	select userid, username, email, tel from member where userid=#{userid}
+</select>
+
+<!-- 게시글 -->
+<select id="maxInqNum" resultType="int">
+	select nvl(max(inq_num),0) from inquiry_board
+</select>
+
+<insert id="insertInquiry" parameterType="map">
+	insert into inquiry_board (inq_num,userid, username, tel, email,
+		category, inq_cate, subject, context, hitCount, created, answer)
+	values (#{inq_num},#{userid}, #{username}, #{tel}, #{email},
+		#{category}, #{inq_cate}, #{subject}, #{context}, 0, sysdate, 0)
+</insert>
+
+<select id="getInqList" resultType="com.boot.hotel.dto.HotelInquiryDTO" parameterType="map">
+ 		SELECT * from (
+  	    select rownum rnum,data.* from (
+  	    select * from inquiry_board 
+  	    where ${searchKey} like '%' || #{searchValue} || '%'
+  	    order by inq_num desc) data)
+    <![CDATA[
+        where rnum>=#{start} and rnum<=#{end}
+    ]]> 
+</select>
+
+<select id="getListsCount" resultType="int" >
+	select nvl(count(*),0) from inquiry_board 
+	where ${searchKey} like '%' || #{searchValue}||'%'
+</select>
+
+<update id="updateHitCount" parameterType="int">
+	update inquiry_board set hitCount=hitCount+1 where inq_num=#{inq_num}
+</update>
+
+<select id="getReadData" parameterType="int" resultType="com.boot.hotel.dto.HotelInquiryDTO">
+	select inq_num,userid, tel, email, category, inq_cate, subject, context, hitCount, created, answer
+	from inquiry_board where inq_num=#{inq_num}
+</select> 
+
+<update id="updateListData" parameterType="com.boot.hotel.dto.AnswerBoardDTO">
+	update inquiry_board set subject=#{subject},context=#{context} where inq_num=#{inq_num}
+</update>
+
+<delete id="deleteData" parameterType="int">
+	delete inquiry_board where inq_num=#{inq_num}
+</delete>
+
+
+
+
+
+
+
+<delete id="delAns" parameterType="int">
+	delete from answer_board where inq_num=#{inq_num}
+</delete>
+
+
+
+
+<update id="updateAnsweredList" parameterType="com.boot.hotel.dto.HotelInquiryDTO">
+	update inquiry_board set answer=1 where inq_num=#{inq_num}
+</update>
+  
+
+<!-- 답변 -->
+<select id="maxAnsNum" resultType="int">
+	select nvl(max(ans_num),0) from answer_board
+</select>
+
+<insert id="insertAnswer" parameterType="map">
+	insert into answer_board (ans_num,inq_num,userid,username,content,created)
+	values (#{ans_num},#{inq_num},#{userid},#{username},#{content},sysdate)
+</insert>
+
+<select id="getAnswerList" resultType="com.boot.hotel.dto.AnswerBoardDTO" parameterType="map">
+ 		SELECT * from (
+  	    select rownum rnum,data.* from (
+  	    select * from answer_board 
+  	    order by inq_num desc) data)
+  	    where inq_num=#{num}
+</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper> 
