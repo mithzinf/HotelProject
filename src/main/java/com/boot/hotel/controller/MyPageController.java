@@ -406,7 +406,7 @@ public class MyPageController {
 
 	    // 내일 날짜로 설정
 	    calendar.add(Calendar.DATE, 1);
-
+	    
 	    String tomorrowDate = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
 		
 		ModelAndView mav = new ModelAndView();
@@ -432,7 +432,6 @@ public class MyPageController {
 		
 		ModelAndView mav = new ModelAndView();
 
-		myPageService.deletePay(res_num);
 		myPageService.deleteReservation(res_num);
 		
 		mav.setViewName("redirect:/mypage/my_reservation");

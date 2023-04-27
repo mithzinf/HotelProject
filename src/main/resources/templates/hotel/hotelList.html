@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- 경로가 templates/layout/layout.html을 상속받아야 하므로 -->
-<html layout:decorate="~{/layout/layout}">
+<html layout:decorate="~{/layout/layout}" xmlns:th="http://www.thymeleaf.org">
 
 <meta charset="UTF-8">
 
@@ -183,7 +183,7 @@ p {
 							<div class="basket-paging" th:if="${dataCount==0}">
 								<td colspan="5">
 									<span style="font-size: 36px; text-align:center;
-									font-family: 'Gowun Batang', sans-serif; font-weight: bold;">찜하신 호텔이 없습니다. </span>
+									font-family: 'Gowun Batang', sans-serif; font-weight: bold;">찾으시는 호텔이 없습니다. </span>
 								</td>
 							</div>
 	 						
