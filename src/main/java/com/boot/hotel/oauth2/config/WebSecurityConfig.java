@@ -34,7 +34,7 @@ public class WebSecurityConfig {
 			csrf().disable().headers().frameOptions().disable()
 			.and()
 			.authorizeRequests()
-				.antMatchers("/**","/hotel/**").permitAll()
+				.antMatchers("/**").permitAll()
 				.anyRequest().authenticated()
 			.and()
 			.logout().logoutUrl("/logout").logoutSuccessUrl("/login/logout")

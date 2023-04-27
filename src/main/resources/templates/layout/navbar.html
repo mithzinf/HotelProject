@@ -2,6 +2,14 @@
 <meta charset="UTF-8">
 
 <nav th:fragment="navbarFragment">
+<style>
+@import url('https://fonts.googleapis.com/css?family=Gowun+Batang&display=swap');
+h1,h2,h3,input,p,span,ul{
+	font-family: 'Gowun Batang', sans-serif;
+	opacity: 1;
+	font-weight: 600;
+}
+</style>
 
 <div class="page-wrapper">
     <div id="page-header">
@@ -19,14 +27,14 @@
 	                    <div class="right" th:if="${session.sessionUser == null || session.sessionUserRegister != null}">
 	                        <nav id="primary-nav">
 	                            <ul>
-	                                <li><a href="login/login">로그인</a></li>
-	                                <li><a href="login/register_select">회원가입</a></li>
-	                                <li><a href="hotel/main" class="has-child">더보기</a>
+	                                <li><a href="login/login" style="font-size: 18px;">로그인</a></li>
+	                                <li><a href="login/register_select" style="font-size: 18px;">회원가입</a></li>
+	                                <li><a href="hotel/main" class="has-child" style="font-size: 18px;">더보기</a>
 	                                    <ul class="child-nav">
-											<li><a href="hotel/main">공지사항</a></li>
-	                                        <li><a href="hotel/main">문의게시판</a></li>
-	                                        <li><a href="hotel/main">메뉴1</a></li>
-	                                        <li><a href="hotel/main">메뉴2</a></li>
+											<li><a href="hotel/main"><span style="opacity: 1; font-weight: bold;">공지사항</span></a></li>
+	                                        <li><a href="hotel/main"><span style="opacity: 1; font-weight: bold;">문의게시판</span></a></li>
+	                                        <li><a href="hotel/main"><span style="opacity: 1; font-weight: bold;">메뉴1</span></a></li>
+	                                        <li><a href="hotel/main"><span style="opacity: 1; font-weight: bold;">메뉴2</span></a></li>
 	                                    </ul>
 	                                </li>                                    
 	                            </ul>
@@ -37,21 +45,21 @@
 	                        <nav id="primary-nav">
 	                            <ul>
 	                            	<li><strong>[ [[${session.sessionUser.name}]] ]</strong> 님 환영합니다! &nbsp;&nbsp;</li>
-	                                <li><a href="login/logout">로그아웃</a></li>
-	                                <li><a href="hotel/main" class="has-child">마이페이지</a>
+	                                <li><a href="login/logout" style="font-size: 18px;">로그아웃</a></li>
+	                                <li><a href="hotel/main" class="has-child" style="font-size: 18px;">마이페이지</a>
 	                                    <ul class="child-nav">
-											<li><a href="mypage/mypage">내정보</a></li>
-	                                        <li><a href="mypage/basket">호텔 찜 목록</a></li>
-	                                        <li><a href="mypage/my_reservation">예약내역</a></li>
-	                                        <li><a href="mypage/delete">회원탈퇴</a></li>
+											<li><a href="mypage/mypage"><span style="opacity: 1; font-weight: bold;">내정보</span></a></li>
+	                                        <li><a href="mypage/basket"><span style="opacity: 1; font-weight: bold;">호텔 찜 목록</span></a></li>
+	                                        <li><a href="mypage/my_reservation"><span style="opacity: 1; font-weight: bold;">예약내역</span></a></li>
+	                                        <li><a href="mypage/delete"><span style="opacity: 1; font-weight: bold;">회원탈퇴</span></a></li>
 	                                    </ul>
 	                                </li> 
-	                                <li><a href="/nav/index" class="has-child">더보기</a>
+	                                <li><a href="/nav/index" class="has-child" style="font-size: 18px;">더보기</a>
 	                                    <ul class="child-nav">
-											<li><a href="hotel/main">공지사항</a></li>
-	                                        <li><a href="hotel/main">문의게시판</a></li>
-	                                        <li><a href="hotel/main">메뉴1</a></li>
-	                                        <li><a href="hotel/main">메뉴2</a></li>
+											<li><a href="hotel/main"><span style="opacity: 1; font-weight: bold;">공지사항</span></a></li>
+	                                        <li><a href="hotel/main"><span style="opacity: 1; font-weight: bold;">문의게시판</span></a></li>
+	                                        <li><a href="hotel/main"><span style="opacity: 1; font-weight: bold;">메뉴1</span></a></li>
+	                                        <li><a href="hotel/main"><span style="opacity: 1; font-weight: bold;">메뉴2</span></a></li>
 	                                    </ul>
 	                                </li>                                    
 	                            </ul>

@@ -330,7 +330,10 @@ public class MyPageController {
 			currentPage = Integer.parseInt(pageNum);
 		}
 		
+		System.out.println(sessionUser.getId());
+		
 		int dataCount = myPageService.reservationMaxNum(sessionUser.getId());
+		System.out.println(dataCount);
 		
 		int numPerPage = 4;
 		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
@@ -395,20 +398,14 @@ public class MyPageController {
 	
 	
 	@RequestMapping(value = "/mypage/my_reservation_delete", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView my_reservation_delete(@RequestParam int hotel_id) throws Exception
+	public ModelAndView my_reservation_delete(@RequestParam int res_num) throws Exception
 	{
 		System.out.println("예약 내역 삭제 컨트롤러 진입");
 		
-		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
-		
 		ModelAndView mav = new ModelAndView();
-		
-		Map<String, Object> params = new HashMap<>();
-        params.put("userid", sessionUser.getId());
-        params.put("hotel_id", hotel_id);
-		
-		myPageService.deletePay(params);
-		myPageService.deleteReservation(params);
+
+		myPageService.deletePay(res_num);
+		myPageService.deleteReservation(res_num);
 		
 		mav.setViewName("redirect:/mypage/my_reservation");
 		

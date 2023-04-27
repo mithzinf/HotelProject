@@ -68,14 +68,16 @@ public class MyPageServiceImpl implements MyPageService{
 	}
 
 	@Override
-	public void deletePay(Map<String, Object> params) throws Exception {
-		myPageMapper.deletePay(params);
+	public void deletePay(int res_num) throws Exception {
+		myPageMapper.deletePay(res_num);
 	}
 
 	@Override
-	public void deleteReservation(Map<String, Object> params) throws Exception {
-		myPageMapper.deleteReservation(params);
+	public void deleteReservation(int res_num) throws Exception {
+		myPageMapper.deleteReservation(res_num);
 	}
+
+
 
 
 	

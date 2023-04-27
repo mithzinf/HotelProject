@@ -17,5 +17,14 @@ public interface HotelInfoService {
 	public List<HotelPictureDTO> getHotelList3(Map<String, Object> params) throws Exception;
 	
     public int getHotelCount(Map<String, Object> params) throws Exception;
+    
+    //리스트에 표시할 찜 유무를 검색하기 위한 메소드
+    public String searchListBasket(Map<String, Object> params) throws Exception;
+    
+    //카테고리 검색을 위한 전체 갯수 구하기
+    public int getHotelCountCategory(Map<String, Object> params) throws Exception;
+    
+    //카테고리 검색 호텔리스트1
+    public List<HotelDTO> getHotelList1Category(Map<String, Object> params) throws Exception;
 }
 
