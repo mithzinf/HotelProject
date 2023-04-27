@@ -153,7 +153,7 @@ h1,h2,input{
      
 
 
-		<!-- 부트스트랩? 기능 장소 : 5월의 추천 행사 캐러셀 : 제작 : 김어진 -->
+		<!-- 부트스트랩? 기능 장소 -->
         <div class="block">
             <div class="container">
                 <div class="title">
@@ -167,7 +167,7 @@ h1,h2,input{
                         <div class="description">
                             <a href="https://hangang.seoul.go.kr/www/eventMng/detail.do?&evntSn=59&mid=538"><h3 style="text-align: center">2023 드론라이트쇼</h3></a>
                             
-                            <p>수백여 대의 드론이 펼치는 화려한 불빛 쇼로 더욱 아름다운 한강의 밤하늘을 감상하세요.</p>
+                            <p>수백여 대의 드론이 펼치는 화려한 불빛 쇼로  더욱 아름다운 한강의 밤하늘을 감상하세요</p>
                             <br/>
                             <a href="https://hangang.seoul.go.kr/www/eventMng/detail.do?&evntSn=59&mid=538" class="btn btn-default btn-small btn-framed btn-rounded">More</a>
                         </div>
@@ -186,7 +186,7 @@ h1,h2,input{
                     <div class="gallery-item">
                         <a href="https://ddp.or.kr/index.html?menuno=230&siteno=2&bbsno=469&boardno=15&bbstopno=469&act=view&subno="><div class="image"><img src="https://ddp.or.kr/usr/upload/board_thumb/zboardphotogallery0/20230310100925952.jpg" alt=""></div></a>
                         <div class="description">
-                            <a href="https://ddp.or.kr/index.html?menuno=230&siteno=2&bbsno=469&boardno=15&bbstopno=469&act=view&subno="><h3>데이비드 호크니&브리티시 팝 아트</h3></a>
+                            <a href="https://ddp.or.kr/index.html?menuno=230&siteno=2&bbsno=469&boardno=15&bbstopno=469&act=view&subno="><h3>데이비드 호크니&브리티쉬 팝 아트</h3></a>
                           
                             <p>영국 팝아트 거장들의 작품들을 한 번에 만나 볼 수 있는 특별한 기회!</p>
                             <a href="https://ddp.or.kr/index.html?menuno=230&siteno=2&bbsno=469&boardno=15&bbstopno=469&act=view&subno=" class="btn btn-default btn-small btn-framed btn-rounded">More</a>
@@ -262,56 +262,27 @@ h1,h2,input{
        
 
 
-		<!-- 메인페이지 리뷰 목록 보여주는곳? -->
+		<!-- 메인페이지 리뷰 목록 보여주는곳? 디자인 수정 - 김어진-->
         <div class="container">
             <div class="block">
                 <div class="title">
                     <h2>Reviews</h2>
-                                        <div class="row">
+                    <div class="row">
+                    <div th:if = "${#lists.size(mainReview)}!=null" th:each="dto:${mainReview}">
                         <div class="col-md-3 col-sm-3">
                             <div class="review-single">
-								<a href="detail.html#reviews"><h3>호텔 이름</h3></a>
-                                <figure class="location">userid</figure>
-                                <div class="rating"><i class="fa fa-star"></i>score컬럼</div>
-                                <p>리뷰 컨텐츠 : content 어쩌구 저쩌구 어어어어어어아아아아아아아아아</p>
+								<a href="detail.html#reviews"><h3>[[${dto.HOTEL_NAME}]]</h3></a>
+                                <figure class="location">[[${dto.USERID}]]</figure>
+                                <div class="rating"><i class="fa fa-star"></i>[[${dto.SCORE}]]</div>
+                                <p>[[${dto.CONTEXT}]]</p>
                                 <a href="detail.html#reviews" class="link icon">Full Review<i class="fa fa-expand"></i></a>
                             </div>
-                            <!--end review-->
+                            <!--end review single-->
                         </div>
                         <!--end col-md-3-->
-                        <div class="col-md-3 col-sm-3">
-                            <div class="review-single">
-                               <a href="detail.html#reviews"><h3>호텔 이름</h3></a>
-                                <figure class="location">userid</figure>
-                                <div class="rating"><i class="fa fa-star"></i>score컬럼</div>
-                                <p>리뷰 컨텐츠 : content</p>
-                                <a href="detail.html#reviews" class="link icon">Full Review<i class="fa fa-expand"></i></a>
-                            </div>
-                            <!--end review-->
+                        
                         </div>
-                        <!--end col-md-3-->
-                        <div class="col-md-3 col-sm-3">
-                            <div class="review-single">
-                               <a href="detail.html#reviews"><h3>호텔 이름</h3></a>
-                                <figure class="location">userid</figure>
-                                <div class="rating"><i class="fa fa-star"></i>score 컬럼</div>
-                                <p>리뷰 컨텐츠 : content</p>
-                                <a href="detail.html#reviews" class="link icon">Full Review<i class="fa fa-expand"></i></a>
-                            </div>
-                            <!--end review-->
-                        </div>
-                        <!--end col-md-3-->
-                        <div class="col-md-3 col-sm-3">
-                            <div class="review-single">
-                                <a href="detail.html#reviews"><h3>호텔 이름</h3></a>
-                                <figure class="location">userid</figure>
-                                <div class="rating"><i class="fa fa-star"></i>score 컬럼</div>
-                                <p>리뷰 컨텐츠 : content</p>
-                                <a href="detail.html#reviews" class="link icon">Full Review<i class="fa fa-expand"></i></a>
-                            </div>
-                            <!--end review, content의 길이에 따라 full Review의 위치가 달라짐..-->
-                        </div>
-                        <!--end col-md-3-->
+                        <!-- th : if of end -->
                     </div>
                     <!--end row-->
                 </div>

@@ -2,6 +2,7 @@ package com.boot.hotel.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -169,7 +170,43 @@ public class HotelDetailController {
    }
  
    
- 
+   @RequestMapping(value = "/ozin", method = { RequestMethod.GET, RequestMethod.POST })
+ public ModelAndView getMain() throws Exception {
+	 
+	 ModelAndView mav = new ModelAndView();
+	 //메인 페이지 하단에 리뷰 4개 임의로 만드는 코딩 만드는 중
+	//0426 추가 쿼리 : 메인에서 더미 리뷰 데이터 불러오는 쿼리, 나중에 복붙하면 됨
+		
+	 Map<String, Object> paramMap = new HashMap<>();
+	 int[] hotel_id = new int[4];
+	 //i가 1, 11, 21,31 출력되게 하는 for문..
+	 for(int i=0; i<4; i++) {
+		 hotel_id[i] = 1+i*10;
+	 }
+	 
+	 
+	 List<Map<String, Object>> mainReview = new ArrayList<>();
+	 for(int i = 0; i < hotel_id.length; i++) {
+	     List<Map<String, Object>> reviewData = hotelDetailService.getReviewData(hotel_id[i]);
+	     mainReview.addAll(reviewData);
+	 }
+	 
+
+	 
+	 mav.addObject("mainReview", mainReview);
+	// System.out.println(mainReview); //출력 실험
+	 System.out.println(hotel_id[1]); //11나와야 되그등?
+		
+		// List<Map<String, Object>> reviewData = hotelDetailService.getReviewData(1);
+		 System.out.println(mainReview);
+	 
+	 
+	 mav.setViewName("hotel/hotelMain_ozin");
+	 return mav;
+	 
+	
+	
+ }
    
    
 }

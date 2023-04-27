@@ -42,4 +42,13 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 </select>
 
 
+
+<!-- 0426 추가 쿼리 : 메인에서 더미 리뷰 데이터 불러오는 쿼리, 나중에 복붙하면 됨 -->
+<select id="getReviewData" parameterType="int" resultType="map">
+		SELECT h.hotel_name, r.userid, r.score, r.context 
+		FROM hotel h 
+		INNER JOIN review r ON h.hotel_id = r.hotel_id 
+		WHERE h.hotel_id = #{hotel_id}
+</select>
+
 </mapper>
