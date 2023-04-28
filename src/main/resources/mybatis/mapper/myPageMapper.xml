@@ -29,7 +29,7 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 </select>
 
 <select id="searchBasketHotel" parameterType="int" resultType="map">
-	select b.basket_num, h.hotel_name, h.addr1, h.category, h.tel, hi.standard, hp.url
+	select h.hotel_id, b.basket_num, h.hotel_name, h.addr1, h.category, h.tel, hi.standard, hp.url
 	from hotel h
 	inner join hotel_info hi on h.hotel_id = hi.hotel_id
 	inner join hotel_picture hp on h.hotel_id = hp.hotel_id

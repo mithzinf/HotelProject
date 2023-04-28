@@ -16,7 +16,7 @@ public interface PaymentService {
 	
 	// 예약 내역
 	public int maxResNum() throws Exception;
-	public void createReservation(HotelReservationDTO resDto) throws Exception;
+	public void insertReservation(HotelReservationDTO resDto) throws Exception;
 	
 	public List<String> searchHotelTitle(Map<String, Object> params) throws Exception;
 	

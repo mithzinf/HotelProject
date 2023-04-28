@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE mapper
+PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boot.hotel.mapper.NoticeMapper">
+
+<!-- 0427 공지사항 관련 매퍼 - 어진 -->
+
+<!--  관리자만 글 쓰게 하는 건 나중 문제, 공지사항은 답변따위 안달아 -->
+
+<!-- 공지사항 글 갯수 가지고 옴 -->
+<select id="maxNoticeNum" resultType="int">
+	select nvl(max(notice_num),0) from notice_board
+</select>
+
+<!-- 공지사항 글쓰기 -->
+<insert id="insertNotice" parameterType="map">
+	insert into notice_board (notice_num, userid, username, subject, context, hitCount, created)
+	values (#{notice_num},#{userid}, #{username}, #{subject}, #{context}, 0, sysdate)
+</insert>
+
+<!-- 공지사항 글 갯수 세는 쿼리 -->
+<select id="getListsCount" resultType="int">
+	select nvl(count(*),0) from notice_board 
+</select>
+
+<!-- 공지사항 글 목록 정렬 + 페이징처리/ 검색기능 빼-->
+<select id="getNoticeList" resultType="com.boot.hotel.dto.NoticeBoardDTO" parameterType="map">
+ 		SELECT * from (
+  	    select rownum rnum,data.* from (
+  	    select * from notice_board 
+  	    order by notice_num desc) data)
+    <![CDATA[
+        where rnum>=#{start} and rnum<=#{end}
+    ]]> 
+</select>
+
+<!-- 공지사항 조회수 증가 쿼리 -->
+<update id="updateHitCount" parameterType="int">
+	update notice_board set hitCount=hitCount+1 where notice_num=#{notice_num}
+</update>
+
+<!-- 공지사항 글 읽어내는 쿼리 -->
+<select id="getReadNotice" parameterType="int" resultType="com.boot.hotel.dto.NoticeBoardDTO">
+	select notice_num,userid, username, subject, context, hitCount, created
+	from notice_board where notice_num=#{notice_num}
+</select> 
+
+<!-- 공지사항 글 수정 쿼리 -->
+<update id="updateNotice" parameterType="com.boot.hotel.dto.NoticeBoardDTO">
+	update notice_board set subject=#{subject},context=#{context} where notice_num=#{notice_num}
+</update>
+
+<!-- 공지사항 글 삭제 쿼리 -->
+<delete id="deleteNotice" parameterType="int">
+	delete notice_board where notice_num=#{notice_num}
+</delete>
+
+
+
+</mapper>

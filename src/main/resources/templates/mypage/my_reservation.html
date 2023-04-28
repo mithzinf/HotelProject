@@ -43,6 +43,12 @@
 	font-size: 30px;
 }
 
+td{
+	font-family: 'Gowun Batang', sans-serif;
+	opacity: 1;
+	font-weight: bold;
+}
+
 .sub {
 	text-align: center;
 	font-family: 'Gowun Batang', sans-serif;
@@ -118,6 +124,9 @@
   text-align: center;
 }
 
+hr {
+	margin: 5px 5px;
+}
 
 
 </style>
@@ -131,7 +140,7 @@
                 <li class="active"><a href="mypage/my_reservation">예약내역</a></li>
                 <li><a href="mypage/delete">회원탈퇴</a></li>
             </ul>
-           	<hr/>
+           	<hr style="margin-top: 25px; margin-bottom:25px; margin-left:0; margin-right:0; width: 100%;"/>
             <h2>더보기</h2>
             <ul class="links">
                 <li><a href="mypage/mypage">공지사항</a></li>
@@ -150,7 +159,7 @@
 			<table class="table">
 				<thead>
   					<tr>
-	                    <th class="sub" style="text-align: left; padding-left: 10px;">회원님이 예약하신 숙박시설의 목록입니다.</th>
+	                    <th class="sub" style="text-align: left; padding-left: 10px;">회원님이 예약하신 숙박 시설의 목록입니다.</th>
 	                    <th style="width: 12%;" class="sub">결제가격</th>
 	                    <th style="width: 7%;" class="sub">예약상태</th>
 	                    <th style="width: 10%;" class="sub">예약취소</th>
@@ -159,17 +168,17 @@
                 <tbody>
                     
                     
-                <tr class="my-item" style="margin-bottom: 0px; height:170px; vertical-align: center;"
+                <tr class="my-item" style="margin-bottom: 0px; height:180px; vertical-align: center;"
                 th:if="${#lists.size(pagedMyReservation)}!=null" th:each="dto:${pagedMyReservation}">
                     <td>
                     <input type="hidden" name="res_num" class="res_num" id="res_num" th:value="${dto.RES_NUM}">
                         <div class="image-wrapper" style="height:100%;">
-                            <a href="mypage/my_reservation" class="image" >
+                            <a th:href="@{|/detail?hotel_id=${dto.HOTEL_ID}&check_in=${check_in_day}&check_out=${check_out_day}|}" class="image" style="height:194px;" >
                             	<img th:src="@{|/hotel/${dto.URL}|}" style="width:100%; height:100%; position: absolute;">
                             </a>
                         </div>
                         <div class="info" style="padding: 20px 20px;">
-                            <a href="mypage/my_reservation"><span class="sub-title">[[${dto.HOTEL_NAME}]]</span></a>
+                            <a th:href="@{|/detail?hotel_id=${dto.HOTEL_ID}&check_in=${check_in_day}&check_out=${check_out_day}|}"><span class="sub-title">[[${dto.HOTEL_NAME}]]</span></a>
                             <figure class="label label-info">[[${dto.CATEGORY}]]</figure>
                             <figure class="location" style="width:80%;"><strong>[[${dto.ADDR1}]]</strong></figure>
                             <div class="meta">
@@ -184,7 +193,9 @@
                         </div>
                         <!--end info-->
                     </td>
-                    <td style="width: 10%; text-align: center; font-size: 18px;">[[${dto.PRICE}]]</td>
+                    <td style="width: 10%; text-align: center; font-size: 18px;">
+                    <span style="font-size: 19px; font-weight: bold;"
+                    th:text="${#numbers.formatInteger(dto.PRICE, 0, 'COMMA')+'원'}"></span></td>
                     <td style="width: 10%; text-align: center; font-size: 18px;">결제완료</td>
                     <td style="width: 10%; text-align: center; font-size: 18px;">
                     <a href="mypage/my_reservation" class="delete-btn">취소</a></td>

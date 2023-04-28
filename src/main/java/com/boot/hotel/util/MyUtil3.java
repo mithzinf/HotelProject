@@ -3,7 +3,7 @@ package com.boot.hotel.util;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MyUtil {
+public class MyUtil3 {
 
 	
 	public int getPageCount(int numPerPage, int dataCount) {
@@ -48,22 +48,22 @@ public class MyUtil {
 	    }
 
 	    if (totalPage > numPerBlock && currentPageSetup > 0) {
-	        sb.append("<a href=\"" + listUrl + "pageNum=" + (currentPageSetup - numPerBlock + 1) + "\">◀이전</a>&nbsp;&nbsp;");
+	        sb.append("<a href=\"" + listUrl + "pageNum=" + (currentPageSetup - numPerBlock + 1) + "\">이전</a>&nbsp;");
 	    }
 
 	    page = currentPageSetup + 1;
 
 	    while (page <= totalPage && page <= (currentPageSetup + numPerBlock)) {
 	        if (page == currentPage) {
-	            sb.append("<a href=\"" + listUrl + "pageNum=" + currentPage + "\"><u>" + currentPage + "</u>&nbsp;</a> ");
+	            sb.append("<a href=\"" + listUrl + "pageNum=" + currentPage + "\">" + currentPage + "</a> ");
 	        } else {
-	            sb.append("<a href=\"" + listUrl + "pageNum=" + page + "\">" + page + "&nbsp;</a> ");
+	            sb.append("<a href=\"" + listUrl + "pageNum=" + page + "\">" + page + "</a> ");
 	        }
 	        page++;
 	    }
 
 	    if (totalPage - currentPageSetup > numPerBlock) {
-	        sb.append("<a href=\"" + listUrl + "pageNum=" + (currentPageSetup + numPerBlock + 1) + "\">다음▶</a>&nbsp;");
+	        sb.append("<a href=\"" + listUrl + "pageNum=" + (currentPageSetup + numPerBlock + 1) + "\">다음</a>&nbsp;");
 	    }
 
 	    return sb.toString();
