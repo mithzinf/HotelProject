@@ -35,7 +35,9 @@ public interface InquiryMapper {
 	
 	public void updateAnsweredList(int num) throws Exception;
 	
-	public int delAns(int num) throws Exception;
+	
+	
+	
 	
 	
 	// 답변
@@ -44,15 +46,14 @@ public interface InquiryMapper {
 	
 	public List<HotelInquiryDTO> getAnswerList(int num) throws Exception;
 	
+	public void deleteAnswer(int num) throws Exception;
 	
 	
 	
+	public int getAnsOnly(int num) throws Exception;
 	
 	
 	
-	
-
-
 	
 	// 사용자 정보 가져오기
 	public List<Map<String, Object>> getUserInfo(String userid) throws Exception;

@@ -8,7 +8,20 @@
 
 
 <!-- 이자리에 html 가운데 코드 작성 -->
+<style>
 
+abc {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-size: 25px;
+  color: #808080;
+  max-width: 300px;
+  }
+  
+  textarea {
+  resize: none;
+}
+</style>
 
 
 <div class="myPage">
@@ -33,88 +46,104 @@
         <!--end filter-->
     </div>
     <!--end sidebar-->
-    <div id="page-content">
-        <div class="container">
+    <div id="page-content" style="width: 60%">
+        <div class="container" >
             <div class="row">
                 <div class="col-md-9"  style="margin-left: 30px;">
                     <div class="main-content">
                     <div class="col-md-9">
                         <h1><h1 style="color: grey; margin-top: 50px;">문의게시판</h1></h1>
                         <!--end title-->
-                        <article class="box filter" style="background-color: white; width: 620px;">
+                        <article class="box filter" style="background-color: white; width: 730px; background-color: #FAFAFA">
 						<table>
 							<tr th:each="dto : ${dto}">
-							   <td th:text="${dto.subject}" style="font-size: 40px"></td>
-							   <td style="vertical-align: top; text-align: right; ">
-							    <div th:text="${dto.userid}" style="font-size: 19px; margin-left: 450px"></div>
-							    <div th:text="${#dates.format(dto.created, 'yyyy/MM/dd')}" style="font-size: 16px"></div>
+							   <abc th:text="${dto.subject}" style="font-size: 30px;font-family: Gowun Batang, sans -serif;"></abc>
+							   
+							   <td style="vertical-align: top; text-align: right; margin-left: 50px">
+							   <div th:text="${dto.inq_cate}" style="font-size: 14px; margin-left: 600px; "></div>
+							    <div th:text="${dto.userid}" style="font-size: 19px; margin-left: 600px"></div>
+							    <div th:text="${#dates.format(dto.created, 'yyyy/MM/dd')}" style="font-size: 14px"></div>
+							    
 							   </td>
 							 </tr>
 						 </table>
 						 
-						 
                          <hr/>
-                         <table style="font-size: 30px">
+                         <table style="font-size: 30px; font-family: Gowun Batang, sans -serif ">
                         	<tr th:each="dto : ${dto}" >
                                 <tr><td th:text="${dto.context}"></td></tr>
                             </tr>
                             
                          </table>
                          
+                         
+                         
                          <br/><br/><br/>
                          
+                         <div th:if="${userid == 'admin' || userid == dto.userid}" style="float: left; width: 100px">
                          <input type="button" value=" 수정 " class="btn btn-framed btn-small btn-default btn-rounded"
 								th:onclick="'location.href=\'inquiryUpdate?num=' + @{${dto.inq_num }} + '&' + @{${params }} +'\''"
-								style="font-size: 13px"/>
-								
-								
+								style="font-size: 13px; width: 87px;height: 41px; font-size: 21px"/>
+						 </div>
+						 
+						 <div th:if="${userid == 'admin' || userid == dto.userid}" style="float: left; width:100px">
 						 <input type="button" value=" 삭제 " class="btn btn-framed btn-small btn-default btn-rounded"
 								th:onclick="'location.href=\'deleted_ok?num=' + @{${dto.inq_num }} + '&' + @{${params }} +'\''"
-								style="font-size: 13px"/>
-						
+								style="font-size: 13px; width: 87px;height: 41px; font-size: 21px"/>
+						 </div>
+						 
 						 <input type="button" value=" 리스트 " class="btn btn-framed btn-small btn-default btn-rounded"
 								th:onclick="'location.href=\'inquiry/inquiryList?num=' + @{${dto.inq_num }} + '&' + @{${params }} +'\''"
-								style="font-size: 13px"/>
+								style="font-size: 13px; width: 87px;height: 41px; font-size: 21px"/>
                         
                         </article><!-- /.blog-post-listing -->
                         
                         <br/>
+                        
+                        
+                        <th:block th:if="${dto.answer}==0">
+                        <table>
+                        	<tr><td></td></tr>
+                        </table>
+                        </th:block>
+                        
+                       	<th:block th:if="${dto.answer}==1">
                         <section >
-                        <div id="anwLists">
-                            <div th:replace="~{/inquiry/answeredList :: anwLists}"></div>
+                        <div id="anwLists" >
+                            <div id="anwLists" th:replace="~{/inquiry/answeredList :: anwLists}"></div>
                         </div>
                         </section>
+                        </th:block>
+                        
+                        
                         
                         
                         
                         
                         <section id="leave-reply">
-                            <header><h2 class="no-border">Leave a Reply</h2></header>
+                        <div th:if="${userid == 'admin' || userid == dto.userid}">
+                        
+                            <header><h2 class="no-border">답변 달기</h2></header>
                             <form action="" name="answerForm" method="post" autocomplete="off">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="form-blog-reply-name">Your ID<em>*</em></label>
-                                            <input type="text" class="form-control" id="userid" td:value="${dto.userid}" required>
+                                            <div style="font-size: 25px">[[${userid}]]</div>
+                                            <input type="hidden" name="userid" id="userid" th:value="${userid}"/>         
                                         </div><!-- /.form-group -->
                                     </div><!-- /.col-md-6 -->
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="form-blog-reply-email">Your NAME<em>*</em></label>
-                                            <input type="text" class="form-control" id="username" td:value="${dto.username}" required>
-                                        </div><!-- /.form-group -->
-                                    </div><!-- /.col-md-6 -->
+                                    
                                 </div><!-- /.row -->
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="form-blog-reply-message">Your Message<em>*</em></label>
-                                            <textarea class="form-control" rows="5" id="content" resize="none" required ></textarea>
+                                            <textarea class="form-control" rows="7" id="content" resize="none" required style="width: 730px;"></textarea>
                                         </div><!-- /.form-group -->
                                     </div><!-- /.col-md-12 -->
                                 </div><!-- /.row -->
                                 <div class="form-group clearfix">
-                                    <input type="button" value=" 등록하기 " class="btn btn-primary btn-rounded scroll" id="sendAnswer"/>
+                                    <input type="button" value=" 등록하기 " class="btn btn-primary btn-rounded scroll" id="sendAnswer"
+                                    style="width: 110px;height: 45px; font-size: 21px;"/>
                                 </div><!-- /.form-group -->
                                 <div id="form-rating-status"></div>
                                 
@@ -122,9 +151,9 @@
                                 <input type="hidden" name="pageNum" id="pageNum" th:value="${pageNum}"/>                       
                                 
                                 </form>
-                                
+                          </div>
                         </section>
-                        
+                         
                         
                         
                     </div>
@@ -143,7 +172,12 @@
 </div>
 
 
+
+
 </html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
 
 <script type="text/javascript">
@@ -166,18 +200,16 @@ $("#sendAnswer").click(function(){
 	    url: "/inquiryAnswer",
 	    data: params,
 	    success: function(data) {
-	    	console.log(data);
 	    	
 	        $("#anwLists").html(data);
-	        $("#anwLists").load(location.href + " #anwLists>*", "");
+	        //$("#anwLists").load(location.href + " #anwLists>*", "");
 	        
 	        $("#username").val("");
 	        $("#userid").val("");
 	        $("#content").val("");
 	        
-	        
-	     	// location.reload(true);
-	     	// refreshData();
+	     	location.reload(true);
+	     	//refreshData();
 	        
 	    },
 	    
@@ -194,6 +226,7 @@ function refreshData() {
     $.ajax({
         type: "get",
         url: "/answeredList",
+        data: params,
         success: function(data) {
             $("#anwLists").html(data);
         },
@@ -205,33 +238,22 @@ function refreshData() {
 
 
 
-
-
-
-
-
-
 function showRequest() {
 	
-	var username = $.trim($("#username").val());
-	var userid = $.trim($("#userid").val());
+	var f = document.answerForm;
+	
 	var content = $.trim($("#content").val());
 	
-	if(!userid){
-		alert("\아이디를 입력하시오");
-		$("#userid").focus();
-		return false;
-	}
 	
-	if(!username){
-		alert("\n이름을 입력하시오");
-		$("#username").focus();
-		return false;
-	}
 	
 	if(!content){
-		alert("\n내용을 입력하시오");
-		$("#content").focus();
+		swal({
+			  title: "내용 입력오류",
+			  text: "내용을 입력하세요.",
+			  icon: "error",
+			  button: "확인",
+			});
+		event.preventDefault();
 		return false;
 	}
 	

@@ -1,15 +1,9 @@
 <!DOCTYPE html>
 <!-- 경로가 templates/layout/layout.html을 상속받아야 하므로 -->
 <html layout:decorate="~{/layout/layout}">
-
 <meta charset="UTF-8">
-
 <div layout:fragment="content" class="content-padding">
-		
             <div th:fragment="anwLists">
-                    
-                
-                
                 <div class="page-wrapper">
 				    <div id="page-content">
 				        <div class="container">
@@ -17,29 +11,60 @@
 				            <div class="row">
 				                <div class="col-md-9">
 				                    <div class="main-content">
+				                    <br/>
+				                    
+				                    <form action="" name="ansForm" method="GET" >
 				                        <section class="box filter" id="comments"
-				                        	style="background-color: #E7E7E7  ; width: 600px;
-				                        	margin-right: -50px">
+				                        	style="background-color: #FAFAFA; width: 640px;
+				                        	margin-left: 80px">
 				                            <header><h2 class="no-border">답변</h2></header>
 				                            <hr style="border-style: solid; border-width: 3px; border-radius: 5px; margin: 10px 0; padding: 0;">
 				                            
 				                            <ul class="comments" >
 				                                <li class="comment" style="display:inline;">
 				                                    <div class="comment-wrapper" >
-				                                    
 				                                    <div th:each="anwList : ${anwLists}">
-				                                        <div style="font-size: 23px">아이디&nbsp;&nbsp;<span th:text="${anwList.userid}" ></span></div>
-				                                        <div>답변 시간&nbsp;&nbsp;<span th:text="${#dates.format(anwList.created, 'yyyy/MM/dd')}"style=" color: grey"></span></div><br/>
-				                                        <div style="font-size: 25px">답변 내용<div th:text="${anwList.content}" style="font-size: 20px; color: grey"></div></td>
+				                                        <div style="font-size: 23px"><span th:text="${anwList.userid}" ></span></div>
+				                                        <br/>
+				                                        
+				                                        <!-- 
+				                                        <a href="'location.href=\'inquiry/inquiryList?num=' + @{${anwList.ans_num}} + '&' + 'pageNum' + @{${pageNum}} +'\''">삭제</a>
+				                                     -->
+				                                    
+				                                    
+				                                    <!-- 
+				                                    <input type="button" th:value="${anwList.ans_num}"
+				                                        class="btn btn-primary btn-rounded scroll" 
+				                                        th:id="'deleteAnswer'+'${anwList.ans_num}'"> 
+			                                        
+			                                        
+			                                        <input type="button" value=" 삭제 " class="btn btn-framed btn-small btn-default btn-rounded"
+													th:onclick="'location.href=\'answerDelete?ans_num=' + @{${anwList.ans_num}} +'\''"
+													style="font-size: 13px"/>
+				                                    
+				                                    <input type="hidden" name="pageNum" id="pageNum" th:value="${pageNum}"/>
+				                                    <input type="hidden" name="inq_num" id="inq_num" th:value="${dto.inq_num}"/>
+				                                    -->
+				                                        
+				                                        
+				                                        <div style="font-size: 25px"><div th:text="${anwList.content}" style="font-size: 20px; color: grey"></div></td>
+				                                        <div><span th:text="${'('+ #dates.format(anwList.created, 'yyyy/MM/dd HH:mm:ss')+')'}"style="font-size: 14px; color: grey"></span></div>
 				                                        <hr style="border-style: solid; border-width: 1px;"/>
 				                                        
+				                                        <input type="hidden" name="ans_num" id="ans_num" th:value="${anwList.ans_num}"/>
+				                                        
+				                                        
 				                                    </div>
-				                                     
+				                                    
+				                                    
 				                                    </div>
+				                                    
 				                                </li>
-				                                
 				                            </ul>
 				                        </section><!-- /#comments -->
+				                        </form>
+				                        
+				                        
 				                    </div>
 				                    <!--end main-content-->
 				                </div>
@@ -53,10 +78,32 @@
 				    <!--end page-content-->
 				</div>
             </div>
-            
-            
-            
 </div>
 
-
 </html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+
+$("#deleteAnswer" + '#{anwList.ans_num}').click(function(){
+    var ans_num = $("#ans_num").val();
+    $.ajax({
+        type: "post",
+        url: "/answerDelete",
+        data: {ans_num: ans_num},
+        success: function(data) {
+            location.reload(true);
+        },
+        error: function(e) {
+            alert(e.responseText);
+        }
+    });
+});
+
+
+</script>
+
+
+
+
+
+
