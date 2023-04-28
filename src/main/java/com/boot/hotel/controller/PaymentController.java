@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -25,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.boot.hotel.dto.HotelInfoDTO;
 import com.boot.hotel.dto.HotelReservationDTO;
 import com.boot.hotel.dto.PaymentDTO;
+import com.boot.hotel.oauth2.dto.SessionUser;
 import com.boot.hotel.service.HotelDetailService;
 import com.boot.hotel.service.PaymentService;
 
@@ -40,6 +42,8 @@ public class PaymentController {
     @Autowired
     private HttpServletRequest request;
 	
+    @Autowired
+	private HttpSession httpSession;
 	
 	
 	@GetMapping("/dummyTest")
@@ -110,8 +114,8 @@ public class PaymentController {
 	public ModelAndView paymentPage(
 			@RequestParam("room_type") String room
 			,@RequestParam("hotel_id") int hotel_id
-//			,@RequestParam("checkin") String checkin
-//			,@RequestParam("checkout") String checkout
+			,@RequestParam("check_in") String check_in
+			,@RequestParam("check_out") String check_out
 			) throws Exception{
 		// 받아와야 하는 거 - userid, hotel_id, room, inq_date, date_num
 		// 체크인 체크아웃 날짜 받아서 date_num 받기
@@ -130,7 +134,9 @@ public class PaymentController {
 		// 방종류 - 넘겨 받기
 		String rmType = room/*방 종류*/;
 		
-		String userid = "suzi";
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+		
+    	String userid = sessionUser.getId();
 		
 		String type = "title";
 		paramMap.put("hotel_id", hotel_id);
@@ -165,9 +171,9 @@ public class PaymentController {
 		// 체크인 체크아웃 날짜 받기
 		
 		
-		DateFormat dateFormat1 = new SimpleDateFormat("yyyy/MM/dd");
-		Date checkInDate = dateFormat1.parse("2023/04/25");
-		Date checkOutDate = dateFormat1.parse("2023/04/26");
+		DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+		Date checkInDate = dateFormat1.parse(check_in);
+		Date checkOutDate = dateFormat1.parse(check_out);
 		// TODO - 날짜 받기
 //		Date checkInDate = checkIn;
 //		Date checkOutDate = checkOut;

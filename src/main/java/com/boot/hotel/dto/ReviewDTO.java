@@ -16,6 +16,7 @@ public class ReviewDTO {
 	private String userid;
 	private Date created;
 	private String context;
+	private String username;
 
 	
 }
