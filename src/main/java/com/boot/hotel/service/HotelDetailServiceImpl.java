@@ -72,6 +72,15 @@ public class HotelDetailServiceImpl implements HotelDetailService{
 		return hotelDetailMapper.getSweetPicture(hotel_id);
 	}
 
+
+	//0426 추가 쿼리 : 메인에서 더미 리뷰 데이터 불러오는 쿼리, 나중에 복붙하면 됨
+	@Override
+	public List<Map<String, Object>> getReviewData(int hotel_id) throws Exception {
+		
+		return hotelDetailMapper.getReviewData(hotel_id);
+	}
+
+
 	@Override
 	public int searchDayStandard(Map<String, Object> params) throws Exception {
 		return hotelDetailMapper.searchDayStandard(params);
@@ -96,17 +105,6 @@ public class HotelDetailServiceImpl implements HotelDetailService{
 	}
 	 */
 	
-	
-
-
-
-
-	
-
-
-
-	
-
 	
 
 	

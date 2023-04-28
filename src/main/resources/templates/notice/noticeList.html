@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<!-- 경로가 templates/layout/layout.html을 상속받아야 하므로 -->
+<html layout:decorate="~{/layout/layout}">
+
+<meta charset="UTF-8">
+
+<div layout:fragment="content" class="content-padding">
+
+<div class="myPage">
+    <div class="sidebar" style="margin: 50px 0 50px; width: 17%; min-width: 250px; ">
+        <div class="box filter">
+            <h2>마이페이지</h2>
+            <ul class="links">
+                <li><a href="mypage/mypage">내정보</a></li>
+                <li><a href="mypage/basket">호텔 찜 목록</a></li>
+                <li><a href="mypage/my_reservation">예약내역</a></li>
+                <li><a href="mypage/delete">회원탈퇴</a></li>
+            </ul>
+           	<hr/>
+            <h2>더보기</h2>
+            <ul class="links">
+                <li class="active"><a href="notice/noticeList">공지사항</a></li>
+                <li><a href="inquiry/inquiryList">문의게시판</a></li>
+                <li><a href="mypage/mypage">메뉴1</a></li>
+                <li><a href="mypage/delete">메뉴2</a></li>
+            </ul>
+        </div>
+        <!--end filter-->
+    </div>
+    <!--end sidebar-->
+
+    <div id="page-content">
+        <div class="container">
+            <div class="row" style="margin-left: 30px; padding: 0;">
+                
+                <div class="col-md-9">
+                <h1><h1 style="color: grey; margin-top: 50px;">공지사항 list </h1></h1>
+					<!-- 검색부분 form 부분 뭉탱이 다 들어냄 -->
+                
+                    <div class="main-content">
+                    
+                    <div class="box filter" style="background-color: white; width: 800px">
+                    
+
+                        <section id="choose-a-package" style="margin: 0; padding: 0;">
+                            
+                            <div class="table-responsive pricing-table">
+                                <table class="table">
+                                <thead>
+                                    <tr >
+                                        <th >
+                                            
+                                        </th>
+                                        <!-- 
+                                        <th class="section" style="width: 10%; margin-left: 0%">
+                                            답변 여부
+                                        </th>
+                                        -->
+                                        <th class="width-50 opacity-50" style="width: 5%">
+                                            제목
+                                        </th>
+                                        <th class="section"style="width: 15%; text-align: left;">
+                                            작성자
+                                        </th>
+                                        <th class="section" style="width: 15%; text-align: left;">
+                                            작성일
+                                        </th>
+                                        <th class="section" style="width: 15%; text-align: left;">
+                                            조회수
+                                        </th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                 <tr th:each="lists : ${lists}">
+                                        <th style="width: 5%">
+                                        
+                                        </th>
+                                        <!-- 
+                                        <th class="section" style="width: 10%">
+                                        <div th:switch="${lists.answer}">
+									      <p th:case="0">미응답</p>
+									      <p th:case="1">응답완료</p>
+									    </div>
+                                        </th>
+                                        -->
+                                        <th class="section"style="width: 15%">
+                                        <a th:href="@{|${articleUrl}&num=@{${lists.notice_num}}|}">
+											[[${lists.subject}]]
+										</a>
+                                        </th>
+                                        <th class="section"style="width: 15%">
+                                            [[${lists.userid}]]
+                                        </th>
+                                        <th class="section" style="width: 15%">
+                                            [[${#dates.format(lists.created, 'yyyy/MM/dd')}]]
+                                        </th>
+                                        <th class="section" style="width: 15%">
+                                           	[[${lists.hitCount}]]
+                                        </th>
+                                     </tr>
+                                 </tbody>
+                                </table>
+                                <br/>
+                                <td>
+                                <div th:if="${sessionUser != null and sessionUser.id == 'admin'}">
+									<input type="button" value="작성하기"
+		                            	style="width: 70px; margin-left:650px; font-size: 13px"
+								        class="btn btn-framed btn-small btn-default btn-rounded" 
+								        onclick="location.href='/notice/noticeInsert';"/>
+								</div>        
+								</td>
+                                <div style="text-align: center;" th:if="${dataCount}>0">
+									<ul>
+										<li th:utext="${pageIndexList}" style="font-size: 24px;
+										font-family: 'Gowun Batang', sans-serif; font-weight: bold;"></li>
+									</ul>
+									
+								</div>
+                            </div>
+                            	
+                            	
+                            
+                            </div>
+                            <!--end pricing-table-->
+                            
+                        </section>
+                        
+                    </div>
+                    <!--end main-content-->
+                </div>
+                <!--end col-md-9-->
+            </div>
+            <!--end row-->
+        </div>
+        <!--end container-->
+    </div>
+    <!--end page-content-->
+
+
+</div>
+
+
+</html>
+
+
+
+
+
