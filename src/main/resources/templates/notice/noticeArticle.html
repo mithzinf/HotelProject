@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!-- 경로가 templates/layout/layout.html을 상속받아야 하므로 -->
+<html layout:decorate="~{/layout/layout}">
+
+<meta charset="UTF-8">
+
+<div layout:fragment="content" class="content-padding">
+
+
+
+<!-- 이자리에 html 가운데 코드 작성 -->
+
+
+
+<div class="myPage">
+    <div class="sidebar" style="margin: 50px 0 50px; width: 17%; min-width: 250px; ">
+        <div class="box filter">
+            <h2>마이페이지</h2>
+            <ul class="links">
+                <li><a href="mypage/mypage">내정보</a></li>
+                <li><a href="mypage/basket">호텔 찜 목록</a></li>
+                <li><a href="mypage/my_reservation">예약내역</a></li>
+                <li><a href="mypage/delete">회원탈퇴</a></li>
+            </ul>
+           	<hr/>
+            <h2>더보기</h2>
+            <ul class="links">
+                <li class="active"><a href="notice/noticeList">공지사항</a></li>
+                <li><a href="inquiry/inquiryList">문의게시판</a></li>
+                <li><a href="mypage/mypage">메뉴1</a></li>
+                <li><a href="mypage/delete">메뉴2</a></li>
+            </ul>
+        </div>
+        <!--end filter-->
+    </div>
+    <!--end sidebar-->
+    <div id="page-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9"  style="margin-left: 30px;">
+                    <div class="main-content">
+                    <div class="col-md-9">
+                        <h1><h1 style="color: grey; margin-top: 50px;">공지사항 게시판</h1></h1>
+                        <!--end title-->
+                        <article class="box filter" style="background-color: white; width: 730px; background-color: #FAFAFA">
+						<table>
+							<tr th:each="dto : ${dto}">
+							   <td th:text="${dto.subject}" style="font-size: 40px"></td>
+							   <td style="vertical-align: top; text-align: right; ">
+							    <div th:text="${dto.userid}" style="font-size: 19px; margin-left: 450px"></div>
+							    <div th:text="${#dates.format(dto.created, 'yyyy/MM/dd')}" style="font-size: 14px"></div>
+							   </td>
+							 </tr>
+						 </table>
+						 
+						 
+                         <hr/>
+                        	<tr th:each="dto : ${dto}" >
+                                <tr><td th:text="${dto.context}"></td></tr>
+                            </tr>
+                            
+                         </table>
+                         
+                         <br/><br/><br/>
+						<!-- 수정, 삭제 버튼 -->
+							<span th:if="${sessionUser != null and sessionUser.id == 'admin'}">
+							    <input type="button" value="수정" class="btn btn-framed btn-small btn-default btn-rounded"
+							        th:onclick="'location.href=\'notice/noticeUpdate?num=' + @{${dto.notice_num }}+'\''"
+							        style="display: inline-block;">
+							    <input type="button" value="삭제" class="btn btn-framed btn-small btn-default btn-rounded"
+							        th:onclick="'location.href=\'notice/deleted_ok?num=' + @{${dto.notice_num }} +'\''"
+							        style="display: inline-block;">
+							</span>
+							<!-- 리스트 버튼, 로그인하든 안하든 다 보일 수 있게? -->
+							<span>
+							    <input type="button" value="리스트" class="btn btn-framed btn-small btn-default btn-rounded"
+							        th:onclick="'location.href=\'notice/noticeList?num=' + @{${dto.notice_num }} +'\''"> 
+							</span>
+
+                        
+                        </article><!-- /.blog-post-listing -->
+
+                        
+                       
+                    </div>
+                    <!--end main-content-->
+                </div>
+                <!--end col-md-9-->
+            </div>
+            <!--end row-->
+        </div>
+        <!--end container-->
+    </div>
+    <!--end page-content-->
+</div>
+<!--end page-wrapper-->
+
+</div>
+
+
+</html>
+
+
+
+
+
+
+
+
+
+
+

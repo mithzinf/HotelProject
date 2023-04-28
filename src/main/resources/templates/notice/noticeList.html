@@ -35,7 +35,7 @@
                 
                 <div class="col-md-9">
                 <h1><h1 style="color: grey; margin-top: 50px;">공지사항 list </h1></h1>
-
+					<!-- 검색부분 form 부분 뭉탱이 다 들어냄 -->
                 
                     <div class="main-content">
                     
@@ -57,13 +57,13 @@
                                         </th>
                                         -->
                                         <th class="width-50 opacity-50" style="width: 5%">
-                                            문의제목
+                                            제목
                                         </th>
                                         <th class="section"style="width: 15%; text-align: left;">
-                                            사용자 아이디
+                                            작성자
                                         </th>
                                         <th class="section" style="width: 15%; text-align: left;">
-                                            문의한 날짜
+                                            작성일
                                         </th>
                                         <th class="section" style="width: 15%; text-align: left;">
                                             조회수
@@ -84,7 +84,7 @@
                                         </th>
                                         -->
                                         <th class="section"style="width: 15%">
-                                        <a th:href="@{|${articleUrl}&num=@{${lists.inq_num}}|}">
+                                        <a th:href="@{|${articleUrl}&num=@{${lists.notice_num}}|}">
 											[[${lists.subject}]]
 										</a>
                                         </th>
@@ -95,17 +95,19 @@
                                             [[${#dates.format(lists.created, 'yyyy/MM/dd')}]]
                                         </th>
                                         <th class="section" style="width: 15%">
-                                            [[${lists.hitCount}]]
+                                           	[[${lists.hitCount}]]
                                         </th>
                                      </tr>
                                  </tbody>
                                 </table>
                                 <br/>
                                 <td>
+                                <div th:if="${sessionUser != null and sessionUser.id == 'admin'}">
 									<input type="button" value="작성하기"
 		                            	style="width: 70px; margin-left:650px; font-size: 13px"
 								        class="btn btn-framed btn-small btn-default btn-rounded" 
 								        onclick="location.href='/notice/noticeInsert';"/>
+								</div>        
 								</td>
                                 <div style="text-align: center;" th:if="${dataCount}>0">
 									<ul>

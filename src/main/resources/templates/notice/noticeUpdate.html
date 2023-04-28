@@ -5,12 +5,12 @@
 <meta charset="UTF-8">
 
 <div layout:fragment="content" class="content-padding">
-	<form action="/noticecreate_ok" name="noticeForm" method="post" autocomplete="off">
-	        
+	<form action="/noticeUpdate_ok" name="noticeForm" method="post" autocomplete="off">
 	    <section id="main-information">
 	        <div class="title">
 	            <h2></h2>
 	        </div>
+	        
 	        <div class="page-wrapper">
 			    <div id="page-content">
 			        <div class="container">
@@ -21,17 +21,16 @@
 			                    <div class="main-content">
 			                        
 			                        <section>
-			                                <h2>공지사항 작성하기</h2>
+			                                <h2>공지사항 수정하기</h2>
 			                                
 			                                <div class="row">
 			                                    <div class="col-md-6">
 			                                    	<div class="form-group">
 			                                            <label for="form-contact-name">공지사항 제목</label>
-			                                            <input type="text" class="form-control" name="subject0" placeholder="제목" >
-			                                            
+			                                            <input type="text" class="form-control" id="subject" name="subject" placeholder="제목" th:value="${dto.subject}" >
 			                                        </div>
 			                                    </div>
-			                                    <!--end col-md-6-->        
+			                                    <!--end col-md-6-->                    
 			                                </div>
 			                                <!--end row-->
 			                                
@@ -39,19 +38,20 @@
 									            <div class="col-md-7">
 									                <div class="form-group">
 									                    <label for="form-submit-description">공지사항</label>
-									                    <textarea class="form-control" style="width: 550px; resize:none;" id="context0" rows="10" name="context" 
-									                    	placeholder="공지사항을 작성해주십시오"></textarea>
+									                    <textarea class="form-control" style="width: 550px; resize:none;"
+									                    	rows="10" name="context"  id="context" 
+									                    	th:value="${dto.context}" th:text="${dto.context}" ></textarea>
 									                </div>
 									                <!--end form-group-->
+									                
 									                <button style="width: 80px; height: 28px; margin: 3%" class="btn btn-primary btn-rounded scroll" 
-									                 onclick="createnotice();" type="button">작성하기</button>
+									                 type="submit" onclick="updateList">수정하기</button>
 									            </div>
 									        </div>
 									        <!--end row-->
 			                        </section>
 			                    </div>
 			                    <!--end main-content-->
-			                    
 			                </div>
 			                <!--end col-md-9-->
 			            </div>
@@ -65,48 +65,48 @@
 	    
 	    </section>
 	    
-		<input type="hidden" id="username" name="username" th:value="${username}"/>
-		<input type="hidden" id="userid"  name="userid" th:value="${userid}"/>
+	    <input type="hidden" id="username" name="username" th:value="${username}"/>
+		<input type="hidden" name="userid" id="userid" th:value="${userid}"/>		
+		<input type="hidden" id="notice_num" name="notice_num" th:value="${dto.notice_num}"/>
+		
 	</form>
-	
+
 </html>
+
+
 
 <script type="text/javascript">
 
-function createnotice(){
+
+function updateList(){
 	
 	var f = document.noticeForm; 
 	
-	str = f.subject0.value;
+	str = f.subject.value;
 	str = str.trim();
 	if(!str){
 		alert("\n제목을 입력하시오")
-		f.subject1.focus();
+		f.subject.focus();
 		return;
 	}
-	f.subject0.value = str;
+	f.subject.value = str;
 	
-	
-	
-	
-	str = f.context0.value;
+	str = f.context.value;
 	str = str.trim();
 	if(!str){
 		alert("\n내용을 입력하시오")
-		f.context1.focus();
+		f.context.focus();
 		return;
 	}
-	f.context0.value = str;
+	f.context.value = str;
 	
-	f.action = "notice/noticecreate_ok";
+	
+	f.action = "/noticeUpdate_ok";
 	f.submit();
 	
 }
 	
 	
+	
+	
 </script>
-
-
-
-
-

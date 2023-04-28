@@ -24,10 +24,17 @@ public class NoticeServiceImpl implements NoticeService{
 	public void insertNotice(NoticeBoardDTO dto) throws Exception {
 		noticemapper.insertNotice(dto);	
 	}
-
+	
 	@Override
-	public void updateHitCount(NoticeBoardDTO dto) throws Exception {
-		noticemapper.updateHitCount(dto);
+	public int getListsCount() throws Exception {
+		
+		return noticemapper.getListsCount();
+	}
+
+	
+	@Override
+	public void updateHitCount(int num) throws Exception {
+		noticemapper.updateHitCount(num);
 	}
 
 	@Override
@@ -53,6 +60,7 @@ public class NoticeServiceImpl implements NoticeService{
 		noticemapper.deleteNotice(num);
 		
 	}
+
 
 	
 	

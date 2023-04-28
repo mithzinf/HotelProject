@@ -22,6 +22,11 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 	values (#{notice_num},#{userid}, #{username}, #{subject}, #{context}, 0, sysdate)
 </insert>
 
+<!-- 공지사항 글 갯수 세는 쿼리 -->
+<select id="getListsCount" resultType="int">
+	select nvl(count(*),0) from notice_board 
+</select>
+
 <!-- 공지사항 글 목록 정렬 + 페이징처리/ 검색기능 빼-->
 <select id="getNoticeList" resultType="com.boot.hotel.dto.NoticeBoardDTO" parameterType="map">
  		SELECT * from (
