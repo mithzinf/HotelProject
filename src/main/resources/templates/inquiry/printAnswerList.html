@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!-- 경로가 templates/layout/layout.html을 상속받아야 하므로 -->
+<html layout:decorate="~{/layout/layout}">
+
+<meta charset="UTF-8">
+
+<div layout:fragment="content" class="content-padding">
+<!-- 대충 이자리에 개별 CSS가 있다면 선언 -->
+
+
+
+<!-- 이자리에 html 가운데 코드 작성 -->
+<h1>콘텐트 자리[[${session.sessionUser}]]</h1>
+
+<!-- 세션값 불러오는 방법 : [[${session.sessionUser}]]</h1> -->
+
+
+
+<!-- 대충 이자리에 개별 JS가 있다면 선언 -->
+
+<!-- 이자리에 js 스크립트 코드 작성 -->
+
+</div>
+
+
+</html>

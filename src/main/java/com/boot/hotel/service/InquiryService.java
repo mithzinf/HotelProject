@@ -32,7 +32,12 @@ public interface InquiryService {
 	
 	public void updateAnsweredList(int num) throws Exception;
 	
-	public int delAns(int num) throws Exception;
+
+	public void deleteAnswer(int num) throws Exception;
+	
+	
+	
+	
 	
 	// 답변
 	public int maxAnsNum() throws Exception;
@@ -41,8 +46,7 @@ public interface InquiryService {
 	public List<HotelInquiryDTO> getAnswerList(int num) throws Exception;
 	
 	
-	
-	
+	public int getAnsOnly(int num) throws Exception;
 	
 	
 	
