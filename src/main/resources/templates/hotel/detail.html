@@ -19,7 +19,7 @@
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Gowun+Batang&display=swap');
-h1,h2,h3,input,span,a,button,th,dt,dd{
+h1,h2,h3,h4,input,span,a,button,th,dt,dd,label{
 	font-family: 'Gowun Batang', sans-serif;
 	opacity: 1;
 	font-weight: 600;
@@ -45,7 +45,6 @@ li{
 	font-weight: 600;
 	text-decoration: none;
 }
-
 
 
 </style>
@@ -561,171 +560,146 @@ li{
                                     <div id="map" style="width: 600px; height: 400px;"></div>
                                     <!--end map-->
                                 </section>
-                        <section id="reviews">
-                            <div class="title">
-                                <h2 class="pull-left">Reviews</h2>
-                                <a href="#write-a-review" class="btn btn-primary btn-rounded pull-right scroll">Write a Review</a>
-                            </div>
-                            <h3>Overall Score</h3>
-                            <ul class="rating-score">
-                                <li class="overall"><i class="fa fa-star"></i>9.9</li>
-                                <li><span>9.6</span>
-                                    <figure>Cleanliness</figure>
-                                </li>
-                                <li><span>10</span>
-                                    <figure>Comfort</figure>
-                                </li>
-                                <li><span>9.4</span>
-                                    <figure>Location</figure>
-                                </li>
-                                <li><span>9.8</span>
-                                    <figure>Facilities</figure>
-                                </li>
-                                <li><span>10</span>
-                                    <figure>Staff</figure>
-                                </li>
-                                <li><span>10</span>
-                                    <figure>Value for money</figure>
-                                </li>
-                            </ul>
-                            <div class="reviews">
-                                <div class="review">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <aside class="name">John Doe</aside>
-                                            <aside class="date">10.03.2015</aside>
-                                        </div>
-                                        <!--end col-md-3-->
-                                        <div class="col-md-9">
-                                            <div class="comment">
-                                                <div class="comment-title">
-                                                    <figure class="rating">9.5</figure>
-                                                    <h4>Beautiful Holiday</h4>
-                                                </div>
-                                                <!--end title-->
-                                                <p>Consectetur adipiscing elit. Vivamus nec augue ac dui sodales euismod.
-                                                    Suspendisse at dui sit amet felis commodo dictum. Class aptent taciti
-                                                    sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
-                                                    Integer commodo eleifend erat, vitae tincidunt urna volutpat et.
-                                                    Mauris laoreet, sem ut sodales sodales, massa turpis posuere lectus, non
-                                                    aliquet massa nisl ac orci.
-                                                </p>
-                                                <div class="clearfix options">
-                                                    <span class="pull-left"><a href="" class="btn btn-framed btn-default btn-rounded btn-small icon"><i class="fa fa-thumbs-up font-color-default"></i>3</a>Helpful Review?</span>
-                                                    <span class="pull-right"><a href="" class="link icon font-color-grey"><i class="fa fa-flag"></i>Report</a></span>
-                                                </div>
-                                                <!--end options-->
-                                                <div class="answer">
-                                                    <h4>James Green, CEO of the Mountain Paradise Hotel</h4>
-                                                    <p>Phasellus venenatis vel orci et lacinia. Duis sollicitudin arcu et hendrerit
-                                                        tempor. Aliquam at urna fringilla, auctor tellus eget, vehicula lorem.
-                                                        Pellentesque ornare faucibus sapien eget max
-                                                    </p>
-                                                </div>
-                                                <!--end answer-->
-                                            </div>
-                                            <!--end comment-->
-                                        </div>
-                                        <!--end col-md-9-->
-                                    </div>
-                                    <!--end row-->
-                                </div>
-                                <!--end review-->
-                                <div class="review">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <aside class="name">Peter Green</aside>
-                                            <aside class="date">10.03.2015</aside>
-                                        </div>
-                                        <!--end col-md-3-->
-                                        <div class="col-md-9">
-                                            <div class="comment">
-                                                <div class="comment-title">
-                                                    <figure class="rating">9.8</figure>
-                                                    <h4>Very Good Hotel</h4>
-                                                </div>
-                                                <!--end title-->
-                                                <p>In eleifend odio vel augue mattis, et pharetra dolor ullamcorper. Nulla
-                                                    ut porttitor mauris. Sed tincidunt, urna non cursus suscipit, quam velit
-                                                    laoreet libero, sit amet tincidunt ex nunc eget eros.
-                                                </p>
-                                                <div class="clearfix options">
-                                                    <span class="pull-left"><a href="" class="btn btn-framed btn-default btn-rounded btn-small icon"><i class="fa fa-thumbs-up font-color-default"></i>10</a>Helpful Review?</span>
-                                                    <span class="pull-right"><a href="" class="link icon font-color-grey"><i class="fa fa-flag"></i>Report</a></span>
-                                                </div>
-                                                <!--end options-->
-                                            </div>
-                                            <!--end comment-->
-                                        </div>
-                                        <!--end col-md-9-->
-                                    </div>
-                                    <!--end row-->
-                                </div>
-                                <!--end review-->
-                            </div>
-                            <!--end reviews-->
-                        </section>
-                        <section id="write-a-review">
-                            <h2>Write a Review</h2>
-                            <form id="searchForm2" action="" method="post">
-                                <div class="alert alert-dark fade in center" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" data-switch="#review-write">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    <span class="sr-only">Error:</span>
-                                    <a href="#tab-sign-in" data-toggle="modal" data-tab="true" data-target="#sign-in-register-modal">Please Sign in to write a review</a>
-                                </div>
-                                <div class="review write switch" id="review-write">
-                                    <aside class="name">John Doe</aside>
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                        	 <!-- 리뷰 시작================================================================================ -->
+                       		 <section id="reviews">
+								<div th:with="hotel_id=${hotel_id}">
+
+									<div class="title">
+										<h2 class="pull-left">리뷰</h2>
+										<a href="#write-a-review"
+											class="btn btn-primary btn-rounded pull-right scroll">나도
+											리뷰 쓰기</a>
+									</div>
+									<ul style="width:600px;">
+
+										<h3>호텔 평균 점수</h3>
+										<ul class="rating-score rating-score-without-star">
+											<li class="overall"><i class="fa fa-star"></i></li>
+										</ul>
+
+										<div class="reviews">
+
+											<div class="review">
+												
+												<div class="test1111">
+											
+													<li th:each="review : ${reviewList}" style="list-style-type: none; padding-bottom: 15px; width:600px;">
+														<div class="row">
+	
+															<div class="col-md-9">
+																<div class="comment" style="padding: 20px; width: 600px;">
+																	<div class="comment-title">
+																		<figure class="rating" th:text="${review.SCORE}">평점</figure>
+																		<h4 th:text="${review.USERNAME}"></h4>
+																		<i class="fa fa-clock-o"></i>
+																		<span th:text="${#dates.format(review.CREATED, 'yy-MM-dd HH:mm:ss')}"></span>
+																	</div>
+																	<br />
+																	<p th:text="${review.CONTEXT}"></p>
+																</div>
+															</div>
+														</div> <!--end row-->												
+													</li>
+												</div>
+												
+												
+												<!-- 페이징====================================== -->
+												<div class="paging11">
+													<div class="basket-paging" th:if="${dataCount>0}">
+														<ul>
+															<li th:utext="${pageIndexList}" style="font-size: 24px; text-align:center; list-style-type: none;
+															font-family: 'Gowun Batang', sans-serif; font-weight: bold;"></li>
+														</ul>
+													</div>
+											                
+													<div class="basket-paging" th:if="${dataCount==0}">
+														<td colspan="5">
+															<span style="font-size: 36px; text-align:center;
+															font-family: 'Gowun Batang', sans-serif; font-weight: bold;">등록된 리뷰가 없습니다. </span>
+														</td>
+													</div>
+												</div>
+												<!-- 페이징끝====================================== -->
+											
+											<!-- review끝 -->
+											</div>
+											
+											<!-- reviews끝 -->
+										</div>
+										
+										<!-- review : ${reviewList}반복끝 -->
+									</ul>
+									
+								</div>
+								
+								<!-- 김은영이 준 reviewList띄우기 끝 -->
+							</section>
+							
+							
+							
+							<!--end review-->
+							<section id="write-a-review">
+                            <h2>나도 나도 리뷰 쓰기</h2>
+                            <form  class="labels-uppercase clearfix" name="myForm4" id="review-form" method="post">
+                                <div class="review write switch" id="review-write" style="opacity: 1; pointer-events: all;">
+                                    
                                     <div class="comment">
                                         <div class="row">
+                                        
                                             <div class="col-md-8">
                                                 <div class="comment-title">
-                                                    <h4>Review Your Stay</h4>
+                                                 <input type="hidden" id="hotel_id" name="hotel_id" th:value="${hotel_id}"> 
+														<h4> [[${dto1[0].hotel_name}]]</h4>
                                                 </div>
+                                                
                                                 <!--end title-->
                                                 <div class="form-group">
-                                                    <label for="form_reply_1-name">Title of your review<em>*</em></label>
-                                                    <input type="text" class="form-control" id="form_reply_1-name" name="name" placeholder="Beautiful holiday!" required="">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="form_reply_1-message">Your Answer<em>*</em></label>
-                                                    <textarea class="form-control" id="form_reply_1-message" rows="8" name="answer" required="" placeholder="Describe your stay"></textarea>
+                                                    <label for="form_reply_1-message" style="font-size: 14px;">리뷰 내용<em>*</em></label>
+                                                    <textarea class="form-control" id="context11" rows="8" name="context11" placeholder="Describe your stay"></textarea>
                                                 </div>
                                                 <!--end form-group-->
                                                 <div class="form-group pull-right">
-                                                    <button type="submit" class="btn btn-primary btn-rounded" onclick="review();">Send Review</button>
+                                                    <button type="submit" class="btn btn-primary btn-rounded" onclick="review0129();">작성완료</button>
                                                 </div>
                                                 <!--end form-group-->
                                             </div>
                                             <!--end col-md-8-->
                                             <div class="col-md-4">
                                                 <div class="comment-title">
-                                                    <h4>Rating</h4>
+                                                    <h4>호텔 평점</h4>
                                                 </div>
                                                 <!--end title-->
                                                 <dl class="visitor-rating">
-                                                    <dt>Cleanliness</dt>
-                                                    <dd class="star-rating active" data-name="cleanliness"></dd>
-                                                    <dt>Comfort</dt>
-                                                    <dd class="star-rating active" data-name="comfort"></dd>
-                                                    <dt>Location</dt>
-                                                    <dd class="star-rating active" data-name="location"></dd>
-                                                    <dt>Facilities</dt>
-                                                    <dd class="star-rating active" data-name="facilities"></dd>
-                                                    <dt>Staff</dt>
-                                                    <dd class="star-rating active" data-name="staff"></dd>
-                                                    <dt>Value for money</dt>
-                                                    <dd class="star-rating active" data-name="value"></dd>
+                                                    <dt>점수 남기기</dt>
+                                                    <dd class="star-rating active" data-name="cleanliness" id="score11" name="score11">
+                                                    </dd>
                                                 </dl>
                                             </div>
                                             <!--end col-md-4-->
+                                  
                                         </div>
                                         <!--end row-->
                                     </div>
                                     <!--end comment-->
                                 </div>
                                 <!--end review-->
+                                <!-- 리뷰 끝================================================================================ -->
+                                
+                                
+                                
+                                
+                                
+                                
+                                <input type="hidden" id="user_id_review" th:value="${user_id}" />
                             </form>
                             <!--end form-->
                         </section>
@@ -752,6 +726,247 @@ li{
 
 <script type="text/javascript">
 
+	function getPageList(listUrl, pageNum1) {
+		event.preventDefault();
+		
+		var hotel_id = $("#hotel_id").val();
+		
+		$.ajax({
+			type: "GET",
+	        url: "/reviewPaging",
+	        data: {listUrl: listUrl, pageNum1: pageNum1, hotel_id: hotel_id},
+	        success: function(pagingData) {
+	        	
+	        	var pageIndexList = pagingData.pageIndexList;
+	        	var dataCount = pagingData.dataCount;
+	        	var reviewList = pagingData.reviewList;
+	        	
+	        	
+	        	var container = $(".test1111");
+	            container.empty();
+
+	            for (var i = 0; i < reviewList.length; i++) {
+	                var review = reviewList[i];
+	                var item = $("<li>", {"style": "list-style-type: none; padding-bottom: 15px;"});
+
+	                var row = $("<div>", {"class": "row"});
+	                var col = $("<div>", {"class": "col-md-9"});
+	                var comment = $("<div>", {"class": "comment", "style": "padding: 20px; width: 600px;"});
+
+	                var title = $("<div>", {"class": "comment-title"});
+	                var rating = $("<figure>", {"class": "rating", "text": review.SCORE});
+	                var username = $("<h4>", {"html": "&nbsp;" + review.USERNAME + "&nbsp;"});
+	                var clockIcon = $("<i>", {"class": "fa fa-clock-o"});
+	                var created = $("<span>", {"text": review.CREATED});
+	                var context = $("<p>", {"text": review.CONTEXT});
+
+	                var date = new Date(created.text());
+
+		            // yy-mm-dd hh-mm-ss 형태로 변환
+		            var formattedDate = " " + ("0" + (date.getYear() - 100)).slice(-2) + "-" +
+		                                 ("0" + (date.getMonth() + 1)).slice(-2) + "-" +
+		                                 ("0" + date.getDate()).slice(-2) + " " +
+		                                 ("0" + date.getHours()).slice(-2) + ":" +
+		                                 ("0" + date.getMinutes()).slice(-2) + ":" +
+		                                 ("0" + date.getSeconds()).slice(-2);
+	                
+	                title.append(rating);
+	                title.append(username);
+	                title.append(clockIcon);
+	                title.append(formattedDate);
+	                comment.append(title);
+	                comment.append("<br>");
+	                comment.append(context);
+	                col.append(comment);
+	                row.append(col);
+	                item.append(row);
+
+	                container.append(item);
+	            }
+	        	
+
+				var containerPaging = $(".paging11");
+				containerPaging.empty();
+				
+	            if(dataCount > 0){
+	            	var yes = $("<div>", {"class": "basket-paging"});
+	            	var ul = $("<ul>");
+	            	var li = $("<li>").append(pageIndexList);
+	            	li.css({
+	            	  "font-size": "24px",
+	            	  "text-align": "center",
+	            	  "list-style-type": "none",
+	            	  "font-family": "'Gowun Batang', sans-serif",
+	            	  "font-weight": "bold"
+	            	});
+	            	ul.append(li);
+		            yes.append(ul);
+		            containerPaging.append(yes);
+	            }
+	            
+				if(dataCount == 0){
+	            	var no = $("<div>", {"class": "basket-paging"});
+	            	var td = $("<td>").attr("colspan", "5");
+	            	var li = $("<li>", {"text": "등록된 리뷰가 없습니다."});
+	            	li.css({
+	            	  "font-size": "24px",
+	            	  "text-align": "center",
+	            	  "list-style-type": "none",
+	            	  "font-family": "'Gowun Batang', sans-serif",
+	            	  "font-weight": "bold"
+	            	});
+	            	td.append(li);
+		            no.append(td);
+		            containerPaging.append(no);
+	            	
+	            }
+   
+	        }
+	    });
+	    
+	    
+	}
+
+	
+	
+	function review0129() {
+		
+		var f = document.myForm4;
+		
+	    var hotel_id = $("#hotel_id").val();
+	    var inputElement = document.querySelector('#score_cleanliness');
+	    var context = $("#context11").val();
+		
+		var user_id_review = $("#user_id_review").val();
+		
+		if(user_id_review===""){
+			
+			swal({
+        		title: "로그인 필요",
+        		text: "로그인 후 이용가능합니다.",
+        		icon: "warning",
+        		button: "확인",
+        	}).then(function() {
+        		f.action="login/login";
+    			f.submit();
+        	});
+			event.preventDefault();
+			
+		}else{
+			
+			if(inputElement.value==""){
+				
+				swal({
+					  title: "별점 입력오류",
+					  text: "별점을 설정해주세요.",
+					  icon: "error",
+					  button: "확인",
+				})
+				
+				event.preventDefault();
+				return;
+				    
+			}
+			
+			if(context==""){
+				
+				swal({
+					  title: "리뷰 내용 입력오류",
+					  text: "리뷰 내용을 입력해주세요.",
+					  icon: "error",
+					  button: "확인",
+				})
+				
+				event.preventDefault();
+				return;
+				    
+			}
+			
+			
+			
+			
+			$.ajax({
+		        type: "GET",
+		        url: "/reviews",
+		        data: {hotel_id: hotel_id, score: inputElement.value, context: context},
+		        success: function(reviewData) {
+		        	
+		        	var reviewList = reviewData.reviewList;
+		        	var pageIndexList = reviewData.pageIndexList;
+		        	var dataCount = reviewData.dataCount;
+		        	
+		        	var container = $(".test1111");
+		            container.empty();
+
+		            for (var i = 0; i < reviewList.length; i++) {
+		                var review = reviewList[i];
+		                var item = $("<li>", {"style": "list-style-type: none; padding-bottom: 15px;"});
+
+		                var row = $("<div>", {"class": "row"});
+		                var col = $("<div>", {"class": "col-md-9"});
+		                var comment = $("<div>", {"class": "comment", "style": "padding: 20px; width: 600px;"});
+
+		                var title = $("<div>", {"class": "comment-title"});
+		                var rating = $("<figure>", {"class": "rating", "text": review.SCORE});
+		                var username = $("<h4>", {"html": "&nbsp;" + review.USERNAME + "&nbsp;"});
+		                var clockIcon = $("<i>", {"class": "fa fa-clock-o"});
+		                var created = $("<span>", {"text": review.CREATED});
+		                var context = $("<p>", {"text": review.CONTEXT});
+
+		                var date = new Date(created.text());
+
+			            // yy-mm-dd hh-mm-ss 형태로 변환
+			            var formattedDate = " " + ("0" + (date.getYear() - 100)).slice(-2) + "-" +
+			                                 ("0" + (date.getMonth() + 1)).slice(-2) + "-" +
+			                                 ("0" + date.getDate()).slice(-2) + " " +
+			                                 ("0" + date.getHours()).slice(-2) + ":" +
+			                                 ("0" + date.getMinutes()).slice(-2) + ":" +
+			                                 ("0" + date.getSeconds()).slice(-2);
+		                
+		                title.append(rating);
+		                title.append(username);
+		                title.append(clockIcon);
+		                title.append(formattedDate);
+		                comment.append(title);
+		                comment.append("<br>");
+		                comment.append(context);
+		                col.append(comment);
+		                row.append(col);
+		                item.append(row);
+
+		                container.append(item);
+		            }
+		            
+		            var containerPaging = $(".paging11");
+					containerPaging.empty();
+					
+		            if(dataCount > 0){
+		            	var yes = $("<div>", {"class": "basket-paging"});
+		            	var ul = $("<ul>");
+		            	var li = $("<li>").append(pageIndexList);
+		            	li.css({
+		            	  "font-size": "24px",
+		            	  "text-align": "center",
+		            	  "list-style-type": "none",
+		            	  "font-family": "'Gowun Batang', sans-serif",
+		            	  "font-weight": "bold"
+		            	});
+		            	ul.append(li);
+			            yes.append(ul);
+			            containerPaging.append(yes);
+		            }
+		    
+		        }
+		        
+		        
+		        
+		    });
+		    event.preventDefault();
+		}
+		
+	}
+	    
+		
 	function reservation1() {
 		
 		var f = document.myForm1;
@@ -823,8 +1038,8 @@ li{
 		}
 		
 	}
-	
-	
+		
+	    
 
 </script>
 
@@ -1013,20 +1228,5 @@ li{
 
 </script>
 
-<!-- 얘 왜 잇더라
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
-<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-		
-<script type="text/javascript">
-function hotelClick(hotel_id) {
-  var url = "./hotel/layoutTest?hotel_id=${hotel_id};
-  window.open(url, "객실 상세 페이지", "width=800,height=600,left=400");
-}
-
-</script>
- -->
- <!--[if lte IE 9]>
-<script src="assets/js/ie.js"></script>
-<![endif]-->
 
 </html>

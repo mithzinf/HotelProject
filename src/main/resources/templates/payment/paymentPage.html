@@ -108,10 +108,10 @@ dd,dt,td {
 											<dd style="font-size: 18px"><td th:text="${#dates.format(check_out, 'yyyy/MM/dd')}"></td></dd>
                                             
                                             <dt style="font-size: 18px"><b>숙박 인원</b></dt>
-                                            <dd style="font-size: 18px"><td th:text="${people}"></td></dd>
+                                            <dd style="font-size: 18px"><td th:text="${people}+'명'"></td></dd>
                                             
                                             <dt style="font-size: 18px"><b>숙박 일수</b></dt>
-                                            <dd style="font-size: 18px"><td th:text="${date_num}"></td></dd>
+                                            <dd style="font-size: 18px"><td th:text="${date_num}+'일'"></td></dd>
                                             
                                             <dt style="font-size: 18px"><b>금액</b></dt>
                                             <dd style="font-size: 18px"><td th:text="${#numbers.formatInteger(price, 0, 'COMMA')} + '원'"></td></dd>
