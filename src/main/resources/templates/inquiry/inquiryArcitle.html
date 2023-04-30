@@ -16,9 +16,9 @@ abc {
   font-size: 25px;
   color: #808080;
   max-width: 300px;
-  }
+}
   
-  textarea {
+textarea {
   resize: none;
 }
 </style>
@@ -30,14 +30,14 @@ abc {
             <h2>마이페이지</h2>
             <ul class="links">
                 <li><a href="mypage/mypage">내정보</a></li>
-                <li><a href="mypage/basket">호텔 찜 목록</a></li>
+                <li><a href="mypage/basket">숙소 찜 목록</a></li>
                 <li><a href="mypage/my_reservation">예약내역</a></li>
                 <li><a href="mypage/delete">회원탈퇴</a></li>
             </ul>
            	<hr/>
             <h2>더보기</h2>
             <ul class="links">
-                <li><a href="mypage/mypage">공지사항</a></li>
+                <li><a href="notice/noticeList">공지사항</a></li>
                 <li class="active"><a href="inquiry/inquiryList">문의게시판</a></li>
                 <li><a href="mypage/mypage">메뉴1</a></li>
                 <li><a href="mypage/delete">메뉴2</a></li>
@@ -52,24 +52,27 @@ abc {
                 <div class="col-md-9"  style="margin-left: 30px;">
                     <div class="main-content">
                     <div class="col-md-9">
-                        <h1><h1 style="color: grey; margin-top: 50px;">문의게시판</h1></h1>
+                        <h1 style="color: grey; margin-top: 50px; margin-bottom: 40px;">문의 내역</h1>
                         <!--end title-->
-                        <article class="box filter" style="background-color: white; width: 730px; background-color: #FAFAFA">
+                        <article class="box filter" style="background-color: white; width: 150%; background-color: #FAFAFA">
 						<table>
 							<tr th:each="dto : ${dto}">
-							   <abc th:text="${dto.subject}" style="font-size: 30px;font-family: Gowun Batang, sans -serif;"></abc>
+							   <abc th:text="${dto.subject}" style="font-size: 30px; font-family: Gowun Batang, sans -serif; font-weight: bold; color:#000;"></abc>
 							   
 							   <td style="vertical-align: top; text-align: right; margin-left: 50px">
-							   <div th:text="${dto.inq_cate}" style="font-size: 14px; margin-left: 600px; "></div>
-							    <div th:text="${dto.userid}" style="font-size: 19px; margin-left: 600px"></div>
-							    <div th:text="${#dates.format(dto.created, 'yyyy/MM/dd')}" style="font-size: 14px"></div>
+							   <div th:text="'문의 유형 : ' + ${dto.inq_cate}" style="width:850px; font-size: 17px; text-align: right;"></div>
+							    <div th:text="${dto.userid}" style="width:850px; font-size: 19px; text-align: right;"></div>
+							    <div style="width:850px; text-align: right; font-size: 16px">
+								    <i class="fa fa-clock-o"></i> 
+								    <span th:text="${#dates.format(dto.created, 'yyyy/MM/dd, HH:MM:SS')}"></span>
+								</div>
 							    
 							   </td>
 							 </tr>
 						 </table>
 						 
                          <hr/>
-                         <table style="font-size: 30px; font-family: Gowun Batang, sans -serif ">
+                         <table style="font-size: 22px; font-family: Gowun Batang, sans -serif ">
                         	<tr th:each="dto : ${dto}" >
                                 <tr><td th:text="${dto.context}"></td></tr>
                             </tr>
@@ -94,7 +97,7 @@ abc {
 						 
 						 <input type="button" value=" 리스트 " class="btn btn-framed btn-small btn-default btn-rounded"
 								th:onclick="'location.href=\'inquiry/inquiryList?num=' + @{${dto.inq_num }} + '&' + @{${params }} +'\''"
-								style="font-size: 13px; width: 87px;height: 41px; font-size: 21px"/>
+								style="font-size: 13px; width: 100px;height: 41px; font-size: 21px"/>
                         
                         </article><!-- /.blog-post-listing -->
                         
@@ -123,7 +126,7 @@ abc {
                         <section id="leave-reply">
                         <div th:if="${userid == 'admin' || userid == dto.userid}">
                         
-                            <header><h2 class="no-border">답변 달기</h2></header>
+                            <header><h2 class="no-border" style="margin-top: 50px;">답변 작성</h2></header>
                             <form action="" name="answerForm" method="post" autocomplete="off">
                                 <div class="row">
                                     <div class="col-md-6">

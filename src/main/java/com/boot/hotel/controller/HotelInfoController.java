@@ -1,5 +1,6 @@
 package com.boot.hotel.controller;
 
+import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -27,6 +28,7 @@ import com.boot.hotel.dto.HotelBasketDTO;
 import com.boot.hotel.dto.HotelDTO;
 import com.boot.hotel.dto.HotelInfoDTO;
 import com.boot.hotel.dto.HotelPictureDTO;
+import com.boot.hotel.mapper.ReviewMapper;
 import com.boot.hotel.oauth2.dto.SessionUser;
 import com.boot.hotel.service.HotelBasketService;
 import com.boot.hotel.service.HotelInfoService;
@@ -52,6 +54,9 @@ public class HotelInfoController {
     
     @Resource
 	private HotelMainService hotelMainService;
+    
+    @Autowired
+    private ReviewMapper reviewMapper;
     
     
     @RequestMapping(value = "/hotellist", method = { RequestMethod.GET, RequestMethod.POST })
@@ -151,12 +156,17 @@ public class HotelInfoController {
         	hotelList1 = hotelInfoService.getHotelList1Category(params);
         }
 
+        
+        
         List<HotelInfoDTO> hotelList2 = hotelInfoService.getHotelList2(params);
         List<HotelPictureDTO> hotelList3 = hotelInfoService.getHotelList3(params); // 추가된 부분입니다.
         
         
-        //날짜계산, 찜 목록 체크 수행 시작
+        //날짜계산, 찜 목록 체크, 리뷰 평점 추가 시작
         int num = 0;
+        double avg = 0;
+		int k = 0;
+		
         for(HotelDTO i : hotelList1) {
         	
     		int hotel_id =(i.getHotel_id());
@@ -220,6 +230,10 @@ public class HotelInfoController {
 			    i.setBasket_(true);
 			}
 			
+			Map<String, Object> map1 = reviewMapper.searchReviewAvg(hotel_id);
+			
+			i.setAvg(((BigDecimal) map1.get("AVG")).doubleValue());
+			i.setCount(((BigDecimal) map1.get("COUNT")).intValue());
 			num++;
 
         }

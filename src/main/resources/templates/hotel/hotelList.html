@@ -40,7 +40,7 @@ p {
                 <div class="col-md-3">
                     <div class="sidebar">
                         <div class="box filter">
-                            <h2>서울어때 호텔 찾아보기</h2>
+                            <h2>서울어때 숙소 찾아보기</h2>
                             <form id="searchForm" action="/hotel/hotellist" method="get">
                                <div class="form-group">
                                     <label for="form-filter-destination" style="font-family: 'Gowun Batang', sans-serif;">장소</label>
@@ -52,13 +52,13 @@ p {
                                     <div class="form-group">
                                         <label class="label-on-input" for="datepicker1" style="font-size: 12px; opacity: 1; font-family: 'Gowun Batang', sans-serif;">체크인 날짜</label>
                                         <input type="text" id="datepicker1" name="check_in" placeholder="연도-월-일" th:value="${check_in_day}"
-                                        onkeydown="return false;" readonly style="padding-left: 10px;">
+                                        onkeydown="return false;" readonly style="padding-left: 10px; font-weight: bold; font-size: 15px;">
                                     </div>
                                     <!--end form-group-->
                                     <div class="form-group">
                                         <label class="label-on-input" for="datepicker2" style="font-size: 12px; opacity: 1; font-family: 'Gowun Batang', sans-serif;">체크아웃 날짜</label>
                                         <input type="text" id="datepicker2" name="check_out" placeholder="연도-월-일" th:value="${check_out_day}"
-                                        onkeydown="return false;" readonly style="padding-left: 10px; ">
+                                        onkeydown="return false;" readonly style="padding-left: 10px; font-weight: bold; font-size: 15px;">
                                     </div>
                                     <!--end form-group-->
                                 </div>
@@ -66,7 +66,7 @@ p {
 
                                 <div class="form-group center">
                                     <button type="submit" class="btn btn-primary btn-rounded form-control"
-                                    style="font-family: 'Gowun Batang', sans-serif; background-color: #488f3e;">호텔 검색하기</button>
+                                    style="font-family: 'Gowun Batang', sans-serif; background-color: #488f3e;">숙소 검색하기</button>
                                 </div>
                             </form>
                             <!--end form-filter-->
@@ -87,7 +87,7 @@ p {
                 <div class="col-md-9">
                     <div class="main-content">
                         <div class="title"  style="text-align: left; padding-left: 10px;">
-                            <h1>회원님이 검색하신 호텔 목록입니다.</h1>
+                            <h1>회원님이 검색하신 숙소 목록입니다.</h1>
                             <div class="display-selector">
                             </div>
                         </div>
@@ -131,7 +131,7 @@ p {
 			            <th:block th:if="${hotel.soldout}=='만실'">
 			                <h3 th:text="${hotel.hotel_name}" style="color: #808080; text-decoration: line-through;" ></h3><br/>
 			            </th:block>
-			            <figure th:text="${hotel.addr1}"></figure>
+			            <figure th:text="${hotel.addr1}" style="font-weight: 600;"></figure>
 			            <figure class="label label-info" th:if="${hotel.category} != null" th:text="${hotel.category}"></figure>
 			            <figure class="label label-info" th:if="${hotel.tel} != null" th:text="${hotel.tel}"></figure>
 			            <div th:if="${hotelList2 != null}">
@@ -155,15 +155,17 @@ p {
 									<input type="hidden" class="hotel_id_value" id="hotel_id_value" name="hotel_id_value" th:value="${hotel.hotel_id}" />    
 									
 									<th:block th:if="${!hotel.basket_}">
-									<a class="btn btn-rounded btn-default btn-framed btn-small basket-btn" id="hotel_id_">♡찜하기♡</a>
+									<a class="btn btn-rounded btn-default btn-framed btn-small basket-btn" id="hotel_id_"
+									style="font-size: 15px;">♡찜하기♡</a>
 									</th:block>
 									<th:block th:if="${hotel.basket_}">
-									<a class="btn btn-rounded btn-default btn-framed btn-small basket-btn" id="hotel_id_">♥찜해제♥</a>
+									<a class="btn btn-rounded btn-default btn-framed btn-small basket-btn" id="hotel_id_"
+									style="font-size: 15px;">♥찜해제♥</a>
 									</th:block>
 									
 									
-			                        <span><i class="fa fa-star"></i>평점</span>
-			                        <span><i class="fa fa-bed"></i>리뷰 수</span>
+			                        <span style="font-size: 22px; vertical-align: middle;"><i class="fa fa-star"></i>[[${hotel.avg}]]</span>
+			                        <span style="font-size: 22px; vertical-align: middle;"><i class="fa fa-bed"></i>[[${hotel.count}]]</span>
 			                    </div>
 			                </div>
 			            </div>
@@ -183,7 +185,7 @@ p {
 							<div class="basket-paging" th:if="${dataCount==0}">
 								<td colspan="5">
 									<span style="font-size: 36px; text-align:center;
-									font-family: 'Gowun Batang', sans-serif; font-weight: bold;">찾으시는 호텔이 없습니다. </span>
+									font-family: 'Gowun Batang', sans-serif; font-weight: bold;">찾으시는 숙소가 없습니다. </span>
 								</td>
 							</div>
 	 						

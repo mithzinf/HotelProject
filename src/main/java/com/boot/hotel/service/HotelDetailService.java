@@ -41,9 +41,9 @@ public interface HotelDetailService {
 	
 	public List<HotelPictureDTO> getSweetPicture(int hotel_id) throws Exception;
 	
-	//0426 추가 쿼리 : 메인에서 더미 리뷰 데이터 불러오는 쿼리, 나중에 복붙하면 됨
-	public List<Map<String, Object>> getReviewData(int hotel_id) throws Exception;
-		
+	//메인 페이지의 리뷰데이터 4개를 최신순으로 불러오는 코드
+	public List<Map<String, Object>> getReviewData() throws Exception;
+	
 
 	//호텔 날짜 검색 스탠다드
 	public int searchDayStandard(Map<String, Object> params) throws Exception;

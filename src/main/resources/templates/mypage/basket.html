@@ -121,15 +121,15 @@
             <h2>마이페이지</h2>
             <ul class="links">
                 <li><a href="mypage/mypage">내정보</a></li>
-                <li class="active"><a href="mypage/basket">호텔 찜 목록</a></li>
+                <li class="active"><a href="mypage/basket">숙소 찜 목록</a></li>
                 <li><a href="mypage/my_reservation">예약내역</a></li>
                 <li><a href="mypage/delete">회원탈퇴</a></li>
             </ul>
            	<hr/>
             <h2>더보기</h2>
             <ul class="links">
-                <li><a href="mypage/mypage">공지사항</a></li>
-                <li><a href="mypage/mypage">문의게시판</a></li>
+                <li><a href="notice/noticeList">공지사항</a></li>
+                <li><a href="inquiry/inquiryList">문의게시판</a></li>
                 <li><a href="mypage/mypage">메뉴1</a></li>
                 <li><a href="mypage/delete">메뉴2</a></li>
             </ul>
@@ -139,15 +139,15 @@
     <!--end sidebar-->
 
 	
-    <div class="my-items table-responsive" style="margin: 50px 0 50px; width: 60%; margin-left: 4%;">
-    	<p class="title">회원님이 찜하신 호텔</p>
+    <div class="my-items table-responsive" style="margin: 50px 0 50px; width: 65%; margin-left: 4%;">
+    	<p class="title">회원님이 찜하신 숙소</p>
 			<table class="table">
 				<thead>
   					<tr>
-	                    <th class="sub" style="text-align: left; padding-left: 10px;">회원님이 찜하신 숙박 시설의 목록입니다.</th>
-	                    <th style="width: 12%;" class="sub">가격</th>
-	                    <th style="width: 7%;" class="sub">평점</th>
-	                    <th style="width: 10%;" class="sub">찜 취소</th>
+	                    <th class="sub" style="text-align: left; padding-left: 10px;">회원님이 찜하신 숙소의 목록입니다.</th>
+	                    <th style="width: 13%;" class="sub">가격</th>
+	                    <th style="width: 8%;" class="sub">평점</th>
+	                    <th style="width: 11%;" class="sub">찜 취소</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -173,11 +173,11 @@
                         </div>
                         <!--end info-->
                     </td>
-                    <td style="width: 10%; text-align: center; font-size: 18px;">
+                    <td style="width: 13%; text-align: center; font-size: 18px;">
                     <span style="font-size: 19px; font-weight: bold;"
                     th:text="${#numbers.formatInteger(dto.STANDARD, 0, 'COMMA') + '원~'}"></span></td>
-                    <td style="width: 10%; text-align: center; font-size: 18px;">9.3</td>
-                    <td style="width: 10%; text-align: center; font-size: 18px;">
+                    <td style="width: 8%; text-align: center; font-size: 18px; font-weight: bold;"><i class="fa fa-star" style="font-size: 14px;"></i> [[${dto.AVG}]]</td>
+                    <td style="width: 11%; text-align: center; font-size: 18px;">
                     <a href="mypage/basket" class="delete-btn">
                     <img style="width: 35px; height: 35px;" src="assets/img/delete.png"></a></td>
 					
@@ -196,7 +196,7 @@
 		<div class="basket-paging" th:if="${dataCount==0}">
 			<td colspan="5">
 				<span style="font-size: 36px;
-				font-family: 'Gowun Batang', sans-serif; font-weight: bold;">찜하신 호텔이 없습니다. </span>
+				font-family: 'Gowun Batang', sans-serif; font-weight: bold;">찜하신 숙소가 없습니다. </span>
 			</td>
 		</div>
 		
@@ -215,8 +215,8 @@
 		var basket_num = $(this).closest('.my-item').find('.basket_num').val();
 		
 		swal({
-			title: "호텔 찜 삭제",
-		    text: "이 호텔을 찜 목록에서 삭제하시겠습니까?",
+			title: "숙소 찜 삭제",
+		    text: "이 숙소를 찜 목록에서 삭제하시겠습니까?",
 		    icon: "warning",
 		    buttons: ["취소", "확인"],
 		    className: "text-center"

@@ -25,7 +25,7 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
     SELECT * FROM (
         SELECT rownum rnum, data.*
         FROM (       
-         SELECT r.*, to_char(r.created,'yy-MM-dd HH-mm-ss') 
+         SELECT r.*, to_char(r.created,'yyyy-MM-dd, HH24:MI:SS') 
             FROM review r WHERE hotel_id = #{hotel_id}
             ORDER BY review_num DESC
         ) data
@@ -44,16 +44,8 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 	delete review where review_num = #{review_num} 
 </delete>
 
-<select id="getReviewScoreData" parameterType="map" resultType="double">
-  SELECT r.hotel_id, r.review_num, r.userid, r.score, r.created, r.context, s.count, s.ave
-  FROM review r, (
-    SELECT hotel_id, COUNT(*) AS count, AVG(score) AS ave
-    FROM review
-    GROUP BY hotel_id
-  ) s
-  WHERE r.hotel_id = s.hotel_id
-  AND ${searchKey} LIKE '%' || #{searchValue} || '%'
-  ORDER BY r.review_num DESC
+<select id="searchReviewAvg" parameterType="int" resultType="map">
+	select round(nvl(avg(score), 0), 1) as avg, nvl(count(*), 0) as count FROM review WHERE hotel_id = #{hotel_id}
 </select>
 
 

@@ -32,8 +32,8 @@ h1,h2,h3,input,p,span,ul{
 	                                <li><a href="login/register_select" style="font-size: 18px; text-decoration: none;">회원가입</a></li>
 	                                <li><a href="hotel/main" class="has-child" style="font-size: 18px; text-decoration: none;">더보기</a>
 	                                    <ul class="child-nav">
-											<li><a href="hotel/main" style="text-decoration: none;"><span style="opacity: 1; font-weight: bold;">공지사항</span></a></li>
-	                                        <li><a href="hotel/main" style="text-decoration: none;"><span style="opacity: 1; font-weight: bold;">문의게시판</span></a></li>
+											<li><a href="notice/noticeList" style="text-decoration: none;"><span style="opacity: 1; font-weight: bold;">공지사항</span></a></li>
+	                                        <li><a href="inquiry/inquiryList" style="text-decoration: none;"><span style="opacity: 1; font-weight: bold;">문의게시판</span></a></li>
 	                                        <li><a href="hotel/main" style="text-decoration: none;"><span style="opacity: 1; font-weight: bold;">메뉴1</span></a></li>
 	                                        <li><a href="hotel/main" style="text-decoration: none;"><span style="opacity: 1; font-weight: bold;">메뉴2</span></a></li>
 	                                    </ul>
@@ -45,19 +45,24 @@ h1,h2,h3,input,p,span,ul{
 	                    <div class="right" th:if="${session.sessionUser != null && session.sessionUserRegister == null}">
 	                        <nav id="primary-nav">
 	                            <ul>
-	                            	<li><strong>[ [[${session.sessionUser.name}]] ]</strong> 님 환영합니다! &nbsp;&nbsp;</li>
+	                           	 	<th:block th:if="${session.sessionUser.id == 'admin'}">
+	                           	 		<li><strong style="color: red">[ [[${session.sessionUser.name}]] ]</strong> 님 어서오십시오. &nbsp;&nbsp;</li>
+	                           	 	</th:block>
+	                           	 	<th:block th:if="${session.sessionUser.id != 'admin'}">
+	                           	 		<li><strong>[ [[${session.sessionUser.name}]] ]</strong> 님 환영합니다! &nbsp;&nbsp;</li>
+	                           	 	</th:block>
 	                                <li><a href="login/logout" style="font-size: 18px; text-decoration: none;">로그아웃</a></li>
-	                                <li><a href="hotel/main" class="has-child" style="font-size: 18px; text-decoration: none;">마이페이지</a>
+	                                <li><a href="mypage/mypage" class="has-child" style="font-size: 18px; text-decoration: none;">마이페이지</a>
 	                                    <ul class="child-nav">
 											<li><a href="mypage/mypage" style="text-decoration: none;"><span style="opacity: 1; font-weight: bold;">내정보</span></a></li>
-	                                        <li><a href="mypage/basket" style="text-decoration: none;"><span style="opacity: 1; font-weight: bold;">호텔 찜 목록</span></a></li>
+	                                        <li><a href="mypage/basket" style="text-decoration: none;"><span style="opacity: 1; font-weight: bold;">숙소 찜 목록</span></a></li>
 	                                        <li><a href="mypage/my_reservation" style="text-decoration: none;"><span style="opacity: 1; font-weight: bold;">예약내역</span></a></li>
 	                                        <li><a href="mypage/delete" style="text-decoration: none;"><span style="opacity: 1; font-weight: bold;">회원탈퇴</span></a></li>
 	                                    </ul>
-	                                </li> 
-	                                <li><a href="/nav/index" class="has-child" style="font-size: 18px; text-decoration: none;">더보기</a>
+	                                </li>
+	                                <li><a href="hotel/main" class="has-child" style="font-size: 18px; text-decoration: none;">더보기</a>
 	                                    <ul class="child-nav">
-											<li><a href="hotel/main" style="text-decoration: none;"><span style="opacity: 1; font-weight: bold;">공지사항</span></a></li>
+											<li><a href="notice/noticeList" style="text-decoration: none;"><span style="opacity: 1; font-weight: bold;">공지사항</span></a></li>
 	                                        <li><a href="inquiry/inquiryList" style="text-decoration: none;"><span style="opacity: 1; font-weight: bold;">문의게시판</span></a></li>
 	                                        <li><a href="hotel/main" style="text-decoration: none;"><span style="opacity: 1; font-weight: bold;">메뉴1</span></a></li>
 	                                        <li><a href="hotel/main" style="text-decoration: none;"><span style="opacity: 1; font-weight: bold;">메뉴2</span></a></li>

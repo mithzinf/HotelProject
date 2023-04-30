@@ -24,7 +24,7 @@ public interface ReviewMapper {
 	public int updateReviewData(ReviewDTO dto);
 	
 	public void deleteReviewData(ReviewDTO dto);
-	
-	public List<ReviewScoreDTO> getReviewScoreData(Map<String, Object> map);
+
+	public Map<String, Object> searchReviewAvg(int hotel_id) throws Exception;
 	
 }

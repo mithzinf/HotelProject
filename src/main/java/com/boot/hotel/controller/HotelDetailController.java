@@ -1,5 +1,6 @@
 package com.boot.hotel.controller;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 
 
@@ -38,6 +39,7 @@ import com.boot.hotel.dto.HotelInfoDTO;
 import com.boot.hotel.dto.HotelPictureDTO;
 import com.boot.hotel.dto.HotelReservationDTO;
 import com.boot.hotel.dto.ReviewDTO;
+import com.boot.hotel.mapper.ReviewMapper;
 import com.boot.hotel.oauth2.dto.SessionUser;
 import com.boot.hotel.service.HotelDetailService;
 import com.boot.hotel.service.ReviewService;
@@ -55,50 +57,15 @@ public class HotelDetailController {
    
    @Resource
    private ReviewService reviewService;
+   
+   @Autowired
+   private ReviewMapper reviewMapper;
 	
    @Autowired
    private MyUtil2 myUtil2;
    
    @Autowired
    private MyUtil4 myUtil4;
-/*
-   @RequestMapping(value = "/detail" , method= {RequestMethod.GET, RequestMethod.POST})
-   public ModelAndView detail(@RequestParam(value = "hotel_id", required = true) int hotel_id, 
-				@RequestParam(value = "type", required = true) String type) throws Exception {
-     
-     
-      
-      Map<String, Object> paramMap = new HashMap<>();
-	   
- 	 
-	   //hotel_id와 type을 paramMap에 넣어요....매개변수를 넣는다......
-	   paramMap.put("hotel_id", hotel_id);
-	   paramMap.put("type", type);
-	   
-	   List<String> searchHotelDetail = hotelDetailService.searchHotelDetail(paramMap); 
-     
-      
-      List<HotelDTO> dto1 = hotelDetailService.getHotelById(hotel_id);
-      List<HotelInfoDTO> dto2 = hotelDetailService.getHotelInfoById(hotel_id);
-      List<HotelPictureDTO> dto3 = hotelDetailService.getHotelPicById(hotel_id);
-      List<HotelFacilityInDTO> dto4 = hotelDetailService.getHotelFacilityInById(hotel_id);
-      
-      
-      ModelAndView mav = new ModelAndView();
-      // Model에 데이터 추가, 좌항 : view에서 부를 별칭, 우항 : 진짜 담아진 객체의 이름
-      mav.addObject("dto1", dto1);
-      mav.addObject("dto2", dto2);
-      mav.addObject("dto3", dto3);
-      mav.addObject("dto4", dto4);
-      mav.addObject("searchHotelDetail",searchHotelDetail);
-      //mav.addObject("hotel_id",hotel_id);
-      mav.setViewName("hotel/detail"); //templates.login의 detail.html로 가게 하려고...
-      
-      return mav;
-      
-   }
-   
-  */ 
    
    
     @RequestMapping(value = "/detail", method = {RequestMethod.GET, RequestMethod.POST})
@@ -296,8 +263,10 @@ public class HotelDetailController {
 		String pageIndexList = 
 				myUtil4.pageIndexList(currentPage, totalPage, listUrl);
 				
-				
+		Map<String, Object> map1 = reviewMapper.searchReviewAvg(hotel_id);
 		
+		double avg = ((BigDecimal) map1.get("AVG")).doubleValue();
+		int count = ((BigDecimal) map1.get("COUNT")).intValue();
 		
 			
 		//===============리뷰끝==================
@@ -314,7 +283,10 @@ public class HotelDetailController {
 		mav.addObject("dataCount",dataCount);
 		mav.addObject("reviewList",reviewList);
 		mav.addObject("pageNum1",pageNum1);
+		mav.addObject("avg",avg);
+		mav.addObject("count",count);
 		
+		mav.addObject("listUrl", listUrl);
 		mav.addObject("resultMap1",resultMap1);
 		mav.addObject("check_in_day",check_in_day);
 		mav.addObject("check_out_day",check_out_day);
@@ -337,16 +309,11 @@ public class HotelDetailController {
 
     @RequestMapping(value = "/reviews", method = { RequestMethod.GET, RequestMethod.POST })
 	public Map<String, Object> reviewPage (@RequestParam("hotel_id") int hotel_id,
-									HttpServletRequest request) throws Exception {
+			@RequestParam("listUrl") String listUrl, HttpServletRequest request) throws Exception {
     	
     	System.out.println("리뷰 작성 컨트롤러 진입");
-
-    	String pageNum = request.getParameter("pageNum");
-    	String searchValue = request.getParameter("searchValue");
-    	String check_in = request.getParameter("check_in");
-    	String check_out = request.getParameter("check_out");
     	
-    	
+  
     	
 		int score = Integer.parseInt(request.getParameter("score"));
 		String context = request.getParameter("context");
@@ -370,15 +337,8 @@ public class HotelDetailController {
 		
 		System.out.println("리뷰 작성 처리 완료!!");
 		
-		//
-		
-		String pageNum1 = request.getParameter("pageNum1");
 		
 		int currentPage = 1;
-		
-		if(pageNum1!=null){ //넘어오는 페이지 번호가 있다면
-			currentPage = Integer.parseInt(pageNum1);
-		}
 		
 		int dataCount = reviewService.getReviewDataCount(hotel_id);
 		
@@ -399,11 +359,8 @@ public class HotelDetailController {
         
         List<ReviewDTO> reviewList = reviewService.getReadReviewList(params);
 
-        
-		String listUrl = "detail";
-		
 		String pageIndexList = 
-				myUtil2.pageIndexList(currentPage, totalPage, listUrl);
+				myUtil4.pageIndexList(currentPage, totalPage, listUrl);
 		
 		
 		Map<String, Object> reviewData = new HashMap<String, Object>();
@@ -411,8 +368,6 @@ public class HotelDetailController {
 		reviewData.put("pageIndexList", pageIndexList);
 		reviewData.put("reviewList", reviewList);
 		reviewData.put("dataCount", dataCount);
-		
-		System.out.println(reviewData.get("reviewList"));
 		
 		return reviewData;
 
@@ -425,6 +380,8 @@ public class HotelDetailController {
     		HttpServletRequest request) {
         Map<String, Object> pagingData = new HashMap<>();
 		
+        System.out.println("리뷰 페이징 컨트롤러 진입");
+        
 		int currentPage = 1;
 		
 		if(pageNum1!=null){ //넘어오는 페이지 번호가 있다면
@@ -454,9 +411,6 @@ public class HotelDetailController {
 		String pageIndexList = 
 				myUtil4.pageIndexList(currentPage, totalPage, listUrl);
 		
-		System.out.println(reviewList);
-		System.out.println(pageIndexList);
-		System.out.println(dataCount);
 		pagingData.put("dataCount", dataCount);
 		pagingData.put("reviewList", reviewList);
 		pagingData.put("pageIndexList", pageIndexList);
@@ -592,41 +546,7 @@ public class HotelDetailController {
 		return resultMap;
 	   
    }
-   
-  @RequestMapping(value = "/ozin", method = { RequestMethod.GET, RequestMethod.POST })
- public ModelAndView getMain() throws Exception {
-	 
-	 ModelAndView mav = new ModelAndView();
-	 //메인 페이지 하단에 리뷰 4개 임의로 만드는 코딩 만드는 중
-	//0426 추가 쿼리 : 메인에서 더미 리뷰 데이터 불러오는 쿼리, 나중에 복붙하면 됨
-		
-	 Map<String, Object> paramMap = new HashMap<>();
-	 int[] hotel_id = new int[4];
-	 //i가 1, 11, 21,31 출력되게 하는 for문..
-	 for(int i=0; i<4; i++) {
-		 hotel_id[i] = 1+i*10;
-	 }
-	 
-	 
-	 List<Map<String, Object>> mainReview = new ArrayList<>();
-	 for(int i = 0; i < hotel_id.length; i++) {
-	     List<Map<String, Object>> reviewData = hotelDetailService.getReviewData(hotel_id[i]);
-	     mainReview.addAll(reviewData);
-	 }
-	 
 
-	 
-	 mav.addObject("mainReview", mainReview);
-	// System.out.println(mainReview); //출력 실험
-	 System.out.println(hotel_id[1]); //11나와야 되그등?
-		
-		// List<Map<String, Object>> reviewData = hotelDetailService.getReviewData(1);
-		 System.out.println(mainReview);
-	 
-	 
-	 mav.setViewName("hotel/hotelMain_ozin");
-	 return mav;
- }
    
 
    

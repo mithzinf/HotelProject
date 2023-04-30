@@ -27,7 +27,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.boot.hotel.dto.HotelDTO;
 import com.boot.hotel.dto.HotelInfoDTO;
 import com.boot.hotel.dto.HotelPictureDTO;
+import com.boot.hotel.mapper.ReviewMapper;
 import com.boot.hotel.service.HotelBasketService;
+import com.boot.hotel.service.HotelDetailService;
 import com.boot.hotel.service.HotelInfoService;
 import com.boot.hotel.service.HotelMainService;
 import com.boot.hotel.util.MyUtil;
@@ -42,6 +44,12 @@ public class HotelMainController {
     private HotelBasketService hotelBasketService;
     
     @Autowired
+    private HotelDetailService hotelDetailService;
+    
+    @Autowired
+    private ReviewMapper reviewMapper;
+    
+    @Autowired
     private MyUtil myUtil;
 	
 	@Resource
@@ -53,7 +61,6 @@ public class HotelMainController {
 		
 		ModelAndView mav = new ModelAndView();
 		
-		Map<String, Object> paramMap = new HashMap<>();
 		int[] hotel_id = new int[8];
 		for(int i=0;i<8;i++) {
 			hotel_id[i] = 1 + i*6;
@@ -62,7 +69,20 @@ public class HotelMainController {
 		List<Map<String, Object>> mainHotel = new ArrayList<>();
 		for(int i = 0; i < hotel_id.length; i++) {
 		    List<Map<String, Object>> hotelData = hotelMainService.getHotelMain(hotel_id[i]);
+		    
 		    mainHotel.addAll(hotelData);
+		}
+		
+		double avg = 0;
+		int j = 0;
+		for (Map<String, Object> map : mainHotel) {
+			
+			Map<String, Object> map1 = reviewMapper.searchReviewAvg(hotel_id[j]);
+			
+			map.put("AVG", map1.get("AVG"));
+			map.put("COUNT", map1.get("COUNT"));
+			j++;
+			
 		}
 		
 		//오늘,내일 날짜를 html에 보내기 위해
@@ -76,6 +96,19 @@ public class HotelMainController {
 
 	    String tomorrowDate = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
 		
+
+		 
+		 
+
+
+		List<Map<String, Object>> reviewData = hotelDetailService.getReviewData();
+
+		System.out.println(reviewData);
+
+		 
+		
+	    mav.addObject("reviewData",reviewData);
+	    
 	    mav.addObject("check_in_day", currentDate);
 	    mav.addObject("check_out_day", tomorrowDate);
 		mav.addObject("mainHotel",mainHotel);

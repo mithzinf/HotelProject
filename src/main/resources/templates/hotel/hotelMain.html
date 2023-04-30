@@ -10,8 +10,9 @@
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Gowun+Batang&display=swap');
-h1,h2,input{
+h1,h2,input,figure{
 	font-family: 'Gowun Batang', sans-serif;
+	opacity: 1;
 }
 
 </style>
@@ -125,9 +126,9 @@ h1,h2,input{
 	                                </div>
 	                                <!--end image-->
 	                                <div class="description">
-	                                    <div class="meta">
-	                                        <span><i class="fa fa-star"></i>8.9</span>
-	                                        <span><i class="fa fa-bed"></i>365</span>
+	                                    <div class="meta" style="font-size: 15px;">
+	                                        <span><i class="fa fa-star"></i>[[${dto.AVG}]]</span>
+	                                        <span><i class="fa fa-bed"></i>[[${dto.COUNT}]]</span>
 	                                    </div>
 	                                    <div class="info">
 	                                        <figure class="label label-info">[[${dto.CATEGORY}]]</figure>
@@ -157,7 +158,7 @@ h1,h2,input{
         <div class="block">
             <div class="container">
                 <div class="title">
-                    <h2 class="center">서울어때가 추천하는 5월의 행사</h2>
+                    <h2 class="center">서울어때가 추천하는 서울의 5월 주요 행사</h2>
                 </div>
                 <!--end title-->
                 <!-- 행사 관련 캐러셀 시작 -->
@@ -188,7 +189,7 @@ h1,h2,input{
                         <div class="description">
                             <a href="https://ddp.or.kr/index.html?menuno=230&siteno=2&bbsno=469&boardno=15&bbstopno=469&act=view&subno="><h3>데이비드 호크니&브리티시 팝 아트</h3></a>
                           
-                            <p>영국 팝아트 거장들의 작품들을 한 번에 만나 볼 수 있는 특별한 기회!</p>
+                            <p>영국 팝아트 거장들의 작품들을 한 번에 만나 볼 수 있는 특별한 기회! 놓치지 마세요!</p>
                             <a href="https://ddp.or.kr/index.html?menuno=230&siteno=2&bbsno=469&boardno=15&bbstopno=469&act=view&subno=" class="btn btn-default btn-small btn-framed btn-rounded">More</a>
                         </div>
                     </div>
@@ -214,7 +215,7 @@ h1,h2,input{
                     </div>
                     <!--end gallery-item-->
                     <div class="gallery-item">
-                        <a href="http://www.boardgamecon.com/"><div class="image"><img src="http://www.boardgamecon.com/data/upload/banner/16795323942.gif" alt=""></div></a>
+                        <a href="http://www.boardgamecon.com/"><div class="image"><img src="https://image.news1.kr/system/photos/2023/4/24/5957071/article.jpg/dims/optimize" alt=""></div></a>
                         <div class="description">
                             <a href="http://www.boardgamecon.com/"><h3 style="text-align: center">보드게임콘</h3></a>
                            
@@ -235,20 +236,18 @@ h1,h2,input{
         <!--end block-->
 
 
-
-		<!-- 쿠폰? 자리 -->
-        <div class="container">
-            <div class="block">
+		
+		<!-- 메인 리뷰 자리 -->
+        <div class="container" style="padding-top: 70px;">
+            <div class="block" style="padding: 40px 0; ">
                 <form class="marketing-form">
                     <div class="row">
                         <div class="col-md-10 col-md-offset-1">
                             <div class="form-group-inline vertical-align-middle no-margin">
-                                <div class="form-group">
-                                    <h3 class="font-color-white no-margin">첫 숙소 예약은 반값에!</h3>
-                                    <p class="font-color-white no-margin">쿠폰 받아 가세요</p>
-                                </div>
-                                <div class="form-group width-50">
-                                    <button style="width: 100px; height: 80px;">쿠폰 받기</button>
+                                <div class="form-group" style="text-align: center;">
+                                    <h2 class="font-color-white no-margin" style="font-size: 30px;">서울 어때를 이용하신 고객님들의 최신 숙박 후기!</h2>
+                                    <br/>
+                                    <p class="font-color-white no-margin" style="font-size: 17px;">다양한 이용경험을 보고 마음에 드는 숙소를 골라보세요!</p>
                                 </div>
                             </div>
                         </div>
@@ -262,56 +261,25 @@ h1,h2,input{
        
 
 
-		<!-- 메인페이지 리뷰 목록 보여주는곳? -->
-        <div class="container">
+		<div class="container" style="padding-bottom: 100px;">
             <div class="block">
-                <div class="title">
-                    <h2>Reviews</h2>
-                                        <div class="row">
+                <div class="title" style="margin-bottom: 10px;">
+                    <div class="row">
+                    <div th:if = "${#lists.size(reviewData)}!=null" th:each="dto:${reviewData}">
                         <div class="col-md-3 col-sm-3">
                             <div class="review-single">
-								<a href="detail.html#reviews"><h3>호텔 이름</h3></a>
-                                <figure class="location">userid</figure>
-                                <div class="rating"><i class="fa fa-star"></i>score컬럼</div>
-                                <p>리뷰 컨텐츠 : content 어쩌구 저쩌구 어어어어어어아아아아아아아아아</p>
-                                <a href="detail.html#reviews" class="link icon">Full Review<i class="fa fa-expand"></i></a>
+								<a th:href="@{|/detail?hotel_id=${dto.HOTEL_ID}&check_in=${check_in_day}&check_out=${check_out_day}|}"><h2>[[${dto.HOTEL_NAME}]]</h2></a>
+                                <figure class="location" style="margin-top: 22px; font-weight: 600; font-size: 17px;">[[${dto.USERNAME}]] <span style="font-size: 13px;">님</span>
+                                <span style="font-size: 13px; color: #00BFFF; margin-bottom:10px; font-weight: bold;"> (<i class="fa fa-star"></i> [[${dto.SCORE}]])</span></figure>
+                                <div class="rating" style="font-size: 13px; margin-bottom:10px; font-weight: bold; margin-left: 0px;"><i class="fa fa-clock-o"></i>[[${dto.CREATED}]]</div>
+                                <p>[[${dto.CONTEXT}]]</p>
                             </div>
-                            <!--end review-->
+                            <!--end review single-->
                         </div>
                         <!--end col-md-3-->
-                        <div class="col-md-3 col-sm-3">
-                            <div class="review-single">
-                               <a href="detail.html#reviews"><h3>호텔 이름</h3></a>
-                                <figure class="location">userid</figure>
-                                <div class="rating"><i class="fa fa-star"></i>score컬럼</div>
-                                <p>리뷰 컨텐츠 : content</p>
-                                <a href="detail.html#reviews" class="link icon">Full Review<i class="fa fa-expand"></i></a>
-                            </div>
-                            <!--end review-->
+                        
                         </div>
-                        <!--end col-md-3-->
-                        <div class="col-md-3 col-sm-3">
-                            <div class="review-single">
-                               <a href="detail.html#reviews"><h3>호텔 이름</h3></a>
-                                <figure class="location">userid</figure>
-                                <div class="rating"><i class="fa fa-star"></i>score 컬럼</div>
-                                <p>리뷰 컨텐츠 : content</p>
-                                <a href="detail.html#reviews" class="link icon">Full Review<i class="fa fa-expand"></i></a>
-                            </div>
-                            <!--end review-->
-                        </div>
-                        <!--end col-md-3-->
-                        <div class="col-md-3 col-sm-3">
-                            <div class="review-single">
-                                <a href="detail.html#reviews"><h3>호텔 이름</h3></a>
-                                <figure class="location">userid</figure>
-                                <div class="rating"><i class="fa fa-star"></i>score 컬럼</div>
-                                <p>리뷰 컨텐츠 : content</p>
-                                <a href="detail.html#reviews" class="link icon">Full Review<i class="fa fa-expand"></i></a>
-                            </div>
-                            <!--end review, content의 길이에 따라 full Review의 위치가 달라짐..-->
-                        </div>
-                        <!--end col-md-3-->
+                        <!-- th : if of end -->
                     </div>
                     <!--end row-->
                 </div>

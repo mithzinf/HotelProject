@@ -6,7 +6,15 @@
 
 <div layout:fragment="content" class="content-padding">
 
-
+<style>
+abc {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-size: 25px;
+  color: #808080;
+  max-width: 300px;
+}
+</style>
 
 <!-- 이자리에 html 가운데 코드 작성 -->
 
@@ -18,7 +26,7 @@
             <h2>마이페이지</h2>
             <ul class="links">
                 <li><a href="mypage/mypage">내정보</a></li>
-                <li><a href="mypage/basket">호텔 찜 목록</a></li>
+                <li><a href="mypage/basket">숙소 찜 목록</a></li>
                 <li><a href="mypage/my_reservation">예약내역</a></li>
                 <li><a href="mypage/delete">회원탈퇴</a></li>
             </ul>
@@ -40,21 +48,25 @@
                 <div class="col-md-9"  style="margin-left: 30px;">
                     <div class="main-content">
                     <div class="col-md-9">
-                        <h1><h1 style="color: grey; margin-top: 50px;">공지사항 게시판</h1></h1>
+                        <h1 style="color: grey; margin-top: 50px; margin-bottom: 40px;">공지사항</h1>
                         <!--end title-->
-                        <article class="box filter" style="background-color: white; width: 730px; background-color: #FAFAFA">
+                         <article class="box filter" style="background-color: white; width: 150%; background-color: #FAFAFA">
 						<table>
 							<tr th:each="dto : ${dto}">
-							   <td th:text="${dto.subject}" style="font-size: 40px"></td>
+							  <abc th:text="${dto.subject}" style="font-size: 30px; font-family: Gowun Batang, sans -serif; font-weight: bold; color:#000;"></abc>
 							   <td style="vertical-align: top; text-align: right; ">
-							    <div th:text="${dto.userid}" style="font-size: 19px; margin-left: 450px"></div>
-							    <div th:text="${#dates.format(dto.created, 'yyyy/MM/dd')}" style="font-size: 14px"></div>
+							    <div th:text="${dto.userid}" style="width:850px; font-size: 19px; text-align: right;"></div>
+							    <div style="width:850px; text-align: right; font-size: 16px">
+								    <i class="fa fa-clock-o"></i> 
+								    <span th:text="${#dates.format(dto.created, 'yyyy/MM/dd, HH:MM:SS')}"></span>
+								</div>
 							   </td>
 							 </tr>
 						 </table>
 						 
 						 
                          <hr/>
+                         <table style="font-size: 22px; font-family: Gowun Batang, sans -serif ">
                         	<tr th:each="dto : ${dto}" >
                                 <tr><td th:text="${dto.context}"></td></tr>
                             </tr>
@@ -66,15 +78,16 @@
 							<span th:if="${sessionUser != null and sessionUser.id == 'admin'}">
 							    <input type="button" value="수정" class="btn btn-framed btn-small btn-default btn-rounded"
 							        th:onclick="'location.href=\'notice/noticeUpdate?num=' + @{${dto.notice_num }}+'\''"
-							        style="display: inline-block;">
+							        style="font-size: 13px; width: 87px;height: 41px; font-size: 21px">
 							    <input type="button" value="삭제" class="btn btn-framed btn-small btn-default btn-rounded"
 							        th:onclick="'location.href=\'notice/deleted_ok?num=' + @{${dto.notice_num }} +'\''"
-							        style="display: inline-block;">
+							        style="font-size: 13px; width: 87px;height: 41px; font-size: 21px">
 							</span>
 							<!-- 리스트 버튼, 로그인하든 안하든 다 보일 수 있게? -->
 							<span>
 							    <input type="button" value="리스트" class="btn btn-framed btn-small btn-default btn-rounded"
-							        th:onclick="'location.href=\'notice/noticeList?num=' + @{${dto.notice_num }} +'\''"> 
+							        th:onclick="'location.href=\'notice/noticeList?num=' + @{${dto.notice_num }} +'\''"
+							        style="font-size: 13px; width: 87px;height: 41px; font-size: 21px"> 
 							</span>
 
                         

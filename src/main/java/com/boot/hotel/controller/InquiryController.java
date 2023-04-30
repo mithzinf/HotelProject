@@ -92,7 +92,7 @@ public class InquiryController {
         params1.put("searchKey", searchKey);
 		
         int dataCount = inquiryService.getListsCount(params1);
-		int numPerPage = 3;
+		int numPerPage = 10;
 		int totalPage = myUtil3.getPageCount(numPerPage, dataCount);
 		
 		if(currentPage>totalPage) {
@@ -419,17 +419,19 @@ public class InquiryController {
 		}
 		
 		
-		String param = "pageNum=" + pageNum;
+		String param = "num=" + num + "&pageNum=" + pageNum;
 		if(searchValue!=null&&!searchValue.equals("")) {
 			param += "&searchKey=" + searchKey;
 			param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 		}
 		
+		mav.addObject("num",num);
 		mav.addObject("dto", dto);
 		mav.addObject("pageNum", pageNum);
 		mav.addObject("params", param);
 		mav.addObject("searchKey", searchKey);
 		mav.addObject("searchValue", searchValue);
+		System.out.println(param);
 		
 		mav.setViewName("inquiry/inquiryUpdate");
 		return mav;

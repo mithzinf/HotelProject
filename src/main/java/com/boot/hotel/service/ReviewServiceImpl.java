@@ -42,13 +42,13 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public List<ReviewScoreDTO> getReviewScoreData(Map<String, Object> map) {
-		  return reviewMapper.getReviewScoreData(map);
+	public List<ReviewDTO> getReadReviewList(Map<String, Object> params) {
+		return reviewMapper.getReadReviewList(params);
 	}
 
 	@Override
-	public List<ReviewDTO> getReadReviewList(Map<String, Object> params) {
-		return reviewMapper.getReadReviewList(params);
+	public Map<String, Object> searchReviewAvg(int hotel_id) throws Exception {
+		return reviewMapper.searchReviewAvg(hotel_id);
 	}
 
 

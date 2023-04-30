@@ -1,5 +1,6 @@
 package com.boot.hotel.controller;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.boot.hotel.dto.HotelReservationDTO;
 import com.boot.hotel.dto.MemberDTO;
+import com.boot.hotel.mapper.ReviewMapper;
 import com.boot.hotel.oauth2.dto.SessionUser;
 import com.boot.hotel.service.MemberService;
 import com.boot.hotel.service.MyPageService;
@@ -42,6 +44,9 @@ public class MyPageController {
 	
 	@Resource
 	private MemberService memberService;
+	
+	@Autowired
+    private ReviewMapper reviewMapper;
 	
 	@Autowired
     private MyUtil2 myUtil;
@@ -242,17 +247,11 @@ public class MyPageController {
 				
 		int numPerPage = 4;
 		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
-		
-		System.out.println("currentPage" + currentPage);
-		System.out.println("totalPage" + totalPage);
-		
+
 		if(currentPage>totalPage) {
 			currentPage = totalPage;
 		}
-		
-		System.out.println("currentPage" + currentPage);
-		System.out.println("totalPage" + totalPage);
-		
+
 		int start = (currentPage-1)*numPerPage+1; 
 		int end = currentPage*numPerPage;
 		
@@ -264,7 +263,10 @@ public class MyPageController {
 		    
 			List<Map<String, Object>> basketData = myPageService.searchBasketHotel(hotel_id);
 			basket.addAll(basketData);
+			
 		}
+		
+		
 		
 		start -= 1;
 		
@@ -276,8 +278,23 @@ public class MyPageController {
 		if(basket.size() > 0) {
 			for (int i = start; i < end; i++) {
 				pagedBasket.add(basket.get(i));
+
 			}
 		}
+		
+		int temp = 0;
+		for(Map<String,Object> i: pagedBasket ) {
+			
+			BigDecimal hotelIdBigDecimal = ((BigDecimal) basket.get(temp).get("HOTEL_ID"));
+			int hotel_id_paged = hotelIdBigDecimal.intValue();
+			
+			Map<String, Object> map1 = reviewMapper.searchReviewAvg(hotel_id_paged);
+			
+			i.put("AVG", map1.get("AVG"));
+			
+			temp++;
+		}
+		
 		
 		String listUrl = "mypage/basket";
 		

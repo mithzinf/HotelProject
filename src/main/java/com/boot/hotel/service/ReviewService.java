@@ -20,7 +20,7 @@ public interface ReviewService {
 	
 	public void deleteReviewData(ReviewDTO dto);
 	
-	public List<ReviewScoreDTO> getReviewScoreData(Map<String, Object> map);
+	public Map<String, Object> searchReviewAvg(int hotel_id) throws Exception;
 
 }
 

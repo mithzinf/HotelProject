@@ -5,28 +5,50 @@
 <meta charset="UTF-8">
 
 <div layout:fragment="content" class="content-padding">
-	<form action="/noticeUpdate_ok" name="noticeForm" method="post" autocomplete="off">
-	    <section id="main-information">
-	        <div class="title">
-	            <h2></h2>
-	        </div>
-	        
-	        <div class="page-wrapper">
-			    <div id="page-content">
-			        <div class="container">
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Gowun+Batang&display=swap');
+
+</style>
+
+<div class="myPage">
+    <div class="sidebar" style="margin: 50px 0 50px; width: 17%; min-width: 250px; ">
+        <div class="box filter">
+            <h2>마이페이지</h2>
+            <ul class="links">
+                <li><a href="mypage/mypage">내정보</a></li>
+                <li><a href="mypage/basket">숙소 찜 목록</a></li>
+                <li><a href="mypage/my_reservation">예약내역</a></li>
+                <li><a href="mypage/delete">회원탈퇴</a></li>
+            </ul>
+           	<hr/>
+            <h2>더보기</h2>
+            <ul class="links">
+                <li class="active"><a href="notice/noticeList">공지사항</a></li>
+                <li><a href="inquiry/inquiryList">문의게시판</a></li>
+                <li><a href="mypage/mypage">메뉴1</a></li>
+                <li><a href="mypage/delete">메뉴2</a></li>
+            </ul>
+        </div>
+        <!--end filter-->
+    </div>
+    <!--end sidebar-->
+
+
+			    <div id="page-content" style="width: 30px;">
+			        <div class="container" style="margin-left: 70px;">
 			            <div class="row">
-			                <div class="col-md-3">
-			                </div>
+			            	<form action="/noticeUpdate_ok" name="noticeForm" method="post" autocomplete="off">
 			                <div class="col-md-9">
 			                    <div class="main-content">
 			                        
 			                        <section>
-			                                <h2>공지사항 수정하기</h2>
+			                            <h1 style="color: grey; margin-top: 40px; margin-bottom: 40px;">공지사항 수정하기 </h1>
 			                                
 			                                <div class="row">
 			                                    <div class="col-md-6">
 			                                    	<div class="form-group">
-			                                            <label for="form-contact-name">공지사항 제목</label>
+			                                            <label for="form-contact-name" style="font-family: 'Gowun Batang', sans-serif; opacity: 1px; font-weight: bold;">공지사항 제목</label>
 			                                            <input type="text" class="form-control" id="subject" name="subject" placeholder="제목" th:value="${dto.subject}" >
 			                                        </div>
 			                                    </div>
@@ -37,15 +59,19 @@
 			                                <div class="row">
 									            <div class="col-md-7">
 									                <div class="form-group">
-									                    <label for="form-submit-description">공지사항</label>
+									                    <label for="form-submit-description" style="font-family: 'Gowun Batang', sans-serif; opacity: 1px; font-weight: bold;">공지사항</label>
 									                    <textarea class="form-control" style="width: 550px; resize:none;"
 									                    	rows="10" name="context"  id="context" 
 									                    	th:value="${dto.context}" th:text="${dto.context}" ></textarea>
 									                </div>
 									                <!--end form-group-->
 									                
-									                <button style="width: 80px; height: 28px; margin: 3%" class="btn btn-primary btn-rounded scroll" 
+									                <button style="width: 120px; height: 45px; font-size: 21px; margin: 3%;
+									                border: 2px solid rgba(31, 31, 31, 0.2); border-radius: 14px;" class="btn btn-primary btn-rounded scroll" 
 									                 type="submit" onclick="updateList">수정하기</button>
+									                 <button style="width: 120px; height: 45px; font-size: 21px; margin: 3%;
+									                border: 2px solid rgba(31, 31, 31, 0.2); border-radius: 14px;" class="btn btn-primarybtn-rounded scroll" 
+									                 onclick="location.href='/notice/noticeList'" type="button">돌아가기</button>
 									            </div>
 									        </div>
 									        <!--end row-->
@@ -53,7 +79,11 @@
 			                    </div>
 			                    <!--end main-content-->
 			                </div>
+			                <input type="hidden" id="username" name="username" th:value="${username}"/>
+							<input type="hidden" name="userid" id="userid" th:value="${userid}"/>		
+							<input type="hidden" id="notice_num" name="notice_num" th:value="${dto.notice_num}"/>
 			                <!--end col-md-9-->
+			                </form>
 			            </div>
 			            <!--end row-->
 			        </div>
@@ -61,16 +91,10 @@
 			    </div>
 			    <!--end page-content-->
 			
-			</div>
-	    
-	    </section>
-	    
-	    <input type="hidden" id="username" name="username" th:value="${username}"/>
-		<input type="hidden" name="userid" id="userid" th:value="${userid}"/>		
-		<input type="hidden" id="notice_num" name="notice_num" th:value="${dto.notice_num}"/>
-		
-	</form>
 
+	    
+
+</div>
 </html>
 
 

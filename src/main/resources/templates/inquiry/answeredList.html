@@ -9,14 +9,14 @@
 				        <div class="container">
 				            
 				            <div class="row">
-				                <div class="col-md-9">
+				                <div class="col-md-9" style="padding-left: 0;">
 				                    <div class="main-content">
 				                    <br/>
 				                    
 				                    <form action="" name="ansForm" method="GET" >
 				                        <section class="box filter" id="comments"
 				                        	style="background-color: #FAFAFA; width: 640px;
-				                        	margin-left: 80px">
+				                        	margin-left: 0px">
 				                            <header><h2 class="no-border">답변</h2></header>
 				                            <hr style="border-style: solid; border-width: 3px; border-radius: 5px; margin: 10px 0; padding: 0;">
 				                            
@@ -48,7 +48,7 @@
 				                                        
 				                                        
 				                                        <div style="font-size: 25px"><div th:text="${anwList.content}" style="font-size: 20px; color: grey"></div></td>
-				                                        <div><span th:text="${'('+ #dates.format(anwList.created, 'yyyy/MM/dd HH:mm:ss')+')'}"style="font-size: 14px; color: grey"></span></div>
+				                                        <div><i class="fa fa-clock-o" style="font-size: 14px;"></i> <span th:text="${#dates.format(anwList.created, 'yyyy/MM/dd HH:mm:ss')}"style="font-size: 14px; color: grey"></span></div>
 				                                        <hr style="border-style: solid; border-width: 1px;"/>
 				                                        
 				                                        <input type="hidden" name="ans_num" id="ans_num" th:value="${anwList.ans_num}"/>

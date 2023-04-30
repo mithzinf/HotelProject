@@ -61,7 +61,7 @@ li{
                  <div class="col-md-3">
                     <div class="sidebar">
                         <div class="box filter">
-                            <h2>서울어때 호텔 찾아보기</h2>
+                            <h2>서울어때 숙소 찾아보기</h2>
                             <form id="searchForm" action="/hotel/hotellist" method="get">
                                <div class="form-group">
                                     <label for="form-filter-destination" style="font-family: 'Gowun Batang', sans-serif; margin-bottom: 8.8px;">장소</label>
@@ -73,20 +73,20 @@ li{
                                     <div class="form-group">
                                         <label class="label-on-input" for="datepicker1" style="font-size: 12px; opacity: 1; font-family: 'Gowun Batang', sans-serif; margin-bottom: 8px;">체크인 날짜</label>
                                         <input type="text" id="datepicker1" name="check_in" placeholder="연도-월-일" th:value="${check_in_day}"
-                                        onkeydown="return false;" readonly style="padding-left: 10px;">
+                                        onkeydown="return false;" readonly style="padding-left: 10px; font-weight: bold; font-size: 15px;">
                                     </div>
                                     <!--end form-group-->
                                     <div class="form-group">
                                         <label class="label-on-input" for="datepicker2" style="font-size: 12px; opacity: 1; font-family: 'Gowun Batang', sans-serif; margin-bottom: 8px;">체크아웃 날짜</label>
                                         <input type="text" id="datepicker2" name="check_out" placeholder="연도-월-일" th:value="${check_out_day}"
-                                        onkeydown="return false;" readonly style="padding-left: 10px; ">
+                                        onkeydown="return false;" readonly style="padding-left: 10px; font-weight: bold; font-size: 15px;">
                                     </div>
                                     <!--end form-group-->
                                 </div>
                                 <!--end form-group-inline-->
 
                                 <div class="form-group center">
-                                    <button type="submit" class="btn btn-primary1 btn-rounded form-control" style="font-family: 'Gowun Batang', sans-serif; font-weight: bold;">호텔 검색하기</button>
+                                    <button type="submit" class="btn btn-primary1 btn-rounded form-control" style="font-family: 'Gowun Batang', sans-serif; font-weight: bold;">숙소 검색하기</button>
                                 </div>
                             </form>
                             <!--end form-filter-->
@@ -185,7 +185,7 @@ li{
                                         <div class="form-group">
                                             <label class="label-on-input" for="datepicker3" style="font-size: 12px; opacity: 1; font-family: 'Gowun Batang', sans-serif;">체크인 날짜</label>
 	                                        <input type="text" id="datepicker3" name="check_in" placeholder="연도-월-일" th:value="${check_in_day}"
-	                                        onkeydown="return false;" readonly style="padding-left: 10px;">
+	                                        onkeydown="return false;" readonly style="padding-left: 10px; font-weight: bold; font-size: 17px;">
                                         </div>
                                     </div>
                                     <!--end col-md-3-->
@@ -193,7 +193,7 @@ li{
                                         <div class="form-group">
                                             <label class="label-on-input" for="datepicker4" style="font-size: 12px; opacity: 1; font-family: 'Gowun Batang', sans-serif;">체크아웃 날짜</label>
 	                                        <input type="text" id="datepicker4" name="check_out" placeholder="연도-월-일" th:value="${check_out_day}"
-	                                        onkeydown="return false;" readonly style="padding-left: 10px; ">
+	                                        onkeydown="return false;" readonly style="padding-left: 10px; font-weight: bold; font-size: 17px;">
                                         </div>
                                     </div>
                                     <!--end col-md-3-->
@@ -201,8 +201,9 @@ li{
                                         <div class="form-group">
                                             <label class="invisible">Hidden label</label>
                                             <input type="hidden" id="hotel_id" name="hotel_id" th:value="${hotel_id}"> <!-- hotel_id hidden 필드 추가 -->
-                                            <button class="btn btn-primary btn-rounded btn-framed form-control" style="font-weight: bold;"
-                                            onclick="searchDay();" >잔여 객실 검색하기</button>
+                                            <button class="btn btn-primary btn-rounded btn-framed form-control"
+                                            style="font-weight: bold; height: 40px; background: #488f3e; color: #fff; font-size: 17px;"
+                                            onclick="searchDay();" >객실 날짜 검색하기</button>
                                         </div>
                                     </div>
                                     <!--end col-md-3-->
@@ -574,16 +575,15 @@ li{
 								<div th:with="hotel_id=${hotel_id}">
 
 									<div class="title">
-										<h2 class="pull-left">리뷰</h2>
+										<h2 class="pull-left">이용 후기</h2>
 										<a href="#write-a-review"
-											class="btn btn-primary btn-rounded pull-right scroll">나도
-											리뷰 쓰기</a>
+											class="btn btn-primary btn-rounded pull-right scroll">이용 후기 작성하기</a>
 									</div>
 									<ul style="width:600px;">
 
-										<h3>호텔 평균 점수</h3>
+										<h3>호텔 평점</h3>
 										<ul class="rating-score rating-score-without-star">
-											<li class="overall"><i class="fa fa-star"></i></li>
+											<li class="overall"><i class="fa fa-star"></i>[[${avg}]] &nbsp;&nbsp;<span style="font-size: 20px;"><i class="fa fa-bed"></i>[[${count}]]</span></li>
 										</ul>
 
 										<div class="reviews">
@@ -597,11 +597,11 @@ li{
 	
 															<div class="col-md-9">
 																<div class="comment" style="padding: 20px; width: 600px;">
-																	<div class="comment-title">
+																	<div class="comment-title" style="margin-bottom: 5px;">
 																		<figure class="rating" th:text="${review.SCORE}">평점</figure>
 																		<h4 th:text="${review.USERNAME}"></h4>
 																		<i class="fa fa-clock-o"></i>
-																		<span th:text="${#dates.format(review.CREATED, 'yy-MM-dd HH:mm:ss')}"></span>
+																		<span th:text="${#dates.format(review.CREATED, 'yyyy-MM-dd, HH:mm:ss')}"></span>
 																	</div>
 																	<br />
 																	<p th:text="${review.CONTEXT}"></p>
@@ -624,7 +624,7 @@ li{
 													<div class="basket-paging" th:if="${dataCount==0}">
 														<td colspan="5">
 															<span style="font-size: 36px; text-align:center;
-															font-family: 'Gowun Batang', sans-serif; font-weight: bold;">등록된 리뷰가 없습니다. </span>
+															font-family: 'Gowun Batang', sans-serif; font-weight: bold;">등록된 이용 후기가 없습니다. </span>
 														</td>
 													</div>
 												</div>
@@ -648,7 +648,7 @@ li{
 							
 							<!--end review-->
 							<section id="write-a-review">
-                            <h2>나도 나도 리뷰 쓰기</h2>
+                            <h2>이용 후기 작성하기</h2>
                             <form  class="labels-uppercase clearfix" name="myForm4" id="review-form" method="post">
                                 <div class="review write switch" id="review-write" style="opacity: 1; pointer-events: all;">
                                     
@@ -664,7 +664,7 @@ li{
                                                 <!--end title-->
                                                 <div class="form-group">
                                                     <label for="form_reply_1-message" style="font-size: 14px;">리뷰 내용<em>*</em></label>
-                                                    <textarea class="form-control" id="context11" rows="8" name="context11" placeholder="Describe your stay"></textarea>
+                                                    <textarea class="form-control" id="context11" rows="8" name="context11" placeholder="숙박 후기를 적어주세요!"></textarea>
                                                 </div>
                                                 <!--end form-group-->
                                                 <div class="form-group pull-right">
@@ -700,6 +700,7 @@ li{
                                 
                                 
                                 <input type="hidden" id="user_id_review" th:value="${user_id}" />
+                                <input type="hidden" id="listUrl_review" th:value="${listUrl}"/>
                             </form>
                             <!--end form-->
                         </section>
@@ -836,7 +837,9 @@ li{
 	    var hotel_id = $("#hotel_id").val();
 	    var inputElement = document.querySelector('#score_cleanliness');
 	    var context = $("#context11").val();
-		
+	    var listUrl = $("#listUrl_review").val();
+
+	    
 		var user_id_review = $("#user_id_review").val();
 		
 		if(user_id_review===""){
@@ -888,7 +891,7 @@ li{
 			$.ajax({
 		        type: "GET",
 		        url: "/reviews",
-		        data: {hotel_id: hotel_id, score: inputElement.value, context: context},
+		        data: {hotel_id: hotel_id, score: inputElement.value, context: context, listUrl:listUrl},
 		        success: function(reviewData) {
 		        	
 		        	var reviewList = reviewData.reviewList;
