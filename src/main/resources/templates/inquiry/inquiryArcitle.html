@@ -39,8 +39,6 @@ textarea {
             <ul class="links">
                 <li><a href="notice/noticeList">공지사항</a></li>
                 <li class="active"><a href="inquiry/inquiryList">문의게시판</a></li>
-                <li><a href="mypage/mypage">메뉴1</a></li>
-                <li><a href="mypage/delete">메뉴2</a></li>
             </ul>
         </div>
         <!--end filter-->
@@ -74,7 +72,7 @@ textarea {
                          <hr/>
                          <table style="font-size: 22px; font-family: Gowun Batang, sans -serif ">
                         	<tr th:each="dto : ${dto}" >
-                                <tr><td th:text="${dto.context}"></td></tr>
+                                <tr><td th:utext="${dto.context}"></td></tr>
                             </tr>
                             
                          </table>
@@ -144,6 +142,7 @@ textarea {
                                         </div><!-- /.form-group -->
                                     </div><!-- /.col-md-12 -->
                                 </div><!-- /.row -->
+                                
                                 <div class="form-group clearfix">
                                     <input type="button" value=" 등록하기 " class="btn btn-primary btn-rounded scroll" id="sendAnswer"
                                     style="width: 110px;height: 45px; font-size: 21px;"/>

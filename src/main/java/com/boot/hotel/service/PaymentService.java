@@ -10,14 +10,19 @@ import com.boot.hotel.dto.PaymentDTO;
 
 public interface PaymentService {
 	
-	// 결제 내역
+	// 최신 결제 내역 조회
 	public int maxPayNum() throws Exception;
+	
+	// 결제완료시 결제 내역 저장
 	public void insertPayment(PaymentDTO payDto) throws Exception;
 	
-	// 예약 내역
+	// 최신 예약 정보 조회
 	public int maxResNum() throws Exception;
+	
+	// 예매/결제 시 예약 정보 저장
 	public void insertReservation(HotelReservationDTO resDto) throws Exception;
 	
+	// 전경 사진 가져오기
 	public List<String> searchHotelTitle(Map<String, Object> params) throws Exception;
 	
 	// 호텔 정보 가져오기

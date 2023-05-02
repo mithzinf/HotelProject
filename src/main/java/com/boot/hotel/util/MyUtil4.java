@@ -2,6 +2,7 @@ package com.boot.hotel.util;
 
 import org.springframework.stereotype.Service;
 
+//리뷰 페이징 유틸 (ajax)
 @Service
 public class MyUtil4 {
 

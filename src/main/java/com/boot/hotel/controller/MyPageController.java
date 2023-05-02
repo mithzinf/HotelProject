@@ -61,10 +61,12 @@ public class MyPageController {
 		
 		MemberDTO dto = memberService.getReadDataMember(sessionUser.getId());
 		
+		//@를 기준으로 나눠서 저장
 		String[] email = dto.getEmail().split("@");
 		dto.setEmail1(email[0]);
 		dto.setEmail2(email[1]);
 		
+		//-를 기준으로 나눠서 저장
 		String[] tel = dto.getTel().split("-");
 		dto.setTel1(tel[0]);
 		dto.setTel2(tel[1]);
@@ -102,8 +104,8 @@ public class MyPageController {
 		
 		mav.addObject("dto",dto);
 		
-		System.out.println(dto.getAuth());
 		
+		//일반/소셜 수정페이지 나눠서 진입
 		if(dto.getAuth().equals("소셜회원")) {
 			
 			mav.setViewName("mypage/update_oauth");
@@ -237,7 +239,7 @@ public class MyPageController {
 		
 		int currentPage = 1;
 		
-		if(pageNum!=null){ //넘어오는 페이지 번호가 있다면
+		if(pageNum!=null){
 			currentPage = Integer.parseInt(pageNum);
 		}
 		
@@ -255,6 +257,7 @@ public class MyPageController {
 		int start = (currentPage-1)*numPerPage+1; 
 		int end = currentPage*numPerPage;
 		
+		//hotel_id를 기준으로 찜 목록 리스트를 불러옴
 		List<Map<String, Object>> basket = new ArrayList<>();
 		
 		for(Map<String,Object> i: hotel_id_list ) {
@@ -268,6 +271,7 @@ public class MyPageController {
 		
 		
 		
+		//컨트롤러에서 자체 페이징 처리
 		start -= 1;
 		
 		if(dataCount<end) {
@@ -282,6 +286,7 @@ public class MyPageController {
 			}
 		}
 		
+		//평점 구하는 코드
 		int temp = 0;
 		for(Map<String,Object> i: pagedBasket ) {
 			
@@ -296,6 +301,8 @@ public class MyPageController {
 		}
 		
 		
+		//호텔을 눌렀을때 상세 페이지로 보내게 하기 위한 준비
+		//상세페이지는 체크인, 체크아웃 날짜가 반드시 있어야 한다.
 		String listUrl = "mypage/basket";
 		
 		String pageIndexList = 
@@ -327,6 +334,7 @@ public class MyPageController {
 	}
 	
 	
+	//찜 삭제 메소드
 	@RequestMapping(value = "/mypage/basket_delete", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView basket_delete(@RequestParam int basket_num) throws Exception
 	{
@@ -362,10 +370,8 @@ public class MyPageController {
 			currentPage = Integer.parseInt(pageNum);
 		}
 		
-		System.out.println(sessionUser.getId());
 		
 		int dataCount = myPageService.reservationMaxNum(sessionUser.getId());
-		System.out.println(dataCount);
 		
 		int numPerPage = 4;
 		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
@@ -385,8 +391,8 @@ public class MyPageController {
         
         List<Map<String, Object>> lists = myPageService.getMyReservationLists(params);
         
-        System.out.println("1차 출력 정보" + lists);
         
+        //페이징된 데이터를 기준으로 다른 테이블에서 추가 정보를 가져올 준비
         for (Map<String, Object> map : lists) {
         	
         	Map<String, Object> params2 = new HashMap<>();
@@ -394,8 +400,6 @@ public class MyPageController {
             params2.put("hotel_id", map.get("HOTEL_ID"));
             
             List<Map<String, Object>> lists2 = myPageService.getMyReservationListsAdd(params2);
-            
-            System.out.println("추가하려는 리스트 : " + lists2);
 
             map.put("ADDR1", lists2.get(0).get("ADDR1"));
             map.put("PRICE", lists2.get(0).get("PRICE").toString());
@@ -404,8 +408,6 @@ public class MyPageController {
             map.put("TEL", lists2.get(0).get("TEL"));
             map.put("URL", lists2.get(0).get("URL"));
             
-            System.out.println("최종 가져온 리스트 : " + map);
-            
         }
         
         
@@ -413,7 +415,6 @@ public class MyPageController {
 		
 		String pageIndexList = 
 				myUtil.pageIndexList(currentPage, totalPage, listUrl);
-		
 		
 		//오늘,내일 날짜를 html에 보내기 위해
 		String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
@@ -442,6 +443,7 @@ public class MyPageController {
 	}
 	
 	
+	//예약 내역 삭제 메소드
 	@RequestMapping(value = "/mypage/my_reservation_delete", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView my_reservation_delete(@RequestParam int res_num) throws Exception
 	{
@@ -452,18 +454,6 @@ public class MyPageController {
 		myPageService.deleteReservation(res_num);
 		
 		mav.setViewName("redirect:/mypage/my_reservation");
-		
-		return mav;
-		
-	}
-	
-	@RequestMapping(value = "/mypage/test1111", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView test1111() throws Exception
-	{
-		System.out.println("없어.");
-		ModelAndView mav = new ModelAndView();
-		
-		mav.setViewName("mypage/test1111");
 		
 		return mav;
 		

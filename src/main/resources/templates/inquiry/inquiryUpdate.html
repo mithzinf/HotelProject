@@ -26,8 +26,6 @@
             <ul class="links">
                 <li><a href="notice/noticeList">공지사항</a></li>
                 <li class="active"><a href="inquiry/inquiryList">문의게시판</a></li>
-                <li><a href="mypage/mypage">메뉴1</a></li>
-                <li><a href="mypage/delete">메뉴2</a></li>
             </ul>
         </div>
         <!--end filter-->
@@ -87,10 +85,12 @@
 									                
 									                <button style="width: 120px; height: 45px; font-size: 21px; margin: 3%;
 									                border: 2px solid rgba(31, 31, 31, 0.2); border-radius: 14px;" class="btn btn-primarybtn-rounded scroll" 
-									                 type="submit" onclick="updateList">수정하기</button>
+									                type="submit" onclick="updateList">수정하기</button>
+									                 
 									                <button style="width: 120px; height: 45px; font-size: 21px; margin: 3%;
 									                border: 2px solid rgba(31, 31, 31, 0.2); border-radius: 14px;" class="btn btn-primarybtn-rounded scroll" 
-									                 onclick="location.href='/inquiry/inquiryList'" type="button">돌아가기</button>
+									                th:onclick="'location.href=\'inquiry/inquiryArcitle?num=' + @{${dto.inq_num }} + '&' + @{${params }} +'\''" 
+									                type="button">돌아가기</button>
 									            </div>
 									        </div>
 									        <!--end row-->

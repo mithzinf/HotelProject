@@ -27,27 +27,7 @@
 				                                        <div style="font-size: 23px"><span th:text="${anwList.userid}" ></span></div>
 				                                        <br/>
 				                                        
-				                                        <!-- 
-				                                        <a href="'location.href=\'inquiry/inquiryList?num=' + @{${anwList.ans_num}} + '&' + 'pageNum' + @{${pageNum}} +'\''">삭제</a>
-				                                     -->
-				                                    
-				                                    
-				                                    <!-- 
-				                                    <input type="button" th:value="${anwList.ans_num}"
-				                                        class="btn btn-primary btn-rounded scroll" 
-				                                        th:id="'deleteAnswer'+'${anwList.ans_num}'"> 
-			                                        
-			                                        
-			                                        <input type="button" value=" 삭제 " class="btn btn-framed btn-small btn-default btn-rounded"
-													th:onclick="'location.href=\'answerDelete?ans_num=' + @{${anwList.ans_num}} +'\''"
-													style="font-size: 13px"/>
-				                                    
-				                                    <input type="hidden" name="pageNum" id="pageNum" th:value="${pageNum}"/>
-				                                    <input type="hidden" name="inq_num" id="inq_num" th:value="${dto.inq_num}"/>
-				                                    -->
-				                                        
-				                                        
-				                                        <div style="font-size: 25px"><div th:text="${anwList.content}" style="font-size: 20px; color: grey"></div></td>
+				                                        <div style="font-size: 25px"><div th:utext="${anwList.content.replaceAll('\n','&lt;br/&gt;')}" style="font-size: 20px; color: grey"></div></td>
 				                                        <div><i class="fa fa-clock-o" style="font-size: 14px;"></i> <span th:text="${#dates.format(anwList.created, 'yyyy/MM/dd HH:mm:ss')}"style="font-size: 14px; color: grey"></span></div>
 				                                        <hr style="border-style: solid; border-width: 1px;"/>
 				                                        
@@ -81,26 +61,7 @@
 </div>
 
 </html>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript">
 
-$("#deleteAnswer" + '#{anwList.ans_num}').click(function(){
-    var ans_num = $("#ans_num").val();
-    $.ajax({
-        type: "post",
-        url: "/answerDelete",
-        data: {ans_num: ans_num},
-        success: function(data) {
-            location.reload(true);
-        },
-        error: function(e) {
-            alert(e.responseText);
-        }
-    });
-});
-
-
-</script>
 
 
 

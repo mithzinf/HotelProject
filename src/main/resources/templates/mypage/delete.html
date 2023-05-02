@@ -56,8 +56,6 @@ img {
             <ul class="links">
                 <li><a href="notice/noticeList">공지사항</a></li>
                 <li><a href="inquiry/inquiryList">문의게시판</a></li>
-                <li><a href="mypage/mypage">메뉴1</a></li>
-                <li><a href="mypage/delete">메뉴2</a></li>
             </ul>
         </div>
         <!--end filter-->
@@ -105,7 +103,8 @@ img {
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script>
-
+	
+	//체크 항목을 눌렀을때만 버튼이 활성화 되게
 	$(document).ready(function() {
 
 		var checkbox = $('#checkbox');
@@ -144,6 +143,7 @@ img {
 		f.submit();
 	}
 	
+	//ajax로 회원 탈퇴 처리
 	function deleteMember() {
 		
 		var f = document.myForm;

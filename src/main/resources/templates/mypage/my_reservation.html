@@ -145,8 +145,6 @@ hr {
             <ul class="links">
                 <li><a href="notice/noticeList">공지사항</a></li>
                 <li><a href="inquiry/inquiryList">문의게시판</a></li>
-                <li><a href="mypage/mypage">메뉴1</a></li>
-                <li><a href="mypage/delete">메뉴2</a></li>
             </ul>
         </div>
         <!--end filter-->
@@ -214,7 +212,7 @@ hr {
                 
 		<div class="basket-paging" th:if="${dataCount}==0">
 			<td colspan="5">
-				<span style="font-size: 24px;
+				<span style="font-size: 36px;
 				font-family: 'Gowun Batang', sans-serif; font-weight: bold;">예약하신 호텔이 없습니다. </span>
 			</td>
 		</div>
@@ -229,7 +227,7 @@ hr {
 
 	
 	
-
+	//예약 취소 처리 ajax 코드
 	$('.delete-btn').click(function(event) {
 		event.preventDefault();
 		
