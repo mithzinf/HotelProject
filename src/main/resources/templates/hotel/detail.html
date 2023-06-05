@@ -66,7 +66,7 @@ li{
                                <div class="form-group">
                                     <label for="form-filter-destination" style="font-family: 'Gowun Batang', sans-serif; margin-bottom: 8.8px;">장소</label>
                                     <input type="text" class="form-control" id="searchValue" name="searchValue" placeholder="지역, 숙소명을 입력하세요."
-                                    style="opacity: 1;">
+                                    style="opacity: 1; font-weight: bold; font-size: 15px;">
                                 </div>
                                 <!--end form-group-->
                                 <div class="form-group-inline">
@@ -93,6 +93,12 @@ li{
                         </div>
                         
                         <!--end filter-->
+                        <div>
+	                        <a href="#" class="advertising-banner">
+	                            <span class="banner-badge">광고자리입니다</span>
+	                            <img src="assets/img/ad-banner-02.jpg" alt="">
+	                        </a>
+                        </div>
                         <!--end box-->
                         
                     </div>
@@ -105,7 +111,7 @@ li{
                     <div class="main-content">
                         <div class="title">
                             <div class="left" style="text-align: left;">
-                                <h1 style="color: #488f3e;"><b>[[${dto1[0].hotel_name}]]</b><span class="rating"><i class="fa fa-star"></i>9.9</span></h1>
+                                <h1 style="color: #488f3e;"><b>[[${dto1[0].hotel_name}]]</b><span class="rating" style="font-size: 20px; opacity: 1;"><i class="fa fa-star"></i><span>[[${avg}]]</span></span></h1>
                                 <h3 style="color: #488f3e;">[[${dto1[0].addr1}]]</h3>
                             </div>
                             <div class="right">
@@ -583,14 +589,14 @@ li{
 
 										<h3>호텔 평점</h3>
 										<ul class="rating-score rating-score-without-star">
-											<li class="overall"><i class="fa fa-star"></i>[[${avg}]] &nbsp;&nbsp;<span style="font-size: 20px;"><i class="fa fa-bed"></i>[[${count}]]</span></li>
+											<li class="overall"><i class="fa fa-star"></i><span>[[${avg}]]</span> &nbsp;&nbsp;<span style="font-size: 20px;"><i class="fa fa-bed"></i>[[${count}]]</span></li>
 										</ul>
 
 										<div class="reviews">
 
 											<div class="review">
 												
-												<div class="test1111">
+												<div class="review11">
 											
 													<li th:each="review : ${reviewList}" style="list-style-type: none; padding-bottom: 15px; width:600px;">
 														<div class="row">
@@ -727,6 +733,7 @@ li{
 
 <script type="text/javascript">
 
+	//리뷰 페이징 클릭시 ajax로 html을 동적할당해 새로고침 없이 표시하게 하기
 	function getPageList(listUrl, pageNum1) {
 		event.preventDefault();
 		
@@ -738,14 +745,17 @@ li{
 	        data: {listUrl: listUrl, pageNum1: pageNum1, hotel_id: hotel_id},
 	        success: function(pagingData) {
 	        	
+	        	//컨트롤러에서 업데이트 한 리스트 정보를 변수에 저장
 	        	var pageIndexList = pagingData.pageIndexList;
 	        	var dataCount = pagingData.dataCount;
 	        	var reviewList = pagingData.reviewList;
 	        	
-	        	
-	        	var container = $(".test1111");
+	        	//일단 기존의 리뷰 리스트 html을 삭제
+	        	var container = $(".review11");
 	            container.empty();
 
+	            //빈 자리에 반복문으로 html코드를 동적 할당 (DOM객체, 비동기식 처리)
+	            //변수값에는 업데이트된 정보를 담아 저장함
 	            for (var i = 0; i < reviewList.length; i++) {
 	                var review = reviewList[i];
 	                var item = $("<li>", {"style": "list-style-type: none; padding-bottom: 15px;"});
@@ -771,6 +781,8 @@ li{
 		                                 ("0" + date.getMinutes()).slice(-2) + ":" +
 		                                 ("0" + date.getSeconds()).slice(-2);
 	                
+		            //위에서 비운 자리에 새로 구현한 html 코드를 저장
+		            //낮은? 자식 클래스부터 차례대로 붙여넣어간다.
 	                title.append(rating);
 	                title.append(username);
 	                title.append(clockIcon);
@@ -785,10 +797,12 @@ li{
 	                container.append(item);
 	            }
 	        	
-
+				//기존의 페이징 html 코드 삭제
 				var containerPaging = $(".paging11");
 				containerPaging.empty();
 				
+				//삭제한 자리에 컨트롤러에서 받은 html 코드를 삽입
+				//페이징할 데이터가 있을때
 	            if(dataCount > 0){
 	            	var yes = $("<div>", {"class": "basket-paging"});
 	            	var ul = $("<ul>");
@@ -805,6 +819,7 @@ li{
 		            containerPaging.append(yes);
 	            }
 	            
+				//데이터가 없을때
 				if(dataCount == 0){
 	            	var no = $("<div>", {"class": "basket-paging"});
 	            	var td = $("<td>").attr("colspan", "5");
@@ -829,16 +844,16 @@ li{
 	}
 
 	
-	
+	//리뷰 작성후 리뷰 리스트, 페이징을 실시간으로 적용해 html을 띄우게 하기
 	function review0129() {
 		
 		var f = document.myForm4;
 		
+		//필요한 정보를 받아와 보낼 준비
 	    var hotel_id = $("#hotel_id").val();
 	    var inputElement = document.querySelector('#score_cleanliness');
 	    var context = $("#context11").val();
 	    var listUrl = $("#listUrl_review").val();
-
 	    
 		var user_id_review = $("#user_id_review").val();
 		
@@ -894,11 +909,15 @@ li{
 		        data: {hotel_id: hotel_id, score: inputElement.value, context: context, listUrl:listUrl},
 		        success: function(reviewData) {
 		        	
+		        	//받아온 데이터를 변수에 담아 저장
+		        	var avg = reviewData.avg;
+		        	var count = reviewData.count;
 		        	var reviewList = reviewData.reviewList;
 		        	var pageIndexList = reviewData.pageIndexList;
 		        	var dataCount = reviewData.dataCount;
 		        	
-		        	var container = $(".test1111");
+		        	//리뷰 리스트, 페이징 코드를 실시간으로 동적 할당
+		        	var container = $(".review11");
 		            container.empty();
 
 		            for (var i = 0; i < reviewList.length; i++) {
@@ -958,6 +977,15 @@ li{
 			            yes.append(ul);
 			            containerPaging.append(yes);
 		            }
+		            
+		            //업데이트된 평점, 리뷰 갯수를 실시간으로 동적 할당
+		            var containerScore = $(".overall");
+		            containerScore.empty();
+		            
+		            var html = '<i class="fa fa-star"></i><span>' + avg + '</span>&nbsp;&nbsp;<span style="font-size: 20px;"><i class="fa fa-bed"></i>' + count + '</span>';
+
+		            
+		            containerScore.append(html);
 		    
 		        }
 		        
@@ -969,7 +997,8 @@ li{
 		
 	}
 	    
-		
+	
+	//스탠다드룸 결제
 	function reservation1() {
 		
 		var f = document.myForm1;
@@ -994,6 +1023,8 @@ li{
 		
 	}
 	
+	
+	//스위트룸 결제
 	function reservation2() {
 		
 		var f = document.myForm2;
@@ -1018,6 +1049,7 @@ li{
 		
 	}
 	
+	//디럭스룸 결제
 	function reservation3() {
 		
 		var f = document.myForm3;
@@ -1066,6 +1098,7 @@ li{
     $(function() {
     	  var today = new Date();
     	  var selectedDate;
+    	  //noConflict를 해줘야 datePicker의 충돌이 일어나지 않는다!
     	  var dp1 = jQuery.noConflict();
     	  var dp2 = jQuery.noConflict();
     	  var checkinDate = $("#datepicker1").val();
@@ -1091,6 +1124,7 @@ li{
     	  var checkinDateRoom = $("#datepicker3").val();
     	  var checkoutDateRoom = new Date(new Date(checkinDateRoom).getTime() + oneDay);
     	  
+    	  //상세 객실 날짜의 초기값을 설정하기
     	  $("#datepicker3").datepicker({
     	    minDate: today,
     	    onSelect: function(date) {
@@ -1108,12 +1142,15 @@ li{
     	  
     	});
     
+    	//캐러셀 자동 넘김 해제
         $(document).ready(function() {
     	  $('#myCarousel1').carousel({
     	    interval: false
     	  });
     	});
         
+    	
+    	//지도 API 상세 설정
         var latitude = document.getElementsByName("latitude")[0].value;
         var longitude = document.getElementsByName("longitude")[0].value;
 
@@ -1131,6 +1168,8 @@ li{
         
         
         
+        //객실 날짜 검색 처리
+        //ajax로 새로고침 없이 바뀔 html 부분만 동적 할당해 적용하기
         function searchDay() {
 
         	var hotel_id = $("#hotel_id").val();
@@ -1144,8 +1183,6 @@ li{
         	$('#check_in_after3').attr("value",check_in);
         	$('#check_out_after3').attr("value",check_out);
 
-
-        	
         	const button1 = document.getElementById('standardButton');
         	const button2 = document.getElementById('sweetButton');
         	const button3 = document.getElementById('deluxeButton');
@@ -1159,6 +1196,7 @@ li{
 				data: { check_in:check_in, check_out:check_out, hotel_id: hotel_id },
 				success: function(resultMap) {       
 					
+					//검색한 날짜의 객실 정보를 실시간으로 동적 할당
 					if(resultMap.standard === "만실"){
 						button1.classList.remove('btn-primary1'); 
 						button1.classList.add('btn-disabled1'); 

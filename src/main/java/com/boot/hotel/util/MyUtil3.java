@@ -2,6 +2,7 @@ package com.boot.hotel.util;
 
 import org.springframework.stereotype.Service;
 
+//문의게시판 페이징 유틸
 @Service
 public class MyUtil3 {
 

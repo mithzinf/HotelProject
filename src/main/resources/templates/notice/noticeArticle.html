@@ -35,8 +35,6 @@ abc {
             <ul class="links">
                 <li class="active"><a href="notice/noticeList">공지사항</a></li>
                 <li><a href="inquiry/inquiryList">문의게시판</a></li>
-                <li><a href="mypage/mypage">메뉴1</a></li>
-                <li><a href="mypage/delete">메뉴2</a></li>
             </ul>
         </div>
         <!--end filter-->
@@ -68,9 +66,9 @@ abc {
                          <hr/>
                          <table style="font-size: 22px; font-family: Gowun Batang, sans -serif ">
                         	<tr th:each="dto : ${dto}" >
-                                <tr><td th:text="${dto.context}"></td></tr>
+                                <tr><td th:utext=" ${dto.context.replaceAll('\r\n','<br/>')}"></td></tr>
                             </tr>
-                            
+                           
                          </table>
                          
                          <br/><br/><br/>

@@ -444,10 +444,8 @@ public class MemberController {
 		//로그인할때 올린 세션을 삭제
 		httpSession.invalidate();
 		
-		//String referer = request.getHeader("Referer");
-		
 		ModelAndView mav = new ModelAndView();
-		//mav.setViewName("redirect:" + referer);
+		
 		mav.setViewName("redirect:/hotel/main");
 		return mav;
 		

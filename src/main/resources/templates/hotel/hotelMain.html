@@ -294,6 +294,7 @@ h1,h2,input,figure{
 
 
 <script>
+	//datepicker 캘린더 출력 한글패치 세팅
     $.datepicker.setDefaults({
         dateFormat: 'yy-mm-dd',
         prevText: '이전 달',
@@ -307,12 +308,15 @@ h1,h2,input,figure{
         yearSuffix: '년'
     });
 	
+	
     $(function() {
     	  var today = new Date();
     	  var selectedDate;
     	  var dp1 = jQuery.noConflict();
     	  var dp2 = jQuery.noConflict();
     	  
+    	  //체크인 날짜를 초기값으로 오늘 날짜로 설정 및 이전 날짜를 비활성화
+    	  //체크아웃 날짜의 초기값을 체크인 날짜 +1일로 자동 설정후 이전 날짜를 비활성화
     	  $("#datepicker1").datepicker({
     	    minDate: today,
     	    onSelect: function(date) {
@@ -322,6 +326,7 @@ h1,h2,input,figure{
     	    }
     	  });
     	  
+    	  //체크인 날짜를 먼저 선택해야 체크아웃 날짜를 선택하게끔
     	  $("#datepicker2").datepicker({
     		minDate: selectedDate,
     		beforeShow: function(input, inst) {
@@ -342,6 +347,18 @@ h1,h2,input,figure{
 
 <script type="text/javascript">
 	
+	
+	//엔터키를 누르면 검색이 되게함
+	function handleEnterKey(event) {
+	    if (event.keyCode === 13) { // 엔터키의 key code는 13
+	       search();
+	    }
+	}
+	
+	// 이벤트 핸들러 등록
+	document.addEventListener('keydown', handleEnterKey);
+	
+	
 	//일반검색
 	function search() {
 		
@@ -355,6 +372,8 @@ h1,h2,input,figure{
 		
 	}
 	
+	
+	//아래 6개는 카테고리 검색 함수
 	function hotel() {
 		
 		var f = document.myForm1;
@@ -438,6 +457,7 @@ h1,h2,input,figure{
 	    f.submit();
 	    
 	}
+	
 	
 	
 	//체크인 날짜가 입력 안됐을때 오늘 날짜로 디폴트 설정

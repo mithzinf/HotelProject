@@ -26,8 +26,6 @@
             <ul class="links">
                 <li><a href="notice/noticeList">공지사항</a></li>
                 <li class="active"><a href="inquiry/inquiryList">문의게시판</a></li>
-                <li><a href="mypage/mypage">메뉴1</a></li>
-                <li><a href="mypage/delete">메뉴2</a></li>
             </ul>
         </div>
         <!--end filter-->
@@ -91,14 +89,23 @@
                                  </thead>
                                  <tbody>
                                  <tr th:each="lists : ${lists}">
-                                        
                                         <th class="section" style="width: 3%; font-size: 18px">
                                             [[${lists.inq_num}]]
                                         </th>
 									    
-                                        <th class="section" style="width: 53%; font-size: 18px; font-family: Gowun Batang, sans -serif">
+                                        <th class="section" style="width: 0px; font-size: 18px; font-family: Gowun Batang, sans -serif">
                                         <a th:href="@{|${articleUrl}&num=@{${lists.inq_num}}|}">
 											[[${lists.subject}]]
+											
+											<span style="color: red; font-size: 11px; font-weight: bold">
+										    <span th:if="${lists.answer == 0}">
+										        [[${null}]]
+										    </span>
+										    <span th:if="${lists.answer != 0}">
+										        [[${'[답변완료]'}]]
+										    </span>
+											</span>
+											
 										</a>
                                         </th>
                                         
@@ -114,7 +121,7 @@
                                         <th class="section" style="width: 7%; font-size: 16px">
                                             [[${lists.hitCount}]]
                                         </th>
-                                     </tr>
+                                  </tr>
                                  </tbody>
                                 </table>
                                 

@@ -45,62 +45,6 @@ public class PaymentController {
     @Autowired
 	private HttpSession httpSession;
 	
-	
-	@GetMapping("/dummyTest")
-	public ModelAndView aboutUs() throws Exception{
-		ModelAndView mav = new ModelAndView();
-		
-		Map<String, Object> paramMap = new HashMap<>();
-		
-		int hotelId = 35/*hotel_id*/;
-		String type = "title";
-		paramMap.put("hotel_id", hotelId);
-		paramMap.put("type", type);
-		
-		List<String> hotelTitle = paymentService.searchHotelTitle(paramMap);
-		mav.addObject("hotelTitle",hotelTitle);
-		
-
-		String user_name = "배수지";
-		String userid = "suzi";
-		String hotel_name = "aaa";
-		String room ="스탠다드";
-		int people = 2;
-		int date_num = 2;
-		String category = "호텔";
-		String status = "결제완료";
-		int pay_num = 1;
-		int res_num = 1;
-		String request1 = null;
-		int price = 100;
-		int inq_date = 20000101;
-		
-		mav.addObject("user_name",user_name);
-		mav.addObject("userid",userid);
-		mav.addObject("hotel_name",hotel_name);
-		mav.addObject("room",room);
-		mav.addObject("people",people);
-		mav.addObject("date_num",date_num);
-		mav.addObject("category",category);
-		mav.addObject("status",status);
-		mav.addObject("pay_num",pay_num);
-		mav.addObject("res_num",res_num);
-		mav.addObject("request1",request1);
-		mav.addObject("price",price);
-		mav.addObject("inq_date",inq_date);
-		
-		mav.setViewName("payment/dummy");
-		return mav;
-	}
-	
-	@PostMapping("payment/dummy")
-	public ModelAndView myAccommodations(PaymentDTO payDto, HotelReservationDTO resDto) throws Exception{
-		ModelAndView mav = new ModelAndView();
-		
-		mav.setViewName("payment/dummy");
-		return mav;
-	}
-	
 	@GetMapping("/payChek")
 	public ModelAndView payChek() throws Exception{
 		ModelAndView mav = new ModelAndView();
@@ -109,7 +53,6 @@ public class PaymentController {
 		return mav;
 	}
 	
-//	@GetMapping("/paymentPage")
 	@RequestMapping(value = "/paymentPage", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView paymentPage(
 			@RequestParam("room_type") String room
@@ -117,8 +60,6 @@ public class PaymentController {
 			,@RequestParam("check_in") String check_in
 			,@RequestParam("check_out") String check_out
 			) throws Exception{
-		// 받아와야 하는 거 - userid, hotel_id, room, inq_date, date_num
-		// 체크인 체크아웃 날짜 받아서 date_num 받기
 		
 		
 		System.out.println("결제하기 페이지 이동");

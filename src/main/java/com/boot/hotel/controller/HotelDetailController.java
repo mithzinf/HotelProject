@@ -67,12 +67,13 @@ public class HotelDetailController {
    @Autowired
    private MyUtil4 myUtil4;
    
-   
+    //호텔 상세 페이지 띄우기
     @RequestMapping(value = "/detail", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView detail(@RequestParam("hotel_id") int hotel_id, HttpServletRequest request) throws Exception {
       
     	System.out.println("디테일 컨트롤러 진입");
     	
+    	//페이징 유지 및 체크인시간,아웃시간 저장
     	String pageNum = request.getParameter("pageNum");
     	String searchValue = request.getParameter("searchValue");
     	
@@ -192,7 +193,7 @@ public class HotelDetailController {
 			resultMap1.put("deluxe", "여유");
 		}
 		
-		 
+		
 		List<HotelDTO> dto1 = hotelDetailService.getHotelById(hotel_id);
 		List<HotelInfoDTO> dto2 = hotelDetailService.getHotelInfoById(hotel_id);
 		List<HotelFacilityDTO> dto3 = hotelDetailService.getHotelFacilityById(hotel_id);
@@ -204,7 +205,8 @@ public class HotelDetailController {
 		List<HotelPictureDTO> getSweet = hotelDetailService.getSweetPicture(hotel_id); //스위트룸 사진 가지구 와..
 		  
 		
-		//================리뷰자리======================
+		//================리뷰 정보 띄우기 시작======================
+		
 		
 		String pageNum1 = request.getParameter("pageNum1");
 		
@@ -214,36 +216,29 @@ public class HotelDetailController {
 			currentPage = Integer.parseInt(pageNum1);
 		}
 		
-		
+		//리뷰 테이블의 데이터 개수 구하기
 		int dataCount = reviewService.getReviewDataCount(hotel_id);
-		
-	
 		
 		int numPerPage = 4;
 		int totalPage = myUtil2.getPageCount(numPerPage, dataCount);
-		
 		
 		if(currentPage>totalPage) {
 			currentPage = totalPage;
 		}
 		
-
-		
 		int start = (currentPage-1)*numPerPage+1; 
 		int end = currentPage*numPerPage;
-		
-		
-	
 		
         Map<String, Object> params = new HashMap<>();
         params.put("start", start);
         params.put("end", end);  
         params.put("hotel_id",hotel_id);
         
+        //페이징 처리된 리뷰 리스트 불러오기
         List<ReviewDTO> reviewList = reviewService.getReadReviewList(params);
         
-     
-		
+        
+        //url 설정
 		String listUrl = "detail";
 		
 		listUrl += "?hotel_id=" + hotel_id;
@@ -260,18 +255,21 @@ public class HotelDetailController {
 		
 		listUrl += "&check_in=" + check_in_list + "&check_out=" + check_out_list;
 		
+		//ajax 페이징처리 코드 myUtil4 호출
 		String pageIndexList = 
 				myUtil4.pageIndexList(currentPage, totalPage, listUrl);
-				
+		
+		//평점, 리뷰갯수 저장하기
 		Map<String, Object> map1 = reviewMapper.searchReviewAvg(hotel_id);
 		
+		//map에 담긴 값을 BigDecimal로 다운캐스팅후 형태에 맞게 저장
 		double avg = ((BigDecimal) map1.get("AVG")).doubleValue();
 		int count = ((BigDecimal) map1.get("COUNT")).intValue();
 		
 			
 		//===============리뷰끝==================
 		
-    	
+    	//로그인된 상태라면 세션 아이디를 불러옴
 		ModelAndView mav = new ModelAndView();
 		if(httpSession.getAttribute("sessionUser")!=null) {
         	SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
@@ -306,18 +304,18 @@ public class HotelDetailController {
 	}
 
     
-
+    //리뷰 작성 컨트롤러 진입
     @RequestMapping(value = "/reviews", method = { RequestMethod.GET, RequestMethod.POST })
 	public Map<String, Object> reviewPage (@RequestParam("hotel_id") int hotel_id,
 			@RequestParam("listUrl") String listUrl, HttpServletRequest request) throws Exception {
     	
     	System.out.println("리뷰 작성 컨트롤러 진입");
     	
-  
-    	
+    	//작성한 평점과 리뷰내용을 받음
 		int score = Integer.parseInt(request.getParameter("score"));
 		String context = request.getParameter("context");
 
+		//리뷰 작성 처리 
 		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
 		String userid = sessionUser.getId();
 		String username = sessionUser.getName();
@@ -338,6 +336,7 @@ public class HotelDetailController {
 		System.out.println("리뷰 작성 처리 완료!!");
 		
 		
+		//리뷰 작성후 새로 적용된 데이터를 띄울 준비
 		int currentPage = 1;
 		
 		int dataCount = reviewService.getReviewDataCount(hotel_id);
@@ -362,9 +361,16 @@ public class HotelDetailController {
 		String pageIndexList = 
 				myUtil4.pageIndexList(currentPage, totalPage, listUrl);
 		
+		Map<String, Object> map1 = reviewMapper.searchReviewAvg(hotel_id);
+		
+		double avg = ((BigDecimal) map1.get("AVG")).doubleValue();
+		int count = ((BigDecimal) map1.get("COUNT")).intValue();
+		
 		
 		Map<String, Object> reviewData = new HashMap<String, Object>();
 		
+		reviewData.put("avg", avg);
+		reviewData.put("count",count);
 		reviewData.put("pageIndexList", pageIndexList);
 		reviewData.put("reviewList", reviewList);
 		reviewData.put("dataCount", dataCount);
@@ -374,6 +380,7 @@ public class HotelDetailController {
 	}
  
     
+    //리뷰 페이징 컨트롤러 진입
     @GetMapping("/reviewPaging")
     public Map<String, Object> reviewPaging(@RequestParam("pageNum1") String pageNum1,
     		@RequestParam("hotel_id") int hotel_id, @RequestParam("listUrl") String listUrl,
@@ -384,7 +391,7 @@ public class HotelDetailController {
         
 		int currentPage = 1;
 		
-		if(pageNum1!=null){ //넘어오는 페이지 번호가 있다면
+		if(pageNum1!=null){
 			currentPage = Integer.parseInt(pageNum1);
 		}
 		
@@ -422,14 +429,15 @@ public class HotelDetailController {
     
     
     
-		   
+    //디테일 내에서 객실 날짜 검색시
 	@ResponseBody
 	@RequestMapping(value = "/detailDay", method = { RequestMethod.GET, RequestMethod.POST })
 	public Map<String, Object> detailDay(@RequestParam String check_in, @RequestParam String check_out,
 			@RequestParam int hotel_id) throws Exception {
-   
+		
+		System.out.println("디테일 객실 날짜 검색 컨트롤러 진입");
 	    Map<String, Object> resultMap = new HashMap<String, Object>();
-	   
+	    
 		//체크인, 체크아웃 시간을 받아 알맞은 형태로 바꾸고 변수에 저장
 		LocalDate check_in_day = LocalDate.parse(check_in, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		LocalDate check_out_day = LocalDate.parse(check_out, DateTimeFormatter.ofPattern("yyyy-MM-dd"));

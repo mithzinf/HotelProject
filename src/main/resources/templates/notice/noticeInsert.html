@@ -27,8 +27,6 @@
             <ul class="links">
                 <li class="active"><a href="notice/noticeList">공지사항</a></li>
                 <li><a href="inquiry/inquiryList">문의게시판</a></li>
-                <li><a href="mypage/mypage">메뉴1</a></li>
-                <li><a href="mypage/delete">메뉴2</a></li>
             </ul>
         </div>
         <!--end filter-->
@@ -104,7 +102,7 @@ function createnotice(){
 	str = str.trim();
 	if(!str){
 		alert("\n제목을 입력하시오")
-		f.subject1.focus();
+		f.subject0.focus();
 		return;
 	}
 	f.subject0.value = str;
@@ -116,7 +114,7 @@ function createnotice(){
 	str = str.trim();
 	if(!str){
 		alert("\n내용을 입력하시오")
-		f.context1.focus();
+		f.context0.focus();
 		return;
 	}
 	f.context0.value = str;
