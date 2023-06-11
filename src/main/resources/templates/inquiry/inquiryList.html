@@ -6,119 +6,132 @@
 
 <div layout:fragment="content" class="content-padding">
 
+<style>
+@import url('https://fonts.googleapis.com/css?family=Gowun+Batang&display=swap');
+
+</style>
+
 <div class="myPage">
-    <div class="sidebar" style="margin: 50px 0 50px; width: 17%; min-width: 250px; ">
+    <div class="sidebar" style="margin: 50px 0 50px; width: 17%; min-width: 250px;">
         <div class="box filter">
             <h2>마이페이지</h2>
             <ul class="links">
                 <li><a href="mypage/mypage">내정보</a></li>
-                <li><a href="mypage/basket">호텔 찜 목록</a></li>
+                <li><a href="mypage/basket">숙소 찜 목록</a></li>
                 <li><a href="mypage/my_reservation">예약내역</a></li>
                 <li><a href="mypage/delete">회원탈퇴</a></li>
             </ul>
            	<hr/>
             <h2>더보기</h2>
             <ul class="links">
-                <li><a href="mypage/mypage">공지사항</a></li>
+                <li><a href="notice/noticeList">공지사항</a></li>
                 <li class="active"><a href="inquiry/inquiryList">문의게시판</a></li>
-                <li><a href="mypage/mypage">메뉴1</a></li>
-                <li><a href="mypage/delete">메뉴2</a></li>
             </ul>
         </div>
         <!--end filter-->
     </div>
     <!--end sidebar-->
 
-    <div id="page-content">
-        <div class="container">
-            <div class="row" style="margin-left: 30px;">
+    <div id="page-content" style="width: 30px;">
+        <div class="container" style="width: 500px;">
+            <div class="row" style="margin-left: 15px; ">
                 
-                <div class="col-md-9">
-                <h1><h1 style="color: grey; margin-top: 50px;">문의게시판 list </h1></h1>
-                    <form action="" name="myForm" method="GET" style="width: 800px" >
+                <div class="col-md-9" >
+                <h1 style="color: grey; margin-top: 50px; margin-bottom: 40px;">문의게시판 </h1>
+                    <form action="" name="myForm" method="GET" style="width: 1000px;" >
                     
-            			<select name="searchKey" class="selectField" style="width: 82px; margin-left: 16px" >
-							<option value="subject">제목</option>
-							<option value="userid">아이디</option>
-							<option value="context">내용</option>
+            			<select name="searchKey" class="selectField"
+            			style="width: 90px; height: 40px; margin-left: 10px; font-size: 15px;
+            			border: 2px solid rgba(31, 31, 31, 0.2); border-radius:14px; padding-left: 15px;
+            			font-family: 'Gowun Batang', sans-serif; opacity: 1px; font-weight: bold;" >
+							<option value="subject" style="font-family: 'Gowun Batang', sans-serif; opacity: 1px; font-weight: bold;">제목</option>
+							<option value="userid" style="font-family: 'Gowun Batang', sans-serif; opacity: 1px; font-weight: bold;">아이디</option>
+							<option value="context" style="font-family: 'Gowun Batang', sans-serif; opacity: 1px; font-weight: bold;">내용</option>
 						</select>
-						
-						<input type="text" name="searchValue" class="textField" style="width: 500px; margin-left: 30px"/>
-						<input type="button" value=" 검 색 " style="width: 58px; margin-left:41px; font-size: 13px"
+						<input type="text" name="searchValue" class="textField" style="width: 550px; 
+							margin-left: 5px; border-radius: 10px;"/>
+						<input type="button" value=" 검 색 " style="width: 100px;height: 40px; margin-left:45px;
+						font-size: 18px; text-align: center;"
 						class="btn btn-framed btn-small btn-default btn-rounded" onclick="sendIt();"/>
             		</form>
                 
                     <div class="main-content">
                     
-                    <div class="box filter" style="background-color: white; width: 800px">
+                    <div class="box filter" style="background-color: white; width: 330%;">
                     
 
                         <section id="choose-a-package" style="margin: 0; padding: 0;">
                             
                             <div class="table-responsive pricing-table">
-                                <table class="table">
+                                <table class="table" >
                                 <thead>
-                                    <tr >
-                                        <th >
-                                            
+                                    <tr>
+                                        
+                                        <th class="section" style="width: 3%; margin-left: 0%;">
                                         </th>
-                                        <!-- 
-                                        <th class="section" style="width: 10%; margin-left: 0%">
-                                            답변 여부
-                                        </th>
-                                        -->
-                                        <th class="width-50 opacity-50" style="width: 5%">
+                                        
+                                        <th class="width-50 opacity-50" style="width: 53%; font-size: 18px; padding: 8px; color: #000; opacity: 1;" >
                                             문의제목
                                         </th>
-                                        <th class="section"style="width: 15%; text-align: left;">
-                                            사용자 아이디
+                                        <th class="width-50 opacity-50" style="width: 10%; text-align: left; font-size: 18px; padding: 8px; color: #000; opacity: 1;">
+                                            아이디
                                         </th>
-                                        <th class="section" style="width: 15%; text-align: left;">
-                                            문의한 날짜
+                                        <th class="width-50 opacity-50" style="width: 11%; text-align: left; font-size: 18px; padding: 8px; color: #000; opacity: 1;">
+                                            문의 날짜
                                         </th>
-                                        <th class="section" style="width: 15%; text-align: left;">
+                                        <th class="width-50 opacity-50" style="width: 9%; text-align: left; font-size: 18px; padding: 8px; color: #000; opacity: 1;">
+                                            문의 유형
+                                        </th>
+                                        <th class="width-50 opacity-50" style="width: 7%; text-align: left; font-size: 18px; padding: 8px; color: #000; opacity: 1;">
                                             조회수
                                         </th>
                                     </tr>
                                  </thead>
                                  <tbody>
                                  <tr th:each="lists : ${lists}">
-                                        <th style="width: 5%">
-                                        
+                                        <th class="section" style="width: 3%; font-size: 18px">
+                                            [[${lists.inq_num}]]
                                         </th>
-                                        <!-- 
-                                        <th class="section" style="width: 10%">
-                                        <div th:switch="${lists.answer}">
-									      <p th:case="0">미응답</p>
-									      <p th:case="1">응답완료</p>
-									    </div>
-                                        </th>
-                                        -->
-                                        <th class="section"style="width: 15%">
+									    
+                                        <th class="section" style="width: 0px; font-size: 18px; font-family: Gowun Batang, sans -serif">
                                         <a th:href="@{|${articleUrl}&num=@{${lists.inq_num}}|}">
 											[[${lists.subject}]]
+											
+											<span style="color: red; font-size: 11px; font-weight: bold">
+										    <span th:if="${lists.answer == 0}">
+										        [[${null}]]
+										    </span>
+										    <span th:if="${lists.answer != 0}">
+										        [[${'[답변완료]'}]]
+										    </span>
+											</span>
+											
 										</a>
                                         </th>
-                                        <th class="section"style="width: 15%">
+                                        
+                                        <th class="section" style="width: 10%; font-size: 16px">
                                             [[${lists.userid}]]
                                         </th>
-                                        <th class="section" style="width: 15%">
+                                        <th class="section" style="width: 11%; font-size: 16px">
                                             [[${#dates.format(lists.created, 'yyyy/MM/dd')}]]
                                         </th>
-                                        <th class="section" style="width: 15%">
+                                        <th class="section" style="width: 9%; font-size: 16px">
+                                            [[${lists.inq_cate}]]
+                                        </th>
+                                        <th class="section" style="width: 7%; font-size: 16px">
                                             [[${lists.hitCount}]]
                                         </th>
-                                     </tr>
+                                  </tr>
                                  </tbody>
                                 </table>
-                                <br/>
-                                <td>
+                                
+                                
 									<input type="button" value="문의하기"
-		                            	style="width: 70px; margin-left:650px; font-size: 13px"
-								        class="btn btn-framed btn-small btn-default btn-rounded" 
+		                            	style="width: 160px; margin-left: 850px; font-size: 25px"
+								        class="btn btn-primary btn-rounded scroll"
 								        onclick="location.href='/inquiry/inquiryCreate';"/>
-								</td>
-                                <div style="text-align: center;" th:if="${dataCount}>0">
+								
+                                <div style="text-align: center; margin-top: 30px;" th:if="${dataCount}>0">
 									<ul>
 										<li th:utext="${pageIndexList}" style="font-size: 24px;
 										font-family: 'Gowun Batang', sans-serif; font-weight: bold;"></li>

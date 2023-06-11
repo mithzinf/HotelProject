@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <!-- 경로가 templates/layout/layout.html을 상속받아야 하므로 -->
 <html layout:decorate="~{/layout/layout}">
-
 <meta charset="UTF-8">
 
 <div layout:fragment="content" class="content-padding">
@@ -9,7 +8,20 @@
 
 
 <!-- 이자리에 html 가운데 코드 작성 -->
+<style>
 
+abc {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-size: 25px;
+  color: #808080;
+  max-width: 300px;
+}
+  
+textarea {
+  resize: none;
+}
+</style>
 
 
 <div class="myPage">
@@ -18,114 +30,122 @@
             <h2>마이페이지</h2>
             <ul class="links">
                 <li><a href="mypage/mypage">내정보</a></li>
-                <li><a href="mypage/basket">호텔 찜 목록</a></li>
+                <li><a href="mypage/basket">숙소 찜 목록</a></li>
                 <li><a href="mypage/my_reservation">예약내역</a></li>
                 <li><a href="mypage/delete">회원탈퇴</a></li>
             </ul>
            	<hr/>
             <h2>더보기</h2>
             <ul class="links">
-                <li><a href="mypage/mypage">공지사항</a></li>
+                <li><a href="notice/noticeList">공지사항</a></li>
                 <li class="active"><a href="inquiry/inquiryList">문의게시판</a></li>
-                <li><a href="mypage/mypage">메뉴1</a></li>
-                <li><a href="mypage/delete">메뉴2</a></li>
             </ul>
         </div>
         <!--end filter-->
     </div>
     <!--end sidebar-->
-    <div id="page-content">
-        <div class="container">
+    <div id="page-content" style="width: 60%">
+        <div class="container" >
             <div class="row">
                 <div class="col-md-9"  style="margin-left: 30px;">
                     <div class="main-content">
                     <div class="col-md-9">
-                        <h1><h1 style="color: grey; margin-top: 50px;">문의게시판</h1></h1>
+                        <h1 style="color: grey; margin-top: 50px; margin-bottom: 40px;">문의 내역</h1>
                         <!--end title-->
-                        <article class="box filter" style="background-color: white; width: 620px;">
+                        <article class="box filter" style="background-color: white; width: 150%; background-color: #FAFAFA">
 						<table>
 							<tr th:each="dto : ${dto}">
-							   <td th:text="${dto.subject}" style="font-size: 30px"></td>
-							   <td style="vertical-align: top; text-align: right; ">
-							    <div th:text="${dto.userid}" style="font-size: 16px; margin-left: 490px"></div>
-							    <div th:text="${#dates.format(dto.created, 'yyyy/MM/dd')}" style="font-size: 16px"></div>
+							   <abc th:text="${dto.subject}" style="font-size: 30px; font-family: Gowun Batang, sans -serif; font-weight: bold; color:#000;"></abc>
+							   
+							   <td style="vertical-align: top; text-align: right; margin-left: 50px">
+							   <div th:text="'문의 유형 : ' + ${dto.inq_cate}" style="width:850px; font-size: 17px; text-align: right;"></div>
+							    <div th:text="${dto.userid}" style="width:850px; font-size: 19px; text-align: right;"></div>
+							    <div style="width:850px; text-align: right; font-size: 16px">
+								    <i class="fa fa-clock-o"></i> 
+								    <span th:text="${#dates.format(dto.created, 'yyyy/MM/dd, HH:MM:SS')}"></span>
+								</div>
+							    
 							   </td>
 							 </tr>
 						 </table>
 						 
-						 
                          <hr/>
+                         <table style="font-size: 22px; font-family: Gowun Batang, sans -serif ">
                         	<tr th:each="dto : ${dto}" >
-                                <tr><td th:text="${dto.context}"></td></tr>
+                                <tr><td th:utext="${dto.context}"></td></tr>
                             </tr>
                             
                          </table>
                          
+                         
+                         
                          <br/><br/><br/>
                          
+                         <div th:if="${userid == 'admin' || userid == dto.userid}" style="float: left; width: 100px">
                          <input type="button" value=" 수정 " class="btn btn-framed btn-small btn-default btn-rounded"
-								th:onclick="'location.href=\'inquiryUpdate?num=' + @{${dto.inq_num }} + '&' + @{${params }} +'\''"/>
-								
+								th:onclick="'location.href=\'inquiryUpdate?num=' + @{${dto.inq_num }} + '&' + @{${params }} +'\''"
+								style="font-size: 13px; width: 87px;height: 41px; font-size: 21px"/>
+						 </div>
+						 
+						 <div th:if="${userid == 'admin' || userid == dto.userid}" style="float: left; width:100px">
 						 <input type="button" value=" 삭제 " class="btn btn-framed btn-small btn-default btn-rounded"
-								th:onclick="'location.href=\'deleted_ok?num=' + @{${dto.inq_num }} + '&' + @{${params }} +'\''"/>
-						
+								th:onclick="'location.href=\'deleted_ok?num=' + @{${dto.inq_num }} + '&' + @{${params }} +'\''"
+								style="font-size: 13px; width: 87px;height: 41px; font-size: 21px"/>
+						 </div>
+						 
 						 <input type="button" value=" 리스트 " class="btn btn-framed btn-small btn-default btn-rounded"
-								th:onclick="'location.href=\'inquiry/inquiryList?num=' + @{${dto.inq_num }} + '&' + @{${params }} +'\''"/>
+								th:onclick="'location.href=\'inquiry/inquiryList?num=' + @{${dto.inq_num }} + '&' + @{${params }} +'\''"
+								style="font-size: 13px; width: 100px;height: 41px; font-size: 21px"/>
                         
                         </article><!-- /.blog-post-listing -->
-                        <section id="comments">
-                            <br/><br/>
-                            
-                            <div id="listData">
-                            <ul class="comments" >
-                                <li th:each="anw : ${anwLists}" >
-                                    <ul class="comments-child" >
-                                        <li class="comment">
-                                        <div class="box filter" style="background-color: #e5e5e5; width: 520px; font-size: 18px">
-                                            <div class="comment-wrapper">
-                                                <tr>작성자&nbsp;&nbsp;<td th:text="${anw.userid}"></td></tr>
-                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <tr>작성일시&nbsp;<td th:text="${#dates.format(anw.created,'yyyy/MM/dd')}"></td></tr>
-                                                <hr style="border-top: 1px solid grey;"/>
-                                                <tr style="font-size: 20px">답변내용<br/><br/><td th:text="${anw.content}"></td></tr>
-                                            </div>
-                                        </div>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            </div>
-                        </section><!-- /#comments -->
+                        
+                        <br/>
+                        
+                        
+                        <th:block th:if="${dto.answer}==0">
+                        <table>
+                        	<tr><td></td></tr>
+                        </table>
+                        </th:block>
+                        
+                       	<th:block th:if="${dto.answer}==1">
+                        <section >
+                        <div id="anwLists" >
+                            <div id="anwLists" th:replace="~{/inquiry/answeredList :: anwLists}"></div>
+                        </div>
+                        </section>
+                        </th:block>
+                        
+                        
+                        
+                        
+                        
                         
                         <section id="leave-reply">
-                            <header><h2 class="no-border">Leave a Reply</h2></header>
+                        <div th:if="${userid == 'admin' || userid == dto.userid}">
+                        
+                            <header><h2 class="no-border" style="margin-top: 50px;">답변 작성</h2></header>
                             <form action="" name="answerForm" method="post" autocomplete="off">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="form-blog-reply-name">Your ID<em>*</em></label>
-                                            <input type="text" class="form-control" id="userid" td:value="${dto.userid}" required>
+                                            <div style="font-size: 25px">[[${userid}]]</div>
+                                            <input type="hidden" name="userid" id="userid" th:value="${userid}"/>         
                                         </div><!-- /.form-group -->
                                     </div><!-- /.col-md-6 -->
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="form-blog-reply-email">Your NAME<em>*</em></label>
-                                            <input type="text" class="form-control" id="username" td:value="${dto.username}" required>
-                                        </div><!-- /.form-group -->
-                                    </div><!-- /.col-md-6 -->
+                                    
                                 </div><!-- /.row -->
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="form-blog-reply-message">Your Message<em>*</em></label>
-                                            <textarea class="form-control" rows="5" id="content3" required></textarea>
+                                            <textarea class="form-control" rows="7" id="content" resize="none" required style="width: 730px;"></textarea>
                                         </div><!-- /.form-group -->
                                     </div><!-- /.col-md-12 -->
                                 </div><!-- /.row -->
+                                
                                 <div class="form-group clearfix">
-                                    <input type="button" value=" 등록하기 " class="btn btn-primary btn-rounded scroll" id="sendAnswer"/>
+                                    <input type="button" value=" 등록하기 " class="btn btn-primary btn-rounded scroll" id="sendAnswer"
+                                    style="width: 110px;height: 45px; font-size: 21px;"/>
                                 </div><!-- /.form-group -->
                                 <div id="form-rating-status"></div>
                                 
@@ -133,7 +153,11 @@
                                 <input type="hidden" name="pageNum" id="pageNum" th:value="${pageNum}"/>                       
                                 
                                 </form>
+                          </div>
                         </section>
+                         
+                        
+                        
                     </div>
                     <!--end main-content-->
                 </div>
@@ -150,7 +174,12 @@
 </div>
 
 
+
+
 </html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
 
 <script type="text/javascript">
@@ -166,24 +195,26 @@ $("#sendAnswer").click(function(){
 				+ "&username=" + $("#username").val()
 				+ "&inq_num=" + $("#inq_num").val()
 				+ "&pageNum=" + $("#pageNum").val()
-				+ "&content3=" + $("#content3").val();
+				+ "&content=" + $("#content").val();
 	
 	$.ajax({
 	    type: "post",
 	    url: "/inquiryAnswer",
 	    data: params,
 	    success: function(data) {
-	    	console.log(data.anwLists);
-	        $("#listData").html(data.anwLists);
+	    	
+	        $("#anwLists").html(data);
+	        //$("#anwLists").load(location.href + " #anwLists>*", "");
 	        
 	        $("#username").val("");
 	        $("#userid").val("");
-	        $("#content3").val("");
+	        $("#content").val("");
 	        
 	     	location.reload(true);
 	     	//refreshData();
 	        
 	    },
+	    
 	    beforeSend: showRequest,
 	    error: function(e) {
 	        alert(e.responseText);
@@ -197,8 +228,9 @@ function refreshData() {
     $.ajax({
         type: "get",
         url: "/answeredList",
+        data: params,
         success: function(data) {
-            $("#answeredList").html(data);
+            $("#anwLists").html(data);
         },
         error: function(e) {
             alert(e.responseText);
@@ -208,33 +240,22 @@ function refreshData() {
 
 
 
-
-
-
-
-
-
 function showRequest() {
 	
-	var username = $.trim($("#username").val());
-	var userid = $.trim($("#userid").val());
-	var content3 = $.trim($("#content3").val());
+	var f = document.answerForm;
 	
-	if(!userid){
-		alert("\아이디를 입력하시오");
-		$("#userid").focus();
-		return false;
-	}
+	var content = $.trim($("#content").val());
 	
-	if(!username){
-		alert("\n이름을 입력하시오");
-		$("#username").focus();
-		return false;
-	}
 	
-	if(!content3){
-		alert("\n내용을 입력하시오");
-		$("#content3").focus();
+	
+	if(!content){
+		swal({
+			  title: "내용 입력오류",
+			  text: "내용을 입력하세요.",
+			  icon: "error",
+			  button: "확인",
+			});
+		event.preventDefault();
 		return false;
 	}
 	

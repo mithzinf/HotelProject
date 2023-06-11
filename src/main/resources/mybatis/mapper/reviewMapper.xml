@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boot.hotel.mapper.ReviewMapper">
+
+<select id="maxNum" resultType="int">
+	select nvl(max(review_num),0) from review
+</select>
+
+
+<insert id="insertReviewData" parameterType="com.boot.hotel.dto.ReviewDTO">
+	insert into review (hotel_id,review_num,userid,score,created,context,username)
+	values (#{hotel_id},#{review_num},#{userid},#{score},SYSDATE,#{context},#{username})
+</insert>
+
+<select id="getReviewDataCount" parameterType="int" resultType="int">
+	select nvl(count(*),0) from review where hotel_id = #{hotel_id}
+</select>
+
+
+<select id="getReadReviewList" resultType="map" parameterType="com.boot.hotel.dto.ReviewDTO">
+    SELECT * FROM (
+        SELECT rownum rnum, data.*
+        FROM (       
+         SELECT r.*, to_char(r.created,'yyyy-MM-dd, HH24:MI:SS') 
+            FROM review r WHERE hotel_id = #{hotel_id}
+            ORDER BY review_num DESC
+        ) data
+    )
+    <![CDATA[
+        WHERE rnum >= #{start} AND rnum <= #{end}
+    ]]>
+</select>
+
+
+<update id="updateReviewData" parameterType="com.boot.hotel.dto.ReviewDTO">
+	update review set score= #{score},context = #{context} where review_num = #{review_num}
+</update>
+
+<delete id="deleteReviewData" parameterType="com.boot.hotel.dto.ReviewDTO">
+	delete review where review_num = #{review_num} 
+</delete>
+
+<select id="searchReviewAvg" parameterType="int" resultType="map">
+	select round(nvl(avg(score), 0), 1) as avg, nvl(count(*), 0) as count FROM review WHERE hotel_id = #{hotel_id}
+</select>
+
+
+</mapper>

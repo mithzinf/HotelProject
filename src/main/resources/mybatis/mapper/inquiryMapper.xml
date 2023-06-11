@@ -6,10 +6,7 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.boot.hotel.mapper.InquiryMapper">
 
-<!-- 사용자 정보 가져오기 -->
-<select id="getUserInfo" parameterType="map" resultType="map">
-	select userid, username, email, tel from member where userid=#{userid}
-</select>
+
 
 <!-- 게시글 -->
 <select id="maxInqNum" resultType="int">
@@ -48,7 +45,7 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 	from inquiry_board where inq_num=#{inq_num}
 </select> 
 
-<update id="updateListData" parameterType="com.boot.hotel.dto.AnswerBoardDTO">
+<update id="updateListData" parameterType="com.boot.hotel.dto.HotelInquiryDTO">
 	update inquiry_board set subject=#{subject},context=#{context} where inq_num=#{inq_num}
 </update>
 
@@ -60,11 +57,6 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
 
 
 
-
-
-<delete id="delAns" parameterType="int">
-	delete from answer_board where inq_num=#{inq_num}
-</delete>
 
 
 
@@ -88,23 +80,30 @@ PUBLIC "-mybatis.org//DTD Mapper 3.0//EN"
  		SELECT * from (
   	    select rownum rnum,data.* from (
   	    select * from answer_board 
-  	    order by inq_num desc) data)
+  	    order by ans_num) data)
+  	    where inq_num=#{num}
+</select>
+
+<select id="getAnsOnly" resultType="map">
+ 		SELECT * from 
   	    where inq_num=#{num}
 </select>
 
 
 
+<delete id="deleteAnswer" parameterType="int">
+	delete answer_board where ans_num=#{ans_num}
+</delete>
 
 
 
 
 
 
-
-
-
-
-
+<!-- 사용자 정보 가져오기 -->
+<select id="getUserInfo" parameterType="map" resultType="map">
+	select userid, username, email, tel from member where userid=#{userid}
+</select>
 
 
 

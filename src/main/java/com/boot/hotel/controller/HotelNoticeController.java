@@ -46,9 +46,11 @@ public class HotelNoticeController {
 			
 			String pageNum = request.getParameter("pageNum");
 			
+			
+			//페이징 처리
 			int currentPage = 1;
 			
-			if(pageNum!=null) { //넘어오는 페이지 번호가 있다면
+			if(pageNum!=null) {
 				currentPage = Integer.parseInt(pageNum);
 			}
 			
@@ -109,27 +111,43 @@ public class HotelNoticeController {
 		   mav.setViewName("notice/noticeInsert");
 		   return mav;
 	   }
+		
+		
 	   
 	//공지사항 글 작성 create_ok(실질적으로 데이터 넘어가는 메소드)
 	 @PostMapping("notice/noticecreate_ok")
-	 public ModelAndView insert_ok(NoticeBoardDTO dto, @RequestParam String subject0) throws Exception{
-		 
+	 public ModelAndView insert_ok(NoticeBoardDTO dto, @RequestParam String subject0,HttpServletRequest request) throws Exception{
 		 ModelAndView mav = new ModelAndView();
 		 System.out.println("공지사항 작성글 진입 - noticecreate_ok");
-		 
 	
 		 SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
 		 String userid="";
 		 userid = sessionUser.getId();
+		 String username="";
+		 username = sessionUser.getName();
 		 
 		 int maxNoticeNum = noticeService.maxNoticeNum();
 		 
+		 
+		 //줄바꿈
+		 String context = dto.getContext();
+		 
+		 String replaced = context.replaceAll("\r\n", "<br/>");
+			
+		 dto.setContext(replaced);
+			
+			
+		 
 		 dto.setUserid(userid);
+		 dto.setUsername(username);
 		 dto.setSubject(subject0);
+		 //dto.setContext(context);
 		 dto.setNotice_num(maxNoticeNum+1);
-				 
+		 
 		 noticeService.insertNotice(dto);
-		 System.out.println("작성글"+dto);
+		 System.out.println("작성글" + dto);
+		 System.out.println(context);
+		 System.out.println("replaced" +replaced);
 		 mav.setViewName("redirect:/notice/noticeList");
 		 return mav;
 		 
@@ -156,7 +174,7 @@ public class HotelNoticeController {
 
 		 
 		 if(dto == null) {
-			 System.out.println("article: dto가 0이란다");
+			 
 			 ModelAndView mav = new ModelAndView();
 			 mav.setViewName("redirect:/noticeArticle?PageNum=" + pageNum);
 			 
@@ -166,7 +184,6 @@ public class HotelNoticeController {
 		 //--------------------------------
 		 
 		 ModelAndView mav = new ModelAndView();
-		 System.out.println("article: dto가 있단다..");
 		 mav.addObject("dto", dto);
 		 mav.addObject("notice_num", num);
 		 mav.addObject("pageNum", pageNum);
@@ -176,6 +193,7 @@ public class HotelNoticeController {
 		 return mav;
 		 
 	 }
+	 
 	 
 	 
 	//공지사항 글 수정
@@ -231,7 +249,6 @@ public class HotelNoticeController {
 	
 	 
 	 //공지사항 글 삭제 deleted_ok
-	 
 	 @GetMapping("/notice/deleted_ok")
 	 public ModelAndView deleted_ok(HttpServletRequest request) throws Exception {
 		 System.out.println("공지사항 게시글 삭제 기능 진입");

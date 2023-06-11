@@ -136,17 +136,15 @@ hr {
             <h2>마이페이지</h2>
             <ul class="links">
                 <li><a href="mypage/mypage">내정보</a></li>
-                <li><a href="mypage/basket">호텔 찜 목록</a></li>
+                <li><a href="mypage/basket">숙소 찜 목록</a></li>
                 <li class="active"><a href="mypage/my_reservation">예약내역</a></li>
                 <li><a href="mypage/delete">회원탈퇴</a></li>
             </ul>
            	<hr style="margin-top: 25px; margin-bottom:25px; margin-left:0; margin-right:0; width: 100%;"/>
             <h2>더보기</h2>
             <ul class="links">
-                <li><a href="mypage/mypage">공지사항</a></li>
-                <li><a href="mypage/mypage">문의게시판</a></li>
-                <li><a href="mypage/mypage">메뉴1</a></li>
-                <li><a href="mypage/delete">메뉴2</a></li>
+                <li><a href="notice/noticeList">공지사항</a></li>
+                <li><a href="inquiry/inquiryList">문의게시판</a></li>
             </ul>
         </div>
         <!--end filter-->
@@ -214,7 +212,7 @@ hr {
                 
 		<div class="basket-paging" th:if="${dataCount}==0">
 			<td colspan="5">
-				<span style="font-size: 24px;
+				<span style="font-size: 36px;
 				font-family: 'Gowun Batang', sans-serif; font-weight: bold;">예약하신 호텔이 없습니다. </span>
 			</td>
 		</div>
@@ -229,7 +227,7 @@ hr {
 
 	
 	
-
+	//예약 취소 처리 ajax 코드
 	$('.delete-btn').click(function(event) {
 		event.preventDefault();
 		

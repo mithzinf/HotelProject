@@ -108,10 +108,10 @@ dd,dt,td {
 											<dd style="font-size: 18px"><td th:text="${#dates.format(check_out, 'yyyy/MM/dd')}"></td></dd>
                                             
                                             <dt style="font-size: 18px"><b>숙박 인원</b></dt>
-                                            <dd style="font-size: 18px"><td th:text="${people}"></td></dd>
+                                            <dd style="font-size: 18px"><td th:text="${people}+'명'"></td></dd>
                                             
                                             <dt style="font-size: 18px"><b>숙박 일수</b></dt>
-                                            <dd style="font-size: 18px"><td th:text="${date_num}"></td></dd>
+                                            <dd style="font-size: 18px"><td th:text="${date_num}+'일'"></td></dd>
                                             
                                             <dt style="font-size: 18px"><b>금액</b></dt>
                                             <dd style="font-size: 18px"><td th:text="${#numbers.formatInteger(price, 0, 'COMMA')} + '원'"></td></dd>
@@ -248,8 +248,8 @@ let maxPayNum = document.getElementById("maxPayNum").value;
         IMP.request_pay({
         	pg : 'html5_inicis.INIpayTest',
             pay_method : 'card',
-            merchant_uid: 57008833-33246,
-         	// 사용한 값 33001~245
+            merchant_uid: 57008833-33248,
+         	// 사용한 값 33001~247
          	// 일일이 수정해주면서 값을 늘려주는 수밖에...
             name : hotel_name,
             amount : 100,

@@ -5,12 +5,12 @@ import com.boot.hotel.util.MyUtil3;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.boot.hotel.dto.AnswerBoardDTO;
 import com.boot.hotel.dto.HotelInquiryDTO;
+import com.boot.hotel.oauth2.dto.SessionUser;
 import com.boot.hotel.service.InquiryService;
 import com.boot.hotel.service.PaymentService;
 
@@ -37,30 +38,20 @@ public class InquiryController {
 	private PaymentService paymentService;
 	
 	@Autowired
+	private HttpSession httpSession;
+	
+	@Autowired
 	MyUtil3 myUtil3;
 	
-	@GetMapping("/blog")
-	public ModelAndView blog() throws Exception{
-		ModelAndView mav = new ModelAndView();
-		
-		mav.setViewName("inquiry/blog-detail");
-		return mav;
-	}
-	
-	@GetMapping("/det")
-	public ModelAndView det() throws Exception{
-		ModelAndView mav = new ModelAndView();
-		
-		mav.setViewName("inquiry/detail");
-		return mav;
-	}
-	
-	
+	//문의 리스트 출력 메소드
 	@GetMapping("inquiry/inquiryList")
 	public ModelAndView inquiryList(HttpServletRequest request) throws Exception{
 		ModelAndView mav = new ModelAndView();
 		
 		System.out.println("문의 리스트 진입");
+		
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+		
 		String pageNum = request.getParameter("pageNum");
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
@@ -80,12 +71,13 @@ public class InquiryController {
 	        searchValue = URLDecoder.decode(searchValue, "UTF-8");
         }
 		
+		
 		Map<String, Object> params1 = new HashMap<>();
         params1.put("searchValue", searchValue);
         params1.put("searchKey", searchKey);
 		
         int dataCount = inquiryService.getListsCount(params1);
-		int numPerPage = 3;
+		int numPerPage = 10;
 		int totalPage = myUtil3.getPageCount(numPerPage, dataCount);
 		
 		if(currentPage>totalPage) {
@@ -99,7 +91,6 @@ public class InquiryController {
         params1.put("end", end);
         
         List<HotelInquiryDTO> lists = inquiryService.getInqList(params1);
-        
         
 		String param = "";
 		if(searchValue!=null && !searchValue.equals("")) {
@@ -119,8 +110,6 @@ public class InquiryController {
 			articleUrl += "&" + param;
 		}
 		
-		
-		
 		mav.addObject("lists", lists);
 		mav.addObject("pageIndexList", pageIndexList);
 		mav.addObject("dataCount", dataCount);
@@ -133,41 +122,32 @@ public class InquiryController {
 	
 	
 	
-	// TODO
-	// 아래 정보는 세션을 통해 사용자id를 받은 후에 삭제한다
+	//문의글 작성 메소드 진입
 	@GetMapping("inquiry/inquiryCreate")
 	public ModelAndView Create(Model model) throws Exception{
 		ModelAndView mav = new ModelAndView();
 		
-		String userid = "suzi";
-		String username = "배수지";
-		String tel = "010-2222-3333";
-		String email = "111@naver.com";
-		String category = "호텔";
+		System.out.println("문의글 작성 컨트롤러 진입");
+		
+		String userid = null;
+		if(httpSession.getAttribute("sessionUser")!=null) {
+        	SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+        	userid = sessionUser.getId();
+        }
 		
 		
+		inquiryService.getUserInfo(userid);
+		
+		
+		List<Map<String, Object>> userInfo = paymentService.getUserInfo(userid);
+		Object username = userInfo.get(0).get("USERNAME");
+		Object tel = userInfo.get(0).get("TEL");
+		Object email = userInfo.get(0).get("EMAIL");
 		
 		mav.addObject("userid",userid);
 		mav.addObject("username",username);
 		mav.addObject("tel",tel);
 		mav.addObject("email",email);
-		mav.addObject("category",category);
-		
-		
-		/*
-		List<Map<String, Object>> userInfo = paymentService.getUserInfo(userid);
-		Object userid = userInfo.get(0).get("USERID");
-		Object username = userInfo.get(0).get("USERNAME");
-		Object tel = userInfo.get(0).get("TEL");
-		Object email = userInfo.get(0).get("EMAIL");
-		
-		int hotel_id = 1;
-		
-		List<Map<String, Object>> hotelInfo = paymentService.getHotelInfo(hotel_id);
-		Object category = hotelInfo.get(0).get("CATEGORY");
-		*/
-		
-		
 		
 		mav.setViewName("inquiry/inquiryCreate");
 		return mav;
@@ -175,12 +155,24 @@ public class InquiryController {
 	
 	
 	
-	
+	//문의글 작성 처리 메소드
 	@PostMapping("/inquirycreate_ok")
-	public ModelAndView Create_ok(HotelInquiryDTO dto, @RequestParam String subject1) throws Exception{
+	public ModelAndView Create_ok(HttpServletRequest request, HotelInquiryDTO dto, @RequestParam String subject1) throws Exception{
+		
+		System.out.println("문의글 작성 처리 컨트롤러 진입");
+		
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
 		
 		ModelAndView mav = new ModelAndView();
 		int maxInqNum = inquiryService.maxInqNum();
+		
+		
+		String context = request.getParameter("context1");
+		
+		String replaced = context.replaceAll("\r\n", "<br/>");
+		
+		dto.setContext(replaced);
+		
 		
 		dto.setSubject(subject1);
 		dto.setInq_num(maxInqNum+1);
@@ -191,13 +183,23 @@ public class InquiryController {
 		return mav;
 	}
 	
-//	@GetMapping("/inquiry/inquiryArcitle")
+	
+	//문의글 아티클 메소드 진입
 	@RequestMapping(value = "/inquiry/inquiryArcitle",
 			method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView inquiryArcitle(HttpServletRequest request,
 			HotelInquiryDTO hotDto) throws Exception{
 		
-		System.out.println("article 진입");
+		System.out.println("문의게시판 아티클 컨트롤러 진입");
+		ModelAndView mav = new ModelAndView();
+		
+		String userid = null;
+		if(httpSession.getAttribute("sessionUser")!=null) {
+        	SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+        	userid = sessionUser.getId();
+        }
+		
+		
 		
 		int num = Integer.parseInt(request.getParameter("num"));
 		
@@ -213,11 +215,11 @@ public class InquiryController {
 		HotelInquiryDTO dto = inquiryService.getReadData(num);
 
 		if(dto == null) {
-			ModelAndView mav = new ModelAndView();
 			mav.setViewName("redirect:/inquiryArcitle?pageNum=" + pageNum);
 			
 			return mav;
 		}
+		
 		
 		String param = "pageNum=" + pageNum;
 		if(searchValue!=null&&!searchValue.equals("")) {
@@ -225,12 +227,10 @@ public class InquiryController {
 			param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 		}
 		
-		ModelAndView mav = new ModelAndView();
 		
 		
 		
 		// -------------------------------------------------------
-		System.out.println("답변 출력하기");
 		
 		List<HotelInquiryDTO> anwLists = inquiryService.getAnswerList(num);
 		
@@ -238,7 +238,8 @@ public class InquiryController {
 		
 		// -------------------------------------------------------
 		
-		
+		mav.addObject("userid",userid);
+		mav.addObject("hotDto", hotDto);
 		mav.addObject("dto", dto);
 		mav.addObject("inq_num", num);
 		mav.addObject("params", param);
@@ -251,11 +252,86 @@ public class InquiryController {
 	}
 	
 	
+	//문의글 답변 처리 메소드 진입
+	@RequestMapping(value = "/inquiryAnswer",
+			method = { RequestMethod.GET, RequestMethod.POST })
+	public void inquiryAnswer(AnswerBoardDTO ansDto, HotelInquiryDTO inqDto, HttpServletRequest request
+			) throws Exception{
+		
+		System.out.println("문의게시판 답변 처리 컨트롤러 진입");
+		
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+		
+		String userId = sessionUser.getId();
+		
+		
+		
+		String content = request.getParameter("content");
+		
+		String replaced = content.replaceAll("\r\n", "<br/>");
+		
+		inqDto.setContext(replaced);
+		
+		
+		
+		
+		int num = Integer.parseInt(request.getParameter("inq_num"));
+		
+		int maxAnsNum = inquiryService.maxAnsNum();
+		
+		ansDto.setAns_num(maxAnsNum+1);
+		
+		inquiryService.insertAnswer(ansDto);
+		
+		inquiryService.updateAnsweredList(num);
+		
+		inqDto.setAnswer(maxAnsNum+1);
+		
+		
+		
+		
+		return;
+		
 	
+	}
+	
+	
+	//문의게시판 답변 리스트 출력 메소드
+	@RequestMapping(value = "/getAnwLists",
+			method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView getAnwLists(AnswerBoardDTO dto, HttpServletRequest request
+			) throws Exception{
+		
+		System.out.println("문의게시판 답변 리스트 컨트롤러 진입 ");
+		
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+		
+		ModelAndView mav = new ModelAndView();
+		
+		int num = Integer.parseInt(request.getParameter("inq_num"));
+		
+		
+		int getAnswerList = inquiryService.getAnsOnly(num);
+		
+		
+		
+		mav.addObject("getAnswerList",getAnswerList);
+		
+		return mav;
+		
+	
+	}
+	
+    
+	
+	
+	//문의게시판 삭제 메소드
 	@GetMapping("/deleted_ok")
 	public ModelAndView deleted_ok(HttpServletRequest request, AnswerBoardDTO ansBdDto) throws Exception{
 		
-		System.out.println("문의게시판 삭제하기");
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+		
+		System.out.println("문의게시판 삭제 컨트롤러 진입");
 		
 		int num = Integer.parseInt(request.getParameter("num"));
 		String pageNum = request.getParameter("pageNum");
@@ -265,8 +341,6 @@ public class InquiryController {
 		if(searchValue!=null) {
 			searchValue = URLDecoder.decode(searchValue, "UTF-8");
 		}
-		
-		int i = inquiryService.delAns(num);
 		
 		inquiryService.deleteData(num);
 		
@@ -287,24 +361,14 @@ public class InquiryController {
 	
 	
 	
+	//문의게시판 수정 페이지 메소드 진입
 	@GetMapping("/inquiryUpdate")
 	public ModelAndView inquiryUpdate(HttpServletRequest request) throws Exception{
 		ModelAndView mav = new ModelAndView();
 		
-		System.out.println("수정할 준비");
-		
-		String userid = "suzi";
-		String username = "배수지";
-		String tel = "010-2222-3333";
-		String email = "111@naver.com";
-		String category = "호텔";
-		
-		mav.addObject("userid",userid);
-		mav.addObject("username",username);
-		mav.addObject("tel",tel);
-		mav.addObject("email",email);
-		mav.addObject("category",category);
-		
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+
+		System.out.println("문의게시판 수정 페이지 컨트롤러 진입");
 		
 		
 		int num = Integer.parseInt(request.getParameter("num"));
@@ -325,12 +389,13 @@ public class InquiryController {
 		}
 		
 		
-		String param = "pageNum=" + pageNum;
+		String param = "num=" + num + "&pageNum=" + pageNum;
 		if(searchValue!=null&&!searchValue.equals("")) {
 			param += "&searchKey=" + searchKey;
 			param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 		}
 		
+		mav.addObject("num",num);
 		mav.addObject("dto", dto);
 		mav.addObject("pageNum", pageNum);
 		mav.addObject("params", param);
@@ -341,6 +406,8 @@ public class InquiryController {
 		return mav;
 	}
 	
+	
+	//문의게시판 수정 처리 메소드
 	@RequestMapping(value = "/inquiryUpdate_ok",
 			method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView inquiryUpdate_ok(HotelInquiryDTO dto,
@@ -350,17 +417,17 @@ public class InquiryController {
 			@RequestParam String userid,
 			@RequestParam String tel,
 			@RequestParam String email,
-			@RequestParam String category,
-			@RequestParam int inq_num
+			@RequestParam String category
+			,@RequestParam int inq_num
 			) throws Exception{
 		
-		System.out.println("수정페이지 진입");
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+		
+		System.out.println("문의게시판 수정 처리 컨트롤러 진입");
 		
 		String pageNum = request.getParameter("pageNum");
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
-		
-//		String inq_num = Integer.parseInt("inq_num");
 		
 		if(searchValue!=null) {
 			searchValue = URLDecoder.decode(searchValue, "UTF-8");
@@ -385,49 +452,31 @@ public class InquiryController {
 	}
 	
 	
-//	@PostMapping("/inquiryAnswer")
-	@RequestMapping(value = "/inquiryAnswer",
+
+	
+	
+	//문의게시판 답변 삭제 메소드
+	@RequestMapping(value = "/answerDelete",
 			method = { RequestMethod.GET, RequestMethod.POST })
-	public void inquiryAnswer(AnswerBoardDTO dto, HttpServletRequest request
-			) throws Exception{
+	public ModelAndView answerDelete(HttpServletRequest request, AnswerBoardDTO ansBdDto) throws Exception{
+		
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+		
+		System.out.println("문의게시판 답변 삭제 처리 컨트롤러 진입");
+		
+		int ansNum = Integer.parseInt(request.getParameter("ans_num"));
+		
+		inquiryService.deleteAnswer(ansNum);
+		
 		ModelAndView mav = new ModelAndView();
 		
-		System.out.println("답변 달기 ");
-		
-		String pageNum = request.getParameter("pageNum");
-		String content = request.getParameter("content3");
-		
 		int num = Integer.parseInt(request.getParameter("inq_num"));
+		int pageNum = Integer.parseInt(request.getParameter("pageNum"));
 		
-		dto.setContent(content);
+		mav.setViewName("redirect:/inquiryArcitle?pageNum=" + pageNum + "?num=" + num);
 		
-		String articleUrl = "/inquiry/inquiryArcitle?pageNum=" + pageNum + "&num=" + num;
+		return mav;
 		
-		int maxAnsNum = inquiryService.maxAnsNum();
-		
-		dto.setAns_num(maxAnsNum+1);
-		
-		inquiryService.insertAnswer(dto);
-		
-		System.out.println("답변완료 출력");
-		
-		inquiryService.updateAnsweredList(num);
-		
-		// -------------------------------------------------------
-		List<HotelInquiryDTO> anwLists = inquiryService.getAnswerList(num);
-		
-		mav.addObject("anwLists",anwLists);
-		
-		// -------------------------------------------------------
-		
-		
-		mav.addObject("articleUrl",articleUrl);
-		
-//		mav.setViewName("redirect:/" + articleUrl);
-		mav.setViewName("rediect:/inquiry/inquiryArcitle");
-		return;
-		
-	
 	}
 	
 	

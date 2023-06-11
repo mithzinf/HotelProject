@@ -71,10 +71,6 @@ public class InquiryServiceImpl implements InquiryService{
 	}
 	
 	
-	@Override
-	public int delAns(int num) throws Exception {
-		return inquiryMapper.delAns(num);
-	}
 	
 	
 
@@ -96,8 +92,18 @@ public class InquiryServiceImpl implements InquiryService{
 
 
 
+	@Override
+	public void deleteAnswer(int num) throws Exception {
+		inquiryMapper.deleteData(num);		
+	}
 
-
+	
+	
+	
+	@Override
+	public int getAnsOnly(int num) throws Exception {
+		return inquiryMapper.getAnsOnly(num);
+	}
 
 	
 	
@@ -108,6 +114,14 @@ public class InquiryServiceImpl implements InquiryService{
 	public List<Map<String, Object>> getUserInfo(String userid) throws Exception {
 		return inquiryMapper.getUserInfo(userid);
 	}
+
+
+
+	
+
+
+
+	
 	
 	
 	

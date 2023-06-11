@@ -1,38 +1,70 @@
 <!DOCTYPE html>
 <!-- 경로가 templates/layout/layout.html을 상속받아야 하므로 -->
 <html layout:decorate="~{/layout/layout}">
-
 <meta charset="UTF-8">
-
 <div layout:fragment="content" class="content-padding">
-
-
-
-<h1>콘텐트 자리[[${session.sessionUser}]]</h1>
-
-
-<ul class="comments" >
-    <li th:each="anw : ${anwLists}" >
-        <ul class="comments-child" >
-            <li class="comment">
-            <div class="box filter" style="background-color: #e5e5e5; width: 520px; font-size: 18px">
-                <div class="comment-wrapper">
-                    <tr>작성자&nbsp;&nbsp;<td th:text="${anw.userid}"></td></tr>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <tr>작성일시&nbsp;<td th:text="${#dates.format(anw.created,'yyyy/MM/dd')}"></td></tr><hr/>
-                    <tr style="font-size: 20px">답변내용<br/><br/><td th:text="${anw.content}"></td></tr>
-                </div>
+            <div th:fragment="anwLists">
+                <div class="page-wrapper">
+				    <div id="page-content">
+				        <div class="container">
+				            
+				            <div class="row">
+				                <div class="col-md-9" style="padding-left: 0;">
+				                    <div class="main-content">
+				                    <br/>
+				                    
+				                    <form action="" name="ansForm" method="GET" >
+				                        <section class="box filter" id="comments"
+				                        	style="background-color: #FAFAFA; width: 640px;
+				                        	margin-left: 0px">
+				                            <header><h2 class="no-border">답변</h2></header>
+				                            <hr style="border-style: solid; border-width: 3px; border-radius: 5px; margin: 10px 0; padding: 0;">
+				                            
+				                            <ul class="comments" >
+				                                <li class="comment" style="display:inline;">
+				                                    <div class="comment-wrapper" >
+				                                    <div th:each="anwList : ${anwLists}">
+				                                        <div style="font-size: 23px"><span th:text="${anwList.userid}" ></span></div>
+				                                        <br/>
+				                                        
+				                                        <div style="font-size: 25px"><div th:utext="${anwList.content.replaceAll('\n','&lt;br/&gt;')}" style="font-size: 20px; color: grey"></div></td>
+				                                        <div><i class="fa fa-clock-o" style="font-size: 14px;"></i> <span th:text="${#dates.format(anwList.created, 'yyyy/MM/dd HH:mm:ss')}"style="font-size: 14px; color: grey"></span></div>
+				                                        <hr style="border-style: solid; border-width: 1px;"/>
+				                                        
+				                                        <input type="hidden" name="ans_num" id="ans_num" th:value="${anwList.ans_num}"/>
+				                                        
+				                                        
+				                                    </div>
+				                                    
+				                                    
+				                                    </div>
+				                                    
+				                                </li>
+				                            </ul>
+				                        </section><!-- /#comments -->
+				                        </form>
+				                        
+				                        
+				                    </div>
+				                    <!--end main-content-->
+				                </div>
+				                <!--end col-md-9-->
+				                
+				            </div>
+				            <!--end row-->
+				        </div>
+				        <!--end container-->
+				    </div>
+				    <!--end page-content-->
+				</div>
             </div>
-            </li>
-        </ul>
-    </li>
-</ul>
-
-
-
 </div>
 
-
 </html>
+
+
+
+
+
+
+

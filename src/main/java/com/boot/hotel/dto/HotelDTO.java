@@ -25,4 +25,8 @@ public class HotelDTO {
 	//찜 유무 표시를 위한 변수
 	private Boolean basket_;
 	
+	//리뷰 평점,개수 표시를 위한 변수
+	private double avg;
+	private int count;
+	
 }

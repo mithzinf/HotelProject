@@ -1,5 +1,6 @@
 package com.boot.hotel.controller;
 
+import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -27,6 +28,7 @@ import com.boot.hotel.dto.HotelBasketDTO;
 import com.boot.hotel.dto.HotelDTO;
 import com.boot.hotel.dto.HotelInfoDTO;
 import com.boot.hotel.dto.HotelPictureDTO;
+import com.boot.hotel.mapper.ReviewMapper;
 import com.boot.hotel.oauth2.dto.SessionUser;
 import com.boot.hotel.service.HotelBasketService;
 import com.boot.hotel.service.HotelInfoService;
@@ -52,6 +54,9 @@ public class HotelInfoController {
     
     @Resource
 	private HotelMainService hotelMainService;
+    
+    @Autowired
+    private ReviewMapper reviewMapper;
     
     
     @RequestMapping(value = "/hotellist", method = { RequestMethod.GET, RequestMethod.POST })
@@ -151,19 +156,25 @@ public class HotelInfoController {
         	hotelList1 = hotelInfoService.getHotelList1Category(params);
         }
 
+        
+        
         List<HotelInfoDTO> hotelList2 = hotelInfoService.getHotelList2(params);
         List<HotelPictureDTO> hotelList3 = hotelInfoService.getHotelList3(params); // 추가된 부분입니다.
         
         
-        //날짜계산, 찜 목록 체크 수행 시작
+        //날짜계산, 찜 목록 체크, 리뷰 평점 추가 시작
         int num = 0;
+        double avg = 0;
+		int k = 0;
+		
         for(HotelDTO i : hotelList1) {
         	
     		int hotel_id =(i.getHotel_id());
-		
+    		
+    		//체크인~체크아웃 날짜를 하루씩 판별하여 만실인지 체크함
+    		//3박4일이면 3번 반복
     		for(int j=0;j<days;j++) {
     			
-    			//
 				Map<String, Object> paramMap2 = new HashMap<>();
 				paramMap2.put("check_in", check_in_temp.plusDays(j));
 				paramMap2.put("check_out", check_out_temp.plusDays(j));
@@ -186,6 +197,7 @@ public class HotelInfoController {
 			
     		}
 			
+    		//만실 체크
 			if(judge.equals("만실")) {
 				i.setSoldout("만실");
 				judge = "";
@@ -199,6 +211,7 @@ public class HotelInfoController {
 				judge = "";
 			}
 			
+			
 			SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
 	    	String userid = "";
 			if(sessionUser!=null) {
@@ -206,6 +219,7 @@ public class HotelInfoController {
 			}
 	    	
 			
+			//찜 유무 체크
 			Map<String, Object> paramMap3 = new HashMap<>();
 			paramMap3.put("userid", userid);
 			paramMap3.put("hotel_id", hotel_id);
@@ -220,21 +234,24 @@ public class HotelInfoController {
 			    i.setBasket_(true);
 			}
 			
+			
+			//평점 체크
+			Map<String, Object> map1 = reviewMapper.searchReviewAvg(hotel_id);
+			
+			i.setAvg(((BigDecimal) map1.get("AVG")).doubleValue());
+			i.setCount(((BigDecimal) map1.get("COUNT")).intValue());
 			num++;
 
         }
         //날짜계산, 찜 유무 체크 끝
         
         
+        //리스트, 검색, 페이징 준비
         String currentUrl = request.getRequestURL().toString() + "?" + request.getQueryString();
         String listUrl = currentUrl.replaceAll("&?pageNum=\\d+", "");
 
-       
-
         String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl, searchValue);
 
-
-        
         String detailUrl = "/detail?searchValue=" + 
                 searchValue + "&pageNum=" + currentPage;
 
@@ -271,8 +288,8 @@ public class HotelInfoController {
     
         
     }
-    //리스트에서 추가하면 코드 짐하기 코드..어쩌고.... 저저고..
-    //여기에 찜하기 어쩌고 저쩌ㅏ고 
+    
+    //리스트에서 찜 추가 처리 메소드
     @PostMapping("/addBasket")
     public String addBasket(@RequestParam int hotel_id) throws Exception {
     	
@@ -296,6 +313,8 @@ public class HotelInfoController {
         return "추가 성공";
     }
 
+    
+    //리스트에서 찜 해제 처리 메소드
     @PostMapping("/removeBasket")
     public String removeBasket(@RequestParam int hotel_id) throws Exception {
     	

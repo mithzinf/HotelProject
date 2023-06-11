@@ -2,9 +2,9 @@ package com.boot.hotel.util;
 
 import org.springframework.stereotype.Service;
 
-//일반 개량판 페이징 유틸
+//리뷰 페이징 유틸 (ajax)
 @Service
-public class MyUtil2 {
+public class MyUtil4 {
 
 	
 	public int getPageCount(int numPerPage, int dataCount) {
@@ -24,7 +24,7 @@ public class MyUtil2 {
 	public String pageIndexList(int currentPage, int totalPage, String listUrl) {
 	    int numPerBlock = 5; // 한 블록당 페이지 수
 	    int currentPageSetup;
-	    int page;
+	    int pageNum1;
 	    StringBuffer sb = new StringBuffer();
 
 	    if (currentPage == 0 || totalPage == 0) {
@@ -44,23 +44,22 @@ public class MyUtil2 {
 	    }
 
 	    if (totalPage > numPerBlock && currentPageSetup > 0) {
-	        sb.append("<a href=\"" + listUrl + "pageNum=" + (currentPageSetup - numPerBlock + 1) + "\">◀이전&nbsp;&nbsp;</a>");
+	        sb.append("<a href=\"#\" style=\"text-decoration: none;\" onclick=\"getPageList('" + listUrl + "', " + (currentPageSetup - numPerBlock + 1) + ")\">◀이전&nbsp;&nbsp;</a>");
 	    }
 
-	    page = currentPageSetup + 1;
+	    pageNum1 = currentPageSetup + 1;
 
-	    while (page <= totalPage && page <= (currentPageSetup + numPerBlock)) {
-	        if (page == currentPage) {
-	        	sb.append("<a href=\"" + listUrl + "pageNum=" + currentPage + "\"><u>" + currentPage + "</u>&nbsp;</a> ");
+	    while (pageNum1 <= totalPage && pageNum1 <= (currentPageSetup + numPerBlock)) {
+	        if (pageNum1 == currentPage) {
+	            sb.append("<a href=\"#\" style=\"text-decoration: none;\" onclick=\"getPageList('" + listUrl + "', " + pageNum1 + ")\"><u>" + currentPage + "</u>&nbsp;</a> ");
 	        } else {
-	        	
-	            sb.append("<a href=\"" + listUrl + "pageNum=" + page + "\">" + page + "&nbsp;</a> ");
+	            sb.append("<a href=\"#\" style=\"text-decoration: none;\" onclick=\"getPageList('" + listUrl + "', " + pageNum1 + ")\">" + pageNum1 + "&nbsp;</a> ");
 	        }
-	        page++;
+	        pageNum1++;
 	    }
 
 	    if (totalPage - currentPageSetup > numPerBlock) {
-	        sb.append("<a href=\"" + listUrl + "pageNum=" + (currentPageSetup + numPerBlock + 1) + "\">다음▶</a>&nbsp;");
+	        sb.append("<a href=\"#\" style=\"text-decoration: none;\" onclick=\"getPageList('" + listUrl + "', " + (currentPageSetup + numPerBlock + 1) + ")\">다음▶</a>&nbsp;");
 	    }
 
 	    return sb.toString();

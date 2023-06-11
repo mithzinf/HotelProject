@@ -1,9 +1,13 @@
 package com.boot.hotel.controller;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
+
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
@@ -34,8 +38,13 @@ import com.boot.hotel.dto.HotelFacilityInDTO;
 import com.boot.hotel.dto.HotelInfoDTO;
 import com.boot.hotel.dto.HotelPictureDTO;
 import com.boot.hotel.dto.HotelReservationDTO;
+import com.boot.hotel.dto.ReviewDTO;
+import com.boot.hotel.mapper.ReviewMapper;
 import com.boot.hotel.oauth2.dto.SessionUser;
 import com.boot.hotel.service.HotelDetailService;
+import com.boot.hotel.service.ReviewService;
+import com.boot.hotel.util.MyUtil2;
+import com.boot.hotel.util.MyUtil4;
 @ResponseBody
 @RestController
 public class HotelDetailController {
@@ -45,52 +54,32 @@ public class HotelDetailController {
    
    @Autowired
    private HttpSession httpSession;
-/*
-   @RequestMapping(value = "/detail" , method= {RequestMethod.GET, RequestMethod.POST})
-   public ModelAndView detail(@RequestParam(value = "hotel_id", required = true) int hotel_id, 
-				@RequestParam(value = "type", required = true) String type) throws Exception {
-     
-     
-      
-      Map<String, Object> paramMap = new HashMap<>();
-	   
- 	 
-	   //hotel_id와 type을 paramMap에 넣어요....매개변수를 넣는다......
-	   paramMap.put("hotel_id", hotel_id);
-	   paramMap.put("type", type);
-	   
-	   List<String> searchHotelDetail = hotelDetailService.searchHotelDetail(paramMap); 
-     
-      
-      List<HotelDTO> dto1 = hotelDetailService.getHotelById(hotel_id);
-      List<HotelInfoDTO> dto2 = hotelDetailService.getHotelInfoById(hotel_id);
-      List<HotelPictureDTO> dto3 = hotelDetailService.getHotelPicById(hotel_id);
-      List<HotelFacilityInDTO> dto4 = hotelDetailService.getHotelFacilityInById(hotel_id);
-      
-      
-      ModelAndView mav = new ModelAndView();
-      // Model에 데이터 추가, 좌항 : view에서 부를 별칭, 우항 : 진짜 담아진 객체의 이름
-      mav.addObject("dto1", dto1);
-      mav.addObject("dto2", dto2);
-      mav.addObject("dto3", dto3);
-      mav.addObject("dto4", dto4);
-      mav.addObject("searchHotelDetail",searchHotelDetail);
-      //mav.addObject("hotel_id",hotel_id);
-      mav.setViewName("hotel/detail"); //templates.login의 detail.html로 가게 하려고...
-      
-      return mav;
-      
-   }
    
-  */ 
+   @Resource
+   private ReviewService reviewService;
    
+   @Autowired
+   private ReviewMapper reviewMapper;
+	
+   @Autowired
+   private MyUtil2 myUtil2;
    
+   @Autowired
+   private MyUtil4 myUtil4;
+   
+    //호텔 상세 페이지 띄우기
     @RequestMapping(value = "/detail", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView detail(@RequestParam("hotel_id") int hotel_id, HttpServletRequest request) throws Exception {
       
+    	System.out.println("디테일 컨트롤러 진입");
+    	
+    	//페이징 유지 및 체크인시간,아웃시간 저장
+    	String pageNum = request.getParameter("pageNum");
+    	String searchValue = request.getParameter("searchValue");
+    	
 		String check_in_list = request.getParameter("check_in");
 		String check_out_list = request.getParameter("check_out");
-		 
+		
 		//체크인, 체크아웃 시간을 받아 알맞은 형태로 바꾸고 변수에 저장
 		LocalDate check_in_day = LocalDate.parse(check_in_list, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		LocalDate check_out_day = LocalDate.parse(check_out_list, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -109,7 +98,7 @@ public class HotelDetailController {
 		String deluxeJudge = "";
 		
 		Map<String, Object> resultMap1 = new HashMap<String, Object>();
-		
+
 		//스탠다드룸 잔여객실 체크
 		for(int i=0;i<days;i++) {
 			
@@ -204,7 +193,7 @@ public class HotelDetailController {
 			resultMap1.put("deluxe", "여유");
 		}
 		
-		 
+		
 		List<HotelDTO> dto1 = hotelDetailService.getHotelById(hotel_id);
 		List<HotelInfoDTO> dto2 = hotelDetailService.getHotelInfoById(hotel_id);
 		List<HotelFacilityDTO> dto3 = hotelDetailService.getHotelFacilityById(hotel_id);
@@ -216,15 +205,86 @@ public class HotelDetailController {
 		List<HotelPictureDTO> getSweet = hotelDetailService.getSweetPicture(hotel_id); //스위트룸 사진 가지구 와..
 		  
 		
+		//================리뷰 정보 띄우기 시작======================
 		
-
 		
-    	
+		String pageNum1 = request.getParameter("pageNum1");
+		
+		int currentPage = 1;
+		
+		if(pageNum1!=null){ //넘어오는 페이지 번호가 있다면
+			currentPage = Integer.parseInt(pageNum1);
+		}
+		
+		//리뷰 테이블의 데이터 개수 구하기
+		int dataCount = reviewService.getReviewDataCount(hotel_id);
+		
+		int numPerPage = 4;
+		int totalPage = myUtil2.getPageCount(numPerPage, dataCount);
+		
+		if(currentPage>totalPage) {
+			currentPage = totalPage;
+		}
+		
+		int start = (currentPage-1)*numPerPage+1; 
+		int end = currentPage*numPerPage;
+		
+        Map<String, Object> params = new HashMap<>();
+        params.put("start", start);
+        params.put("end", end);  
+        params.put("hotel_id",hotel_id);
+        
+        //페이징 처리된 리뷰 리스트 불러오기
+        List<ReviewDTO> reviewList = reviewService.getReadReviewList(params);
+        
+        
+        //url 설정
+		String listUrl = "detail";
+		
+		listUrl += "?hotel_id=" + hotel_id;
+		
+		if (pageNum != null) {
+			listUrl += "&pageNum=" + pageNum;
+        }
+		
+		if (searchValue != null && !searchValue.equals("")) {
+			listUrl += "&searchValue=" + searchValue;
+        }else {
+        	listUrl += "&searchValue=";
+        }
+		
+		listUrl += "&check_in=" + check_in_list + "&check_out=" + check_out_list;
+		
+		//ajax 페이징처리 코드 myUtil4 호출
+		String pageIndexList = 
+				myUtil4.pageIndexList(currentPage, totalPage, listUrl);
+		
+		//평점, 리뷰갯수 저장하기
+		Map<String, Object> map1 = reviewMapper.searchReviewAvg(hotel_id);
+		
+		//map에 담긴 값을 BigDecimal로 다운캐스팅후 형태에 맞게 저장
+		double avg = ((BigDecimal) map1.get("AVG")).doubleValue();
+		int count = ((BigDecimal) map1.get("COUNT")).intValue();
+		
+			
+		//===============리뷰끝==================
+		
+    	//로그인된 상태라면 세션 아이디를 불러옴
 		ModelAndView mav = new ModelAndView();
 		if(httpSession.getAttribute("sessionUser")!=null) {
         	SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
         	mav.addObject("user_id",sessionUser.getId());
         }
+		
+		//리뷰 데이터
+		mav.addObject("pageIndexList",pageIndexList);
+		mav.addObject("dataCount",dataCount);
+		mav.addObject("reviewList",reviewList);
+		mav.addObject("pageNum1",pageNum1);
+		mav.addObject("avg",avg);
+		mav.addObject("count",count);
+		
+		mav.addObject("listUrl", listUrl);
 		mav.addObject("resultMap1",resultMap1);
 		mav.addObject("check_in_day",check_in_day);
 		mav.addObject("check_out_day",check_out_day);
@@ -237,84 +297,147 @@ public class HotelDetailController {
 		mav.addObject("getStandard", getStandard);
 		mav.addObject("getDeluxe", getDeluxe);
 		mav.addObject("getSweet", getSweet);
-		System.out.println(resultMap1);
 		mav.setViewName("hotel/detail");
 			
 		return mav;
 			 
 	}
 
-   //상세페이지에서 예약하기를 눌렀을 때의 메소드!...hotel_id, 체크인날짜, 체크아웃날짜, 예약한 객실(standard,suite,deluxe)의 타입 데이터 넘길 메소드
-   //딱히 매핑주소가 필요하진 않아보임?
- //hotel_id는 hotelDTO에 있고...
-   //check_in 날짜와 check_out 날짜는 장바구니 테이블 basketdto의 req_date, reservation 테이블의 inq_date 컬럼 갖다 써야하는지?
-   //내가 예약한 객실..room 컬럼 room == standard 뭐 이렇게 넘겨야 하는것임? 
-   //테이블 안써도 되고..detail.html부분에서 체크인, 체크아웃 날짜 선택하는 부분에서 그 날짜를 value name으로 받아서 넘기면 될듯?
-   //결제페이지에서는 서치밸류 넘기지 말자고 하숏다, roomtype 일일이 치면 된다... 리퀘스트파람을 room1 room2 name 은 type(예약어여서 type1)으로 / value = standard 
-   @RequestMapping(value = "/bookRoom", method = RequestMethod.POST)
-   public ModelAndView bookRoom(@RequestParam("hotel_id") int hotel_id,@RequestParam("room_type") String room_type,HttpServletRequest request) throws Exception {
-	   		
-	   
-	   		ModelAndView mav = new ModelAndView();
-	   		
-	 
-	   		//일단 체크인,체크아웃 날짜는 내가 정해놓은 것임
-	   		/*
-	   		Calendar startCal = Calendar.getInstance();
-			startCal.setTime(checkInDate);
+    
+    //리뷰 작성 컨트롤러 진입
+    @RequestMapping(value = "/reviews", method = { RequestMethod.GET, RequestMethod.POST })
+	public Map<String, Object> reviewPage (@RequestParam("hotel_id") int hotel_id,
+			@RequestParam("listUrl") String listUrl, HttpServletRequest request) throws Exception {
+    	
+    	System.out.println("리뷰 작성 컨트롤러 진입");
+    	
+    	//작성한 평점과 리뷰내용을 받음
+		int score = Integer.parseInt(request.getParameter("score"));
+		String context = request.getParameter("context");
 
-			Calendar endCal = Calendar.getInstance();
-			endCal.setTime(checkOutDate);
-	   		 */
-	   		 
-	   	
-	     
-	     //날짜 계산
-	     SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
-	     Date checkInDate = dateformat.parse("2023/04/26");
-	     Date checkOutDate =dateformat.parse("2023/04/28");
-	     
-	     	Calendar startCal = Calendar.getInstance();
-			startCal.setTime(checkInDate);
+		//리뷰 작성 처리 
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+		String userid = sessionUser.getId();
+		String username = sessionUser.getName();
 
-			Calendar endCal = Calendar.getInstance();
-			endCal.setTime(checkOutDate);
-	     
-			
-			
-			long diffMillis = endCal.getTimeInMillis() - startCal.getTimeInMillis();
-			long date_num = diffMillis / (24 * 60 * 60 * 1000);
-			
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(checkInDate); // Calendar 객체에 변환한 날짜를 적용
+		ReviewDTO dto = new ReviewDTO();
 
-			calendar.add(Calendar.DATE, (int) date_num); // date_num일을 더함
-	     
-	     
-		    
-	     List<HotelInfoDTO> dto2 = hotelDetailService.getHotelInfoById(hotel_id); //hotel_id 델꼬 올라고 일단 이거 가지고 와밧슴 리스트로..
-	     
-	     	mav.addObject("dto2", dto2);
-		    mav.addObject("checkInDate", checkInDate);
-		    mav.addObject("checkOutDate", checkOutDate);
-		    mav.addObject("date_num", date_num);
-		    mav.addObject("room_type", room_type);
-			System.out.println("객실 예약 버튼 클릭");
+		int maxNum = reviewService.maxNum();
 
-			System.out.println("호텔아이디 : "+ hotel_id);
-			mav.setViewName("payment/paymentPage");   
+		dto.setReview_num(maxNum + 1);
+		dto.setUserid(userid);
+		dto.setHotel_id(hotel_id);
+		dto.setScore(score);
+		dto.setContext(context);
+		dto.setUsername(username);
+		
+		reviewService.insertReviewData(dto);
+		
+		System.out.println("리뷰 작성 처리 완료!!");
+		
+		
+		//리뷰 작성후 새로 적용된 데이터를 띄울 준비
+		int currentPage = 1;
+		
+		int dataCount = reviewService.getReviewDataCount(hotel_id);
+		
+		int numPerPage = 4;
+		int totalPage = myUtil2.getPageCount(numPerPage, dataCount);
+	
+		if(currentPage>totalPage) {
+			currentPage = totalPage;
+		}
+		
+		int start = (currentPage-1)*numPerPage+1; 
+		int end = currentPage*numPerPage;
+		
+        Map<String, Object> params = new HashMap<>();
+        params.put("start", start);
+        params.put("end", end);  
+        params.put("hotel_id",hotel_id);
+        
+        List<ReviewDTO> reviewList = reviewService.getReadReviewList(params);
 
-	   return mav;
-   }
+		String pageIndexList = 
+				myUtil4.pageIndexList(currentPage, totalPage, listUrl);
+		
+		Map<String, Object> map1 = reviewMapper.searchReviewAvg(hotel_id);
+		
+		double avg = ((BigDecimal) map1.get("AVG")).doubleValue();
+		int count = ((BigDecimal) map1.get("COUNT")).intValue();
+		
+		
+		Map<String, Object> reviewData = new HashMap<String, Object>();
+		
+		reviewData.put("avg", avg);
+		reviewData.put("count",count);
+		reviewData.put("pageIndexList", pageIndexList);
+		reviewData.put("reviewList", reviewList);
+		reviewData.put("dataCount", dataCount);
+		
+		return reviewData;
+
+	}
  
-		   
+    
+    //리뷰 페이징 컨트롤러 진입
+    @GetMapping("/reviewPaging")
+    public Map<String, Object> reviewPaging(@RequestParam("pageNum1") String pageNum1,
+    		@RequestParam("hotel_id") int hotel_id, @RequestParam("listUrl") String listUrl,
+    		HttpServletRequest request) {
+        Map<String, Object> pagingData = new HashMap<>();
+		
+        System.out.println("리뷰 페이징 컨트롤러 진입");
+        
+		int currentPage = 1;
+		
+		if(pageNum1!=null){
+			currentPage = Integer.parseInt(pageNum1);
+		}
+		
+		int dataCount = reviewService.getReviewDataCount(hotel_id);
+		
+		int numPerPage = 4;
+		int totalPage = myUtil2.getPageCount(numPerPage, dataCount);
+		
+		if(currentPage>totalPage) {
+			currentPage = totalPage;
+		}
+		
+		int start = (currentPage-1)*numPerPage+1; 
+		int end = currentPage*numPerPage;
+		
+        Map<String, Object> params = new HashMap<>();
+        params.put("start", start);
+        params.put("end", end);  
+        params.put("hotel_id",hotel_id);
+        
+        List<ReviewDTO> reviewList = reviewService.getReadReviewList(params);
+		
+		
+		String pageIndexList = 
+				myUtil4.pageIndexList(currentPage, totalPage, listUrl);
+		
+		pagingData.put("dataCount", dataCount);
+		pagingData.put("reviewList", reviewList);
+		pagingData.put("pageIndexList", pageIndexList);
+        
+        return pagingData;
+        
+    }
+    
+    
+    
+    
+    //디테일 내에서 객실 날짜 검색시
 	@ResponseBody
 	@RequestMapping(value = "/detailDay", method = { RequestMethod.GET, RequestMethod.POST })
 	public Map<String, Object> detailDay(@RequestParam String check_in, @RequestParam String check_out,
 			@RequestParam int hotel_id) throws Exception {
-   
+		
+		System.out.println("디테일 객실 날짜 검색 컨트롤러 진입");
 	    Map<String, Object> resultMap = new HashMap<String, Object>();
-	   
+	    
 		//체크인, 체크아웃 시간을 받아 알맞은 형태로 바꾸고 변수에 저장
 		LocalDate check_in_day = LocalDate.parse(check_in, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		LocalDate check_out_day = LocalDate.parse(check_out, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -431,41 +554,7 @@ public class HotelDetailController {
 		return resultMap;
 	   
    }
-   
-  @RequestMapping(value = "/ozin", method = { RequestMethod.GET, RequestMethod.POST })
- public ModelAndView getMain() throws Exception {
-	 
-	 ModelAndView mav = new ModelAndView();
-	 //메인 페이지 하단에 리뷰 4개 임의로 만드는 코딩 만드는 중
-	//0426 추가 쿼리 : 메인에서 더미 리뷰 데이터 불러오는 쿼리, 나중에 복붙하면 됨
-		
-	 Map<String, Object> paramMap = new HashMap<>();
-	 int[] hotel_id = new int[4];
-	 //i가 1, 11, 21,31 출력되게 하는 for문..
-	 for(int i=0; i<4; i++) {
-		 hotel_id[i] = 1+i*10;
-	 }
-	 
-	 
-	 List<Map<String, Object>> mainReview = new ArrayList<>();
-	 for(int i = 0; i < hotel_id.length; i++) {
-	     List<Map<String, Object>> reviewData = hotelDetailService.getReviewData(hotel_id[i]);
-	     mainReview.addAll(reviewData);
-	 }
-	 
 
-	 
-	 mav.addObject("mainReview", mainReview);
-	// System.out.println(mainReview); //출력 실험
-	 System.out.println(hotel_id[1]); //11나와야 되그등?
-		
-		// List<Map<String, Object>> reviewData = hotelDetailService.getReviewData(1);
-		 System.out.println(mainReview);
-	 
-	 
-	 mav.setViewName("hotel/hotelMain_ozin");
-	 return mav;
- }
    
 
    
