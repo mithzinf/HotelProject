@@ -136,7 +136,9 @@ public class HotelNoticeController {
 			
 		 dto.setContext(replaced);
 			
-			
+
+	//	System.out.println("dto" + dto);	
+
 		 
 		 dto.setUserid(userid);
 		 dto.setUsername(username);
