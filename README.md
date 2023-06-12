@@ -9,7 +9,39 @@
 6. 프로젝트 후 느낀 점 및 배운 것
 7. 개선사항
 ---
-## 개발목적 및 목적
+## 개발목적 및 목표
+
+#### 목적
+- 숙박객들이 편리하게 숙박시설을 예약할 수 있도록 개발하게 되었습니다
+#### 목표
+- SpringBoot를 프레임워크를 효율적으로 이용해보기
+- ajax를 통해 웹페이지 새로고침, 화면 깜빡이는 경우를 최대한 줄여보기
+
+---
+## 팀원소개
+- 송찬호(팀장)
+- 김어진
+- 김은영
+- 강병한
+
+---
+## 개발환경
+
+#### 운영체제
+- Windows 10
+
+#### 개발도구
+- STS3
+
+#### 사용언어
+* Front-end *
+- Html
+- css
+- javascript
+- jQuery
+- 
+* Back-end *
+
 ![008](https://github.com/mithzinf/HotelProject/assets/124668883/1838c547-a000-4a95-b49a-fa5dfbff069f)
 ![003](https://github.com/mithzinf/HotelProject/assets/124668883/248b39b2-6dca-4aab-8f52-a8a323d07ea3)
 ![004](https://github.com/mithzinf/HotelProject/assets/124668883/76f3511d-af66-4f20-a98e-6cb45524ff67)
