@@ -1,6 +1,15 @@
-# 프로젝트 소개
-HotelProject 서울어때 파이널프로젝트
+# 호텔 예약 웹사이트 '서울어때' 🏨
+
+## 목차
+1. 개발목적 및 목표
+2. 팀원 소개
+3. 개발 환경
+4. DB 구조
+5. 페이지별 설명 및 개발한 기능
+6. 프로젝트 후 느낀 점 및 배운 것
+7. 개선사항
 ---
+## 개발목적 및 목적
 ![008](https://github.com/mithzinf/HotelProject/assets/124668883/1838c547-a000-4a95-b49a-fa5dfbff069f)
 ![003](https://github.com/mithzinf/HotelProject/assets/124668883/248b39b2-6dca-4aab-8f52-a8a323d07ea3)
 ![004](https://github.com/mithzinf/HotelProject/assets/124668883/76f3511d-af66-4f20-a98e-6cb45524ff67)
