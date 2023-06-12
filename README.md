@@ -15,7 +15,7 @@
 - 숙박객들이 편리하게 숙박시설을 예약할 수 있도록 개발하게 되었습니다
 #### 목표
 - SpringBoot를 프레임워크를 효율적으로 이용해보기
-- ajax를 통해 웹페이지 새로고침, 화면 깜빡이는 경우를 최대한 줄여보기
+- ajax를 통해 웹페이지 새로고침, 화면 깜빡이는 경우를 최대한 줄여보기(편리함, 효율성 ↑)
 
 ---
 ## 팀원소개
@@ -30,17 +30,27 @@
 #### 운영체제
 - Windows 10
 
+#### 데이터 베이스
+- Oracle
+- Mybatis
+
 #### 개발도구
 - STS3
+- Gradle
+- SpringBoot
+
 
 #### 사용언어
-* Front-end *
-- Html
-- css
-- javascript
-- jQuery
-- 
-* Back-end *
+* Front-end 
+  - Html
+  - css
+  - javascript
+  - jQuery
+  -  Bootstrap  
+* Back-end
+  - Java
+  - ThymeLeaf
+
 
 ![008](https://github.com/mithzinf/HotelProject/assets/124668883/1838c547-a000-4a95-b49a-fa5dfbff069f)
 ![003](https://github.com/mithzinf/HotelProject/assets/124668883/248b39b2-6dca-4aab-8f52-a8a323d07ea3)
