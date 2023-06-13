@@ -66,12 +66,19 @@
 ## 페이지 및 구현 기능 설명
 1. 메인 페이지
 ![008](https://github.com/mithzinf/HotelProject/assets/124668883/1838c547-a000-4a95-b49a-fa5dfbff069f)
-사용자들에게 서울시 관련 행사 정보를 제공하기 위하여 캐러셀 슬라이드를 활용하였습니다.
-사용자들이 왼쪽, 오른쪽 화살표 버튼을 통해 수동으로 탐색할 수 있습니다.
-
+- 사용자들에게 서울시 관련 행사 정보를 제공하기 위하여 캐러셀 슬라이드를 활용하였습니다.
+- 사용자들이 왼쪽, 오른쪽 화살표 버튼을 통해 수동으로 탐색할 수 있습니다.
+2. 객실 상세 페이지
 ![003](https://github.com/mithzinf/HotelProject/assets/124668883/248b39b2-6dca-4aab-8f52-a8a323d07ea3)
 ![004](https://github.com/mithzinf/HotelProject/assets/124668883/76f3511d-af66-4f20-a98e-6cb45524ff67)
 ![005](https://github.com/mithzinf/HotelProject/assets/124668883/3a014742-c2c6-4d05-b4af-8deba4eb64d5)
+**해당 호텔을 소개하는 페이지이자 해당 호텔의 시설, 해당 호텔 객실 시설 정보 제공하는 페이지입니다**
+- Javascript와 지도 API를 활용하여 지도 위에 호텔 위치를 표시하는 기능을 구현하였습니다.
+(사용자들이 호텔의 위치를 간편히 확인할 수 있도록)
+```
+
+```
+
 ![010](https://github.com/mithzinf/HotelProject/assets/124668883/1682842d-649d-418f-8b26-3d7e25fe5748)
 
 ---
