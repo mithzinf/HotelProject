@@ -202,7 +202,7 @@
 								  <!-- th:if lists.size ==1 div 태그 -->
 							</div>
 ```
-- 호텔의 객실 종류 별로 잔여 객실 갯수를 계산하는 코드를 프로그래밍하여, 객실 정보에 '객실 여유' , '잔여 객실 1개 남았습니', '객실 만실' 문구를 객실 별로 띄우는 기능을 구현하였습니다.
+- 날짜에 따라 잔여 객실 갯수를 계산하는 코드를 프로그래밍하여, 객실 정보에 '객실 여유' , '잔여 객실 1개 남았습니다', '객실 만실' 문구를 객실 별로 띄우는 기능을 구현하였습니다. ajax를 활용하여 새로고침 없이 내용이 바뀌는 부분에만 동적 할당을 하도록 구현하였습니다.
 - '만실'일 때는 '예약하기' 버튼이 비활성화 / '객실 여유', '만실 임박'일 때는 '예약하기' 버튼이 활성화되도록 타임리프 th:if를 사용하여 기능 구현하였습니다. 
 ```
                                       //스탠다드룸 ver
@@ -228,26 +228,234 @@
 	                                                	&nbsp;예약하기&nbsp; </button>
                                         </th:block>
 ```
+```
+        //지정 날짜에 따른 잔여 객실 카운트 코딩 (ajax) : 스탠다드룸 ver
+        
+        function searchDay() {
 
-![005](https://github.com/mithzinf/HotelProject/assets/124668883/3a014742-c2c6-4d05-b4af-8deba4eb64d5)
+        	var hotel_id = $("#hotel_id").val();
+        	var check_in = $("#datepicker3").val();
+        	var check_out = $("#datepicker4").val();
+			
+        	$('#check_in_after1').attr("value",check_in);
+        	$('#check_out_after1').attr("value",check_out);
+        	$('#check_in_after2').attr("value",check_in);
+        	$('#check_out_after2').attr("value",check_out);
+        	$('#check_in_after3').attr("value",check_in);
+        	$('#check_out_after3').attr("value",check_out);
 
-- Javascript와 지도 API를 활용하여 지도 위에 호텔 위치를 표시하는 기능을 구현하였습니다.
-(사용자들이 호텔의 위치를 간편히 확인할 수 있도록)
+        	const button1 = document.getElementById('standardButton');
+        	
+		// (중간 생략)
+        	
+        	$.ajax({
+				url: "./detailDay",
+				type: "post",
+				data: { check_in:check_in, check_out:check_out, hotel_id: hotel_id },
+				success: function(resultMap) {       
+					//url : 객실 정보를 서버에 요청할 주소, Controller와 연결
+					//post 방식으로 요청 전송
+					// data : ':' 콜론을 기점으로 좌항: 변수, 우항 : 데이터 값
+					//검색한 날짜의 객실 정보를 실시간으로 동적 할당
+					//button1 : standardButton
+					if(resultMap.standard === "만실"){
+						button1.classList.remove('btn-primary1'); 
+						button1.classList.add('btn-disabled1'); 
+						button1.disabled = true;
+						button1.textContent = '예약불가';
+						text1.textContent = '이 객실은 만실입니다.';
+					}else if(resultMap.standard === "만실 임박"){
+						button1.classList.remove('btn-disabled1'); 
+						button1.classList.add('btn-primary1'); 
+						button1.disabled = false;
+						button1.textContent = '예약하기';
+						text1.textContent = '잔여 객실이 1개 남았습니다.';
+					}else{
+						button1.classList.remove('btn-disabled1'); 
+						button1.classList.add('btn-primary1'); 
+						button1.disabled = false;
+						button1.textContent = '예약하기';
+						text1.textContent = '';
+					}
+```
+```
+//체크인 날짜, 체크아웃날짜 받아오고, 각 객실은 일단 0으로 초기화 (스탠다드룸 ver)
+		LocalDate check_in_temp = check_in_day;
+		LocalDate check_out_temp = check_in_day.plusDays(1);
+		int standard = 0;
+		int sweet = 0;
+		int deluxe = 0;
+		String standardJudge = "";
+		String sweetJudge = "";
+		String deluxeJudge = "";
+		
+		
+		//스탠다드룸 잔여객실 체크
+		for(int i=0;i<days;i++) {
+			
+			Map<String, Object> paramMap2 = new HashMap<>();
+			paramMap2.put("check_in", check_in_temp.plusDays(i));
+			paramMap2.put("check_out", check_out_temp.plusDays(i));
+			paramMap2.put("hotel_id", hotel_id);
+			standard = hotelDetailService.searchDayStandard(paramMap2);
+			
+			
+			if(standard>4) {
+				standardJudge = "만실";
+				break;
+			}else if(standard == 4) {
+				standardJudge = "만실 임박";
+			}else {
+				if(standardJudge!="만실 임박") {
+					standardJudge = "여유";
+				}
+			}
+		}
 ```
 
+- 로그인 상태에서 '예약하기'를 누르면 결제페이지로 이동 / 만일 비로그인 상태에서 예약하기를 누르면 '로그인 후 이용 가능합니다' 팝업창과 함께 로그인 창으로 이동하도록 기능을 구현하였습니다. 
 ```
-
+//스탠다드룸 결제
+	function reservation1() {
+		
+		var f = document.myForm1;
+		
+		var user_id = document.getElementById("user_id1").value;
+		if(user_id===""){
+			
+			swal({
+        		title: "로그인 필요",
+        		text: "로그인 후 이용가능합니다.",
+        		icon: "warning",
+        		button: "확인",
+        	}).then(function() {
+        		f.action="login/login";
+    			f.submit();
+        	});
+			event.preventDefault();
+		}else{
+			f.action="paymentPage";
+		    f.submit();
+		}
+		
+	}
+	
+	
+	//스위트룸 결제
+	function reservation2() {
+		
+		var f = document.myForm2;
+		
+		var user_id = document.getElementById("user_id2").value;
+		if(user_id===""){
+			
+			swal({
+        		title: "로그인 필요",
+        		text: "로그인 후 이용가능합니다.",
+        		icon: "warning",
+        		button: "확인",
+        	}).then(function() {
+        		f.action="login/login";
+    			f.submit();
+        	});
+			event.preventDefault();
+		}else{
+			f.action="paymentPage";
+		    f.submit();
+		}
+		
+	}
+	
+	//디럭스룸 결제
+	function reservation3() {
+		
+		var f = document.myForm3;
+		
+		var user_id = document.getElementById("user_id3").value;
+		if(user_id===""){
+			
+			swal({
+        		title: "로그인 필요",
+        		text: "로그인 후 이용가능합니다.",
+        		icon: "warning",
+        		button: "확인",
+        	}).then(function() {
+        		f.action="login/login";
+    			f.submit();
+        	});
+			event.preventDefault();
+		}else{
+			f.action="paymentPage";
+		    f.submit();
+		}
+		
+	}
+		
+```
+3. 공지사항 게시판 페이지
 ![010](https://github.com/mithzinf/HotelProject/assets/124668883/1682842d-649d-418f-8b26-3d7e25fe5748)
+- 관리자만 공지사항 게시글을 작성, 수정, 삭제할 수 있으며, 관리자 외 일반회원들은 글 조회만 가능합니다.
+```
+  //공지사항 글 작성 메소드
+		@GetMapping("notice/noticeInsert")
+	   public ModelAndView insert(NoticeBoardDTO dto) throws Exception {
+		   
+		   ModelAndView mav = new ModelAndView();
+		   System.out.println("공지사항 작성글 진입");
+		   
+		   SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
+			// String userid = "";
+			 
+			 //sessionUser가 null이거나 admin이 아닌 경우 - 걍 로그인창으로 가세요!ㅠㅠ
+			 if(sessionUser==null || !"admin".equals(sessionUser.getId())) {
+				 mav.setViewName("/login/login");
+				return mav;
+			 }
+				
+			 //sessionUser가 admin인 경우!! noticeInsert.html으로 가렴
+			 dto.setUserid(sessionUser.getId());
+		   mav.setViewName("notice/noticeInsert");
+		   return mav;
+	   }
+```
 
+```
+//관리자, 일반회원 모두에게 '목록' 버튼은 보이지만
+//관리자 admin에게만 작성, 수정, 삭제 버튼이 보이고, 관리자 외 일반회원은 보이지 않도록 타임리프 조건문을 활용하였습니다.
+						<!-- 수정, 삭제 버튼 -->
+							<span th:if="${sessionUser != null and sessionUser.id == 'admin'}">
+							    <input type="button" value="수정" class="btn btn-framed btn-small btn-default btn-rounded"
+							        th:onclick="'location.href=\'notice/noticeUpdate?num=' + @{${dto.notice_num }}+'\''"
+							        style="font-size: 13px; width: 87px;height: 41px; font-size: 21px">
+							    <input type="button" value="삭제" class="btn btn-framed btn-small btn-default btn-rounded"
+							        th:onclick="'location.href=\'notice/deleted_ok?num=' + @{${dto.notice_num }} +'\''"
+							        style="font-size: 13px; width: 87px;height: 41px; font-size: 21px">
+							</span>
+							<!-- 리스트 버튼, 로그인하든 안하든 다 보일 수 있게? -->
+							<span>
+							    <input type="button" value="리스트" class="btn btn-framed btn-small btn-default btn-rounded"
+							        th:onclick="'location.href=\'notice/noticeList?num=' + @{${dto.notice_num }} +'\''"
+							        style="font-size: 13px; width: 87px;height: 41px; font-size: 21px"> 
+							</span>
+
+```
+- 공지사항 글을 편하게 볼 수 있도록 줄바꿈 기능도 추가하여 구현하였습니다.
+```
+		 //줄바꿈
+		 String context = dto.getContext();
+		 
+		 String replaced = context.replaceAll("\r\n", "<br/>");
+			
+		 dto.setContext(replaced);		
+```
 ---
 
+## 프로젝트 후 느낀 점과 배운 것들
 
-### 구현 기능
-- Main Page : 
-- HotelDetail Page : 
-- Notice board : 
+1. 이론과 함께 실제로 프로젝트를 통해서 프레임워크를 다뤄보니 확실히 프레임워크가 어떤 것인지 알게 되었다. 비유를 하자면 스웨덴의 가구 제조 업체인 '이**'에서 제공하는 '조립형 반제품 가구' 처럼 프레임워크 또한 '반제품'과 비슷하다고 느꼈다. Framework를 사용하여 개발을 해보니까 더 빠르게, 더 효율적으로 개발이 가능하다는 것을 확실히 알 수 있었다.
+2. '시작이 반이다' 라는 말이 많이 떠올랐던 프로젝트였다. DB 설계부터 컨트롤러-서비스-쿼리문 짜는 기간만 약 2주가 걸렸고 수정 및 삭제도 밥먹듯이 했던 순간들이었다. 처음부터 꼼꼼하게 프로젝트를 시작한 덕분에 실수 없이 모두의 마음에 드는 프로젝트를 완성할 수 있어서 기뻤고 실무적인 능력을 기를 수 있어서 좋았다. 
+3. jQuery, ajax를 활용하여 사용자들이 더 편리하게 이 웹사이트를 사용할 수 있게끔 개발하는 것이 목적이었는데 그 목표를 이룬 것 같아서 기쁘다. ajax 방식을 사용하여 코딩을 만들어보니 왜 ajax를 사용하는지 ㅇ라겠고, json 형식의 데이터를 사용하는지 확실히 체감할 수 있었다.
 
-### 구현 기능 상세
-- 메인 페이지
-- 호텔 상세 설명 페이지, 예약 기능
-- 공지사항 게시판
+## 개선사항
+1. 챗봇기능을 꼭 만들고 싶었는데 기간안에 챗봇기능을 만들지 못한 게 매우 아쉽다. 꼭 챗봇 기능을 추가하고 싶다.
+2. 호텔 객실 상세 페이지 좌측에 '광고 배너'가 있는데 이 배너를 꾸미지 못한 채로 완성한 것이 아쉬웠다. javaScript를 활용하여 광고를 랜덤으로 노출시키는 기능을 꼭 추가하고 싶다.
