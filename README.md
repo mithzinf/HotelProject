@@ -401,50 +401,7 @@ result : 많은 고민 끝에, 낙관적 락킹 기법 활용하여 예약 교�
 3. 공지사항 게시판 페이지
 ![010](https://github.com/mithzinf/HotelProject/assets/124668883/1682842d-649d-418f-8b26-3d7e25fe5748)
 - 관리자만 공지사항 게시글을 작성, 수정, 삭제할 수 있으며, 관리자 외 일반회원들은 글 조회만 가능합니다.
-```
-  //공지사항 글 작성 메소드
-		@GetMapping("notice/noticeInsert")
-	   public ModelAndView insert(NoticeBoardDTO dto) throws Exception {
-		   
-		   ModelAndView mav = new ModelAndView();
-		   System.out.println("공지사항 작성글 진입");
-		   
-		   SessionUser sessionUser = (SessionUser) httpSession.getAttribute("sessionUser");
-			// String userid = "";
-			 
-			 //sessionUser가 null이거나 admin이 아닌 경우 - 걍 로그인창으로 가세요!ㅠㅠ
-			 if(sessionUser==null || !"admin".equals(sessionUser.getId())) {
-				 mav.setViewName("/login/login");
-				return mav;
-			 }
-				
-			 //sessionUser가 admin인 경우!! noticeInsert.html으로 가렴
-			 dto.setUserid(sessionUser.getId());
-		   mav.setViewName("notice/noticeInsert");
-		   return mav;
-	   }
-```
 
-```
-//관리자, 일반회원 모두에게 '목록' 버튼은 보이지만
-//관리자 admin에게만 작성, 수정, 삭제 버튼이 보이고, 관리자 외 일반회원은 보이지 않도록 타임리프 조건문을 활용하였습니다.
-						<!-- 수정, 삭제 버튼 -->
-							<span th:if="${sessionUser != null and sessionUser.id == 'admin'}">
-							    <input type="button" value="수정" class="btn btn-framed btn-small btn-default btn-rounded"
-							        th:onclick="'location.href=\'notice/noticeUpdate?num=' + @{${dto.notice_num }}+'\''"
-							        style="font-size: 13px; width: 87px;height: 41px; font-size: 21px">
-							    <input type="button" value="삭제" class="btn btn-framed btn-small btn-default btn-rounded"
-							        th:onclick="'location.href=\'notice/deleted_ok?num=' + @{${dto.notice_num }} +'\''"
-							        style="font-size: 13px; width: 87px;height: 41px; font-size: 21px">
-							</span>
-							<!-- 리스트 버튼, 로그인하든 안하든 다 보일 수 있게? -->
-							<span>
-							    <input type="button" value="리스트" class="btn btn-framed btn-small btn-default btn-rounded"
-							        th:onclick="'location.href=\'notice/noticeList?num=' + @{${dto.notice_num }} +'\''"
-							        style="font-size: 13px; width: 87px;height: 41px; font-size: 21px"> 
-							</span>
-
-```
 - 공지사항 글을 편하게 볼 수 있도록 줄바꿈 기능도 추가하여 구현하였습니다.
 ```
 		 //줄바꿈
